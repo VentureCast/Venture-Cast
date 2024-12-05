@@ -8,7 +8,7 @@
 //import { PrismaClient } from '@prisma/client'
 
 //const prisma = new PrismaClient()
-
+//testtest
 generator client {
   provider = "prisma-client-js"
 }
