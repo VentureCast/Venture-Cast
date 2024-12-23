@@ -1,0 +1,6 @@
+module Pods_Venture_VentureTests {
+  umbrella header "Pods-Venture-VentureTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
