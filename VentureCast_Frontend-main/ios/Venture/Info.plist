@@ -26,14 +26,13 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -48,5 +47,84 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Inter-Italic-VariableFont_opsz,wght.ttf</string>
+		<string>Inter-VariableFont_opsz,wght.ttf</string>
+		<string>Inter_18pt-Black.ttf</string>
+		<string>Inter_18pt-BlackItalic.ttf</string>
+		<string>Inter_18pt-Bold.ttf</string>
+		<string>Inter_18pt-BoldItalic.ttf</string>
+		<string>Inter_18pt-ExtraBold.ttf</string>
+		<string>Inter_18pt-ExtraBoldItalic.ttf</string>
+		<string>Inter_18pt-ExtraLight.ttf</string>
+		<string>Inter_18pt-ExtraLightItalic.ttf</string>
+		<string>Inter_18pt-Italic.ttf</string>
+		<string>Inter_18pt-Light.ttf</string>
+		<string>Inter_18pt-LightItalic.ttf</string>
+		<string>Inter_18pt-Medium.ttf</string>
+		<string>Inter_18pt-MediumItalic.ttf</string>
+		<string>Inter_18pt-Regular.ttf</string>
+		<string>Inter_18pt-SemiBold.ttf</string>
+		<string>Inter_18pt-SemiBoldItalic.ttf</string>
+		<string>Inter_18pt-Thin.ttf</string>
+		<string>Inter_18pt-ThinItalic.ttf</string>
+		<string>Inter_24pt-Black.ttf</string>
+		<string>Inter_24pt-BlackItalic.ttf</string>
+		<string>Inter_24pt-Bold.ttf</string>
+		<string>Inter_24pt-BoldItalic.ttf</string>
+		<string>Inter_24pt-ExtraBold.ttf</string>
+		<string>Inter_24pt-ExtraBoldItalic.ttf</string>
+		<string>Inter_24pt-ExtraLight.ttf</string>
+		<string>Inter_24pt-ExtraLightItalic.ttf</string>
+		<string>Inter_24pt-Italic.ttf</string>
+		<string>Inter_24pt-Light.ttf</string>
+		<string>Inter_24pt-LightItalic.ttf</string>
+		<string>Inter_24pt-Medium.ttf</string>
+		<string>Inter_24pt-MediumItalic.ttf</string>
+		<string>Inter_24pt-Regular.ttf</string>
+		<string>Inter_24pt-SemiBold.ttf</string>
+		<string>Inter_24pt-SemiBoldItalic.ttf</string>
+		<string>Inter_24pt-Thin.ttf</string>
+		<string>Inter_24pt-ThinItalic.ttf</string>
+		<string>Inter_28pt-Black.ttf</string>
+		<string>Inter_28pt-BlackItalic.ttf</string>
+		<string>Inter_28pt-Bold.ttf</string>
+		<string>Inter_28pt-BoldItalic.ttf</string>
+		<string>Inter_28pt-ExtraBold.ttf</string>
+		<string>Inter_28pt-ExtraBoldItalic.ttf</string>
+		<string>Inter_28pt-ExtraLight.ttf</string>
+		<string>Inter_28pt-ExtraLightItalic.ttf</string>
+		<string>Inter_28pt-Italic.ttf</string>
+		<string>Inter_28pt-Light.ttf</string>
+		<string>Inter_28pt-LightItalic.ttf</string>
+		<string>Inter_28pt-Medium.ttf</string>
+		<string>Inter_28pt-MediumItalic.ttf</string>
+		<string>Inter_28pt-Regular.ttf</string>
+		<string>Inter_28pt-SemiBold.ttf</string>
+		<string>Inter_28pt-SemiBoldItalic.ttf</string>
+		<string>Inter_28pt-Thin.ttf</string>
+		<string>Inter_28pt-ThinItalic.ttf</string>
+		<string>Urbanist-Italic-VariableFont_wght.ttf</string>
+		<string>Urbanist-VariableFont_wght.ttf</string>
+		<string>Urbanist-Black.ttf</string>
+		<string>Urbanist-BlackItalic.ttf</string>
+		<string>Urbanist-Bold.ttf</string>
+		<string>Urbanist-BoldItalic.ttf</string>
+		<string>Urbanist-ExtraBold.ttf</string>
+		<string>Urbanist-ExtraBoldItalic.ttf</string>
+		<string>Urbanist-ExtraLight.ttf</string>
+		<string>Urbanist-ExtraLightItalic.ttf</string>
+		<string>Urbanist-Italic.ttf</string>
+		<string>Urbanist-Light.ttf</string>
+		<string>Urbanist-LightItalic.ttf</string>
+		<string>Urbanist-Medium.ttf</string>
+		<string>Urbanist-MediumItalic.ttf</string>
+		<string>Urbanist-Regular.ttf</string>
+		<string>Urbanist-SemiBold.ttf</string>
+		<string>Urbanist-SemiBoldItalic.ttf</string>
+		<string>Urbanist-Thin.ttf</string>
+		<string>Urbanist-ThinItalic.ttf</string>
+	</array>
 </dict>
 </plist>
