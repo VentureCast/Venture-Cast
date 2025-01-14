@@ -7,6 +7,7 @@ import HelpCenter from './Account/HelpCenter';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { Button } from 'react-native-paper';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
+import StaticHeader from './Components/StaticHeader';
 
 //import { Section } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
@@ -89,17 +90,11 @@ const PortfolioScreen = ({ navigation }: any) => {
 //also want the gray bar gone so that the logo and the name hover over the 
   return (
     <>
-      <View style={styles.miniHeader}>
-        <View style={styles.miniTitleContainer}>
-          <Image source={require('../Assets/Images/Frame.png')} style={styles.miniLogo} />
-           {/* need to link this to the home page */}
-          <Text style={styles.miniTitle}>VENTURECAST</Text>
-        </View>
-        <View style={styles.iconsHeaderContainer}>
-          <Image source={require('../Assets/Icons/Search.png')} style={styles.miniLogo} />
-          <Image source={require('../Assets/Icons/more-info.png')} style={styles.miniLogo} />
-        </View>
-      </View>
+      <StaticHeader 
+        rightIconOne={require('../Assets/Icons/Heart.png')}
+        rightIconTwo={require('../Assets/Icons/Notification.png')}
+
+      />
       <ScrollView style={styles.container}>
 
         {/* Line Graph */}
@@ -124,15 +119,6 @@ const PortfolioScreen = ({ navigation }: any) => {
             />
           ))}
         </View>
-        
-       {/* session 3 agenda: 
-
-       - clips section
-       - show more buttons
-       
-       */}
-
-
 
         {/* Stock Positions */}
         <View style={styles.stockList}>
@@ -236,8 +222,10 @@ const styles = StyleSheet.create({
   accountSummary: {
     marginLeft: 20,
   },
+
+  // the user balance
+
   balanceTitle: {
-    //urbanist font
     fontFamily: 'Urbanist-Regular',
     fontSize: 40,
     fontWeight: 'bold',
@@ -255,6 +243,8 @@ const styles = StyleSheet.create({
     borderColor: '#EEEEEE',
     borderWidth: 0.2,
   },
+// user acct info section
+
   accountGrid: {
     flex: 1,
     flexDirection: 'row', // Arrange items in rows
@@ -298,6 +288,9 @@ const styles = StyleSheet.create({
     width: 109,
     height: 53,
   },
+
+// stock/short list section
+
   stockTitleRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -355,11 +348,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   positive: {
-    color: 'green',
+    color: '#12D18E',
   },
   negative: {
-    color: 'red',
+    color: '#F75555',
   },
+
+  // graph; yet to be completed
   lineGraph: {
     height: 400,
     width: '100%',
@@ -367,6 +362,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+
+  // recent clips 
   recentClips: {
     marginLeft: 20,
     marginBottom: 20,
@@ -388,6 +385,8 @@ const styles = StyleSheet.create({
     height:200,
     borderRadius: 12,
   },
+
+  // section title format (with arrow)
   rightArrow: {
     justifyContent: 'flex-end',
   },
@@ -398,33 +397,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#e0e0e0',
   },
-  miniLogo: {
-    width: 20, 
-    height: 20,
-    marginHorizontal: 5,
-  },
-  iconsHeaderContainer: {
-    flexDirection: 'row',
-  },
-  miniTitleContainer: {
-    flexDirection: 'row',
-  },
-  miniTitle: {
-    fontSize: 20,
-    marginLeft: 10,
-    fontFamily: 'Urbanist-Regular',
-    fontWeight: '900',
-    color: 'white',
-  },
-  miniHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    height: 44,
-    padding: 10,
-    paddingLeft: 20, 
-    backgroundColor: '#351560'
-  },
+  // show more button
   showMoreButton: {
     justifyContent: 'center',
   }

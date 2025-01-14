@@ -1,52 +1,72 @@
 // components/Header.tsx
 import React from 'react';
-import { View, Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, ImageBackground, Image} from 'react-native';
 import { StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Or any icon library
+import ActionButton from './ActionButton';
 
-const Header = ({ balance, change }:any) => {
+
+const arrowUp = require('../../Assets/Icons/Arrow-Up-White.png');
+const arrowDown = require('../../Assets/Icons/Arrow-Down-White.png');
+
+const Header = ({ balance, percentChange, moneyChange }:any) => {
   return (
-    <View style={styles.header}>
-      <View style={styles.headerContent}>
-        <Text style={styles.logoText}>VC</Text>
-        {/* <Ionicons name="notifications-outline" size={24} color="#fff" /> */}
+    <ImageBackground source={require('../../Assets/Images/portfolio-background.png')}>
+      <View style={styles.header}>
+        <Text style={styles.balance}>${balance}</Text>
+        <View style={styles.changeRow}>
+          <Image source={percentChange >= 0 ? arrowUp : arrowDown } style={styles.arrowIcon}/>
+          <Text style={[styles.balanceChange, percentChange >= 0 ? styles.positive : styles.negative]}>${moneyChange} ({percentChange}%)</Text>
+        </View>
       </View>
-      <Text style={styles.balance}>{balance}</Text>
-      <Text style={styles.balanceChange}>{change}</Text>
-    </View>
+      <View style={styles.actionButtonContainer}>
+        <ActionButton label="Deposit Funds" onPress={() => {}} large={false} />
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#5D2DFD',
+    backgroundColor: 'transparent',
     paddingVertical: 40,
     paddingHorizontal: 20,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
     alignItems: 'center',
   },
-  headerContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  logoText: {
-    color: '#FFF',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
   balance: {
+    fontFamily: 'Urbanist',
     color: '#FFF',
-    fontSize: 28,
+    fontSize: 48,
     fontWeight: 'bold',
     marginTop: 10,
   },
   balanceChange: {
-    color: '#FFF',
+    fontFamily: 'Urbanist',
+    fontWeight: 'bold',
     fontSize: 16,
     marginTop: 5,
   },
+  positive: {
+    color: '#12D18E',
+  },
+  negative: {
+    color: '#F75555',
+  },
+  changeRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  arrowIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 5,
+    marginTop: 5,
+  },
+
+  actionButtonContainer: {
+    marginBottom: 20,
+  }
 });
 
 export default Header;

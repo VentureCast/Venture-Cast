@@ -5,6 +5,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 
+//COLORS:
+//Dark Purple: #351560
+//Gray button fill: #EAE7EF
+// positive green: #12D18E
+// negative red: #F75555
+
+
 // Import your screens
 import VentureCast from './Pages/VentureCast';
 import CreateAccount from './Pages/CreateAccount';

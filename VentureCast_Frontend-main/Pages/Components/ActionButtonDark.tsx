@@ -1,8 +1,8 @@
-// components/ActionButton.tsx
+// components/ActionButtonDark.tsx
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const ActionButton = ({ label, onPress, large }:any) => {
+const ActionButtonDark = ({ label, onPress, large }:any) => {
   return (
     <TouchableOpacity
       style={[styles.button, large ? styles.largeButton : styles.smallButton]}
@@ -15,7 +15,7 @@ const ActionButton = ({ label, onPress, large }:any) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#EAE7EF',
+    backgroundColor: '#351560',
     borderRadius: 100,
     width: 362,
     height: 58,
@@ -32,11 +32,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
   },
   buttonText: {
-    color: '#351560',
+    color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
     fontFamily: 'Urbanist'
   },
 });
 
-export default ActionButton;
+export default ActionButtonDark;
