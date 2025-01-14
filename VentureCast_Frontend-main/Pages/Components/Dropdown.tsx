@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react
 
 const Dropdown = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('Filter By');
+  const [selectedValue, setSelectedValue] = useState('Sort By');
   const options = ['Price', 'Change', 'Name'];
 
   const handleSelect = (value) => {
@@ -57,10 +57,10 @@ const styles = StyleSheet.create({
     borderRadius: 84.21,
     justifyContent: 'center',
     padding: 8,
-    paddingLeft: 15,
   },
   dropdownText: {
     fontSize: 13.47,
+    textAlign: 'center',
   },
   modalOverlay: {
     flex: 1,
@@ -76,12 +76,14 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   dropdownItem: {
+    justifyContent: 'center',
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
   itemText: {
     fontSize: 16,
+    fontFamily: 'Urbanist-Regular',
   },
 });
 

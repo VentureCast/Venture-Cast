@@ -90,9 +90,15 @@ const PortfolioScreen = ({ navigation }: any) => {
   return (
     <>
       <View style={styles.miniHeader}>
-        <Image source={require('../Assets/Images/Frame.png')} style={styles.miniLogo}></Image>
-        <Text style={styles.miniTitle}>VENTURECAST</Text> 
-        {/* need to link this to the home page */}
+        <View style={styles.miniTitleContainer}>
+          <Image source={require('../Assets/Images/Frame.png')} style={styles.miniLogo} />
+           {/* need to link this to the home page */}
+          <Text style={styles.miniTitle}>VENTURECAST</Text>
+        </View>
+        <View style={styles.iconsHeaderContainer}>
+          <Image source={require('../Assets/Icons/Search.png')} style={styles.miniLogo} />
+          <Image source={require('../Assets/Icons/more-info.png')} style={styles.miniLogo} />
+        </View>
       </View>
       <ScrollView style={styles.container}>
 
@@ -121,11 +127,8 @@ const PortfolioScreen = ({ navigation }: any) => {
         
        {/* session 3 agenda: 
 
-       - stock section type (short or buy)
-       - fonts
        - clips section
        - show more buttons
-       - 
        
        */}
 
@@ -150,9 +153,14 @@ const PortfolioScreen = ({ navigation }: any) => {
               changePercent={stock.change}
               onPress={() => goToStockDetails(stock)} // Pass the stock data to the details screen
             />
-          ))}
+          ))} 
+          
+          {/* need this to be a button that opens up more stock items */}
+          <Button style={styles.showMoreButton}>Show More</Button>
         </View>
 
+
+        {/* short Positions */} 
         <View style={styles.stockList}>
           <View style={styles.stockTitleRow}>
             <Text style={styles.sectionTitle}>My Short Positions</Text>
@@ -172,18 +180,41 @@ const PortfolioScreen = ({ navigation }: any) => {
               onPress={() => goToStockDetails(short)} // Pass the stock data to the details screen
             />
           ))}
+
+         {/* need this to be a button that opens up more short items */}
+          <Button style={styles.showMoreButton}>Show More</Button>
         </View>
 
         {/* Recent Viral Clips Section */}
         <View style={styles.recentClips}>
-          <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
+          <View style = {styles.recentClipsTitle}>
+            <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
+         {/* need this to be a button that opens up more clips */}
+            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+          </View>
+          {/* we want each section to pull from a database of clips for the stocks that are presented above the clips */}
+
+          <View  style={styles.clipStockItem}>
+            <View style={styles.stockNameLogo}> 
+              <Image source={require('../Assets/Images/jake-paul.png')} style={styles.stockLogo} />
+              <View>
+                <Text style={styles.stockName}>Jake Paul</Text>
+                <Text style={styles.stockTicker}>JKPL</Text>
+              </View>
+            </View>
+            <Image source={require('../Assets/Icons/Arrow-right.png')} />
+          </View>
           {/* Replace with real video data */}
           <FlatList
             horizontal
-            data={[{ id: '1', video: 'Jake Paul Clip' }, { id: '2', video: 'PewDiePie Clip' }]}
+            data={
+              [{ id: '1', video: 'Clip 1',  image: require('../Assets/Images/Clip1.png')}, 
+              { id: '2', video: 'Clip 2', image: require('../Assets/Images/Clip2.png')},
+              { id: '3', video: 'Clip 3', image: require('../Assets/Images/Clip3.png')}, 
+              ]}
             renderItem={({ item }) => (
               <View style={styles.clipItem}>
-                <Text style={styles.clipText}>{item.video}</Text>
+                <Image style={styles.clipImage} source = {item.image} />
               </View>
             )}
             keyExtractor={item => item.id}
@@ -195,9 +226,6 @@ const PortfolioScreen = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
-  defaultFont: {
-    fontFamily: 'Urbanist-Regular', //not working
-  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -210,7 +238,7 @@ const styles = StyleSheet.create({
   },
   balanceTitle: {
     //urbanist font
-    fontFamily: 'Urbanist-Regular', //not working
+    fontFamily: 'Urbanist-Regular',
     fontSize: 40,
     fontWeight: 'bold',
   },
@@ -235,11 +263,13 @@ const styles = StyleSheet.create({
   },
   accountText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: '#6c757d',    
+    fontFamily: 'Urbanist-Regular',
   },
   accountTextChange: {
     fontSize: 10,
     color: '#6c757d',
+    fontFamily: 'Urbanist-Regular',
   },
   accountDetail: {
     flexDirection: 'row',
@@ -256,6 +286,7 @@ const styles = StyleSheet.create({
     color:'#757575',
     fontSize: 14,
     fontWeight: '500',
+    fontFamily: 'Urbanist-Regular',
   },
   detailValue: {
     fontSize: 18,
@@ -282,9 +313,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    fontFamily: 'Urbanist-Regular',
     },
   stockNameLogo: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+
   },
   stockItem: {
     flexDirection: 'row',
@@ -295,13 +328,14 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
   },
   stockLogo: {
-    width: 40,
-    height: 40,
+    width: 60,
+    height: 60,
     marginRight: 10,
   },
   stockName: {
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: '600',
+    fontFamily: 'Urbanist-Regular',
   },
   stockTicker: {
     color: '#6c757d',
@@ -311,11 +345,14 @@ const styles = StyleSheet.create({
   },
   stockPrice: {
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: '600',
+    fontFamily: 'Urbanist-Regular',
   },
   stockChange: {
     fontSize: 16,
     marginTop: 4,
+    fontFamily: 'Urbanist-Regular',
+    fontWeight: '600',
   },
   positive: {
     color: 'green',
@@ -335,34 +372,62 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginRight: 20,
   },
+  clipStockItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
   clipItem: {
-    width: 120,
-    height: 120,
-    backgroundColor: '#f1f3f4',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
-    marginRight: 10,
+    marginRight: 8,
+    marginTop: 15,
   },
-  clipText: {
-    fontSize: 14,
-    color: '#333',
+  clipImage: {
+    width: 115,
+    height:200,
+    borderRadius: 12,
+  },
+  rightArrow: {
+    justifyContent: 'flex-end',
+  },
+  recentClipsTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderColor: '#e0e0e0',
   },
   miniLogo: {
     width: 20, 
     height: 20,
+    marginHorizontal: 5,
+  },
+  iconsHeaderContainer: {
+    flexDirection: 'row',
+  },
+  miniTitleContainer: {
+    flexDirection: 'row',
   },
   miniTitle: {
     fontSize: 20,
-    marginLeft: 20,
+    marginLeft: 10,
+    fontFamily: 'Urbanist-Regular',
+    fontWeight: '900',
+    color: 'white',
   },
   miniHeader: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     width: '100%',
-    margin: 10,
-    backgroundColor: 'white'
+    height: 44,
+    padding: 10,
+    paddingLeft: 20, 
+    backgroundColor: '#351560'
   },
+  showMoreButton: {
+    justifyContent: 'center',
+  }
 });
 
 export default PortfolioScreen;
