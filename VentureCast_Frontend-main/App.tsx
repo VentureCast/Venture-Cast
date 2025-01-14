@@ -1,5 +1,6 @@
 // App.js
 import * as React from 'react';
+import { Image, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,6 +13,11 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 // negative red: #F75555
 
 
+//wednesday task:
+//fix the bottom navbar to go to proper pages
+//--> requires creating the trade page
+
+
 // Import your screens
 import VentureCast from './Pages/VentureCast';
 import CreateAccount from './Pages/CreateAccount';
@@ -22,7 +28,6 @@ import EnterEmailScreen from './Pages/EnterEmailScreen';
 // import HomeScreen from './Pages/HomeScreen'; // New Home Screen component
 import WatchListScreen from './Pages/Watchlist'; // Example bottom tab screen
 import NotificationScreen from './Pages/Notifications';
-import { Text, View } from 'react-native';
 import VentureCastHome from './Pages/Home';
 import PortfolioScreen from './Pages/Portfolio';
 import AccountScreen from './Pages/Account';
@@ -31,31 +36,61 @@ import ProfileScreen from './Pages/Account/Profile';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const portfolio = require('./Assets/Icons/Activity.png');
+const portfolioFocused = require('./Assets/Icons/Activity-focused.png');
+const discover = require('./Assets/Icons/Discovery.png');
+const discoverFocused = require('./Assets/Icons/Discovery-focused.png');
+const trade = require('./Assets/Icons/Trade.png');
+const tradeFocused = require('./Assets/Icons/Trade-focused.png');
+const account = require('./Assets/Icons/Profile.png');
+const accountFocused = require('./Assets/Icons/Profile-focused.png');
+
+
 // Home Tabs (Bottom Tab Navigator)
 const HomeTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
+        tabBarIcon: ({ focused }) => {
+          let iconSource;
 
-          if (route.name === 'WatchList') {
-            iconName = 'list';
-          } else if (route.name === 'Portfolio') {
-            iconName = 'wallet';
+          if (route.name === 'Portfolio') {
+            iconSource = focused 
+            ? portfolioFocused // Path to active home icon
+            : portfolio; // Path to inactive home icon
+          } else if (route.name === 'Discover') {
+            iconSource = focused
+            ? discoverFocused // Path to active home icon
+            : discover; // Path to inactive home icon
+          } else if (route.name === 'Trade') {
+            iconSource = focused
+            ? tradeFocused // Path to active home icon
+            : trade; // Path to inactive home icon
+          } else if (route.name === 'Account') {
+            iconSource = focused
+            ? accountFocused // Path to active home icon
+            : account; // Path to inactive home icon
           }
 
+
           // Return the corresponding icon for each tab
-          return  <Text>Icon</Text>
+          return (
+            <Image
+              source={iconSource}
+              style={{
+                width: 24,
+                height: 24,
+              }}
+            />
+          );
         },
-        tabBarActiveTintColor: '#6200ee',
+        tabBarActiveTintColor: '#351560',
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Home" component={VentureCastHome} />
+      <Tab.Screen name="Trade" component={VentureCastHome} />
       <Tab.Screen name="Portfolio" component={PortfolioScreen} />
-      <Tab.Screen name="Notifications" component={NotificationScreen} />
-      <Tab.Screen name="WatchList" component={WatchListScreen} />
+      <Tab.Screen name="Discover" component={NotificationScreen} />
       <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );

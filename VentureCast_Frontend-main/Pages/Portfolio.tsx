@@ -91,8 +91,8 @@ const PortfolioScreen = ({ navigation }: any) => {
   return (
     <>
       <StaticHeader 
-        rightIconOne={require('../Assets/Icons/Heart.png')}
-        rightIconTwo={require('../Assets/Icons/Notification.png')}
+        rightIconOne={require('../Assets/Icons/Search.png')}
+        rightIconTwo={require('../Assets/Icons/more-info.png')}
 
       />
       <ScrollView style={styles.container}>
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
 
   // graph; yet to be completed
   lineGraph: {
-    height: 400,
+    height: 200,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
