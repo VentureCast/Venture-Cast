@@ -8,6 +8,7 @@ import ClipsElement from './Components/ClipsElement';
 import MiniStockScroll from './Components/MiniStockScroll';
 import ActionButtonDark from './Components/ActionButtonDark';
 import StaticHeader from './Components/StaticHeader';
+import ClipTrend from './Components/ClipTrend';
 
 
 
@@ -27,6 +28,18 @@ const trendData = [
 {id: '8', name: "Electronics", icon: require('../Assets/Icons/monitor.png')},
 {id: '9', name: "Cars", icon: require('../Assets/Icons/car.png')},
 ];
+const clipsData = [
+  {id: '1', description: 'Most common names in streaming today', name: "Top 50",  image: require('../Assets/Images/Top50.png') },
+  {id: '2', description: 'High stakes and big wins', name: "Gambling", image: require('../Assets/Images/Gambling.png')},
+  {id: '3', description: 'Where the biggest issues are discussed', name: "Chatting", image: require('../Assets/Images/Chatting.png')},
+  {id: '4', description: 'Learn to learn', name: "Education", image: require('../Assets/Images/Education.png') },
+  {id: '5', description: 'The tip of the streaming iceberg', name: "Top 10", image: require('../Assets/Images/Top10.png')},
+  {id: '6', description: 'All things League', name: "LoL", image: require('../Assets/Images/LoL.png')},
+  {id: '7', description: 'Locked into the grindset', name: "Work", image: require('../Assets/Images/Work.png') },
+  {id: '8', description: 'Do you even lift BRO?', name: "Excercise", image: require('../Assets/Images/Excercise.png')},
+  {id: '9', description: 'The day to day of influentials', name: "Lifestyle", image: require('../Assets/Images/Lifestyle.png')},
+  {id: '10', description: 'All the biggest aestetic trends', name: "Design", image: require('../Assets/Images/Design.png')},
+  ];
 
 const DiscoverScreen = () => {
   return (
@@ -43,6 +56,17 @@ const DiscoverScreen = () => {
               key={trend.id}
               name={trend.name}
               icon={trend.icon}
+            />
+          ))}
+      </View>
+
+      <View style={styles.clipsContainer}>
+      {clipsData.map(trend => (
+            <ClipTrend
+              key={trend.id}
+              name={trend.name}
+              image={trend.image}
+              description={trend.description}
             />
           ))}
       </View>
@@ -63,7 +87,8 @@ const DiscoverScreen = () => {
         icon = {require('../Assets/Icons/Play.png')}
         />
       </View>
-    
+
+      
     </ScrollView>
   </>
   );
@@ -95,6 +120,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist-Regular',
     },
 
+    clipsContainer: {
+      flex: 1,
+      flexDirection: 'row', // Arrange items in rows
+      flexWrap: 'wrap', // Wrap to the next row if needed
+      alignItems: 'center', // Center items vertically
+      justifyContent: 'flex-start',
+      padding: 20,
+    },
 // static header
 miniLogo: {
   width: 20, 
