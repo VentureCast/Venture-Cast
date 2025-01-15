@@ -3,11 +3,11 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import WatchListItem from './Components/WatchlistItem';
 import StaticHeader from './Components/StaticHeader'; 
 
-const WatchListScreen = () => {
-  const watchList = [
-    { name: 'Dude Perfect', shortName: 'DUPT', price: '$71.05', priceChange: '+2.94%', profileImage: require('../Assets/Images/dude-perfect.png') },
-    { name: 'PewDiePie', shortName: 'PDP', price: '$90.79', priceChange: '-2.16%', profileImage: require('../Assets/Images/pewdiepie.png') },
-    { name: 'Jake Paul', shortName: 'JKPI', price: '$207.47', priceChange: '+2.37%', profileImage: require('../Assets/Images/jake-paul.png') },
+const ActivityScreen = () => {
+  const ActivityData = [
+    { name: 'Dude Perfect', shortName: 'DUPT', price: '$73331.005', priceChange: '+2.94%', profileImage: require('../Assets/Images/dude-perfect.png') },
+    { name: 'PewDiePie', shortName: 'PDP', price: '$900.79', priceChange: '-2.16%', profileImage: require('../Assets/Images/pewdiepie.png') },
+    { name: 'Jake Paul', shortName: 'JKPI', price: '$2007.47', priceChange: '+2.37%', profileImage: require('../Assets/Images/jake-paul.png') },
     // Add other items...
   ];
 
@@ -18,7 +18,7 @@ const WatchListScreen = () => {
       </View>
       <StaticHeader />
       <ScrollView style={styles.container}>
-        {watchList.map((item, index) => (
+        {ActivityData.map((item, index) => (
           <WatchListItem
             key={index}
             profileImage={item.profileImage}
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default WatchListScreen;
+export default ActivityScreen;

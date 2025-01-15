@@ -1,27 +1,34 @@
 // components/StaticHeader.tsx
 import React from 'react';
-import { View, Text, ImageBackground, Image} from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Or any icon library
+import { useNavigation } from '@react-navigation/native';
+import MoreInfoButton from './MoreInfoButton';
 
 
 //change the image background to a better image
 
-const arrowUp = require('../../Assets/Icons/Arrow-Up-White.png');
-const arrowDown = require('../../Assets/Icons/Arrow-Down-White.png');
 
-const StaticHeader = ({rightIconOne, rightIconTwo }:any) => {
+const StaticHeader = ({ }:any) => {
+  const navigation = useNavigation();
   return (
     <ImageBackground source={require('../../Assets/Images/portfolio-background.png')}>
     <View style={styles.miniHeader}>
     <View style={styles.miniTitleContainer}>
       <Image source={require('../../Assets/Images/Frame.png')} style={styles.miniLogo} />
-       {/* need to link this to the home page */}
-      <Text style={styles.miniTitle}>VENTURECAST</Text>
+       {/*  This button links to Home as in the tabs pages, when it is pressed on within 
+       a tab page it goes to home page but outside of the tab pages it just returns to the last tab page accessed. */}
+
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <Text style={styles.miniTitle}>VENTURECAST</Text>
+      </TouchableOpacity>
+
     </View>
     <View style={styles.iconsHeaderContainer}>
-      <Image source={rightIconOne} style={styles.icon} />
-      <Image source={rightIconTwo} style={styles.icon} />
+      <TouchableOpacity onPress={() => navigation.navigate('Watchlist')}>
+        <Image source={require('../../Assets/Icons/Heart.png')} style={styles.icon} />
+      </TouchableOpacity>
+      <MoreInfoButton />
     </View>
   </View>
   </ImageBackground>

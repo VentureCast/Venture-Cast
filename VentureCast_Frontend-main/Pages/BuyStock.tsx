@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 15,
+    height: 120, // temporary to make sure the back arrow is clickable
   },
   backButton: {
     fontSize: 24,

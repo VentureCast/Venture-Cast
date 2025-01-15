@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Image, Text} from 'react-native';
 import Header from './Components/Header';
-import CategoryBox from './Components/CategoryBox';
+import TrendBox from './Components/TrendBox';
 import MiniWatchlist from './Components/MiniWatchlist';
 import StockDetailsScreen from './StockDetails';
 import ClipsElement from './Components/ClipsElement';
@@ -16,66 +16,37 @@ const userData = [
 ]
 
 //category data, should be imported from database
-const categoryData = [
-{id: '1', name: "Gaming", percentage: '3.57', graph: require('../Assets/Graphs/Positive-Graph-1.png') },
-{id: '2', name: "Gambling", percentage:'-1.96', graph: require('../Assets/Graphs/Negative-Graph-1.png')},
-{id: '3', name: "Chatting", percentage: '2.85', graph: require('../Assets/Graphs/Positive-Graph-2.png')},
+const trendData = [
+{id: '1', name: "All Stocks", icon: require('../Assets/Icons/check.png') },
+{id: '2', name: "Gambling", icon: require('../Assets/Icons/gambling.png')},
+{id: '3', name: "Chatting", icon: require('../Assets/Icons/chatting.png')},
+{id: '4', name: "Cooking", icon: require('../Assets/Icons/burger.png') },
+{id: '5', name: "Lifestyle", icon: require('../Assets/Icons/cool.png')},
+{id: '6', name: "IRL", icon: require('../Assets/Icons/firework.png')},
+{id: '7', name: "Trending", icon: require('../Assets/Icons/TV.png') },
+{id: '8', name: "Electronics", icon: require('../Assets/Icons/monitor.png')},
+{id: '9', name: "Cars", icon: require('../Assets/Icons/car.png')},
 ];
 
-const VentureCastHome = () => {
+const DiscoverScreen = () => {
   return (
   <>
-    <View style={styles.temp}></View>
     <StaticHeader 
 
     />
    {/* balance and header also need to be imported data from user database*/}
     <ScrollView contentContainerStyle={styles.container}>
-    {userData.map(user => (
-            <Header
-              key={user.id}
-              moneyChange={user.moneyChange}
-              balance={user.balance}
-              percentChange={user.percentChange}
-            />
-          ))}
-      
-      {/* Categories Section  graphs need to become functions of change of price(fund) over time*/}
+      {/* Trending Section */}
       <View style={styles.categoriesContainer}>
-      {categoryData.map(category => (
-            <CategoryBox
-              key={category.id}
-              graph={category.graph}
-              name={category.name}
-              percentage={category.percentage}
+      {trendData.map(trend => (
+            <TrendBox
+              key={trend.id}
+              name={trend.name}
+              icon={trend.icon}
             />
           ))}
       </View>
-
-      {/* Watch List Section */}
       
-        <View style = {styles.subTitle}>
-            <Text style={styles.sectionTitle}>Watchlist</Text>
-         {/* need this to be a button that opens up more clips */}
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-        </View>
-
-      <View>
-        <View style={styles.sectionWatchlist}>
-            <MiniWatchlist />
-        </View>
-      </View>
-
-      {/* My Stocks Section */}
-
-      <View style = {styles.subTitle}>
-            <Text style={styles.sectionTitle}>My Stocks</Text>
-         {/* need this to be a button that opens up more clips */}
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-      </View>
-      <View style={styles.sectionWatchlist}>     
-      <MiniStockScroll />
-      </View>
       {/* Clips & News Section -- change the clipitem componet tot he one from portfolio screen, then update portfolio with component */}
       
       <View style = {styles.clipsSubTitle}>
@@ -92,11 +63,7 @@ const VentureCastHome = () => {
         icon = {require('../Assets/Icons/Play.png')}
         />
       </View>
-
-      {/* Deposit to Venture Cast Button: would like this to appear when 
-      the "top-locked" one dissapears adn then stick to the nav tab*/}
-      <ActionButtonDark label="Deposit to VentureCast" onPress={() => {}} large={true} />
-        
+    
     </ScrollView>
   </>
   );
@@ -113,10 +80,12 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   categoriesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 20,
-    paddingHorizontal: 10,
+    flex: 1,
+    flexDirection: 'row', // Arrange items in rows
+    flexWrap: 'wrap', // Wrap to the next row if needed
+    alignItems: 'center', // Center items vertically
+    justifyContent: 'flex-start',
+    padding: 20,
   },
   sectionTitle: {
     alignContent: 'flex-start',
@@ -181,10 +150,6 @@ miniHeader: {
     paddingVertical: 15,
     flexDirection: 'row',
   },
-  // idek what is going on, jk i do
-  temp: {
-    height: 50,
-  } 
 });
 
-export default VentureCastHome;
+export default DiscoverScreen;

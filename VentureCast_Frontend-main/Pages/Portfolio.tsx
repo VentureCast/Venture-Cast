@@ -91,8 +91,6 @@ const PortfolioScreen = ({ navigation }: any) => {
   return (
     <>
       <StaticHeader 
-        rightIconOne={require('../Assets/Icons/Search.png')}
-        rightIconTwo={require('../Assets/Icons/more-info.png')}
 
       />
       <ScrollView style={styles.container}>
@@ -308,6 +306,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontFamily: 'Urbanist-Regular',
     },
+
+    //stock items
   stockNameLogo: {
     flexDirection: 'row',
 

@@ -14,8 +14,9 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 
 
 //wednesday task:
-//fix the bottom navbar to go to proper pages
-//--> requires creating the trade page
+//fix the bottom navbar to go to proper pages > mostly done 
+//finish trade page buttons and the discover page
+//notifs settings, watchlist, and trans activity
 
 
 // Import your screens
@@ -32,6 +33,11 @@ import VentureCastHome from './Pages/Home';
 import PortfolioScreen from './Pages/Portfolio';
 import AccountScreen from './Pages/Account';
 import ProfileScreen from './Pages/Account/Profile';
+import ActivityScreen from './Pages/Activity';
+import NotificationSettings from './Pages/NotificationSettings';
+import DiscoverScreen from './Pages/DiscoverScreen';
+import TradeScreen from './Pages/TradeScreen';
+import BuyStockScreen from './Pages/BuyStock';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -87,10 +93,12 @@ const HomeTabs = () => {
         tabBarActiveTintColor: '#351560',
         tabBarInactiveTintColor: 'gray',
       })}
+      //need the Trade screen to go to the trade screen, not venture cast home (main home screen), we want the tabs to exist on all pages.
     >
-      <Tab.Screen name="Trade" component={VentureCastHome} />
       <Tab.Screen name="Portfolio" component={PortfolioScreen} />
-      <Tab.Screen name="Discover" component={NotificationScreen} />
+      <Tab.Screen name="Discover" component={DiscoverScreen} />
+      <Tab.Screen name="Home" component={VentureCastHome} />
+      <Tab.Screen name="Trade" component={TradeScreen} /> 
       <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );
@@ -139,6 +147,46 @@ const App = () => {
         <Stack.Screen
           name="Profile"
           component={ProfileScreen} // Add the Bottom Tab Navigator as the Home screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="Watchlist"
+          component={WatchListScreen} // Add the Watchlist screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="Notifications"
+          component={NotificationScreen} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="NotificationSettings"
+          component={NotificationSettings} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="Activity"
+          component={ActivityScreen} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="Discover"
+          component={DiscoverScreen} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={VentureCastHome} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="Trade"
+          component={TradeScreen} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="BuyStock"
+          component={BuyStockScreen} // Add the Notifs screen
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
       </Stack.Navigator>
