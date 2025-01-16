@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Image, Text} from 'react-native';
+import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import Header from './Components/Header';
 import CategoryBox from './Components/CategoryBox';
 import MiniWatchlist from './Components/MiniWatchlist';
@@ -8,6 +8,7 @@ import ClipsElement from './Components/ClipsElement';
 import MiniStockScroll from './Components/MiniStockScroll';
 import ActionButtonDark from './Components/ActionButtonDark';
 import StaticHeader from './Components/StaticHeader';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -23,6 +24,7 @@ const categoryData = [
 ];
 
 const VentureCastHome = () => {
+  const navigation = useNavigation();
   return (
   <>
     <View style={styles.temp}></View>
@@ -77,13 +79,13 @@ const VentureCastHome = () => {
       <MiniStockScroll />
       </View>
       {/* Clips & News Section -- change the clipitem componet tot he one from portfolio screen, then update portfolio with component */}
-      
-      <View style = {styles.clipsSubTitle}>
-            <Text style={styles.sectionTitle}>Clips & News</Text>
-         {/* need this to be a button that opens up more clips */}
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-      </View>
-      
+      <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
+        <View style = {styles.clipsSubTitle}>
+              <Text style={styles.sectionTitle}>Clips & News</Text>
+          {/* need this to be a button that opens up more clips */}
+              <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+        </View>
+      </TouchableOpacity>
       <View style={styles.sectionTitle}>
         <ClipsElement 
         title="#InRealLife" 

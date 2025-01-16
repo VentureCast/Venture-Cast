@@ -14,9 +14,10 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 
 
 //wednesday task:
-//fix the bottom navbar to go to proper pages > mostly done 
-//finish trade page buttons and the discover page
+//finish trade page buttons
 //notifs settings, watchlist, and trans activity
+//Want to give identifiers to all the pages and remove the default ones from the main tabs (probably an imbedded property)
+
 
 
 // Import your screens
@@ -38,6 +39,8 @@ import NotificationSettings from './Pages/NotificationSettings';
 import DiscoverScreen from './Pages/DiscoverScreen';
 import TradeScreen from './Pages/TradeScreen';
 import BuyStockScreen from './Pages/BuyStock';
+import DiscoverSubPage from './Pages/DiscoverSubPage';
+import ClipsPage from './Pages/ClipsPage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,6 +53,9 @@ const trade = require('./Assets/Icons/Trade.png');
 const tradeFocused = require('./Assets/Icons/Trade-focused.png');
 const account = require('./Assets/Icons/Profile.png');
 const accountFocused = require('./Assets/Icons/Profile-focused.png');
+const home = require('./Assets/Icons/Home.png');
+const homeFocused = require('./Assets/Icons/HomePurple.png');
+
 
 
 // Home Tabs (Bottom Tab Navigator)
@@ -76,6 +82,10 @@ const HomeTabs = () => {
             iconSource = focused
             ? accountFocused // Path to active home icon
             : account; // Path to inactive home icon
+          } else if (route.name === 'Home') {
+            iconSource = focused
+            ? homeFocused // Path to active home icon
+            : home; // Path to inactive home icon
           }
 
 
@@ -186,8 +196,23 @@ const App = () => {
         />
         <Stack.Screen
           name="BuyStock"
-          component={BuyStockScreen} // Add the Notifs screen
+          component={BuyStockScreen} // Add the buy stock screen
           options={{ headerShown: false }} // Hide header for bottom tabs
+        />        
+        <Stack.Screen
+        name="DiscoverSubPage"
+        component={DiscoverSubPage} // Add the info from a discover item 
+        options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+        name="ClipsPage"
+        component={ClipsPage} // Add the info from a discover item 
+        options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+        name="Portfolio"
+        component={PortfolioScreen} // Add the info from a discover item 
+        options={{ headerShown: false }} // Hide header for bottom tabs
         />
       </Stack.Navigator>
     </NavigationContainer>

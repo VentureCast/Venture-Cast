@@ -1,14 +1,11 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Image, Text} from 'react-native';
-import Header from './Components/Header';
+import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import TrendBox from './Components/TrendBox';
-import MiniWatchlist from './Components/MiniWatchlist';
-import StockDetailsScreen from './StockDetails';
 import ClipsElement from './Components/ClipsElement';
-import MiniStockScroll from './Components/MiniStockScroll';
-import ActionButtonDark from './Components/ActionButtonDark';
 import StaticHeader from './Components/StaticHeader';
 import ClipTrend from './Components/ClipTrend';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 
@@ -42,6 +39,7 @@ const clipsData = [
   ];
 
 const DiscoverScreen = () => {
+  const navigation = useNavigation();
   return (
   <>
     <StaticHeader 
@@ -72,13 +70,13 @@ const DiscoverScreen = () => {
       </View>
       
       {/* Clips & News Section -- change the clipitem componet tot he one from portfolio screen, then update portfolio with component */}
-      
-      <View style = {styles.clipsSubTitle}>
-            <Text style={styles.sectionTitle}>Clips & News</Text>
-         {/* need this to be a button that opens up more clips */}
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-      </View>
-      
+      <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
+        <View style = {styles.clipsSubTitle}>
+              <Text style={styles.sectionTitle}>Clips & News</Text>
+          {/* need this to be a button that opens up more clips */}
+              <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+        </View>
+      </TouchableOpacity>
       <View style={styles.sectionTitle}>
         <ClipsElement 
         title="#InRealLife" 

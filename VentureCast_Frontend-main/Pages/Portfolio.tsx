@@ -8,11 +8,14 @@ import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/
 import { Button } from 'react-native-paper';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
 import StaticHeader from './Components/StaticHeader';
+import { useNavigation } from '@react-navigation/native';
 
 //import { Section } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
 // Reusable component for Stock Item
 const StockItem = ({ logo, name, ticker, price, change, changePercent, onPress }: any) => {
+  
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.stockItem}>
@@ -61,7 +64,12 @@ const LineGraph = ({ color }: any) => (
   </ImageBackground>
 );
 
-const PortfolioScreen = ({ navigation }: any) => {
+
+
+// Portfolio screen starts
+
+const PortfolioScreen = () => {
+  const navigation = useNavigation();
   // Sample data for stock positions
   const stockData = [
     { id: '1', name: 'Dude Perfect', ticker: 'DUPT', price: '71.05', change: 2.94, logo: require('../Assets/Images/dude-perfect.png') },
@@ -82,10 +90,6 @@ const PortfolioScreen = ({ navigation }: any) => {
     { id: '4', name: 'Total Return', value: '66,378.49', change: 24.65, image: require('../Assets/Images/total-return.png') }, //these images are not circles, or same dimensions: we need better ones
   ];
 
-  // Function to handle stock item press
-  const goToStockDetails = (stock: any) => {
-    navigation.navigate('StockDetails', { stock });
-  };
 // do not know where the portfolio header is created or called, want it gone.
 //also want the gray bar gone so that the logo and the name hover over the 
   return (
@@ -135,7 +139,7 @@ const PortfolioScreen = ({ navigation }: any) => {
               price={stock.price}
               change={stock.change}
               changePercent={stock.change}
-              onPress={() => goToStockDetails(stock)} // Pass the stock data to the details screen
+              onPress={() => navigation.navigate('stock')} // Pass the stock data to the details screen
             />
           ))} 
           
@@ -161,7 +165,7 @@ const PortfolioScreen = ({ navigation }: any) => {
               price={short.price}
               change={short.change}
               changePercent={short.change}
-              onPress={() => goToStockDetails(short)} // Pass the stock data to the details screen
+              onPress={() => navigation.navigate('short')} // Pass the stock data to the details screen, need to create a prop that actually does this
             />
           ))}
 
@@ -174,7 +178,9 @@ const PortfolioScreen = ({ navigation }: any) => {
           <View style = {styles.recentClipsTitle}>
             <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
          {/* need this to be a button that opens up more clips */}
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+            <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
+              <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+            </TouchableOpacity>
           </View>
           {/* we want each section to pull from a database of clips for the stocks that are presented above the clips */}
 
@@ -191,8 +197,8 @@ const PortfolioScreen = ({ navigation }: any) => {
           {/* Replace with real video data */}
           <FlatList
             horizontal
-            data={
-              [{ id: '1', video: 'Clip 1',  image: require('../Assets/Images/Clip1.png')}, 
+            data={[
+              { id: '1', video: 'Clip 1',  image: require('../Assets/Images/Clip1.png')}, 
               { id: '2', video: 'Clip 2', image: require('../Assets/Images/Clip2.png')},
               { id: '3', video: 'Clip 3', image: require('../Assets/Images/Clip3.png')}, 
               ]}
@@ -332,6 +338,7 @@ const styles = StyleSheet.create({
   },
   stockTicker: {
     color: '#6c757d',
+    fontFamily: 'Urbanist-Regular',
   },
   stockPriceContainer: {
     alignItems: 'flex-end',

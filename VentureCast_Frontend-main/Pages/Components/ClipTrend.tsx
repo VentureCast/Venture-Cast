@@ -1,18 +1,25 @@
 // components/ClipTrend.tsx
 import React from 'react';
-import { View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 const ClipTrend = ({ name, image, description}:any) => {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <ImageBackground source={image} style={styles.image}>
-        <View style={styles.textContainer}>
-          <Text style={styles.categoryText}>{name}</Text>
-          <Text style={styles.categoryDescription}>{description}</Text>
+    <TouchableOpacity onPress={() => navigation.navigate('DiscoverSubPage')} >
+      <View style={styles.container}>
+        <View style={styles.imageWrapper}>
+          <ImageBackground source={image} style={styles.image}>
+            <View style={styles.textContainer}>
+              <Text style={styles.categoryText}>{name}</Text>
+              <Text style={styles.categoryDescription}>{description}</Text>
+            </View>
+          </ImageBackground>
         </View>
-      </ImageBackground>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -52,6 +59,11 @@ const styles = StyleSheet.create({
   image: {
     height: '100%',
     width: '100%',
+  },
+  imageWrapper: {
+    flex: 1,
+    borderRadius: 25, // Apply border radius here
+    overflow: 'hidden', // Ensures the border radius is respected
   },
 });
 
