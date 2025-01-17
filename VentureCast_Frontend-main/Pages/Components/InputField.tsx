@@ -13,7 +13,7 @@ interface InputFieldProps {
 const InputField: React.FC<InputFieldProps> = ({ label, placeholder, value, onChangeText, isPassword, keyboardType }) => {
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && <Text style={styles.label}>{label}:</Text>}
       <TextInput
         style={styles.input}
         placeholder={placeholder}
@@ -29,18 +29,22 @@ const InputField: React.FC<InputFieldProps> = ({ label, placeholder, value, onCh
 const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
+    borderRadius: 20,
   },
   label: {
-    marginBottom: 5,
-    color: '#000',
-    fontSize: 16,
+    marginBottom: 10,
+    color: '#351560',
+    fontSize: 18,
+    fontFamily: 'urbanist',
+    fontWeight: 'bold',
   },
   input: {
     borderWidth: 1,
     borderColor: '#aaa',
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 16,
+    borderRadius: 20,
+    padding: 15,
+    fontSize: 18,
+    fontFamily: 'urbanist',
   },
 });
 

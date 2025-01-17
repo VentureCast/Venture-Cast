@@ -26,7 +26,6 @@ import CreateAccount from './Pages/CreateAccount';
 import CreateAccountScreen from './Pages/CreateAccount2';
 import SignInScreen from './Pages/SignInScreen';
 import EmailVerificationScreen from './Pages/EmailVerificationScreen';
-import EnterEmailScreen from './Pages/EnterEmailScreen';
 // import HomeScreen from './Pages/HomeScreen'; // New Home Screen component
 import WatchListScreen from './Pages/Watchlist'; // Example bottom tab screen
 import NotificationScreen from './Pages/Notifications';
@@ -41,6 +40,11 @@ import TradeScreen from './Pages/TradeScreen';
 import BuyStockScreen from './Pages/BuyStock';
 import DiscoverSubPage from './Pages/DiscoverSubPage';
 import ClipsPage from './Pages/ClipsPage';
+import ResetPassword from './Pages/ResetPassword';
+import ResetPassword2FA from './Pages/ResetPassword2FA';
+import FinalResetPassword from './Pages/FinalResetPassword';
+import TwoFA from './Pages/2FA';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -122,32 +126,42 @@ const App = () => {
         <Stack.Screen
           name="VentureCast"
           component={VentureCast}
-          options={{ title: 'VentureCast' }}
+          options={{ title: 'VentureCast', headerShown: false}}
         />
         <Stack.Screen
           name="CreateAccount"
           component={CreateAccount}
-          options={{ title: 'Create Account', gestureEnabled: false }} // Security: Disable gestures
+          options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
         />
         <Stack.Screen
           name="CreateAccountStep2"
           component={CreateAccountScreen}
-          options={{ title: 'Create Account Step 2', gestureEnabled: false }} // Security: Disable gestures
+          options={{ gestureEnabled: false, headerShown: false}} // Security: Disable gestures
         />
         <Stack.Screen
           name="SignIn"
           component={SignInScreen}
-          options={{ title: 'Sign In', gestureEnabled: false }} // Security: Disable gestures
+          options={{ gestureEnabled: false , headerShown: false}} // Security: Disable gestures
         />
         <Stack.Screen
-          name="SignInStep2"
-          component={EnterEmailScreen}
-          options={{ title: 'Sign In Step 2', gestureEnabled: false }} // Security: Disable gestures
+          name="2FA"
+          component={TwoFA}
+          options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
         />
         <Stack.Screen
-          name="SignInStep3"
-          component={EmailVerificationScreen}
-          options={{ title: 'Email Verification', gestureEnabled: false }} // Security: Disable gestures
+        name="ResetPassword"
+        component={ResetPassword} // reset pass screen 1
+        options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+        name="ResetPassword2FA"
+        component={ResetPassword2FA} // reset pass screen 1
+        options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+        name="FinalResetPassword"
+        component={FinalResetPassword} // reset pass screen 1
+        options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
           name="Home"

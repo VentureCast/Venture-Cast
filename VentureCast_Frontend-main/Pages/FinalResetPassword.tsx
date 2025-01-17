@@ -4,10 +4,11 @@ import InputField from './Components/InputField';
 import Button from './Components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const SignInScreen = ({navigation}:any) => {
+const FinalResetPassword = ({navigation}:any) => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
+// need an error function for wrong pass/username
 
   const handleSignIn = () => {
     // Handle sign in action
@@ -34,16 +35,14 @@ const SignInScreen = ({navigation}:any) => {
           placeholder="Enter password"
           value={password}
           onChangeText={setPassword}
-          isPassword
         />
+
 
         <TouchableOpacity style={styles.resetButton} onPress={() => navigation.navigate('ResetPassword')}>
           <Text style={styles.resetText}>Forgot your password? </Text>
         </TouchableOpacity>
 
-        <Button title="Continue" onPress={() => navigation.navigate('2FA')} />
-
-        <Text style={styles.faceIdText}>Login with Face ID</Text>
+        <Button title="Continue" onPress={() => navigation.navigate('Home')} />
       </View>
     </ScrollView>
   );
@@ -66,13 +65,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: 'urbanist',
   },
-
-  faceIdText: {
-    marginTop: 30,
-    color: '#2C1E57',
-    fontWeight: '600',
-    fontFamily: 'urbanist',
-  },
   //back arrow
   icon: { 
     width: 28,
@@ -86,18 +78,18 @@ const styles = StyleSheet.create({
       marginBottom: 30,
       paddingTop: 40,
     },
-    //reset pass
+
+    //reset 
     resetButton: {
       height: 40,
     },
     resetText: {
-      fontSize: 14,
       marginTop: 10,
       color: '#888',
-      fontWeight: '600',
       fontFamily: 'urbanist',
       textDecorationLine: 'underline',
+
     },
 });
 
-export default SignInScreen;
+export default FinalResetPassword;

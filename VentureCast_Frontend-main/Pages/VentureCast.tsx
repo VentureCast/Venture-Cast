@@ -2,31 +2,32 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import Vector Icons
-import image from '../Assets/Images/Login.png';
+
 
 const VentureCast = ({ navigation }:any) => {
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
 
         {/* Logo */}
         <View style={styles.logoContainer}>
-          <Image source={image} style={styles.logo} />
+          <Image source={require('../Assets/Images/Login.png')} style={styles.logo} />
         </View>
 
         {/* Title and Subtitle */}
-        <Text style={styles.title}>Welcome to VentureCast app</Text>
+        <Text style={styles.title}>Welcome to VentureCast</Text>
         <Text style={styles.subtitle}>
           The best app to invest in content creators with as little as $1.00
         </Text>
 
-        {/* Authentication buttons */}
+        {/* Authentication buttons need to link to actual google and apple logins */}
         <TouchableOpacity style={styles.authButton}>
-          <Icon name="logo-google" size={30} color="#4F8EF7" />
+          <Image source={require('../Assets/Images/google.png')} style={styles.authLogo} />
           <Text style={styles.authButtonText}>Continue with Google</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.authButton}>
+          <Image source={require('../Assets/Images/apple.png')} style={styles.authLogo} />
           <Text style={styles.authButtonText}>Continue with Apple</Text>
         </TouchableOpacity>
 
@@ -50,11 +51,15 @@ const VentureCast = ({ navigation }:any) => {
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    backgroundColor: '#fff'
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    paddingTop: 70,
     backgroundColor: '#fff',
   },
   avatarContainer: {
@@ -78,14 +83,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#351560',
     marginBottom: 10,
+    fontFamily: 'urbanist',
   },
   subtitle: {
     fontSize: 16,
     color: '#666',
     textAlign: 'center',
     marginBottom: 30,
+    fontFamily: 'urbanist',
+    fontWeight: '400',
   },
   authButton: {
     flexDirection: 'row',
@@ -94,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#ddd',
-    borderRadius: 5,
+    borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
@@ -105,19 +113,24 @@ const styles = StyleSheet.create({
     color: '#333',
     marginLeft: 10,
   },
+  authLogo: {
+    width: 20,
+    height: 20,
+  },
   signUpButton: {
-    backgroundColor: '#5D2DFD',
+    backgroundColor: '#351560',
     paddingVertical: 15,
     paddingHorizontal: 50,
-    borderRadius: 5,
+    borderRadius: 20,
     marginBottom: 10,
     width: '100%',
     alignItems: 'center',
   },
   signUpText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'urbanist',
   },
   signInButton: {
     paddingVertical: 15,
@@ -128,9 +141,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signInText: {
-    color: '#5D2DFD',
-    fontSize: 16,
+    color: '#351560',
+    fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'urbanist',
   },
 });
 

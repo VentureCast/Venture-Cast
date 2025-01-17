@@ -21,10 +21,10 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, disabled }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#4D089A',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 8,
+    backgroundColor: '#351560',
+    padding: 17,
+    justifyContent: 'center' ,
+    borderRadius: 20,
     alignItems: 'center',
     marginTop: 20,
   },
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: 'bold',
     fontFamily: 'Urbanist-Regular',
   },
 });

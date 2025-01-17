@@ -4,10 +4,10 @@ import InputField from './Components/InputField';
 import Button from './Components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const SignInScreen = ({navigation}:any) => {
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+const ResetPassword = ({navigation}:any) => {
+  const [email, setEmail] = useState('');
 
+// need an error function for no account email
 
   const handleSignIn = () => {
     // Handle sign in action
@@ -20,30 +20,23 @@ const SignInScreen = ({navigation}:any) => {
         <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
       </TouchableOpacity>
       <View style={styles.container}>
-        <Text style={styles.title}>Sign In</Text>
+        <Text style={styles.title}>Reset Password</Text>
 
         <InputField
-          label="Username"
-          placeholder="Enter username"
-          value={username}
-          onChangeText={setUsername}
+          label="Email"
+          placeholder="Enter email"
+          value={email}
+          onChangeText={setEmail}
         />
 
         <InputField
-          label="Password"
-          placeholder="Enter password"
-          value={password}
-          onChangeText={setPassword}
-          isPassword
+          label="Confirm Email"
+          placeholder="Enter email"
+          value={email}
+          onChangeText={setEmail}
         />
 
-        <TouchableOpacity style={styles.resetButton} onPress={() => navigation.navigate('ResetPassword')}>
-          <Text style={styles.resetText}>Forgot your password? </Text>
-        </TouchableOpacity>
-
-        <Button title="Continue" onPress={() => navigation.navigate('2FA')} />
-
-        <Text style={styles.faceIdText}>Login with Face ID</Text>
+        <Button title="Continue" onPress={() => navigation.navigate('ResetPassword2FA')} />
       </View>
     </ScrollView>
   );
@@ -66,7 +59,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: 'urbanist',
   },
-
+  resetText: {
+    marginTop: 10,
+    color: '#888',
+    fontFamily: 'urbanist',
+  },
+  resetLink: {
+    color: '#2C1E57',
+    textDecorationLine: 'underline',
+  },
   faceIdText: {
     marginTop: 30,
     color: '#2C1E57',
@@ -86,18 +87,6 @@ const styles = StyleSheet.create({
       marginBottom: 30,
       paddingTop: 40,
     },
-    //reset pass
-    resetButton: {
-      height: 40,
-    },
-    resetText: {
-      fontSize: 14,
-      marginTop: 10,
-      color: '#888',
-      fontWeight: '600',
-      fontFamily: 'urbanist',
-      textDecorationLine: 'underline',
-    },
 });
 
-export default SignInScreen;
+export default ResetPassword;
