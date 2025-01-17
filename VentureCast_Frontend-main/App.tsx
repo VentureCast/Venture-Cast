@@ -34,7 +34,7 @@ import PortfolioScreen from './Pages/Portfolio';
 import AccountScreen from './Pages/Account';
 import ProfileScreen from './Pages/Account/Profile';
 import ActivityScreen from './Pages/Activity';
-import NotificationSettings from './Pages/NotificationSettings';
+import SettingsScreen from './Pages/SettingsScreen';
 import DiscoverScreen from './Pages/DiscoverScreen';
 import TradeScreen from './Pages/TradeScreen';
 import BuyStockScreen from './Pages/BuyStock';
@@ -44,6 +44,9 @@ import ResetPassword from './Pages/ResetPassword';
 import ResetPassword2FA from './Pages/ResetPassword2FA';
 import FinalResetPassword from './Pages/FinalResetPassword';
 import TwoFA from './Pages/2FA';
+import AboutVentureCastScreen from './Pages/About';
+import ChangePassword from './Pages/ChangePassword';
+import HelpCenter from './Pages/Account/HelpCenter';
 
 
 const Stack = createStackNavigator();
@@ -149,6 +152,11 @@ const App = () => {
           options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
         />
         <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword} // change pass screen 1
+        options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
         name="ResetPassword"
         component={ResetPassword} // reset pass screen 1
         options={{ headerShown: false }} // Hide header for bottom tabs
@@ -184,8 +192,8 @@ const App = () => {
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
-          name="NotificationSettings"
-          component={NotificationSettings} // Add the Notifs screen
+          name="SettingsScreen"
+          component={SettingsScreen} // Add the Notifs screen
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
@@ -226,6 +234,16 @@ const App = () => {
         <Stack.Screen
         name="Portfolio"
         component={PortfolioScreen} // Add the info from a discover item 
+        options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+        name="About"
+        component={AboutVentureCastScreen} // Add the info from a discover item 
+        options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+        name="HelpCenter"
+        component={HelpCenter} // Add the info from a discover item 
         options={{ headerShown: false }} // Hide header for bottom tabs
         />
       </Stack.Navigator>

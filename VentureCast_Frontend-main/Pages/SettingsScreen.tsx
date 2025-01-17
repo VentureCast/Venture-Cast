@@ -1,11 +1,20 @@
-import React from 'react';
+
+import React, {useState} from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
 import StaticHeader from './Components/StaticHeader';
 import { useNavigation } from '@react-navigation/native';
+import LanguageButton from './Components/LanguageButton';
+import LanguageSelectionScreen from './Account/Language';
 
 // import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
 
-const NotificationSettings = ({navigation}:any) => {
+const SettingsScreen = ( { navigation }:any ) => {
+
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+
 
   return (
     <>
@@ -19,7 +28,7 @@ const NotificationSettings = ({navigation}:any) => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
             </TouchableOpacity>
-            <Text style={styles.sectionTitle}>Notification Settings</Text>
+            <Text style={styles.sectionTitle}>Settings</Text>
           </View>
       </View>
 
@@ -50,7 +59,7 @@ const NotificationSettings = ({navigation}:any) => {
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="bar-chart-outline" size={24} color="#43a047" /> */}
-        <Text style={styles.menuText}>Funding Activity</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('HelpCenter')}>Funding Activity</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
@@ -63,7 +72,7 @@ const NotificationSettings = ({navigation}:any) => {
       <View style={styles.menuItem}>
         {/* <Ionicons name="language-outline" size={24} color="#1e88e5" /> */}
         <View style={styles.menuLanguageContainer}>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('Language')}>Language</Text>
+          <LanguageButton />
           <Text style={styles.languageOption}>English (US)</Text>
         </View>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
@@ -72,7 +81,11 @@ const NotificationSettings = ({navigation}:any) => {
       <View style={styles.menuItem}>
         {/* <Ionicons name="moon-outline" size={24} color="#757575" /> */}
         <Text style={styles.menuText}>Dark Mode</Text>
-        <Switch value={false} />
+        <Switch 
+          trackColor={{ false: "#767577", true: "#351560" }}
+          thumbColor={isEnabled ? "#998fb7" : "#998fb7"}
+          onValueChange={toggleSwitch}
+          value={isEnabled} />
       </View>
 
       <View style={styles.menuItem}>
@@ -83,13 +96,7 @@ const NotificationSettings = ({navigation}:any) => {
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="lock-closed-outline" size={24} color="#795548" /> */}
-        <Text style={styles.menuText}>Change Password</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
-      </View>
-
-      <View style={styles.menuItem}>
-        {/* <Ionicons name="document-text-outline" size={24} color="#8d6e63" /> */}
-        <Text style={styles.menuText}>Legal Agreements</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('ChangePassword')}>Change Password</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
@@ -101,7 +108,7 @@ const NotificationSettings = ({navigation}:any) => {
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="log-out-outline" size={24} color="#d32f2f" /> */}
-        <Text style={styles.menuText}>Log Out</Text>
+        <Text style={styles.logOut}>Log Out</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
     </ScrollView>
@@ -119,12 +126,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-  },
-  profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 15,
   },
   profileInfo: {
     flex: 1,
@@ -149,6 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
     marginLeft: 10,
+    fontFamily: 'urbanist',
   },
   menuLanguageContainer: {
     flexDirection: 'row',
@@ -157,6 +159,15 @@ const styles = StyleSheet.create({
   },
   languageOption: {
     color: '#6c757d',
+    fontFamily: 'urbanist'
+  },
+  logOut: {
+    fontSize: 16,
+    flex: 1,
+    marginLeft: 10,
+    fontFamily: 'urbanist',
+    color: '#351560',
+    fontWeight: 'bold',
   },
 
 
@@ -189,4 +200,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default NotificationSettings;
+export default SettingsScreen;

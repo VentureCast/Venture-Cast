@@ -54,7 +54,7 @@ const NotificationScreen = () => {
             <Text style={styles.sectionTitle}>Notifications</Text>
           </View>
           <View>
-            <TouchableOpacity onPress={() => navigation.navigate('NotificationSettings')}>
+            <TouchableOpacity onPress={() => navigation.navigate('SettingsScreen')}>
               <Image style={styles.icon} source={require('../Assets/Icons/Setting.png')} />
             </TouchableOpacity>
           </View>

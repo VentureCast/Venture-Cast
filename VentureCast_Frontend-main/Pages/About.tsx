@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, StatusBar, Image } from 'react-native';
 // import { Icon } from 'react-native-elements';
 
-const AboutVentureCastScreen = () => {
+const AboutVentureCastScreen = ({ navigation }:any) => {
   const menuItems = [
     'Partner',
     'Tax Form',
@@ -17,18 +17,21 @@ const AboutVentureCastScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+
       <StatusBar barStyle="dark-content" />
 
       {/* Header */}
       <View style={styles.header}>
-        {/* <Icon name="arrow-back" type="material" color="#333" size={28} /> */}
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>About Venture Cast</Text>
       </View>
 
       {/* Logo and Version Information */}
       <View style={styles.logoContainer}>
         <Image
-          source={require('../../Assets/Images/Frame.png')} // Add your logo image link here
+          source={require('../Assets/Images/FramePurple.png')} // Add your logo image link here
           style={styles.logo}
           resizeMode="contain"
         />
@@ -51,6 +54,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: '#fff',
     paddingHorizontal: 20,
+    paddingTop: 80,
   },
   header: {
     flexDirection: 'row',
@@ -58,10 +62,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 22,
+    fontWeight: 'bold',
     color: '#333',
-    marginLeft: 10,
+    fontFamily: 'urbanist',
   },
   logoContainer: {
     alignItems: 'center',
@@ -77,6 +81,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#333',
     marginTop: 10,
+    fontFamily: 'urbanist',
   },
   menuItem: {
     flexDirection: 'row',
@@ -89,7 +94,13 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 16,
     color: '#333',
+    fontFamily: 'urbanist',
   },
+  icon: { 
+    width: 28,
+    height: 28,
+    marginRight: 20,
+    },
 });
 
 export default AboutVentureCastScreen;
