@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import NotificationItem from './Components/NotificationItem';
-import StaticHeader from './Components/StaticHeader';
 import { useNavigation } from '@react-navigation/native';
 
-const NotificationScreen = () => {
-  const navigation = useNavigation();
+const NotificationScreen = ({navigation}:any) => {
 
   const notifications = [
     {

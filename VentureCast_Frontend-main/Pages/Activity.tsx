@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
 import WatchListItem from './Components/WatchlistItem';
 import StaticHeader from './Components/StaticHeader'; 
 
-const ActivityScreen = () => {
+const ActivityScreen = ({navigation}:any) => {
   const ActivityData = [
     { name: 'Dude Perfect', shortName: 'DUPT', price: '$73331.005', priceChange: '+2.94%', profileImage: require('../Assets/Images/dude-perfect.png') },
     { name: 'PewDiePie', shortName: 'PDP', price: '$900.79', priceChange: '-2.16%', profileImage: require('../Assets/Images/pewdiepie.png') },
@@ -16,8 +16,13 @@ const ActivityScreen = () => {
       <View style={styles.tempBlock}>
 
       </View>
-      <StaticHeader />
       <ScrollView style={styles.container}>
+        <View style={styles.titleRowLeft}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
+          </TouchableOpacity>
+          <Text style={styles.sectionTitle}>Transaction Activity</Text>
+          </View>
         {ActivityData.map((item, index) => (
           <WatchListItem
             key={index}
@@ -44,8 +49,24 @@ const styles = StyleSheet.create({
   tempBlock: {
     height: 50,
     width: '100%',
-    backgroundColor: '#351560',
-  }
+    backgroundColor: 'white',
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'Urbanist',
+    },
+    titleRowLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      marginVertical: 20,
+    },
+  icon: { 
+    width: 28,
+    height: 28,
+    marginHorizontal: 20,
+    },
 });
 
 export default ActivityScreen;

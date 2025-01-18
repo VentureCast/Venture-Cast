@@ -17,11 +17,7 @@ const navigation = useNavigation();
 
   return (
   <>
-    <View style={styles.headerBox}>
-
-    </View>
-    <StaticHeader />
-   {/* balance and header also need to be imported data from user database*/}
+   {/* balance and header also need to be imported data from user database  -- also need to add the search box and functionality*/}
     <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image style={styles.backArrow} source={require('../Assets/Icons/Arrow-Left.png')} />
@@ -76,11 +72,6 @@ const navigation = useNavigation();
 };
 
 const styles = StyleSheet.create({
-  //header to push the static header down:
-headerBox: {
-  height: 101, // just to make it flush with the previous page, still need to get rid of "discover" other upper tab labels
-  backgroundColor: "#351560"
-},
 // back arrow
 backArrow: {
   margin: 20,  

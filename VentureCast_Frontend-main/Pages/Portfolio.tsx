@@ -1,9 +1,5 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
-import NotificationSettings from './Account/NotificationControl';
-import AboutVentureCastScreen from './Account/About';
-import LanguageSelectionScreen from './Account/Language';
-import HelpCenter from './Account/HelpCenter';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { Button } from 'react-native-paper';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
@@ -68,8 +64,7 @@ const LineGraph = ({ color }: any) => (
 
 // Portfolio screen starts
 
-const PortfolioScreen = () => {
-  const navigation = useNavigation();
+const PortfolioScreen = ({navigation}:any) => {
   // Sample data for stock positions
   const stockData = [
     { id: '1', name: 'Dude Perfect', ticker: 'DUPT', price: '71.05', change: 2.94, logo: require('../Assets/Images/dude-perfect.png') },
@@ -94,9 +89,6 @@ const PortfolioScreen = () => {
 //also want the gray bar gone so that the logo and the name hover over the 
   return (
     <>
-      <StaticHeader 
-
-      />
       <ScrollView style={styles.container}>
 
         {/* Line Graph */}

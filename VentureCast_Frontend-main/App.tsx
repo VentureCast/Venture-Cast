@@ -1,9 +1,10 @@
 // App.js
 import * as React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View , TouchableOpacity} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 
 //COLORS:
@@ -13,10 +14,11 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 // negative red: #F75555
 
 
-//wednesday task:
+//Sat task:
 //finish trade page buttons
-//notifs settings, watchlist, and trans activity
-//Want to give identifiers to all the pages and remove the default ones from the main tabs (probably an imbedded property)
+// settings, watchlist, and trans activity
+// make sure all pages that need a header have it --> go back through sign in page
+// create individiual stock page and stock page components
 
 
 
@@ -25,7 +27,6 @@ import VentureCast from './Pages/VentureCast';
 import CreateAccount from './Pages/CreateAccount';
 import CreateAccountScreen from './Pages/CreateAccount2';
 import SignInScreen from './Pages/SignInScreen';
-import EmailVerificationScreen from './Pages/EmailVerificationScreen';
 // import HomeScreen from './Pages/HomeScreen'; // New Home Screen component
 import WatchListScreen from './Pages/Watchlist'; // Example bottom tab screen
 import NotificationScreen from './Pages/Notifications';
@@ -48,6 +49,11 @@ import AboutVentureCastScreen from './Pages/About';
 import ChangePassword from './Pages/ChangePassword';
 import HelpCenter from './Pages/Account/HelpCenter';
 
+// header componets
+import HeaderLeft from './Pages/Components/HeaderLeft';
+import HeaderRight from './Pages/Components/HeaderRight';
+import HeaderRightWatchlist from './Pages/Components/HeaderRightWatclist';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,10 +72,10 @@ const homeFocused = require('./Assets/Icons/HomePurple.png');
 
 
 // Home Tabs (Bottom Tab Navigator)
-const HomeTabs = () => {
+const HomeTabs = ({navigation}:any) => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({ route  }) => ({
         tabBarIcon: ({ focused }) => {
           let iconSource;
 
@@ -109,8 +115,24 @@ const HomeTabs = () => {
         },
         tabBarActiveTintColor: '#351560',
         tabBarInactiveTintColor: 'gray',
+        headerShown: true, //  Option A: Remove the header
+        headerStyle: {
+          backgroundColor: '#351560', // Background color of the header
+        },
+        headerTintColor: '#fff', // Color of back button and title text
+        headerTitleStyle: {
+          fontFamily: 'urbanist',
+          fontSize: 22,
+          fontWeight: 'bold', // Title text styling
+        },//  Option B: Custom Headers
+        headerLeft: () => (
+          <HeaderLeft />
+        ),
+        headerRight: () => (
+          <HeaderRight />
+        ),
       })}
-      //need the Trade screen to go to the trade screen, not venture cast home (main home screen), we want the tabs to exist on all pages.
+
     >
       <Tab.Screen name="Portfolio" component={PortfolioScreen} />
       <Tab.Screen name="Discover" component={DiscoverScreen} />
@@ -152,24 +174,24 @@ const App = () => {
           options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
         />
         <Stack.Screen
-        name="ChangePassword"
-        component={ChangePassword} // change pass screen 1
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="ChangePassword"
+          component={ChangePassword} // change pass screen 1
+          options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
-        name="ResetPassword"
-        component={ResetPassword} // reset pass screen 1
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="ResetPassword"
+          component={ResetPassword} // reset pass screen 1
+          options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
-        name="ResetPassword2FA"
-        component={ResetPassword2FA} // reset pass screen 1
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="ResetPassword2FA"
+          component={ResetPassword2FA} // reset pass screen 1
+          options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
-        name="FinalResetPassword"
-        component={FinalResetPassword} // reset pass screen 1
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="FinalResetPassword"
+          component={FinalResetPassword} // reset pass screen 1
+          options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
           name="Home"
@@ -184,7 +206,24 @@ const App = () => {
         <Stack.Screen
           name="Watchlist"
           component={WatchListScreen} // Add the Watchlist screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
+          options={{ 
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#351560', // Background color of the header
+            },
+            headerTintColor: '#fff', // Color of back button and title text
+            headerTitleStyle: {
+              fontFamily: 'urbanist',
+              fontSize: 22,
+              fontWeight: 'bold', // Title text styling
+            },//  Option B: Custom Headers
+            headerLeft: () => (
+              <HeaderLeft />
+            ),
+            headerRight: () => (
+              <HeaderRightWatchlist />
+            ),
+          }} // Hide header for bottom tabs
         />
         <Stack.Screen
           name="Notifications"
@@ -194,7 +233,24 @@ const App = () => {
         <Stack.Screen
           name="SettingsScreen"
           component={SettingsScreen} // Add the Notifs screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
+          options={{ 
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#351560', // Background color of the header
+            },
+            headerTintColor: '#fff', // Color of back button and title text
+            headerTitleStyle: {
+              fontFamily: 'urbanist',
+              fontSize: 22,
+              fontWeight: 'bold', // Title text styling
+            },//  Option B: Custom Headers
+            headerLeft: () => (
+              <HeaderLeft />
+            ),
+            headerRight: () => (
+              <HeaderRight />
+            ),
+           }} // Hide header for bottom tabs
         />
         <Stack.Screen
           name="Activity"
@@ -209,7 +265,7 @@ const App = () => {
         <Stack.Screen
           name="HomeScreen"
           component={VentureCastHome} // Add the Notifs screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
+          options={{ headerShown: true }} // Hide header for bottom tabs
         />
         <Stack.Screen
           name="Trade"
@@ -222,29 +278,67 @@ const App = () => {
           options={{ headerShown: false }} // Hide header for bottom tabs
         />        
         <Stack.Screen
-        name="DiscoverSubPage"
-        component={DiscoverSubPage} // Add the info from a discover item 
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="DiscoverSubPage"
+          component={DiscoverSubPage} // Add the info from a discover item 
+          options={{ 
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#351560', // Background color of the header
+            },
+            headerTitle: () => (
+              <Text style={ {
+                fontFamily: 'urbanist',
+                fontSize: 22,
+                fontWeight: 'bold',
+                color: 'white' // this is for when the name is not the same as what we want to display
+              }}>Discover</Text>
+            ),
+            headerLeft: () => (
+              <HeaderLeft />
+            ),
+            headerRight: () => (
+              <HeaderRight />
+            ),
+           }} // Hide header for bottom tabs
         />
         <Stack.Screen
-        name="ClipsPage"
-        component={ClipsPage} // Add the info from a discover item 
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="ClipsPage"
+          component={ClipsPage} // Add the info from a discover item 
+          options={{ 
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#351560', // Background color of the header
+            },
+            headerTitle: () => (
+              <Text style={ {
+                fontFamily: 'urbanist',
+                fontSize: 22,
+                fontWeight: 'bold',
+                color: 'white' // this is for when the name is not the same as what we want to display
+              }}>Clips</Text>
+            ),
+            headerLeft: () => (
+              <HeaderLeft />
+            ),
+            headerRight: () => (
+              <HeaderRight />
+            ),
+          }} // Hide header for bottom tabs
         />
         <Stack.Screen
-        name="Portfolio"
-        component={PortfolioScreen} // Add the info from a discover item 
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="Portfolio"
+          component={PortfolioScreen} // Add the info from a discover item 
+          options={{ headerShown: true }} // Hide header for bottom tabs
         />
         <Stack.Screen
-        name="About"
-        component={AboutVentureCastScreen} // Add the info from a discover item 
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="About"
+          component={AboutVentureCastScreen} // Add the info from a discover item 
+          options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
-        name="HelpCenter"
-        component={HelpCenter} // Add the info from a discover item 
-        options={{ headerShown: false }} // Hide header for bottom tabs
+          name="HelpCenter"
+          component={HelpCenter} // Add the info from a discover item 
+          options={{ headerShown: false }} // Hide header for bottom tabs
         />
       </Stack.Navigator>
     </NavigationContainer>

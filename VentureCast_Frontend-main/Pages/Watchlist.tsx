@@ -13,10 +13,6 @@ const WatchListScreen = () => {
 
   return (
     <>
-      <View style={styles.tempBlock}>
-
-      </View>
-      <StaticHeader />
       <ScrollView style={styles.container}>
         {watchList.map((item, index) => (
           <WatchListItem

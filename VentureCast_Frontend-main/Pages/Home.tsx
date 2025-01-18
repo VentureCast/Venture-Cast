@@ -27,10 +27,6 @@ const VentureCastHome = () => {
   const navigation = useNavigation();
   return (
   <>
-    <View style={styles.temp}></View>
-    <StaticHeader 
-
-    />
    {/* balance and header also need to be imported data from user database*/}
     <ScrollView contentContainerStyle={styles.container}>
     {userData.map(user => (

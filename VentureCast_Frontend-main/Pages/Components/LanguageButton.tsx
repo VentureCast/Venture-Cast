@@ -17,7 +17,7 @@ const LanguageButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
-  const handleNavigation = (screen) => {
+  const handleNavigation = (screen:any) => {
     setModalVisible(false);
     navigation.navigate(screen);
   };

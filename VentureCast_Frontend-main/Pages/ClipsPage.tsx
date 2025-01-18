@@ -1,13 +1,9 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
-import NotificationSettings from './Account/NotificationControl';
-import AboutVentureCastScreen from './Account/About';
-import LanguageSelectionScreen from './Account/Language';
-import HelpCenter from './Account/HelpCenter';
+
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { Button } from 'react-native-paper';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
-import StaticHeader from './Components/StaticHeader';
 
 const ClipsPage = ({ navigation }: any) => {
 
@@ -19,10 +15,6 @@ const ClipsPage = ({ navigation }: any) => {
 //also want the gray bar gone so that the logo and the name hover over the 
   return (
     <>
-      <View style={styles.tempBlock}></View>
-      <StaticHeader 
-
-      />
       <ScrollView style={styles.container}>
 
         {/* Recent Viral Clips Section */}

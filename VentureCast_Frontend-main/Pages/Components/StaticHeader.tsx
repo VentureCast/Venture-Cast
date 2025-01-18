@@ -9,7 +9,7 @@ import MoreInfoButton from './MoreInfoButton';
 //change the image background to a better image
 
 
-const StaticHeader = ({ }:any) => {
+const StaticHeader = () => {
   const navigation = useNavigation();
   return (
     <ImageBackground source={require('../../Assets/Images/portfolio-background.png')}>

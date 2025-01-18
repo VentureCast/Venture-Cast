@@ -18,9 +18,7 @@ const SettingsScreen = ( { navigation }:any ) => {
 
   return (
     <>
-    <View style={styles.tempBlock}>
 
-    </View>
     <ScrollView style={styles.container}>
         {/* settings Header */}
       <View style={styles.titleRow}>
@@ -121,6 +119,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    paddingTop: 10,
   },
   profileHeader: {
     flexDirection: 'row',

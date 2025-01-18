@@ -2,96 +2,59 @@ import React from 'react';
 import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import StaticHeader from './Components/StaticHeader';
 import { useNavigation } from '@react-navigation/native';
+import TradeItem from './Components/TradeItem';
 
 const TradeScreen = () => {
   const navigation = useNavigation();
 
   return (
     <>
-      <StaticHeader />
       <ScrollView style={styles.container}>
         <View style={styles.titleRow}>
             <Text style={styles.sectionTitle}>Trading Hub</Text>
         </View>
           <View style={styles.optionsContainer}>
-            <View style={styles.itemContainer}>
-              <View style={styles.leftContainer}>
-                <Image source={require('../Assets/Icons/BuyStock.png')} style={styles.icon} />
-                <View style={styles.textContainer}>
-                  <Text style={styles.title}>Buy Stock</Text>
-                  <Text style={styles.description}>Buy stock for as little as just one dolla.</Text>
-                </View>
-              </View>
-              <TouchableOpacity onPress={() => navigation.navigate('BuyStock')} // that is the wrong screen
-              >
-                <Image source={require('../Assets/Icons/Arrow-right-2.png')} style={styles.arrow} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.itemContainer}>
-              <View style={styles.leftContainer}>
-                <Image source={require('../Assets/Icons/SellStock.png')} style={styles.icon} />
-                <View style={styles.textContainer}>
-                  <Text style={styles.title}>Sell Stock</Text>
-                  <Text style={styles.description}>Sell some or all of you stock holdings to turn a profit.</Text>
-                </View>
-              </View>
-              <TouchableOpacity onPress={() => navigation.navigate('BuyStock')} // that is the definitely the wrong screen
-              >
-                <Image source={require('../Assets/Icons/Arrow-right-2.png')} style={styles.arrow} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.itemContainer}>
-              <View style={styles.leftContainer}>
-                <Image source={require('../Assets/Icons/ShortSell.png')} style={styles.icon} />
-                <View style={styles.textContainer}>
-                  <Text style={styles.title}>Short Sell</Text>
-                  <Text style={styles.description}>Bet against any stock so long as you have three time the borrowing ammount in your account.</Text>
-                </View>
-              </View>
-              <TouchableOpacity onPress={() => navigation.navigate('BuyStock')} // that is the definitely the wrong screen
-              >
-                <Image source={require('../Assets/Icons/Arrow-right-2.png')} style={styles.arrow} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.itemContainer}>
-              <View style={styles.leftContainer}>
-                <Image source={require('../Assets/Icons/Deposit.png')} style={styles.icon} />
-                <View style={styles.textContainer}>
-                  <Text style={styles.title}>Deposit to VentureCast</Text>
-                  <Text style={styles.description}>Transfer funds instantly to your VentureCast account.</Text>
-                </View>
-              </View>
-              <TouchableOpacity onPress={() => navigation.navigate('BuyStock')} // that is the definitely the wrong screen
-              >
-                <Image source={require('../Assets/Icons/Arrow-right-2.png')} style={styles.arrow} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.itemContainer}>
-              <View style={styles.leftContainer}>
-                <Image source={require('../Assets/Icons/Withdraw.png')} style={styles.icon} />
-                <View style={styles.textContainer}>
-                  <Text style={styles.title}>Withdraw from VentureCast</Text>
-                  <Text style={styles.description}>Transfer funds from VentureCast account to a bank account of your choosing.</Text>
-                </View>
-              </View>
-              <TouchableOpacity onPress={() => navigation.navigate('BuyStock')} // that is the definitely the wrong screen
-              >
-                <Image source={require('../Assets/Icons/Arrow-right-2.png')} style={styles.arrow} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.itemContainer}>
-              <View style={styles.leftContainer}>
-                <Image source={require('../Assets/Icons/PaymentMethod.png')} style={styles.icon} />
-                <View style={styles.textContainer}>
-                  <Text style={styles.title}>Payment Methods</Text>
-                  <Text style={styles.description}>Access and manage your bank alternative payment methods.</Text>
-                </View>
-              </View>
-              <TouchableOpacity onPress={() => navigation.navigate('BuyStock')} // that is the definitely the wrong screen
-              >
-                <Image source={require('../Assets/Icons/Arrow-right-2.png')} style={styles.arrow} />
-              </TouchableOpacity>
-            </View>
+          <TradeItem 
+            title='Buy Stock'
+            description='Buy stock for as little as just one dollar.'
+            icon={require('../Assets/Icons/BuyStock.png')}
+            page= 'BuyStock' // wrong page, needs to take me somewhere to see stock options, wait wtf is this page even for?????
+            />
+
+          <TradeItem 
+            title='Sell Stock'
+            description='Sell some or all of you stock holdings to turn a profit.'
+            icon={require('../Assets/Icons/SellStock.png')}
+            page= 'BuyStock'
+            />
+
+          <TradeItem 
+            title='Short Sell Stock'
+            description='Bet against any stock so long as you have three time the borrowing ammount in your account.'
+            icon={require('../Assets/Icons/ShortSell.png')}
+            page= 'BuyStock'
+            />
+
+          <TradeItem 
+            title='Deposit to VentureCast'
+            description='Transfer funds instantly to your VentureCast account.'
+            icon={require('../Assets/Icons/Deposit.png')}
+            page= 'BuyStock'
+            />
+
+          <TradeItem 
+            title='Withdraw from VentureCast'
+            description='Transfer funds from VentureCast account to a bank account of your choosing.'
+            icon={require('../Assets/Icons/Withdraw.png')}
+            page= 'BuyStock'
+            /> 
+
+          <TradeItem 
+            title='Payment Methods'
+            description='Access and manage your bank alternative payment methods.'
+            icon={require('../Assets/Icons/PaymentMethod.png')}
+            page= 'BuyStock'
+            />    
         </View>
       </ScrollView>
     </>

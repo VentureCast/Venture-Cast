@@ -42,9 +42,6 @@ const DiscoverScreen = () => {
   const navigation = useNavigation();
   return (
   <>
-    <StaticHeader 
-
-    />
    {/* balance and header also need to be imported data from user database*/}
     <ScrollView contentContainerStyle={styles.container}>
       {/* Trending Section */}

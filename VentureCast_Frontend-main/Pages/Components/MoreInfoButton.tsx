@@ -13,7 +13,7 @@ const MoreInfoButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
-  const handleNavigation = (screen) => {
+  const handleNavigation = (screen:any) => {
     setModalVisible(false);
     navigation.navigate(screen);
   };
@@ -51,6 +51,13 @@ const MoreInfoButton = () => {
               onPress={() => handleNavigation('Activity')}
             >
               <Text style={styles.optionText}>Transaction Activity</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => handleNavigation('SettingsScreen')}
+            >
+              <Text style={styles.optionText}>Settings</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
