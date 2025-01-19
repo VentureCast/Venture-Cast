@@ -1,5 +1,10 @@
 {
   "dependencies": {
-    "@supabase/supabase-js": "^2.47.16"
+    "@supabase/supabase-js": "^2.47.16",
+    "react-native-url-polyfill": "^2.0.0",
+    "url": "^0.11.4"
+  },
+  "devDependencies": {
+    "@react-native-community/cli": "^15.1.3"
   }
 }

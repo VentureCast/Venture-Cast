@@ -346,3 +346,94 @@ const App = () => {
 };
 
 export default App;
+
+// import 'react-native-url-polyfill/auto';
+// import React, { useEffect, useState } from 'react';
+// import { supabase } from './supabaseClient'; // Ensure this is correct
+// import { Text, View, StyleSheet, ScrollView } from 'react-native'; // Import relevant components from React Native
+
+// interface Portfolio {
+//   portfolio_id: string; // UUID
+//   Streamer_id: string;  // UUID
+//   created_at: string;   // Timestamptz (ISO 8601 format)
+//   shares_owned: number; // int4
+//   average_cost: number; // float4
+// }
+
+// function PortfolioData() {
+//   const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState<string | null>(null);
+
+//   useEffect(() => {
+//     const fetchPortfolio = async () => {
+//       setLoading(true);
+
+//       try {
+//         // Fetch data from Supabase table
+//         const { data, error } = await supabase
+//           .from('Portfolio') // Table name
+//           .select('*'); // Select all columns
+
+//         if (error) {
+//           console.error('Error fetching portfolio data:', error);
+//           setError(error.message);
+//         } else {
+//           console.log(data); // Log the fetched data
+//           setPortfolio(data as Portfolio[]); // Type the data as Portfolio[]
+//         }
+//       } catch (err) {
+//         console.error('Unexpected error occurred:', err);
+//         setError('An unexpected error occurred');
+//       }
+
+//       setLoading(false);
+//     };
+
+//     fetchPortfolio();
+//   }, []);
+
+//   if (loading) return <Text>Loading...</Text>;
+//   if (error) return <Text>Error: {error}</Text>;
+
+//   return (
+//     <ScrollView contentContainerStyle={styles.tableContainer}>
+//       {portfolio.map((item) => (
+//         <View key={item.portfolio_id} style={styles.dataContainer}>
+//           <Text>Portfolio ID: {item.portfolio_id}</Text>
+//           <Text>Streamer ID: {item.Streamer_id}</Text>
+//           <Text>Created At: {item.created_at}</Text>
+//           <Text>Shares Owned: {item.shares_owned}</Text>
+//           <Text>Average Cost: {item.average_cost}</Text>
+//         </View>
+//       ))}
+//     </ScrollView>
+//   );
+// }
+
+// export default function App() {
+//   return (
+//     <View style={styles.appContainer}>
+//       <PortfolioData />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   appContainer: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     padding: 20,
+//     backgroundColor: '#f0f0f0',
+//   },
+//   tableContainer: {
+//     flexGrow: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     marginTop: 20,
+//   },
+//   dataContainer: {
+//     marginBottom: 20,
+//   },
+// });
