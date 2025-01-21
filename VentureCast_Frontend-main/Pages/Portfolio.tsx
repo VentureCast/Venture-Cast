@@ -4,34 +4,19 @@ import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/
 import { Button } from 'react-native-paper';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
 import StaticHeader from './Components/StaticHeader';
-import { useNavigation } from '@react-navigation/native';
+import LineGraph from './Components/LineGraph';
+import StockItems from './Components/StockItems';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  StockPage: undefined; // Do this for all linked pages
+  Portfolio: undefined;
+  ClipsPage: undefined;
+  short: undefined;
+};
 
 //import { Section } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
-// Reusable component for Stock Item
-const StockItem = ({ logo, name, ticker, price, change, changePercent, onPress }: any) => {
-  
-
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.stockItem}>
-        <View style={styles.stockNameLogo}> 
-          <Image source={logo} style={styles.stockLogo} />
-          <View>
-            <Text style={styles.stockName}>{name}</Text>
-            <Text style={styles.stockTicker}>{ticker}</Text>
-          </View>
-        </View>
-          <View style={styles.stockPriceContainer}>
-            <Text style={styles.stockPrice}>${price}</Text>
-            <Text style={[styles.stockChange, change >= 0 ? styles.positive : styles.negative]}>
-              {change >= 0 ? `+${changePercent}%` : `${changePercent}%`}
-            </Text>
-          </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 //Account details : cash, equity, daily change and such in a 2x2 grid 
 
@@ -51,20 +36,14 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
 };
 
 // Reusable component for Line Graph (Placeholder for now)
-const LineGraph = ({ color }: any) => (
-  <ImageBackground source={require('../Assets/Images/portfolio-background.png')}>
-  <View style={[styles.lineGraph, { borderColor: color }]}>
-    {/* You can implement a real graph using react-native-svg or similar libraries */}
-    <Text style={{ color }}>Graph</Text>
-  </View>
-  </ImageBackground>
-);
+// made a separate component LineGraph
 
 
 
 // Portfolio screen starts
 
-const PortfolioScreen = ({navigation}:any) => {
+const PortfolioScreen = ({}:any) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   // Sample data for stock positions
   const stockData = [
     { id: '1', name: 'Dude Perfect', ticker: 'DUPT', price: '71.05', change: 2.94, logo: require('../Assets/Images/dude-perfect.png') },
@@ -92,7 +71,7 @@ const PortfolioScreen = ({navigation}:any) => {
       <ScrollView style={styles.container}>
 
         {/* Line Graph */}
-        <LineGraph color="green" />
+        <LineGraph background={require('../Assets/Images/portfolio-background.png')}/>
 
         {/* Account Summary Section */}
         <View style={styles.balanceBox}>
@@ -123,7 +102,7 @@ const PortfolioScreen = ({navigation}:any) => {
             />
           </View>
           {stockData.map(stock => (
-            <StockItem
+            <StockItems
               key={stock.id}
               logo={stock.logo}
               name={stock.name}
@@ -131,7 +110,7 @@ const PortfolioScreen = ({navigation}:any) => {
               price={stock.price}
               change={stock.change}
               changePercent={stock.change}
-              onPress={() => navigation.navigate('stock')} // Pass the stock data to the details screen
+              onPress={() => navigation.navigate('StockPage')} // Pass the stock data to the details screen
             />
           ))} 
           
@@ -149,7 +128,7 @@ const PortfolioScreen = ({navigation}:any) => {
             />
           </View>
           {shortData.map(short => (
-            <StockItem
+            <StockItems
               key={short.id}
               logo={short.logo}
               name={short.name}
@@ -167,25 +146,26 @@ const PortfolioScreen = ({navigation}:any) => {
 
         {/* Recent Viral Clips Section */}
         <View style={styles.recentClips}>
-          <View style = {styles.recentClipsTitle}>
-            <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
-         {/* need this to be a button that opens up more clips */}
-            <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
-              <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
+            <View style = {styles.recentClipsTitle}>
+              <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
+          {/* need this to be a button that opens up more clips */}
+                <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+            </View>       
+          </TouchableOpacity>
           {/* we want each section to pull from a database of clips for the stocks that are presented above the clips */}
-
-          <View  style={styles.clipStockItem}>
-            <View style={styles.stockNameLogo}> 
-              <Image source={require('../Assets/Images/jake-paul.png')} style={styles.stockLogo} />
-              <View>
-                <Text style={styles.stockName}>Jake Paul</Text>
-                <Text style={styles.stockTicker}>JKPL</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('StockPage')}>
+            <View  style={styles.clipStockItem}>
+              <View style={styles.stockNameLogo}> 
+                <Image source={require('../Assets/Images/jake-paul.png')} style={styles.stockLogo} />
+                <View>
+                  <Text style={styles.stockName}>Jake Paul</Text>
+                  <Text style={styles.stockTicker}>JKPL</Text>
+                </View>
               </View>
+              <Image source={require('../Assets/Icons/Arrow-right.png')} />
             </View>
-            <Image source={require('../Assets/Icons/Arrow-right.png')} />
-          </View>
+          </TouchableOpacity>
           {/* Replace with real video data */}
           <FlatList
             horizontal
@@ -353,15 +333,6 @@ const styles = StyleSheet.create({
     color: '#F75555',
   },
 
-  // graph; yet to be completed
-  lineGraph: {
-    height: 200,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-
   // recent clips 
   recentClips: {
     marginLeft: 20,
@@ -371,6 +342,7 @@ const styles = StyleSheet.create({
   clipStockItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   clipItem: {

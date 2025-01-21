@@ -8,9 +8,13 @@ import ClipsElement from './Components/ClipsElement';
 import MiniStockScroll from './Components/MiniStockScroll';
 import ActionButtonDark from './Components/ActionButtonDark';
 import StaticHeader from './Components/StaticHeader';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-
+type RootStackParamList = {
+  StockPage: undefined; // Do this for all linked pages
+  Portfolio: undefined;
+  ClipsPage: undefined;
+};
 
 const userData = [
   {id: '1', balance: '229,375.25', moneyChange:'66,378.49', percentChange: '24.65' }
@@ -24,7 +28,7 @@ const categoryData = [
 ];
 
 const VentureCastHome = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
   <>
    {/* balance and header also need to be imported data from user database*/}
@@ -65,12 +69,13 @@ const VentureCastHome = () => {
       </View>
 
       {/* My Stocks Section */}
-
-      <View style = {styles.subTitle}>
-            <Text style={styles.sectionTitle}>My Stocks</Text>
-         {/* need this to be a button that opens up more clips */}
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('Portfolio')}> 
+        <View style = {styles.subTitle}>
+              <Text style={styles.sectionTitle}>My Stocks</Text>
+          {/* need this to be a button that opens up more clips */}
+              <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+        </View>
+      </TouchableOpacity>
       <View style={styles.sectionWatchlist}>     
       <MiniStockScroll />
       </View>

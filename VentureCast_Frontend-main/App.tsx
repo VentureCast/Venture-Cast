@@ -18,7 +18,8 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 //finish trade page buttons
 // settings, watchlist, and trans activity
 // make sure all pages that need a header have it --> go back through sign in page
-// create individiual stock page and stock page components
+// create individiual stock page and stock page components -- keep working
+//go in and fix the navigation on all pages (example on home page)
 
 
 
@@ -53,6 +54,9 @@ import HelpCenter from './Pages/Account/HelpCenter';
 import HeaderLeft from './Pages/Components/HeaderLeft';
 import HeaderRight from './Pages/Components/HeaderRight';
 import HeaderRightWatchlist from './Pages/Components/HeaderRightWatclist';
+import StockPage from './Pages/StockPage';
+import HeaderLeftStock from './Pages/Components/HeaderLeftStock';
+import HeaderRightStock from './Pages/Components/HeaderRightStock';
 
 
 const Stack = createStackNavigator();
@@ -339,6 +343,25 @@ const App = () => {
           name="HelpCenter"
           component={HelpCenter} // Add the info from a discover item 
           options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+                <Stack.Screen
+          name="StockPage"
+          component={StockPage} // Add the info from a discover item 
+          options={{ 
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: 'black', // Background color of the header
+            },
+            headerTitle: () => (
+              <Text></Text>
+            ),
+            headerLeft: () => (
+              <HeaderLeftStock />
+            ),
+            headerRight: () => (
+              <HeaderRightStock />
+            ),
+          }} // Hide header for bottom tabs
         />
       </Stack.Navigator>
     </NavigationContainer>

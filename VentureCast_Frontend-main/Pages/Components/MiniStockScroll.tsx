@@ -1,7 +1,14 @@
 // components/MiniStockScroll.tsx
 //this appears only on the homepage (as of now)
 import React from 'react';
-import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  StockPage: undefined; // Define your route and parameters here
+};
+
+
 
 const stockScrollData = [
   {id: '1', name: "MrBeast", ticker: "MBT", price: 30.98, percentage: -1.98, graph: require('../../Assets/Graphs/Mega-Nega-1.png'), avatar: require('../../Assets/Images/JimmyBeast.png') },
@@ -13,29 +20,33 @@ const stockScrollData = [
   ];
 
 const MiniStockScroll = ({ }:any) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
   <View>
     <FlatList 
       data={stockScrollData}
       renderItem={({ item }) => (
-      <View style={styles.container}>
-        <View style={styles.miniStockScroll}>
-          <Image source={item.avatar} style={styles.stockAvatar} />
-          <View style = {styles.infoContainer}>
-            <View style = {styles.textContainer}>
-              <Text style={styles.stockText}>{item.name}</Text>
-              <Text style={styles.stockTicker}>{item.ticker}</Text>
-            </View>
-            <View style={styles.numberContainer}>
-              <Text style={[styles.stockPercentage, 
-              item.percentage >= 0 ? styles.positive : styles.negative]}
-              >({item.percentage}%)</Text>
-              <Text style={styles.stockPrice}>${item.price}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('StockPage')}>
+        <View style={styles.container}>
+          <View style={styles.miniStockScroll}>
+            <Image source={item.avatar} style={styles.stockAvatar} />
+            <View style = {styles.infoContainer}>
+              <View style = {styles.textContainer}>
+                <Text style={styles.stockText}>{item.name}</Text>
+                <Text style={styles.stockTicker}>{item.ticker}</Text>
+              </View>
+              <View style={styles.numberContainer}>
+                <Text style={[styles.stockPercentage, 
+                item.percentage >= 0 ? styles.positive : styles.negative]}
+                >({item.percentage}%)</Text>
+                <Text style={styles.stockPrice}>${item.price}</Text>
+              </View>
             </View>
           </View>
+          <Image source={item.graph} style={styles.graph} />
         </View>
-        <Image source={item.graph} style={styles.graph} />
-      </View>
+      </TouchableOpacity>
          )}
          keyExtractor={(item) => item.id}
          horizontal={true} // Enable horizontal scrolling
