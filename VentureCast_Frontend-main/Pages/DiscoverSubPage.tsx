@@ -1,20 +1,14 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity, ImageBackground} from 'react-native';
-import Header from './Components/Header';
-import TrendBox from './Components/TrendBox';
 import ClipsElement from './Components/ClipsElement';
-import StaticHeader from './Components/StaticHeader';
-import ClipTrend from './Components/ClipTrend';
 import { useNavigation } from '@react-navigation/native';
 
 
 const clipsData = 
   {description: 'High stakes and big wins', name: "Gambling", image: require('../Assets/Images/Gambling.png')}
 
-const DiscoverSubPage = () => {
+const DiscoverSubPage = ({ navigation }: any) => {
   
-const navigation = useNavigation();
-
   return (
   <>
    {/* balance and header also need to be imported data from user database  -- also need to add the search box and functionality*/}

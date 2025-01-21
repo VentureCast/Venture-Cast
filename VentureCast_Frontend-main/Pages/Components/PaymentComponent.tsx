@@ -1,27 +1,26 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
   page: undefined; // Do this for all linked pages
 };
 
-const TradeItem = ({icon, title, description, page}:any) => {
+const PaymentComponent = ({icon, title, page}:any) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
     <View style={styles.optionsContainer}>
-      <TouchableOpacity onPress={() => navigation.navigate(page)} 
+      <TouchableOpacity onPress={() => navigation.navigate(page)} //  need card details page
         >
         <View style={styles.itemContainer}>
           <View style={styles.leftContainer}>
             <Image source={icon} style={styles.icon} />
-            <View style={styles.textContainer}>
-              <Text style={styles.title}>{title}</Text>
-              <Text style={styles.description}>{description}</Text>
-            </View>
+            <Text style={styles.title}>{title}</Text>
           </View>
-          <Image source={require('../../Assets/Icons/Arrow-right-2.png')} style={styles.arrow} />
+          <View>
+            <Text style={styles.connected}>Connected</Text> 
+          </View>
         </View>
       </TouchableOpacity>
     </View>
@@ -37,20 +36,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist',
     },
     titleRow: {
-      flexDirection: 'row',
+      flex: 1,
       alignItems: 'center',
       margin: 20,
-      justifyContent: 'space-between',
     },
     optionsContainer: {
-
     }, 
     itemContainer: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'space-between',
       paddingBottom: 20,
-      marginLeft: 20,
-      marginRight: 40,
+      marginHorizontal: 20,
       marginBottom: 20,
       borderBottomWidth: 1,
       borderColor: '#ccc',
@@ -59,30 +56,23 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
     },
-    arrow: {
-    },
+
     icon: {
       width: 60,
       height: 60,
       marginRight: 10,
-    },
-    textContainer: {
-      flex: 1,
-      paddingRight: 30,
-      alignContent: 'center',
     },
     title: {
       fontFamily: 'Urbanist',
       fontWeight: 'bold',
       fontSize: 18,
     },
-    description: {
-      fontFamily: 'Urbanist',
-      fontSize: 14,
-      fontWeight: 300,
-      marginTop: 10,
-      color: '#555',
+    connected: {
+      fontFamily: 'urbanist',
+      fontWeight: 'bold',
+      color: '#351560',
+      fontSize: 18,
     },
 });
 
-export default TradeItem;
+export default PaymentComponent;

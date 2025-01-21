@@ -15,13 +15,8 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 
 
 //Sat task:
-//finish trade page buttons
+// finish trade page buttons
 // settings, watchlist, and trans activity
-// make sure all pages that need a header have it --> go back through sign in page
-// create individiual stock page and stock page components -- keep working
-//go in and fix the navigation on all pages (example on home page)
-
-
 
 // Import your screens
 import VentureCast from './Pages/VentureCast';
@@ -49,6 +44,7 @@ import TwoFA from './Pages/2FA';
 import AboutVentureCastScreen from './Pages/About';
 import ChangePassword from './Pages/ChangePassword';
 import HelpCenter from './Pages/Account/HelpCenter';
+import PaymentMethods from './Pages/PaymentMethods';
 
 // header componets
 import HeaderLeft from './Pages/Components/HeaderLeft';
@@ -126,7 +122,7 @@ const HomeTabs = ({navigation}:any) => {
         headerTintColor: '#fff', // Color of back button and title text
         headerTitleStyle: {
           fontFamily: 'urbanist',
-          fontSize: 22,
+          fontSize: 26,
           fontWeight: 'bold', // Title text styling
         },//  Option B: Custom Headers
         headerLeft: () => (
@@ -218,7 +214,7 @@ const App = () => {
             headerTintColor: '#fff', // Color of back button and title text
             headerTitleStyle: {
               fontFamily: 'urbanist',
-              fontSize: 22,
+              fontSize: 26,
               fontWeight: 'bold', // Title text styling
             },//  Option B: Custom Headers
             headerLeft: () => (
@@ -235,6 +231,11 @@ const App = () => {
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
+          name="PaymentMethods"
+          component={PaymentMethods} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
           name="SettingsScreen"
           component={SettingsScreen} // Add the Notifs screen
           options={{ 
@@ -243,11 +244,14 @@ const App = () => {
               backgroundColor: '#351560', // Background color of the header
             },
             headerTintColor: '#fff', // Color of back button and title text
-            headerTitleStyle: {
-              fontFamily: 'urbanist',
-              fontSize: 22,
-              fontWeight: 'bold', // Title text styling
-            },//  Option B: Custom Headers
+            headerTitle: () => (
+              <Text style={ {
+                fontFamily: 'urbanist',
+                fontSize: 26,
+                fontWeight: 'bold',
+                color: 'white' // this is for when the name is not the same as what we want to display
+              }}>Settings</Text>
+            ),
             headerLeft: () => (
               <HeaderLeft />
             ),
@@ -292,7 +296,7 @@ const App = () => {
             headerTitle: () => (
               <Text style={ {
                 fontFamily: 'urbanist',
-                fontSize: 22,
+                fontSize: 26,
                 fontWeight: 'bold',
                 color: 'white' // this is for when the name is not the same as what we want to display
               }}>Discover</Text>

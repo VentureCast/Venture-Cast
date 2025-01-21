@@ -2,17 +2,27 @@
 import React, {useState} from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
 import StaticHeader from './Components/StaticHeader';
-import { useNavigation } from '@react-navigation/native';
 import LanguageButton from './Components/LanguageButton';
 import LanguageSelectionScreen from './Account/Language';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  Profile: undefined; // Do this for all linked pages
+  Notifications: undefined;
+  HelpCenter: undefined;
+  ChangePassword: undefined;
+  About: undefined;
+};
 
 // import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
 
-const SettingsScreen = ( { navigation }:any ) => {
+const SettingsScreen = ( { }:any ) => {
 
   const [isEnabled, setIsEnabled] = useState(false);
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
 
 
@@ -26,7 +36,6 @@ const SettingsScreen = ( { navigation }:any ) => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
             </TouchableOpacity>
-            <Text style={styles.sectionTitle}>Settings</Text>
           </View>
       </View>
 
@@ -39,7 +48,7 @@ const SettingsScreen = ( { navigation }:any ) => {
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="notifications-outline" size={24} color="#ff3d00" /> */}
-        <Text style={styles.menuText} onPress={() => navigation.navigate('NotiControl')}>Notifications</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Notifications')}>Notifications</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 

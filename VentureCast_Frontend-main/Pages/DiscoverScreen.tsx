@@ -4,8 +4,13 @@ import TrendBox from './Components/TrendBox';
 import ClipsElement from './Components/ClipsElement';
 import StaticHeader from './Components/StaticHeader';
 import ClipTrend from './Components/ClipTrend';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
+type RootStackParamList = {
+  StockPage: undefined; // Do this for all linked pages
+  Portfolio: undefined;
+  ClipsPage: undefined;
+};
 
 
 
@@ -39,7 +44,7 @@ const clipsData = [
   ];
 
 const DiscoverScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
   <>
    {/* balance and header also need to be imported data from user database*/}

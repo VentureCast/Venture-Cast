@@ -37,6 +37,11 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
     },
     newsContainer: {
+      margin: 20,
+      marginBottom: 0,
+      borderBottomWidth: 1,
+      paddingBottom: 15,
+      borderColor: '#EEEEEE',
     }, 
     topContainer: {
       flexDirection: 'row',
@@ -55,14 +60,14 @@ const styles = StyleSheet.create({
     },
     title: {
       fontFamily: 'Urbanist',
-      fontWeight: '100',
+      fontWeight: '400',
       fontSize: 12,
-      color: 'yellow'
+      color: '#212121'
     },
     headline: {
       fontFamily: 'Urbanist',
       fontSize: 18,
-      fontWeight: '900',
+      fontWeight: '700',
       marginTop: 10,
       color: '#212121',
     },

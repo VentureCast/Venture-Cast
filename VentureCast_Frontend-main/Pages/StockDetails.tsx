@@ -1,8 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import StockOrderScreen from './Oreders';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-const StockDetailsScreen = ({ navigation }: any) => {
+type RootStackParamList = {
+  Orders: undefined; // Do this for all linked pages
+  Portfolio: undefined;
+  ClipsPage: undefined;
+};
+
+const StockDetailsScreen = ({ }: any) => {
+
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
     <View style={styles.container}>
       {/* Header */}

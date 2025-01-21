@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-const BuyStockScreen = ({ navigation }:any) => {
+type RootStackParamList = {
+  StockPage: undefined; // Do this for all linked pages
+  BuyPreview: undefined;
+  ClipsPage: undefined;
+  short: undefined;
+};
+
+const BuyStockScreen = ({ }:any) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const [investmentAmount, setInvestmentAmount] = useState('10000');
 
   return (

@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, Image, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
+type RootStackParamList = {
+  screen: undefined;
+};
 const MoreInfoButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleNavigation = (screen:any) => {
     setModalVisible(false);

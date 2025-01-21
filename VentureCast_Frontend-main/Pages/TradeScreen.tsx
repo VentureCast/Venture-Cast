@@ -1,17 +1,15 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import StaticHeader from './Components/StaticHeader';
-import { useNavigation } from '@react-navigation/native';
 import TradeItem from './Components/TradeItem';
 
 const TradeScreen = () => {
-  const navigation = useNavigation();
 
   return (
     <>
       <ScrollView style={styles.container}>
         <View style={styles.titleRow}>
-            <Text style={styles.sectionTitle}>Trading Hub</Text>
+            <Text style={styles.sectionTitle}></Text>
         </View>
           <View style={styles.optionsContainer}>
           <TradeItem 
@@ -53,7 +51,7 @@ const TradeScreen = () => {
             title='Payment Methods'
             description='Access and manage your bank alternative payment methods.'
             icon={require('../Assets/Icons/PaymentMethod.png')}
-            page= 'BuyStock'
+            page= 'PaymentMethods'
             />    
         </View>
       </ScrollView>
@@ -76,7 +74,7 @@ const styles = StyleSheet.create({
     titleRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      margin: 20,
+      margin: 10,
       justifyContent: 'space-between',
     },
     optionsContainer: {

@@ -1,10 +1,17 @@
 // screens/VentureCast.js
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Import Vector Icons
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
+type RootStackParamList = {
+  CreateAccount: undefined; // Do this for all linked pages
+  SignIn: undefined;
+};
 
-const VentureCast = ({ navigation }:any) => {
+const VentureCast = ({ }:any) => {
+  
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>

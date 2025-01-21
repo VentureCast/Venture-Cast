@@ -1,8 +1,16 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, StatusBar, Image } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  StockPage: undefined; // Do this for all linked pages
+};
+
 // import { Icon } from 'react-native-elements';
 
-const AboutVentureCastScreen = ({ navigation }:any) => {
+const AboutVentureCastScreen = ({ }:any) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const menuItems = [
     'Partner',
     'Tax Form',

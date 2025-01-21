@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity} from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import MarketStat from './Components/MarketStat';
 import LineGraph from './Components/LineGraph';
 import MiniStockScroll from './Components/MiniStockScroll';
 import ClipsElement from './Components/ClipsElement';
 import ViewerPerShareGraph from './Components/ViewerPerShareGraph';
-import NewsItem from './Components/Newsitem';
+import NewsItem from './Components/NewsItem';
+import { Button } from 'react-native-paper';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
@@ -251,6 +252,18 @@ const StockPage = ({}:any) => {
           title= 'Forbes'
           headline='Twitch Roundup: PewDiePie Earnings, Katy Perry Earnings, Dude Perfect Earnings, And ...'
         />
+        <NewsItem
+          time= "2 days ago"
+          title= 'Seeking Alpha'
+          headline='Own The Poll Booths'
+        />
+        <NewsItem
+          time= "2 days ago"
+          title= 'The Motley Fool'
+          headline='Kathie Wood Has Abandoned Dude Perfect -- Should You Follow Her Lead?'
+        />
+        <Button style={styles.showMoreButton}>Show More</Button>
+
   
 
         {/* Characteristics Section */}
@@ -369,9 +382,9 @@ const styles = StyleSheet.create({
     height: 53,
   },
 // market stats
-marketStats: {
-margin: 20,
-},
+  marketStats: {
+    margin: 20,
+  },
 // People also bought section
 
   stockTitleRow: {
@@ -402,7 +415,6 @@ margin: 20,
     marginBottom: 10,
     fontFamily: 'Urbanist-Regular',
   },
-
     //stock items
   positive: {
     color: '#12D18E',
@@ -520,6 +532,9 @@ margin: 20,
   // newsContainer: {
   // flexDirection: 'column'
   // },
+  showMoreButton: {
+    justifyContent: 'center',
+  },
 });
 
 export default StockPage;

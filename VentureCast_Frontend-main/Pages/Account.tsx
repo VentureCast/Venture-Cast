@@ -1,8 +1,22 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  Profile: undefined; // Do this for all linked pages
+  Portfolio: undefined;
+  Notifications: undefined;
+  Language: undefined;
+  HelpCenter: undefined;
+  About: undefined;
+};
 // import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
 
-const AccountScreen = ({navigation}:any) => {
+const AccountScreen = ({}:any) => {
+
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+
   return (
     <ScrollView style={styles.container}>
       {/* Profile Header */}
@@ -29,7 +43,7 @@ const AccountScreen = ({navigation}:any) => {
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="notifications-outline" size={24} color="#ff3d00" /> */}
-        <Text style={styles.menuText} onPress={() => navigation.navigate('NotiControl')}>Notifications</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Notifications')}>Notifications</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 

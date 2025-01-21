@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import NotificationItem from './Components/NotificationItem';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-const NotificationScreen = ({navigation}:any) => {
+type RootStackParamList = {
+  SettingsScreen: undefined; // Do this for all linked pages
+};
+const NotificationScreen = ({}:any) => {
+
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const notifications = [
     {
