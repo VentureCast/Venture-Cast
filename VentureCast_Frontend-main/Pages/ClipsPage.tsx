@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, } from 'react-native';
 
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
-import { Button } from 'react-native-paper';
-import Dropdown from './Components/Dropdown'; // does not do anything but is visible
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-const ClipsPage = ({ navigation }: any) => {
+type RootStackParamList = {
+  StockPage: undefined; // Do this for all linked pages
+  StockDetails: undefined;
+  stock: undefined;
+};
+
+const ClipsPage = ({ }: any) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   // Function to handle stock item press
-  const goToStockDetails = (stock: any) => {
-    navigation.navigate('StockDetails', { stock });
-  };
 // do not know where the portfolio header is created or called, want it gone.
 //also want the gray bar gone so that the logo and the name hover over the 
   return (
@@ -18,6 +21,9 @@ const ClipsPage = ({ navigation }: any) => {
       <ScrollView style={styles.container}>
 
         {/* Recent Viral Clips Section */}
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image source={require('../Assets/Icons/Arrow-Left.png')} style={styles.miniLogo} />
+        </TouchableOpacity>
         <View style={styles.recentClips}>
           <View style = {styles.recentClipsTitle}>
             <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
@@ -193,7 +199,15 @@ const styles = StyleSheet.create({
   // show more button
   showMoreButton: {
     justifyContent: 'center',
-  }
+  },
+
+  //go back button
+  miniLogo: {
+    width: 30, 
+    height: 30,
+    marginHorizontal: 20,
+    marginTop: 20,
+  },
 });
 
 export default ClipsPage;

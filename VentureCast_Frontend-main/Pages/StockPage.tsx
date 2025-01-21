@@ -5,6 +5,8 @@ import MarketStat from './Components/MarketStat';
 import LineGraph from './Components/LineGraph';
 import MiniStockScroll from './Components/MiniStockScroll';
 import ClipsElement from './Components/ClipsElement';
+import ViewerPerShareGraph from './Components/ViewerPerShareGraph';
+import NewsItem from './Components/Newsitem';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
@@ -16,25 +18,16 @@ type RootStackParamList = {
 
 //stock details : shares held, Cost per Share, Equity and Total return in a 2x2 grid 
 
-const StockDetailCash = ({ name, value, changePercent, image }: any) => {
-  return (
-      <View style={styles.accountDetail}>
-        <Image source={image} style={styles.detailLogo} />
-        <View style={styles.accountDetailContainer}>
-          <Text style={styles.detailName}>{name}</Text>
-          <Text style={styles.detailValue}>${value}</Text>
-        </View>
-      </View>
-  );
-};
-const StockDetailValue = ({ name, value, changePercent, image }: any) => {
+
+const StockDetail = ({ name, value, isPercent, image }: any) => {
+
   return (
       <View style={styles.accountDetail}>
         <Image source={image} style={styles.detailLogo} />
         <View style={styles.accountDetailContainer}>
           <Text style={styles.detailName}>{name}</Text>
           <Text style={styles.detailValue}>{value}</Text>
-        </View>
+        </View> 
       </View>
   );
 };
@@ -42,7 +35,14 @@ const StockDetailValue = ({ name, value, changePercent, image }: any) => {
 // Reusable component for Line Graph (Placeholder for now)
 //moved to a component --> LineGraph
 
-
+// data for viewer graph
+const viewerStats = [
+  {id:'1', quarter: 'Q1', fiscalYear: 'FY24', valueOne: -0.22, valueTwo: -0.48, colorOne: '#FFB9B9', colorTwo: '#F75555', margin: 60},
+  {id:'2', quarter: 'Q2', fiscalYear: 'FY24', valueOne: -0.24, valueTwo: -0.48, colorOne: '#12D18E', colorTwo: '#C2B8CF', margin: 60},
+  {id:'3', quarter: 'Q3', fiscalYear: 'FY24', valueOne: +0.24, valueTwo: -0.20, colorOne: '#12D18E', colorTwo: '#C2B8CF', margin: 120}, 
+  {id:'4', quarter: 'Q4', fiscalYear: 'FY24', valueOne: -0.65, valueTwo: -0.90, colorOne: '#FFB9B9', colorTwo: '#F75555', margin: 50},
+  {id:'5', quarter: 'Q1', fiscalYear: 'FY25', valueOne: -0.85, valueTwo: -1.05, colorOne: '#FFB9B9', colorTwo: '#F75555', margin: 20},
+];
 
 // Portfolio screen starts
 
@@ -50,20 +50,37 @@ const StockPage = ({}:any) => {
   // Sample data for stock positions
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const acctStockDataCash = [
-    { id: '2', name: 'Cost at Buy', value: 73.86, image: require('../Assets/Icons/CostPerShare.png') },
-    { id: '3', name: 'Equity', value: '22,935.46' , image: require('../Assets/Images/equity.png') },
-    { id: '4', name: 'Total Return', value: '1,946.75', image: require('../Assets/Images/total-return.png') }, //these images are not circles, or same dimensions: we need better ones
-  ];
-  const acctStockDataValue = [
-  { id: '1', name: 'Shares Held', value: 284.17, image: require('../Assets/Icons/SharesHeld.png') },
-  ];
+  const userHoldings = {totalReturn: 1946.75, equity: 22935.46 , costAtBuy: 73.86, shares: 284.17, targetPrice: 117.25, estimatedReturn: 65.20, };
 
-  const stockLiveValue = { value: 80.71, changePercent: 9.27, change: 6.85 };
+  const marketStats = {
+    currentPrice: 80.71, changePercent: 9.27, change: 6.85, priceER: 0.5, 
+    sharesOutstanding: 2789786, viewPerShare: 1.43, yearHigh: 85.45, yearLow: 69.29, 
+    
+  };
 
 
-// do not know where the portfolio header is created or called, want it gone.
-//also want the gray bar gone so that the logo and the name hover over the 
+  // use this from here on out because we want the data to be raw numbers, then transformed here.
+  const formatNumber = (number: number, decimals: number = 2): string => {
+    return number.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }); // Formats the number with commas
+  };
+
+  const formatCurrency = (number: number, decimals: number = 2): string => {
+    return `$${number.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })}`; // Adds $ and formats the number
+  };
+  const formatPercentage = (number: number, decimals: number = 2): string => {
+    return `(${number.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })}%)`; // Adds ( %) and formats the number
+  };
+
+
   return (
     <>
       <ScrollView style={styles.container}>
@@ -73,43 +90,47 @@ const StockPage = ({}:any) => {
 
         {/* Stock Live value Section */}
         <View style={styles.balanceBox}>
-            <Text style={styles.stockTitle}>$80.71</Text>
+            <Text style={styles.stockTitle}>{formatCurrency(marketStats.currentPrice)}</Text>
             <View style={styles.stockSubTitle} >
                {/* arrows and text color changes for positive and down for negative*/}
               <Image source=
-                { stockLiveValue.changePercent >= 0 ? require('../Assets/Icons/Arrow-Up-Purple.png') : require('../Assets/Icons/Arrow-Down-Purple.png')} 
+                { marketStats.changePercent >= 0 ? require('../Assets/Icons/Arrow-Up-Purple.png') : require('../Assets/Icons/Arrow-Down-Purple.png')} 
                 style={styles.stockLiveArrow}
               />
-              <Text style={[styles.stockSubTitleText, stockLiveValue.changePercent >= 0 ? styles.positive : styles.negative]}>
-              ${stockLiveValue.change} ({stockLiveValue.changePercent}%)</Text>
+              <Text style={[styles.stockSubTitleText, marketStats.changePercent >= 0 ? styles.positive : styles.negative]}>
+              {formatCurrency(marketStats.change)} {formatPercentage(marketStats.changePercent)}</Text>
               <Text style={styles.stockSubTitleText} >Last Close</Text>
             </View>
         </View>
-          {/* my investment */}
+          {/* My Position section */}
         <View style={styles.stockSummary}>
           <Text style={styles.sectionTitle}>My Position</Text>
         </View>
         <View style={styles.accountGrid}>
-          <View>
-            {acctStockDataValue.map(value => (
-              <StockDetailValue
-                key={value.id}
-                image={value.image}
-                name={value.name}
-                value={value.value}
+              <StockDetail
+                image={require('../Assets/Icons/SharesHeld.png')}
+                name={'Shares Held'}
+                value={userHoldings.shares}
+                isPercent = {false}
               />
-            ))}
-          </View>
-          <View>
-            {acctStockDataCash.map(acct => (
-              <StockDetailCash
-                key={acct.id}
-                image={acct.image}
-                name={acct.name}
-                value={acct.value}
+              <StockDetail
+                image={require('../Assets/Icons/CostPerShare.png')}
+                name= 'Cost at Buy'
+                value={formatCurrency(userHoldings.costAtBuy)}
+                isPercent = {false}
               />
-            ))}
-          </View>
+              <StockDetail
+                image={require('../Assets/Images/equity.png')}
+                name= 'Equity'
+                value={formatCurrency(userHoldings.equity)}
+                isPercent = {false}
+              />
+              <StockDetail
+                image={ require('../Assets/Images/total-return.png')}
+                name= 'Total Return'
+                value={formatCurrency(userHoldings.totalReturn)}
+                isPercent = {false}
+              />
         </View>
 
 
@@ -119,33 +140,120 @@ const StockPage = ({}:any) => {
         </View>
         <MarketStat   
           title='Price-Earnings Ratio'
-          description='N/A'
+          description={marketStats.priceER}
           icon={require('../Assets/Icons/Price-EarningsRatio.png')}
         />
         <MarketStat   
           title='Shares Outstanding'
-          description='2,789,786'
+          description={formatNumber(marketStats.sharesOutstanding)} // format number function adds commas
           icon={require('../Assets/Icons/SharesOutstanding.png')}
         />
         <MarketStat   
           title='Viewers Per Share'
-          description='1.43'
+          description={marketStats.viewPerShare}
           icon={require('../Assets/Icons/ViewPerShare.png')}
         />
         <MarketStat   
           title='1 Year High'
-          description='$85.45'
+          description={formatCurrency(marketStats.yearHigh)}
           icon={require('../Assets/Icons/YearHigh.png')}
         />
         <MarketStat   
           title='1 Year Low'
-          description='$69.29'
+          description={formatCurrency(marketStats.yearLow)}
           icon={require('../Assets/Icons/YearLow.png')}
         />
+
           {/* Experts Section */}
+        <View style={styles.miniStockScroll}>
+          <View style={styles.stockTitleRow}>
+            <Text style={styles.sectionTitle}>What the experts say</Text>
+          </View>
+          <Text style={styles.sectionSubTitle}>VentureCast Analyst Rating</Text>
+          <View  style={styles.expertsContainer}>
+            <Image source={require('../Assets/Icons/BUY.png')} style={styles.bigBuy} />
+            <View style={styles.dataColumn}>
+              <View style={styles.graphContainer}>
+                <View style = {styles.emptyGraph}>
+                  <View style={styles.buyGraph}></View>
+                </View>
+                <Text style={styles.buyText}>70%</Text>
+                <Text style={styles.buyText}>Buy</Text>
+              </View>
+              <View style={styles.graphContainer}>
+                <View style = {styles.emptyGraph}>
+                  <View style={styles.holdGraph}></View>
+                </View>
+                <Text style={styles.holdText}>25%</Text>
+                <Text style={styles.holdText}>Hold</Text>
+              </View>
+              <View style={styles.graphContainer}>
+                <View style = {styles.emptyGraph}>
+                  <View style={styles.sellGraph}></View>
+                </View>
+                <Text style={styles.sellText}>5%</Text>
+                <Text style={styles.sellText}>Sell</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={styles.accountGrid}>
+          <StockDetail
+            image={ require('../Assets/Icons/TargetPrice.png')}
+            name= 'Target Price'
+            value={formatCurrency(userHoldings.targetPrice)}
+            isPercent = {false}
+          />
+          <View style={styles.accountDetail}>
+            <Image source={require('../Assets/Icons/EstimatedReturn.png')} style={styles.detailLogo} />
+            <View style={styles.accountDetailContainer}>
+              <Text style={styles.detailName}>Est. Return</Text>
+              <Text style={[styles.detailValue, userHoldings.estimatedReturn >= 0 ? styles.positive : styles.negative]}
+              >{formatPercentage(userHoldings.estimatedReturn)}</Text>
+            </View> 
+          </View>
+        </View>
+
           {/* Viewers Per Share Section */}
-          {/* News Section */}
-          {/* Characteristics Section */}
+        <View style={styles.marketStats}>
+          <Text style={styles.sectionTitle}>Viewers per share</Text>
+        </View>
+        <View>
+          <View style={styles.viewerContainer}>
+            {viewerStats.map(viewer => (
+            <ViewerPerShareGraph 
+              key={viewer.id}
+              quarter={viewer.quarter}
+              fiscalYear={viewer.fiscalYear}
+              valueOne={formatNumber(viewer.valueOne)}
+              valueTwo={formatNumber(viewer.valueTwo)}
+              colorOne={viewer.colorOne}
+              colorTwo={viewer.colorTwo}
+              margin={viewer.margin}
+            />
+              ))}
+          </View>
+        </View>
+        <View style={styles.sectionBaseline}>
+          <Text style={styles.sectionSubTitle}>The creator reported results on Febuary 25, 2025 and missed market expectations.</Text>
+        </View>
+
+        {/* News Section */}
+        {/* are we going to link to a "news" page or the clips page???? */}
+        <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
+          <View style = {styles.clipsSubTitle}>
+            <Text style={styles.sectionTitle}>News</Text>
+            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+          </View>
+        </TouchableOpacity>
+        <NewsItem
+          time= "1 day ago"
+          title= 'Forbes'
+          headline='Twitch Roundup: PewDiePie Earnings, Katy Perry Earnings, Dude Perfect Earnings, And ...'
+        />
+  
+
+        {/* Characteristics Section */}
 
         {/* Stock Positions */}
         <View style={styles.miniStockScroll}>
@@ -161,7 +269,7 @@ const StockPage = ({}:any) => {
           title= '#TrickShot'
           subTitle='Trending Hashtag'
           icon={require('../Assets/Icons/Play.png')}
-          Views='543.32'
+          views='543.32'
         />
       </ScrollView>
     </>
@@ -218,7 +326,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap', // Wrap items to the next row
     justifyContent: 'space-between', // Even spacing between items
     paddingRight: 0,
-    paddingVertical: 10,
+    paddingLeft: 0,
+    marginLeft: 8,
   },
   accountText: {
     fontSize: 16,
@@ -250,10 +359,12 @@ const styles = StyleSheet.create({
   detailValue: {
     fontSize: 18,
     fontWeight: '500',
+    marginTop: 8,
   },
   accountDetailContainer: {
     flexDirection: 'column',
-    alignItems: 'flex-start', 
+    alignItems: 'flex-start',
+    justifyContent: 'center', 
     width: 109,
     height: 53,
   },
@@ -284,6 +395,13 @@ margin: 20,
     marginBottom: 10,
     fontFamily: 'Urbanist-Regular',
     },
+  sectionSubTitle: {
+    alignContent: 'flex-start',
+    fontSize: 14,
+    fontWeight: '300',
+    marginBottom: 10,
+    fontFamily: 'Urbanist-Regular',
+  },
 
     //stock items
   positive: {
@@ -308,6 +426,100 @@ margin: 20,
     borderColor: '#e0e0e0',
   },
 
+  // experts section
+
+  expertsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 15,
+    borderBottomWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  bigBuy: {
+    marginRight: 20,
+  },
+  dataColumn: {
+
+  },
+  graphContainer: {
+    //color: '#351560'
+    marginVertical: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  emptyGraph: {
+    backgroundColor: '#EEE',
+    width:  160, 
+    height: 8,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  buyGraph: {
+    backgroundColor: '#351560',
+    width: 112, 
+    height: 8,
+    borderRadius: 20,
+  },
+  holdGraph: {
+    backgroundColor: '#FFC107',
+    width: 40, 
+    height: 8,
+    borderRadius: 20,
+  },
+  sellGraph: {
+    backgroundColor: '#F75555',
+    width: 8, 
+    height: 8,
+    borderRadius: 20,
+  },
+  buyText: {
+    color:  '#351560',
+    fontFamily: 'urbanist',
+    fontSize: 12,
+    marginHorizontal: 10,
+  },
+  holdText: {
+    color:  '#FFC107',
+    fontFamily: 'urbanist',
+    fontSize: 12,
+    marginHorizontal: 10,
+  },
+  sellText: {
+    color:  '#F75555',
+    fontFamily: 'urbanist',
+    fontSize: 12,
+    marginHorizontal: 10,
+  },
+
+  // viewers per share
+  viewerContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-evenly',
+  },
+  sectionBaseline: {
+    borderTopWidth: 1,
+    borderColor: '#e0e0e0',
+    marginHorizontal: 20,
+    marginVertical: 15,
+    paddingTop: 10,
+  },
+
+  //news section title
+  clipsSubTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    borderColor: '#EAE7EF',
+    borderBottomWidth: 1,
+    marginHorizontal: 20,
+  },
+
+  //news section
+  // newsContainer: {
+  // flexDirection: 'column'
+  // },
 });
 
 export default StockPage;

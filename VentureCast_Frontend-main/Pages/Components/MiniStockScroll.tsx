@@ -13,7 +13,7 @@ type RootStackParamList = {
 const stockScrollData = [
   {id: '1', name: "MrBeast", ticker: "MBT", price: 30.98, percentage: -1.98, graph: require('../../Assets/Graphs/Mega-Nega-1.png'), avatar: require('../../Assets/Images/JimmyBeast.png') },
   {id: '2', name: "Dude Perfect", ticker: "DUPT", price: 71.05, percentage: 2.94, graph: require('../../Assets/Graphs/Mega-Posi-1.png'), avatar: require('../../Assets/Images/dude-perfect.png')},
-  {id: '3', name: "Mark Rober", ticker: "MKRB", price: 89.03,  percentage: 10.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
+  {id: '3', name: "Mark Rober", ticker: "MKRB", price: 89.03,  percentage: 10.45, graph: require('../../Assets/Graphs/Mega-Posi-1.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
   {id: '4', name: "PewDiePie", ticker: "PDP", price: 98.30,  percentage: 14.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/pewdiepie.png')},
   {id: '5', name: "Clark Rober", ticker: "CKRB", price: 39.08,  percentage: 5.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
   {id: '6', name: "Bark Rober", ticker: "BKRB", price: 12.34,  percentage: 100.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
@@ -21,6 +21,13 @@ const stockScrollData = [
 
 const MiniStockScroll = ({ }:any) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const formatPercentage = (number: number): string => {
+    return `(${number.toLocaleString('en-US')}%)`; // Adds ( %) and formats the number
+  };
+  const formatCurrency = (number: number): string => {
+    return `$${number.toLocaleString('en-US')}`; // Adds $ and formats the number
+  };
 
   return (
   <View>
@@ -39,8 +46,8 @@ const MiniStockScroll = ({ }:any) => {
               <View style={styles.numberContainer}>
                 <Text style={[styles.stockPercentage, 
                 item.percentage >= 0 ? styles.positive : styles.negative]}
-                >({item.percentage}%)</Text>
-                <Text style={styles.stockPrice}>${item.price}</Text>
+                >{formatPercentage(item.percentage)}</Text>
+                <Text style={styles.stockPrice}>{formatCurrency(item.price)}</Text>
               </View>
             </View>
           </View>
@@ -73,7 +80,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   infoContainer: {
-    //flexDirection: 'column',
     marginLeft: 10,
   },
   textContainer: {
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
   graph: {
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
-    height: 95,
+    height: 80,
     width: 200,
   },
 });

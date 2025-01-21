@@ -38,8 +38,6 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
 // Reusable component for Line Graph (Placeholder for now)
 // made a separate component LineGraph
 
-
-
 // Portfolio screen starts
 
 const PortfolioScreen = ({}:any) => {
@@ -64,8 +62,7 @@ const PortfolioScreen = ({}:any) => {
     { id: '4', name: 'Total Return', value: '66,378.49', change: 24.65, image: require('../Assets/Images/total-return.png') }, //these images are not circles, or same dimensions: we need better ones
   ];
 
-// do not know where the portfolio header is created or called, want it gone.
-//also want the gray bar gone so that the logo and the name hover over the 
+
   return (
     <>
       <ScrollView style={styles.container}>
