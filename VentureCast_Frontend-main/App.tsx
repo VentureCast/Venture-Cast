@@ -15,7 +15,7 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 
 
 //Sat task:
-// finish trade page buttons
+// finish trade page buttons and payment method buttons (add payment and payment details)
 // settings, watchlist, and trans activity
 
 // Import your screens
