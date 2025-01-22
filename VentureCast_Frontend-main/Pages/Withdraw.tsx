@@ -162,6 +162,8 @@ const styles = StyleSheet.create({
     fontFamily: 'urbanist',
     marginLeft: 20,
   },
+
+  // account info section
   leftContainer: {
     flexDirection: 'row',
     alignItems: 'center',

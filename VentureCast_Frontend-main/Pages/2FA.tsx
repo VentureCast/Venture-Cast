@@ -19,12 +19,14 @@ const TwoFA = ({navigation}:any) => {
 
   return (
     <ScrollView style={styles.scrollContainer}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        {/* Back icon here */}
-        <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
-      </TouchableOpacity>
-      <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
+        </TouchableOpacity>
         <Text style={styles.title}>Two Factor Authentication</Text>
+      </View>
+      <View style={styles.container}>
+    
         <Text style={styles.subTitle} >We have sent a code to your email. Check your email and enter the code below.</Text>
 
 
@@ -52,6 +54,11 @@ const TwoFA = ({navigation}:any) => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    marginTop: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: '#FFFFFF', // White background
@@ -100,9 +107,10 @@ const styles = StyleSheet.create({
   },
     //back arrow
     icon: { 
-      width: 28,
-      height: 28,
+      width: 23.5,
+      height: 20,
       marginHorizontal: 20,
+      marginBottom: 10,
       justifyContent: 'flex-end',
       alignItems: 'flex-end',
       },

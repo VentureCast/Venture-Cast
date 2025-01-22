@@ -200,8 +200,8 @@ const styles = StyleSheet.create({
     color: '#4b0082', // Highlight color for dropdown
   },
   icon: { 
-    width: 28,
-    height: 28,
+    width: 23.5,
+    height: 20,
     marginBottom: 20
     },
 });

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import StaticHeader from './Components/StaticHeader';
 import TradeItem from './Components/TradeItem';
 
 const TradeScreen = () => {
@@ -16,35 +15,35 @@ const TradeScreen = () => {
             title='Buy Stock'
             description='Buy stock for as little as just one dollar.'
             icon={require('../Assets/Icons/BuyStock.png')}
-            page= 'BuyStock' // wrong page, needs to take me somewhere to see stock options, wait wtf is this page even for?????
+            page= 'BuyInter' 
             />
 
           <TradeItem 
             title='Sell Stock'
             description='Sell some or all of you stock holdings to turn a profit.'
             icon={require('../Assets/Icons/SellStock.png')}
-            page= 'BuyStock'
+            page= 'SellInter'
             />
 
           <TradeItem 
             title='Short Sell Stock'
             description='Bet against any stock so long as you have three time the borrowing ammount in your account.'
             icon={require('../Assets/Icons/ShortSell.png')}
-            page= 'BuyStock'
+            page= 'ShortInter'
             />
 
           <TradeItem 
             title='Deposit to VentureCast'
             description='Transfer funds instantly to your VentureCast account.'
             icon={require('../Assets/Icons/Deposit.png')}
-            page= 'Deposit'
+            page= 'DepositOption'
             />
 
           <TradeItem 
             title='Withdraw from VentureCast'
             description='Transfer funds from VentureCast account to a bank account of your choosing.'
             icon={require('../Assets/Icons/Withdraw.png')}
-            page= 'Withdraw'
+            page= 'WithdrawOption'
             /> 
 
           <TradeItem 

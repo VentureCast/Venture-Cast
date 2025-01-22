@@ -2,14 +2,20 @@
 import React from 'react';
 import { View, Text, ImageBackground, Image} from 'react-native';
 import { StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 import ActionButton from './ActionButton';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  DepositOption: undefined;
+};
+
 
 
 const arrowUp = require('../../Assets/Icons/Arrow-Up-White.png');
 const arrowDown = require('../../Assets/Icons/Arrow-Down-White.png');
 
 const Header = ({ balance, percentChange, moneyChange }:any) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <ImageBackground source={require('../../Assets/Images/portfolio-background.png')}>
       <View style={styles.header}>
@@ -20,7 +26,7 @@ const Header = ({ balance, percentChange, moneyChange }:any) => {
         </View>
       </View>
       <View style={styles.actionButtonContainer}>
-        <ActionButton label="Deposit Funds" onPress={() => {}} large={false} />
+        <ActionButton label="Deposit Funds" onPress={() => navigation.navigate('DepositOption')} large={false} />
       </View>
     </ImageBackground>
   );

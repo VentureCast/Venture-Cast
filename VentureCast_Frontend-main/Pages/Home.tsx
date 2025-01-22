@@ -7,13 +7,13 @@ import StockDetailsScreen from './StockDetails';
 import ClipsElement from './Components/ClipsElement';
 import MiniStockScroll from './Components/MiniStockScroll';
 import ActionButtonDark from './Components/ActionButtonDark';
-import StaticHeader from './Components/StaticHeader';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
   StockPage: undefined; // Do this for all linked pages
   Portfolio: undefined;
   ClipsPage: undefined;
+  DepositOption: undefined;
 };
 
 const userData = [
@@ -98,7 +98,7 @@ const VentureCastHome = () => {
 
       {/* Deposit to Venture Cast Button: would like this to appear when 
       the "top-locked" one dissapears adn then stick to the nav tab*/}
-      <ActionButtonDark label="Deposit to VentureCast" onPress={() => {}} large={true} />
+      <ActionButtonDark label="Deposit to VentureCast" onPress={() => navigation.navigate('DepositOption')} large={true} />
         
     </ScrollView>
   </>

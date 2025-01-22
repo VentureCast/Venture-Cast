@@ -203,8 +203,8 @@ const styles = StyleSheet.create({
 
   //go back button
   miniLogo: {
-    width: 30, 
-    height: 30,
+    width: 23.5,
+    height: 20,
     marginHorizontal: 20,
     marginTop: 20,
   },

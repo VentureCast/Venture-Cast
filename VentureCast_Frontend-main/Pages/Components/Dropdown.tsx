@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 
-const Dropdown = () => {
+const Dropdown = ({dropOptions, filler}:any) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('Sort By');
-  const options = ['Price', 'Change', 'Name'];
+  const [selectedValue, setSelectedValue] = useState(filler);
 
-  const handleSelect = (value) => {
-    setSelectedValue(value);
+  const handleSelect = (item: string) => {
+    setSelectedValue(item);
     setIsVisible(false);
   };
 
@@ -27,7 +26,7 @@ const Dropdown = () => {
         />
         <View style={styles.dropdownContainer}>
           <FlatList
-            data={options}
+            data={dropOptions}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity
@@ -46,21 +45,20 @@ const Dropdown = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingLeft: 80,
   },
   dropdownButton: {
     borderColor: '#351560',
-    width: 102,
+    width: '100%',
     borderWidth: 3,
-    borderRadius: 84.21,
+    borderRadius: 20,
     justifyContent: 'center',
-    padding: 8,
+    padding: 10,
   },
   dropdownText: {
-    fontSize: 13.47,
+    fontSize: 14,
     textAlign: 'center',
+    fontWeight: '500',
+    fontFamily: 'urbanist',
   },
   modalOverlay: {
     flex: 1,

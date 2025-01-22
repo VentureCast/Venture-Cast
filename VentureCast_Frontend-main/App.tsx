@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 
 //COLORS:
 //Dark Purple: #351560
@@ -13,11 +12,10 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 // positive green: #12D18E
 // negative red: #F75555
 
-
 // Next tasks:
-// finish trade page buttons and payment method buttons >> edit payment details
-      // did withdraw and deposit
-      // need buy/sell/short stock to mirror etrade page
+// finish trade page buttons short sell
+// payment method buttons >> edit payment details
+      // need short stock page
 // settings, watchlist, and trans activity
 
 // Import your screens
@@ -25,8 +23,15 @@ import VentureCast from './Pages/VentureCast';
 import CreateAccount from './Pages/CreateAccount';
 import CreateAccountScreen from './Pages/CreateAccount2';
 import SignInScreen from './Pages/SignInScreen';
+// header components
+import HeaderLeft from './Pages/Components/HeaderLeft';
+import HeaderRight from './Pages/Components/HeaderRight';
+import HeaderRightWatchlist from './Pages/Components/HeaderRightWatclist';
+import StockPage from './Pages/StockPage';
+import HeaderLeftStock from './Pages/Components/HeaderLeftStock';
+import HeaderRightStock from './Pages/Components/HeaderRightStock';
 // import HomeScreen from './Pages/HomeScreen'; // New Home Screen component
-import WatchListScreen from './Pages/Watchlist'; // Example bottom tab screen
+import WatchListScreen from './Pages/Watchlist';
 import NotificationScreen from './Pages/Notifications';
 import VentureCastHome from './Pages/Home';
 import PortfolioScreen from './Pages/Portfolio';
@@ -50,15 +55,12 @@ import PaymentMethods from './Pages/PaymentMethods';
 import AddPayment from './Pages/AddPayment';
 import Withdraw from './Pages/Withdraw';
 import Deposit from './Pages/Deposit';
-
-// header components
-import HeaderLeft from './Pages/Components/HeaderLeft';
-import HeaderRight from './Pages/Components/HeaderRight';
-import HeaderRightWatchlist from './Pages/Components/HeaderRightWatclist';
-import StockPage from './Pages/StockPage';
-import HeaderLeftStock from './Pages/Components/HeaderLeftStock';
-import HeaderRightStock from './Pages/Components/HeaderRightStock';
-
+import WithdrawOption from './Pages/WithdrawOption';
+import DepositOption from './Pages/DepositOption';
+import BuyInter from './Pages/BuyInter';
+import SellInter from './Pages/SellInter';
+import ShortInter from './Pages/ShortInter';
+import ShortStockScreen from './Pages/ShortStock';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,8 +75,6 @@ const account = require('./Assets/Icons/Profile.png');
 const accountFocused = require('./Assets/Icons/Profile-focused.png');
 const home = require('./Assets/Icons/Home.png');
 const homeFocused = require('./Assets/Icons/HomePurple.png');
-
-
 
 // Home Tabs (Bottom Tab Navigator)
 const HomeTabs = ({navigation}:any) => {
@@ -105,8 +105,6 @@ const HomeTabs = ({navigation}:any) => {
             ? homeFocused // Path to active home icon
             : home; // Path to inactive home icon
           }
-
-
           // Return the corresponding icon for each tab
           return (
             <Image
@@ -137,7 +135,6 @@ const HomeTabs = ({navigation}:any) => {
           <HeaderRight />
         ),
       })}
-
     >
       <Tab.Screen name="Portfolio" component={PortfolioScreen} />
       <Tab.Screen name="Discover" component={DiscoverScreen} />
@@ -282,12 +279,12 @@ const App = () => {
         />
         <Stack.Screen
           name="HomeScreen"
-          component={VentureCastHome} // Add the Notifs screen
+          component={VentureCastHome} // Add the home screen
           options={{ headerShown: true }} // Hide header for bottom tabs
         />
         <Stack.Screen
           name="Trade"
-          component={TradeScreen} // Add the Notifs screen
+          component={TradeScreen} // Add the trade screen
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
@@ -296,15 +293,45 @@ const App = () => {
           options={{ headerShown: false }} // Hide header for bottom tabs
         /> 
         <Stack.Screen
+          name="ShortStock"
+          component={ShortStockScreen} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
+          name="BuyInter"
+          component={BuyInter} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
+          name="ShortInter"
+          component={ShortInter} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
+          name="SellInter"
+          component={SellInter} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
           name="Withdraw"
-          component={Withdraw} // Add the buy stock screen
+          component={Withdraw} // Add the withdraw screen
           options={{ headerShown: false }} // Hide header for bottom tabs
         />      
         <Stack.Screen
           name="Deposit"
-          component={Deposit} // Add the buy stock screen
+          component={Deposit} // Add the deposit screen
           options={{ headerShown: false }} // Hide header for bottom tabs
-        />        
+        />      
+        <Stack.Screen
+          name="WithdrawOption"
+          component={WithdrawOption} // Add the deposit screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />   
+        <Stack.Screen
+          name="DepositOption"
+          component={DepositOption} // Add the deposit screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />  
         <Stack.Screen
           name="DiscoverSubPage"
           component={DiscoverSubPage} // Add the info from a discover item 

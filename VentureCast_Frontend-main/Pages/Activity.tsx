@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
       marginVertical: 20,
     },
   icon: { 
-    width: 28,
-    height: 28,
+    width: 23.5,
+    height: 20,
     marginHorizontal: 20,
     },
 });

@@ -15,12 +15,14 @@ const SignInScreen = ({navigation}:any) => {
 
   return (
     <ScrollView style={styles.scrollContainer}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        {/* Back icon here */}
-        <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
-      </TouchableOpacity>
-      <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
+        </TouchableOpacity>
         <Text style={styles.title}>Sign In</Text>
+      </View>
+      <View style={styles.container}>
+       
 
         <InputField
           label="Username"
@@ -50,10 +52,16 @@ const SignInScreen = ({navigation}:any) => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    marginTop: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: '#FFFFFF', // White background
-    paddingVertical: 30,
+    paddingTop: 60,
+    paddingBottom: 30,
   },
   container: {
     flex: 1,
@@ -75,16 +83,10 @@ const styles = StyleSheet.create({
   },
   //back arrow
   icon: { 
-    width: 28,
-    height: 28,
+    width: 23.5,
+    height: 20,
     marginHorizontal: 20,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    },
-    backButton: {
-      height: 60,
-      marginBottom: 30,
-      paddingTop: 40,
+    marginBottom: 18, // need these to be relative to screen size
     },
     //reset pass
     resetButton: {

@@ -3,7 +3,6 @@ import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, 
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { Button } from 'react-native-paper';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
-import StaticHeader from './Components/StaticHeader';
 import LineGraph from './Components/LineGraph';
 import StockItems from './Components/StockItems';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -95,7 +94,8 @@ const PortfolioScreen = ({}:any) => {
           <View style={styles.stockTitleRow}>
             <Text style={styles.sectionTitle}>My Stock Positions</Text>
             <Dropdown 
-
+              dropOptions={['Price', 'Name', 'Percent']}
+              filler='Sort By'
             />
           </View>
           {stockData.map(stock => (
@@ -121,7 +121,8 @@ const PortfolioScreen = ({}:any) => {
           <View style={styles.stockTitleRow}>
             <Text style={styles.sectionTitle}>My Short Positions</Text>
             <Dropdown 
-
+              dropOptions={['Price', 'Name', 'Percent']}
+              filler='Sort By'
             />
           </View>
           {shortData.map(short => (
@@ -223,6 +224,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // Arrange items in rows
     flexWrap: 'wrap', // Wrap to the next row if needed
     alignItems: 'center', // Center items vertically
+    justifyContent: 'space-between',
+    padding: 10,
   },
   accountText: {
     fontSize: 16,
@@ -237,8 +240,10 @@ const styles = StyleSheet.create({
   accountDetail: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10,
+    justifyContent: 'flex-start',
+    padding: 11,
+    paddingLeft: 10,
+    width: '50%',
   },
   detailLogo: {
     width: 60, 
@@ -258,8 +263,6 @@ const styles = StyleSheet.create({
   accountDetailContainer: {
     flexDirection: 'column',
     alignItems: 'flex-start', 
-    width: 109,
-    height: 53,
   },
 
 // stock/short list section
@@ -267,6 +270,7 @@ const styles = StyleSheet.create({
   stockTitleRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   stockList: {
     marginLeft: 20,
@@ -318,7 +322,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist-Regular',
   },
   stockChange: {
-    fontSize: 16,
+    fontSize: 14,
     marginTop: 4,
     fontFamily: 'Urbanist-Regular',
     fontWeight: '600',

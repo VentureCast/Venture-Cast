@@ -27,7 +27,7 @@ const MoreInfoButton = () => {
       {/* Modal for navigation options */}
       <Modal
         transparent={true}
-        animationType="slide"
+        animationType='fade'
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >

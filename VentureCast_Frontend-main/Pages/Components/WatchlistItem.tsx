@@ -6,13 +6,13 @@ const WatchListItem = ({ profileImage, name, shortName, price, priceChange }:any
 
   // Dummy data to populate the modal list
   const watchListData = [
-    { id: 1, name: 'Jake Paul', shortName: 'JKPI', price: 207.47, priceChange: 2.37, profileImage: require('../../Assets/Images/dude-perfect.png') },
+    { id: 1, name: 'Jake Paul', shortName: 'JKPI', price: 207.47, priceChange: 2.37, profileImage: require('../../Assets/Images/jake-paul.png') },
     { id: 2, name: 'Like Nastya', shortName: 'LKNT', price: 274.52, priceChange: -0.86, profileImage: require('../../Assets/Images/pewdiepie.png') },
-    { id: 3, name: 'Alan Becker', shortName: 'ABK', price: 95.56, priceChange: -4.25, profileImage: require('../../Assets/Images/jake-paul.png') },
+    { id: 3, name: 'James Beast Sr.', shortName: 'MBK', price: 95.56, priceChange: -4.25, profileImage: require('../../Assets/Images/JimmyBeast.png') },
     // Add more items here
   ];
 
-  // Handler to toggle modal visibility
+  // Handler to toggle modal visibility wtf is this modal for?
   const handleItemPress = () => {
     setModalVisible(true);
   };
@@ -32,17 +32,17 @@ const WatchListItem = ({ profileImage, name, shortName, price, priceChange }:any
         </View>
         <View style={styles.priceContainer}>
           <Text style={styles.price}>{`$${price}`}</Text>
-          <Text style={[styles.priceChange, priceChange > 0 ? styles.positive : styles.negative]}>
-            {priceChange > 0 ? `+${priceChange}%` : `${priceChange}%`}
+          <Text style={[styles.priceChange, priceChange >= 0 ? styles.positive : styles.negative]}>
+            {priceChange >= 0 ? `+${priceChange}%` : `${priceChange}%`}
           </Text>
         </View>
       </TouchableOpacity>
 
-      {/* Modal styled as bottom sheet */}
+      {/* Modal styled as bottom sheet this is not necessary? but i want the background to fade in and the bottom to swipe up */}
       <Modal
         visible={modalVisible}
         transparent={true}
-        animationType="slide"
+        animationType='fade'
         onRequestClose={handleCloseModal}
       >
         <TouchableWithoutFeedback onPress={handleCloseModal}>
@@ -84,7 +84,8 @@ const WatchListItem = ({ profileImage, name, shortName, price, priceChange }:any
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
-    padding: 15,
+    paddingVertical: 15,
+    marginHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
@@ -99,11 +100,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: 'urbanist',
   },
   shortName: {
     color: '#888',
     fontSize: 14,
+    fontFamily: 'urbanist',
   },
   priceContainer: {
     justifyContent: 'center',
@@ -112,10 +115,12 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: 'bold',
     fontSize: 16,
+    fontFamily: 'urbanist',
   },
   priceChange: {
     marginTop: 5,
     fontSize: 14,
+    fontFamily: 'urbanist',
   },
   positive: {
     color: 'green',
@@ -183,9 +188,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   saveButton: {
-    backgroundColor: '#6200ee',
+    backgroundColor: '#351560',
     paddingVertical: 12,
-    borderRadius: 10,
+    borderRadius: 20,
     marginTop: 10,
     textAlign: 'center',
   },

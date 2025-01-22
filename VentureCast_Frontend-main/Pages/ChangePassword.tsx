@@ -15,12 +15,13 @@ const ChangePassword = ({navigation}:any) => {
 
   return (
     <ScrollView style={styles.scrollContainer}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        {/* Back icon here */}
-        <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
-      </TouchableOpacity>
-      <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
+        </TouchableOpacity>
         <Text style={styles.title}>Change Password</Text>
+      </View>
+      <View style={styles.container}>
 
         <InputField
           label="Old Password"
@@ -53,7 +54,13 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: '#FFFFFF', // White background
-    paddingVertical: 30,
+    paddingBottom: 30,
+    paddingTop: 60,
+  },
+  header: {
+    marginTop: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   container: {
     flex: 1,
@@ -83,17 +90,12 @@ const styles = StyleSheet.create({
   },
   //back arrow
   icon: { 
-    width: 28,
-    height: 28,
+    width: 23.5,
+    height: 20,
     marginHorizontal: 20,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    marginBottom: 18, // need these to be relative to screen size
     },
-    backButton: {
-      height: 60,
-      marginBottom: 30,
-      paddingTop: 40,
-    },
+
 });
 
 export default ChangePassword;

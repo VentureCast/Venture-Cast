@@ -9,7 +9,7 @@ type RootStackParamList = {
   short: undefined;
 };
 
-const BuyStockScreen = ({ }:any) => {
+const ShortStockScreen = ({ }:any) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const [investmentAmount, setInvestmentAmount] = useState('10000');
@@ -21,7 +21,7 @@ const BuyStockScreen = ({ }:any) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backButton}>←</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Buy</Text>
+        <Text style={styles.headerTitle}>Short Sell</Text>
       </View>
 
       {/* Stock Info */}
@@ -91,15 +91,16 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   backButton: {
-    fontSize: 24,
+    fontSize: 30,
     color: '#000',
     fontFamily: 'urbanist',
 
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
     marginLeft: 15,
+    fontFamily: 'urbanist',
   },
   stockInfo: {
     flexDirection: 'row',
@@ -208,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BuyStockScreen;
+export default ShortStockScreen;
