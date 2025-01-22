@@ -14,8 +14,10 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library
 // negative red: #F75555
 
 
-//Sat task:
-// finish trade page buttons and payment method buttons (add payment and payment details)
+// Next tasks:
+// finish trade page buttons and payment method buttons >> edit payment details
+      // did withdraw and deposit
+      // need buy/sell/short stock to mirror etrade page
 // settings, watchlist, and trans activity
 
 // Import your screens
@@ -45,8 +47,11 @@ import AboutVentureCastScreen from './Pages/About';
 import ChangePassword from './Pages/ChangePassword';
 import HelpCenter from './Pages/Account/HelpCenter';
 import PaymentMethods from './Pages/PaymentMethods';
+import AddPayment from './Pages/AddPayment';
+import Withdraw from './Pages/Withdraw';
+import Deposit from './Pages/Deposit';
 
-// header componets
+// header components
 import HeaderLeft from './Pages/Components/HeaderLeft';
 import HeaderRight from './Pages/Components/HeaderRight';
 import HeaderRightWatchlist from './Pages/Components/HeaderRightWatclist';
@@ -185,12 +190,12 @@ const App = () => {
         />
         <Stack.Screen
           name="ResetPassword2FA"
-          component={ResetPassword2FA} // reset pass screen 1
+          component={ResetPassword2FA} // reset pass screen 2
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
           name="FinalResetPassword"
-          component={FinalResetPassword} // reset pass screen 1
+          component={FinalResetPassword} // reset pass screen 3
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
@@ -233,6 +238,11 @@ const App = () => {
         <Stack.Screen
           name="PaymentMethods"
           component={PaymentMethods} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="AddPayment"
+          component={AddPayment} // Add the Notifs screen
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
@@ -283,6 +293,16 @@ const App = () => {
         <Stack.Screen
           name="BuyStock"
           component={BuyStockScreen} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
+          name="Withdraw"
+          component={Withdraw} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />      
+        <Stack.Screen
+          name="Deposit"
+          component={Deposit} // Add the buy stock screen
           options={{ headerShown: false }} // Hide header for bottom tabs
         />        
         <Stack.Screen

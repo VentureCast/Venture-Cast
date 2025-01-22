@@ -37,14 +37,14 @@ const TradeScreen = () => {
             title='Deposit to VentureCast'
             description='Transfer funds instantly to your VentureCast account.'
             icon={require('../Assets/Icons/Deposit.png')}
-            page= 'BuyStock'
+            page= 'Deposit'
             />
 
           <TradeItem 
             title='Withdraw from VentureCast'
             description='Transfer funds from VentureCast account to a bank account of your choosing.'
             icon={require('../Assets/Icons/Withdraw.png')}
-            page= 'BuyStock'
+            page= 'Withdraw'
             /> 
 
           <TradeItem 

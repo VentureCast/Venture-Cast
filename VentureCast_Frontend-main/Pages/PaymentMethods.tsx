@@ -27,11 +27,11 @@ const PaymentMethods = () => {
       <ScrollView style={styles.container}>
         <View style = {styles.clipsSubTitle}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-Left.png')} />
+            <Image style={styles.leftArrow} source={require('../Assets/Icons/Arrow-Left.png')} />
           </TouchableOpacity>
           <Text style={styles.sectionTitle}>Payment Methods</Text>
           <TouchableOpacity onPress={() => navigation.navigate('AddPayment')}>
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/plus.png')} />
+            <Image style={styles.plus} source={require('../Assets/Icons/plus.png')} />
           </TouchableOpacity>
         </View>
         <View style={styles.cardContainer}>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     alignContent: 'flex-start',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
     fontFamily: 'Urbanist-Regular',
@@ -74,12 +74,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
 
   },
-  rightArrow: {
+  leftArrow: {
     justifyContent: 'flex-end',
-
+    marginTop: 4,
+    width: 23.75,
+    height: 20,
   },
+  plus: {
+    width: 30,
+    height: 30,
+  },
+  
   clipsSubTitle: {
     flexDirection: 'row',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     marginTop: 20,
     marginHorizontal: 20,
