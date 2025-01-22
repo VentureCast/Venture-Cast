@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     margin: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F4FAF5', // Match the background color
+    backgroundColor: 'white', // Match the background color
     borderRadius: 15,
     shadowColor: '#351560',
     shadowOffset: { width: 1, height: 1.5 },
