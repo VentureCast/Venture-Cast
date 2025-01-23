@@ -13,10 +13,10 @@ import { useNavigation } from '@react-navigation/native';
 // negative red: #F75555
 
 // Next tasks:
-// finish trade page buttons short sell
+    // look into importing stocks from a dummy database for smoother integration
+// watchlist (idk what to do with the modal the "devs" implemented), and trans activity
 // payment method buttons >> edit payment details
-      // need short stock page
-// settings, watchlist, and trans activity
+
 
 // Import your screens
 import VentureCast from './Pages/VentureCast';
@@ -395,7 +395,7 @@ const App = () => {
           component={HelpCenter} // Add the info from a discover item 
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
-                <Stack.Screen
+        <Stack.Screen
           name="StockPage"
           component={StockPage} // Add the info from a discover item 
           options={{ 

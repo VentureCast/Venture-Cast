@@ -22,6 +22,17 @@ const WatchListItem = ({ profileImage, name, shortName, price, priceChange }:any
     setModalVisible(false);
   };
 
+  const formatNumber = (number: number, decimals: number = 2): string => {
+    return number.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+  };
+
+  const formatCurrency = (number: number, decimals: number = 2): string => {
+    return `$${formatNumber(number, decimals)}`;
+  };
+
   return (
     <>
       <TouchableOpacity onPress={handleItemPress} style={styles.itemContainer}>
@@ -31,7 +42,7 @@ const WatchListItem = ({ profileImage, name, shortName, price, priceChange }:any
           <Text style={styles.shortName}>{shortName}</Text>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>{`$${price}`}</Text>
+          <Text style={styles.price}>{formatCurrency(price)}</Text>
           <Text style={[styles.priceChange, priceChange >= 0 ? styles.positive : styles.negative]}>
             {priceChange >= 0 ? `+${priceChange}%` : `${priceChange}%`}
           </Text>
@@ -63,7 +74,7 @@ const WatchListItem = ({ profileImage, name, shortName, price, priceChange }:any
                   <Text style={styles.modalShortName}>{item.shortName}</Text>
                 </View>
                 <View style={styles.modalPriceContainer}>
-                  <Text style={styles.modalPrice}>{`$${item.price}`}</Text>
+                  <Text style={styles.modalPrice}>{formatCurrency(item.price)}</Text>
                   <Text style={[styles.modalPriceChange, item.priceChange > 0 ? styles.positive : styles.negative]}>
                     {item.priceChange > 0 ? `+${item.priceChange}%` : `${item.priceChange}%`}
                   </Text>

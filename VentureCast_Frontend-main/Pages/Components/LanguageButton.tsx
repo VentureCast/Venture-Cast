@@ -33,7 +33,7 @@ const LanguageButton = () => {
         {/* Modal for navigation options */}
         <Modal
           transparent={true}
-          animationType="slide"
+          animationType="fade"
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}
         >
@@ -207,8 +207,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 18,
     flex: 1,
+    fontWeight: '600',
     marginLeft: 10,
     fontFamily: 'urbanist',
   },

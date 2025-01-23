@@ -13,6 +13,7 @@ type RootStackParamList = {
   DepositOption: undefined;
   ChangePassword: undefined;
   Activity: undefined;
+  VentureCast: undefined;
 };
 // import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
 
@@ -38,14 +39,14 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
   );
 };
 
-const AccountScreen = ({}:any) => {
+const AccountScreen = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
 
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>
       {/* Profile Header */}
       <View style={styles.profileHeader}>
         <Image
@@ -75,61 +76,71 @@ const AccountScreen = ({}:any) => {
       {/* Menu Items */}
       <View style={styles.menuItem}>
         {/* <Ionicons name="person-outline" size={24} color="#ffab00" /> */}
+        <Image source={require('../Assets/Icons/ProfileColor.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Profile')}>Personal Info</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="notifications-outline" size={24} color="#ff3d00" /> */}
+        <Image source={require('../Assets/Icons/Notifications.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Notifications')}>Notifications</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="time-outline" size={24} color="#673ab7" /> */}
+        <Image source={require('../Assets/Icons/TransactionActivity.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Activity')}>Transaction History</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="bar-chart-outline" size={24} color="#43a047" /> */}
+        <Image source={require('../Assets/Icons/FundingActivity.png')} style={styles.menuIcon} />
         <Text style={styles.menuText}>Funding Activity</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="card-outline" size={24} color="#ff9100" /> */}
+        <Image source={require('../Assets/Icons/Deposit.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('DepositOption')}>Deposit to VentureCast</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="cash-outline" size={24} color="#f44336" /> */}
+        <Image source={require('../Assets/Icons/Withdraw.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('WithdrawOption')}>Withdraw from VentureCast</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="help-circle-outline" size={24} color="#6200ea" /> */}
+        <Image source={require('../Assets/Icons/Help.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('HelpCenter')}>Help</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="lock-closed-outline" size={24} color="#795548" /> */}
+        <Image source={require('../Assets/Icons/ChangePassword.png')} style={styles.menuIcon} />
         <Text style={styles.menuText}  onPress={() => navigation.navigate('ChangePassword')}>Change Password</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="information-circle-outline" size={24} color="#2196f3" /> */}
+        <Image source={require('../Assets/Icons/About.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('About')}>About Venture Cast</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="log-out-outline" size={24} color="#d32f2f" /> */}
-        <Text style={styles.menuText}>Log Out</Text>
+        <Image source={require('../Assets/Icons/LogOut.png')} style={styles.menuIcon} />
+        <Text style={styles.logOut} onPress={() => navigation.navigate('VentureCast')}>Log Out</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
     </ScrollView>
@@ -169,15 +180,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderColor: '#e0e0e0',
+    paddingVertical: 10,
   },
   menuText: {
-    fontSize: 16,
+    fontSize: 18,
     flex: 1,
     marginLeft: 10,
-    fontFamily: 'Urbanist-Regular',
+    fontWeight: '600',
+    fontFamily: 'urbanist',
+  },
+  menuIcon: {
+    width: 52,
+    height: 52,
   },
   menuLanguageContainer: {
     flexDirection: 'row',
@@ -186,6 +200,31 @@ const styles = StyleSheet.create({
   },
   languageOption: {
     color: '#6c757d',
+    fontFamily: 'urbanist'
+  },
+  logOut: {
+    fontSize: 18,
+    flex: 1,
+    marginLeft: 10,
+    fontFamily: 'urbanist',
+    color: '#351560',
+    fontWeight: 'bold',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  backButton: {
+    fontSize: 30,
+    color: '#000',
+    fontFamily: 'urbanist',
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontFamily: 'urbanist',
   },
   // account money details
   accountGrid: {
@@ -214,8 +253,8 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   detailLogo: {
-    width: 60, 
-    height: 60,
+    width: 56, 
+    height: 56,
     marginRight: 8,
   },
   detailName: {

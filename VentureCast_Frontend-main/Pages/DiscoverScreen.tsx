@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity, FlatList, Modal, TextInput} from 'react-native';
+import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import TrendBox from './Components/TrendBox';
 import ClipsElement from './Components/ClipsElement';
-import StaticHeader from './Components/StaticHeader';
 import ClipTrend from './Components/ClipTrend';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
@@ -19,17 +19,7 @@ const userData = [
 ]
 
 //category data, should be imported from database
-const trendData = [
-{id: '1', name: "All Stocks", icon: require('../Assets/Icons/check.png') },
-{id: '2', name: "Gambling", icon: require('../Assets/Icons/gambling.png')},
-{id: '3', name: "Chatting", icon: require('../Assets/Icons/chatting.png')},
-{id: '4', name: "Cooking", icon: require('../Assets/Icons/burger.png') },
-{id: '5', name: "Lifestyle", icon: require('../Assets/Icons/cool.png')},
-{id: '6', name: "IRL", icon: require('../Assets/Icons/firework.png')},
-{id: '7', name: "Trending", icon: require('../Assets/Icons/TV.png') },
-{id: '8', name: "Electronics", icon: require('../Assets/Icons/monitor.png')},
-{id: '9', name: "Cars", icon: require('../Assets/Icons/car.png')},
-];
+
 const clipsData = [
   {id: '1', description: 'Most common names in streaming today', name: "Top 50",  image: require('../Assets/Images/Top50.png') },
   {id: '2', description: 'High stakes and big wins', name: "Gambling", image: require('../Assets/Images/Gambling.png')},
@@ -43,13 +33,96 @@ const clipsData = [
   {id: '10', description: 'All the biggest aestetic trends', name: "Design", image: require('../Assets/Images/Design.png')},
   ];
 
+
+
 const DiscoverScreen = () => {
+
+  const trendData = [
+    {id: '1', name: "All Stocks", icon: require('../Assets/Icons/check.png') },
+    {id: '2', name: "Gambling", icon: require('../Assets/Icons/gambling.png')},
+    {id: '3', name: "Chatting", icon: require('../Assets/Icons/chatting.png')},
+    {id: '4', name: "Cooking", icon: require('../Assets/Icons/burger.png') },
+    {id: '5', name: "Lifestyle", icon: require('../Assets/Icons/cool.png')},
+    {id: '6', name: "IRL", icon: require('../Assets/Icons/firework.png')},
+    {id: '7', name: "Trending", icon: require('../Assets/Icons/TV.png') },
+    {id: '8', name: "Electronics", icon: require('../Assets/Icons/monitor.png')},
+    {id: '9', name: "Cars", icon: require('../Assets/Icons/car.png')},
+    ];
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredTrendData, setFilteredTrendData] = useState< 
+    { id: string; name: string; icon: any }[] >([]); // Define the type explicitly    
+  const [isSearchModalVisible, setSearchModalVisible] = useState(false);
+
+// Search handler
+const handleSearch = (query: string) => {
+  setSearchQuery(query);
+  if (query.trim()) {
+    const newData = trendData.filter((trend) =>
+      trend.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredTrendData(newData);
+  } else {
+    setFilteredTrendData([]); // Clear results when query is empty
+  }
+};
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
   <>
    {/* balance and header also need to be imported data from user database*/}
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Trending Section */}
+      {/* Search Button */}
+    <View style={styles.searchBar}>
+      <TouchableOpacity
+        style={styles.searchButton}
+        onPress={() => setSearchModalVisible(true)}
+      >
+        <Text style={styles.searchButtonText}>Search...</Text>
+        <Image style={styles.rightArrow} source={require('../Assets/Icons/Search.png')} />
+      </TouchableOpacity>
+    </View>
+      {/* Search Modal */}
+      <Modal
+        visible={isSearchModalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setSearchModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            {/* Search Bar */}
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search..."
+              value={searchQuery}
+              onChangeText={handleSearch}
+            />
+            {/* Close Button */}
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setSearchModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+
+            {/* Results */}
+            <FlatList
+              data={filteredTrendData}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <TrendBox name={item.name} icon={item.icon} />
+              )}
+              ListEmptyComponent={
+                searchQuery ? (
+                  <Text style={styles.noResultsText}>No results found</Text>
+                ) : null
+              }
+            />
+          </View>
+        </View>
+      </Modal>
+    <ScrollView style={styles.container}>
       <View style={styles.categoriesContainer}>
       {trendData.map(trend => (
             <TrendBox
@@ -87,8 +160,6 @@ const DiscoverScreen = () => {
         icon = {require('../Assets/Icons/Play.png')}
         />
       </View>
-
-      
     </ScrollView>
   </>
   );
@@ -100,34 +171,92 @@ const DiscoverScreen = () => {
 //
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#FFFFFF',
-    paddingBottom: 20,
-  },
-  categoriesContainer: {
-    flex: 1,
-    flexDirection: 'row', // Arrange items in rows
-    flexWrap: 'wrap', // Wrap to the next row if needed
-    alignItems: 'center', // Center items vertically
-    justifyContent: 'flex-start',
-    padding: 20,
-  },
-  sectionTitle: {
-    alignContent: 'flex-start',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    fontFamily: 'Urbanist-Regular',
-    },
+  // search bar
+searchBar: {
+  backgroundColor: 'white',
 
-    clipsContainer: {
-      flex: 1,
-      flexDirection: 'row', // Arrange items in rows
-      flexWrap: 'wrap', // Wrap to the next row if needed
-      alignItems: 'center', // Center items vertically
-      justifyContent: 'flex-start',
-      padding: 20,
-    },
+},
+searchButton: {
+  margin: 10,
+  padding: 10,
+  paddingHorizontal: 20,
+  backgroundColor: '#351560',
+  opacity: 0.6,
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  borderRadius: 20,
+},
+searchButtonText: {
+  color: '#FFFFFF',
+  fontSize: 24,
+  fontWeight: 'bold',
+  fontFamily: 'urbanist',
+},
+modalOverlay: {
+  flex: 1,
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+modalContent: {
+  backgroundColor: '#FFFFFF',
+  borderRadius: 20,
+  width: '90%',
+  maxHeight: '80%',
+  padding: 20,
+},
+searchInput: {
+  borderColor: '#ccc',
+  borderWidth: 1,
+  borderRadius: 20,
+  padding: 10,
+  marginBottom: 20,
+},
+closeButton: {
+  padding: 10,
+  backgroundColor: '#F75555',
+  borderRadius: 20,
+  alignItems: 'center',
+  marginBottom: 10,
+},
+closeButtonText: {
+  color: '#FFFFFF',
+  fontWeight: 'bold',
+},
+noResultsText: {
+  textAlign: 'center',
+  color: '#F75555',
+  marginTop: 20,
+},
+ // main page
+container: {
+  backgroundColor: '#FFFFFF',
+  paddingBottom: 20,
+},
+categoriesContainer: {
+  flex: 1,
+  flexDirection: 'row', // Arrange items in rows
+  flexWrap: 'wrap', // Wrap to the next row if needed
+  alignItems: 'center', // Center items vertically
+  justifyContent: 'flex-start',
+  padding: 20,
+},
+sectionTitle: {
+  alignContent: 'flex-start',
+  fontSize: 20,
+  fontWeight: 'bold',
+  marginBottom: 10,
+  fontFamily: 'Urbanist-Regular',
+  },
+clipsContainer: {
+  flex: 1,
+  flexDirection: 'row', // Arrange items in rows
+  flexWrap: 'wrap', // Wrap to the next row if needed
+  alignItems: 'center', // Center items vertically
+  justifyContent: 'flex-start',
+  padding: 20,
+},
 // static header
 miniLogo: {
   width: 20, 
@@ -156,33 +285,32 @@ miniHeader: {
   paddingLeft: 20, 
   backgroundColor: '#351560'
 },
+
   //  SubTitles
+subTitle: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  marginTop: 20,
+  marginHorizontal: 20,
+},
+rightArrow: {
+  justifyContent: 'flex-end',
+},
+clipsSubTitle: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  marginTop: 20,
+  borderColor: '#EAE7EF',
+  borderBottomWidth: 1,
+  marginHorizontal: 20,
+},
 
-  subTitle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    marginHorizontal: 20,
-  },
-  rightArrow: {
-    justifyContent: 'flex-end',
-  },
-  clipsSubTitle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    borderColor: '#EAE7EF',
-    borderBottomWidth: 1,
-    marginHorizontal: 20,
-  },
-
-  //Watchlist section
-
-  sectionWatchlist: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    flexDirection: 'row',
-  },
+//Watchlist section
+sectionWatchlist: {
+  paddingHorizontal: 20,
+  paddingVertical: 15,
+  flexDirection: 'row',
+},
 });
 
 export default DiscoverScreen;

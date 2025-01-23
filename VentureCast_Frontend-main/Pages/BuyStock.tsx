@@ -94,12 +94,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#000',
     fontFamily: 'urbanist',
-
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 15,
+    fontFamily: 'urbanist',
   },
   stockInfo: {
     flexDirection: 'row',

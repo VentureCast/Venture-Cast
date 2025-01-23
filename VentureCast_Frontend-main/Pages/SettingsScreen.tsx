@@ -1,9 +1,7 @@
 
 import React, {useState} from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
-import StaticHeader from './Components/StaticHeader';
 import LanguageButton from './Components/LanguageButton';
-import LanguageSelectionScreen from './Account/Language';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
@@ -12,6 +10,10 @@ type RootStackParamList = {
   HelpCenter: undefined;
   ChangePassword: undefined;
   About: undefined;
+  DepositOption: undefined;
+  WithdrawOption: undefined;
+  Activity: undefined;
+  VentureCast: undefined;
 };
 
 // import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
@@ -27,57 +29,61 @@ const SettingsScreen = ( { }:any ) => {
 
 
   return (
-    <>
-
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>
         {/* settings Header */}
-      <View style={styles.titleRow}>
-          <View style={styles.titleRowLeft}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
-            </TouchableOpacity>
-          </View>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.backButton}>←</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Back</Text>
       </View>
 
       {/* Menu Items */}
       <View style={styles.menuItem}>
         {/* <Ionicons name="person-outline" size={24} color="#ffab00" /> */}
+        <Image source={require('../Assets/Icons/ProfileColor.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Profile')}>Personal Info</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="notifications-outline" size={24} color="#ff3d00" /> */}
+        <Image source={require('../Assets/Icons/Notifications.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Notifications')}>Notifications</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="time-outline" size={24} color="#673ab7" /> */}
-        <Text style={styles.menuText}>Transaction History</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
-      </View>
-
-      <View style={styles.menuItem}>
-        {/* <Ionicons name="card-outline" size={24} color="#ff9100" /> */}
-        <Text style={styles.menuText}>Deposit to VentureCast</Text>
+        <Image source={require('../Assets/Icons/TransactionActivity.png')} style={styles.menuIcon} />
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Activity')}>Transaction History</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="bar-chart-outline" size={24} color="#43a047" /> */}
-        <Text style={styles.menuText} onPress={() => navigation.navigate('HelpCenter')}>Funding Activity</Text>
+        <Image source={require('../Assets/Icons/FundingActivity.png')} style={styles.menuIcon} />
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Activity')}>Funding Activity</Text>
+        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
+      </View>
+
+      <View style={styles.menuItem}>
+        {/* <Ionicons name="card-outline" size={24} color="#ff9100" /> */}
+        <Image source={require('../Assets/Icons/Deposit.png')} style={styles.menuIcon} />
+        <Text style={styles.menuText} onPress={() => navigation.navigate('DepositOption')}>Deposit to VentureCast</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="cash-outline" size={24} color="#f44336" /> */}
-        <Text style={styles.menuText}>Withdraw from VentureCast</Text>
+        <Image source={require('../Assets/Icons/Withdraw.png')} style={styles.menuIcon} />
+        <Text style={styles.menuText} onPress={() => navigation.navigate('WithdrawOption')}>Withdraw from VentureCast</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="language-outline" size={24} color="#1e88e5" /> */}
+        <Image source={require('../Assets/Icons/Language.png')} style={styles.menuIcon} />
         <View style={styles.menuLanguageContainer}>
           <LanguageButton />
           <Text style={styles.languageOption}>English (US)</Text>
@@ -87,6 +93,7 @@ const SettingsScreen = ( { }:any ) => {
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="moon-outline" size={24} color="#757575" /> */}
+        <Image source={require('../Assets/Icons/DarkMode.png')} style={styles.menuIcon} />
         <Text style={styles.menuText}>Dark Mode</Text>
         <Switch 
           trackColor={{ false: "#767577", true: "#351560" }}
@@ -97,29 +104,32 @@ const SettingsScreen = ( { }:any ) => {
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="help-circle-outline" size={24} color="#6200ea" /> */}
+        <Image source={require('../Assets/Icons/Help.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('HelpCenter')}>Help</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="lock-closed-outline" size={24} color="#795548" /> */}
+        <Image source={require('../Assets/Icons/ChangePassword.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('ChangePassword')}>Change Password</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="information-circle-outline" size={24} color="#2196f3" /> */}
+        <Image source={require('../Assets/Icons/About.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('About')}>About Venture Cast</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="log-out-outline" size={24} color="#d32f2f" /> */}
-        <Text style={styles.logOut}>Log Out</Text>
+        <Image source={require('../Assets/Icons/LogOut.png')} style={styles.menuIcon} />
+        <Text style={styles.logOut} onPress={() => navigation.navigate('VentureCast')}>Log Out</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
     </ScrollView>
-    </>
   );
 };
 
@@ -150,15 +160,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderColor: '#e0e0e0',
+    paddingVertical: 10,
   },
   menuText: {
-    fontSize: 16,
+    fontSize: 18,
     flex: 1,
     marginLeft: 10,
+    fontWeight: '600',
     fontFamily: 'urbanist',
+  },
+  menuIcon: {
+    width: 52,
+    height: 52,
   },
   menuLanguageContainer: {
     flexDirection: 'row',
@@ -170,42 +183,29 @@ const styles = StyleSheet.create({
     fontFamily: 'urbanist'
   },
   logOut: {
-    fontSize: 16,
+    fontSize: 18,
     flex: 1,
     marginLeft: 10,
     fontFamily: 'urbanist',
     color: '#351560',
     fontWeight: 'bold',
   },
-
-
-  tempBlock: {
-    height: 60,
-    width: '100%',
-    backgroundColor: '#351560',
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
   },
-  sectionTitle: {
-    fontSize: 20,
+  backButton: {
+    fontSize: 30,
+    color: '#000',
+    fontFamily: 'urbanist',
+  },
+  headerTitle: {
+    fontSize: 22,
     fontWeight: 'bold',
-    fontFamily: 'Urbanist',
-    },
-    titleRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 10,
-      marginTop: 20,
-      justifyContent: 'space-between',
-    },
-    titleRowLeft: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-    },
-  icon: { 
-    width: 23.5,
-    height: 20,
-    marginRight: 20,
-    },
+    marginLeft: 10,
+    fontFamily: 'urbanist',
+  },
 });
 
 export default SettingsScreen;
