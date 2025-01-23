@@ -13,6 +13,7 @@ type RootStackParamList = {
   DepositOption: undefined;
   WithdrawOption: undefined;
   Activity: undefined;
+  FundingActivity: undefined;
   VentureCast: undefined;
 };
 
@@ -63,7 +64,7 @@ const SettingsScreen = ( { }:any ) => {
       <View style={styles.menuItem}>
         {/* <Ionicons name="bar-chart-outline" size={24} color="#43a047" /> */}
         <Image source={require('../Assets/Icons/FundingActivity.png')} style={styles.menuIcon} />
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Activity')}>Funding Activity</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('FundingActivity')}>Funding Activity</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 
-const Dropdown = ({dropOptions, filler}:any) => {
+const Dropdown = ({ dropOptions, filler, onSelect }: any) => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(filler);
 
   const handleSelect = (item: string) => {
     setSelectedValue(item);
     setIsVisible(false);
+    if (onSelect) {
+      onSelect(item); // Trigger the callback with the selected item
+    }
   };
 
   return (

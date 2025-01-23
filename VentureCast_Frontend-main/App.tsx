@@ -13,10 +13,14 @@ import { useNavigation } from '@react-navigation/native';
 // negative red: #F75555
 
 // Next tasks:
-    // look into importing stocks from a dummy database for smoother integration
-// watchlist (idk what to do with the modal the "devs" implemented), and trans activity
+// create remaining pages: Buy/sell/short preview, deposit/withdraw success, 
 // payment method buttons >> edit payment details
+// fix clips/news page to toggle between tabs
+    // look into importing stocks from a dummy database for smoother integration
+    // watchlist (idk what to do with the modal the "devs" implemented), and trans activity
+    // share button/function
 
+// go in anywhere i(matt) typed out the format currency function and replace it with the formatCurrency component (adds $ + , and makes 2 decimals )
 
 // Import your screens
 import VentureCast from './Pages/VentureCast';
@@ -61,6 +65,7 @@ import BuyInter from './Pages/BuyInter';
 import SellInter from './Pages/SellInter';
 import ShortInter from './Pages/ShortInter';
 import ShortStockScreen from './Pages/ShortStock';
+import FundingActivity from './Pages/FundingActivity';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -270,6 +275,11 @@ const App = () => {
         <Stack.Screen
           name="Activity"
           component={ActivityScreen} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="FundingActivity"
+          component={FundingActivity} // Add the Notifs screen
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen

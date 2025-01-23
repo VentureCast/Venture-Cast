@@ -13,6 +13,7 @@ type RootStackParamList = {
   DepositOption: undefined;
   ChangePassword: undefined;
   Activity: undefined;
+  FundingActivity: undefined;
   VentureCast: undefined;
 };
 // import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
@@ -98,7 +99,7 @@ const AccountScreen = () => {
       <View style={styles.menuItem}>
         {/* <Ionicons name="bar-chart-outline" size={24} color="#43a047" /> */}
         <Image source={require('../Assets/Icons/FundingActivity.png')} style={styles.menuIcon} />
-        <Text style={styles.menuText}>Funding Activity</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('FundingActivity')}>Funding Activity</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 

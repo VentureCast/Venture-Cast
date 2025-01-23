@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity} from 'react-native';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
-import { Button } from 'react-native-paper';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
 import LineGraph from './Components/LineGraph';
 import StockItems from './Components/StockItems';
+import formatCurrency from './Components/formatCurrency';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
@@ -14,9 +14,6 @@ type RootStackParamList = {
   short: undefined;
 };
 
-//import { Section } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
-
-
 //Account details : cash, equity, daily change and such in a 2x2 grid 
 
 const AccountDetail = ({ name, value, changePercent, image }: any) => {
@@ -25,7 +22,7 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
         <Image source={image} style={styles.detailLogo} />
         <View style={styles.accountDetailContainer}>
           <Text style={styles.detailName}>{name}</Text>
-          <Text style={styles.detailValue}>${value}</Text>
+          <Text style={styles.detailValue}>{formatCurrency(value)}</Text>
           <Text style={[styles.stockChange, changePercent >= 0 ? styles.positive : styles.negative]}>
             ({changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`})
           </Text>
@@ -39,28 +36,77 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
 
 // Portfolio screen starts
 
-const PortfolioScreen = ({}:any) => {
+const PortfolioScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   // Sample data for stock positions
   const stockData = [
-    { id: '1', name: 'Dude Perfect', ticker: 'DUPT', price: '71.05', change: 2.94, logo: require('../Assets/Images/dude-perfect.png') },
-    { id: '2', name: 'PewDiePie', ticker: 'PDP', price: '90.79', change: -2.16, logo: require('../Assets/Images/pewdiepie.png') },
-    { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: '207.47', change: 2.37, logo: require('../Assets/Images/jake-paul.png') },
+    { id: '1', name: 'Dude Perfect', ticker: 'DUPT', price: 71.05, change: 2.94, logo: require('../Assets/Images/dude-perfect.png') },
+    { id: '2', name: 'PewDiePie', ticker: 'PDP', price: 90.79, change: -2.16, logo: require('../Assets/Images/pewdiepie.png') },
+    { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: 207.47, change: 2.37, logo: require('../Assets/Images/jake-paul.png') },
+    { id: '4', name: 'Jimmy BeastMode', ticker: 'MBT', price: 82.50, change: 2.94, logo: require('../Assets/Images/JimmyBeast.png') },
   ];
 
   const shortData = [
-    { id: '1', name: 'Dude Perfect', ticker: 'DUPT', price: '7.23', change: 5.89, logo: require('../Assets/Images/dude-perfect.png') },
-    { id: '2', name: 'PewDiePie', ticker: 'PDP', price: '19.90', change: 7.60, logo: require('../Assets/Images/pewdiepie.png') },
-    { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: '26.87', change: -10.37, logo: require('../Assets/Images/jake-paul.png') },
+    { id: '1', name: 'Jimmy BeastMode', ticker: 'MBT', price: 82.50, change: 2.94, logo: require('../Assets/Images/JimmyBeast.png') },
+    { id: '2', name: 'PewDiePie', ticker: 'PDP', price: 90.79, change: -2.16, logo: require('../Assets/Images/pewdiepie.png') },
+    { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: 207.47, change: 2.37, logo: require('../Assets/Images/jake-paul.png') },
+    { id: '4', name: 'Dude Perfect', ticker: 'DUPT', price: 7.23, change: 5.89, logo: require('../Assets/Images/dude-perfect.png') },
   ];
 
   const acctData = [
-    { id: '1', name: 'Cash', value: '23,087.39', change: 0.00, image: require('../Assets/Images/cash.png') },
-    { id: '2', name: 'Daily Change', value: '9,739.36', change: 24.65, image: require('../Assets/Images/daily-change.png') },
-    { id: '3', name: 'Equity', value: '186,473.68', change: 55.54, image: require('../Assets/Images/equity.png') },
-    { id: '4', name: 'Total Return', value: '66,378.49', change: 24.65, image: require('../Assets/Images/total-return.png') }, //these images are not circles, or same dimensions: we need better ones
+    { id: '1', name: 'Cash', value: 23087.39, change: 0.00, image: require('../Assets/Images/cash.png') },
+    { id: '2', name: 'Daily Change', value: 9739.36, change: 24.65, image: require('../Assets/Images/daily-change.png') },
+    { id: '3', name: 'Equity', value: 186473.68, change: 55.54, image: require('../Assets/Images/equity.png') },
+    { id: '4', name: 'Total Return', value: 66378.49, change: 24.65, image: require('../Assets/Images/total-return.png') }, //these images are not circles, or same dimensions: we need better ones
   ];
 
+  const [showMore1, setShowMore1] = useState(false);
+  const [displayedPositions1, setDisplayedPositions1] = useState(stockData.slice(0, 3));
+  const [showMore2, setShowMore2] = useState(false);
+  const [displayedPositions2, setDisplayedPositions2] = useState(shortData.slice(0, 3));
+
+  const handleShowMore1 = () => {
+    if (showMore1) {
+      setDisplayedPositions1(stockData.slice(0, 3));
+    } else {
+      setDisplayedPositions1(stockData);
+    }
+    setShowMore1((prev) => !prev);
+  };
+
+  const handleShowMore2 = () => {
+    if (showMore2) {
+      setDisplayedPositions2(shortData.slice(0, 3));
+    } else {
+      setDisplayedPositions2(shortData);
+    }
+    setShowMore2((prev) => !prev);
+  };
+
+
+  const handleSort1 = (type: string) => {
+    const sortedPositions = [...displayedPositions1];
+    if (type === 'Price') {
+      sortedPositions.sort((a, b) => a.price - b.price);
+    } else if (type === 'Name') {
+      sortedPositions.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (type === 'Percent') {
+      sortedPositions.sort((a, b) => a.change - b.change);
+    }
+    setDisplayedPositions1(sortedPositions);
+  };
+
+  const handleSort2 = (type: string) => {
+    const sortedPositions = [...displayedPositions2];
+    if (type === 'Price') {
+      sortedPositions.sort((a, b) => a.price - b.price);
+    } else if (type === 'Name') {
+      sortedPositions.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (type === 'Percent') {
+      sortedPositions.sort((a, b) => a.change - b.change);
+    }
+    setDisplayedPositions2(sortedPositions);
+  };
 
   return (
     <>
@@ -71,7 +117,7 @@ const PortfolioScreen = ({}:any) => {
 
         {/* Account Summary Section */}
         <View style={styles.balanceBox}>
-            <Text style={styles.balanceTitle}>$229,375.25</Text>
+            <Text style={styles.balanceTitle}>{formatCurrency(229375.25)}</Text>
         </View>
           {/* my acct, new section 2x2 */}
         <View style={styles.accountSummary}>
@@ -96,9 +142,11 @@ const PortfolioScreen = ({}:any) => {
             <Dropdown 
               dropOptions={['Price', 'Name', 'Percent']}
               filler='Sort By'
+              onSelect={handleSort1}
             />
           </View>
-          {stockData.map(stock => (
+
+          {displayedPositions1.map((stock) => (
             <StockItems
               key={stock.id}
               logo={stock.logo}
@@ -109,10 +157,13 @@ const PortfolioScreen = ({}:any) => {
               changePercent={stock.change}
               onPress={() => navigation.navigate('StockPage')} // Pass the stock data to the details screen
             />
-          ))} 
+            ))
+          } 
           
-          {/* need this to be a button that opens up more stock items */}
-          <Button style={styles.showMoreButton}>Show More</Button>
+          {/* show more button that opens more items */}
+          <TouchableOpacity style={styles.button} onPress={handleShowMore1}>
+            <Text style={styles.buttonText}>{showMore1 ? 'Show Less' : 'Show More'}</Text>
+          </TouchableOpacity>        
         </View>
 
 
@@ -123,9 +174,11 @@ const PortfolioScreen = ({}:any) => {
             <Dropdown 
               dropOptions={['Price', 'Name', 'Percent']}
               filler='Sort By'
+              onSelect={handleSort2}
             />
           </View>
-          {shortData.map(short => (
+
+            {displayedPositions2.map((short) => (
             <StockItems
               key={short.id}
               logo={short.logo}
@@ -136,12 +189,15 @@ const PortfolioScreen = ({}:any) => {
               changePercent={short.change}
               onPress={() => navigation.navigate('short')} // Pass the stock data to the details screen, need to create a prop that actually does this
             />
-          ))}
+            ))
+          }
 
          {/* need this to be a button that opens up more short items */}
-          <Button style={styles.showMoreButton}>Show More</Button>
+          <TouchableOpacity style={styles.button} onPress={handleShowMore2}>
+            <Text style={styles.buttonText}>{showMore2 ? 'Show Less' : 'Show More'}</Text>
+          </TouchableOpacity>       
         </View>
-
+ 
         {/* Recent Viral Clips Section */}
         <View style={styles.recentClips}>
           <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
@@ -195,6 +251,19 @@ const styles = StyleSheet.create({
   },
   accountSummary: {
     marginLeft: 20,
+  },
+
+  //showmore button
+  button: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#351560',
+    fontSize: 16,
+    fontWeight: 'semibold',
   },
 
   // the user balance
@@ -289,7 +358,6 @@ const styles = StyleSheet.create({
     //stock items
   stockNameLogo: {
     flexDirection: 'row',
-
   },
   stockItem: {
     flexDirection: 'row',

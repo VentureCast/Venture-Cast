@@ -51,6 +51,13 @@ const MoreInfoButton = () => {
 
             <TouchableOpacity
               style={styles.optionButton}
+              onPress={() => handleNavigation('FundingActivity')}
+            >
+              <Text style={styles.optionText}>Funding Activity</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.optionButton}
               onPress={() => handleNavigation('SettingsScreen')}
             >
               <Text style={styles.optionText}>Settings</Text>

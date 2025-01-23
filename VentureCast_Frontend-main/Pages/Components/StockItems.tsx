@@ -1,9 +1,10 @@
 // components/StockItems.tsx
 //this appears only on the homepage (as of now)
 import React from 'react';
+import formatCurrency from './formatCurrency';
 import { View, Text,StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-const StockItems = ({  logo, name, ticker, price, change, changePercent, onPress }:any) => {
+const StockItems = ({ logo, name, ticker, price, change, changePercent, onPress }:any) => {
 
   return (
     <TouchableOpacity onPress={onPress}>
@@ -16,7 +17,7 @@ const StockItems = ({  logo, name, ticker, price, change, changePercent, onPress
           </View>
         </View>
           <View style={styles.stockPriceContainer}>
-            <Text style={styles.stockPrice}>${price}</Text>
+            <Text style={styles.stockPrice}>{formatCurrency(price)}</Text>
             <Text style={[styles.stockChange, change >= 0 ? styles.positive : styles.negative]}>
               {change >= 0 ? `+${changePercent}%` : `${changePercent}%`}
             </Text>
