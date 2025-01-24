@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import formatCurrency from './Components/formatCurrency';
 
 type RootStackParamList = {
-// will need to navigate to the edit bank info page
-// as of now we go withdraw amount then to bank page then to congrats
-WithdrawCongrats: undefined;
+  SellPreview: undefined;
+
 };
 
-const Withdraw = ({ }:any) => {
+const SellStock = ({ }:any) => {
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const user = {firstName: 'Alexander', lastName: 'Creighton', cash: 23087.39, accountNumber: '**** **** **** 4321'}; //user data
+  const user = {firstName: 'Alexander', lastName: 'Creighton', equity: 70087.39, accountNumber: '**** **** **** 4321',
+   stockName: 'DUPT', stockLongName: 'Dude Perfect', stockCost: 71.50}; //user data
 
   const [investmentAmount, setInvestmentAmount] = useState('0');
 
@@ -58,13 +59,12 @@ const Withdraw = ({ }:any) => {
   const investmentNumber = parseFloat(investmentAmount)
 
   const message = () => {
-    if (user.cash < investmentNumber) {
-      return ("Not enough cash for withdraw")
+    if (user.equity < investmentNumber) {
+      return ("Not enough equity for sale")
     } else {
-      return (formatCurrency(investmentNumber) + ' will be deposited into your bank account.')
+      return (formatCurrency(investmentNumber) + ` worth of ${user.stockName} will be sold`)
     }
   }
-  
 
   return (
     <View style={styles.container}>
@@ -73,31 +73,31 @@ const Withdraw = ({ }:any) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backButton}>←</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Withdraw</Text>
+        <Text style={styles.headerTitle}>Back</Text>
       </View>
 
-      {/* bank Info */}
+      {/* Stock Info */}
       <View style={styles.stockInfo}>
-        <View style={styles.leftContainer}>
+        <View  style={styles.leftContainer}>
           <Image
-            source={require('../Assets/Icons/Visa.png')}
+            source={require('../Assets/Images/dude-perfect.png')} // Update with your stock image
             style={styles.stockLogo}
           />
-          <View style={styles.textContainer}>
-            <Text style={styles.userName}>{user.firstName} {user.lastName}</Text>
-            <Text style={styles.acctInfo}>Account: {user.accountNumber}</Text>
+          <View>
+            <Text style={styles.stockName}>{user.stockLongName}</Text>
+            <Text style={styles.stockTicker}>{user.stockName}</Text>
           </View>
         </View>
-        <Image source={require('../Assets/Icons/EditHR.png')} style={styles.edit} />
+        <Text style={styles.marketPrice}>{formatCurrency(user.stockCost)}</Text>
       </View>
 
       {/* Investment Input */}
       <View style={styles.investmentContainer}>
         <Text style={styles.cashAvailable}>
-          Cash Available for Withdraw: {formatCurrency(user.cash)}
+          Equity Available: {formatCurrency(user.equity)}
         </Text>
         <View style={styles.investmentBox}>
-          <Text style={[styles.investmentAmount, investmentNumber > user.cash ? styles.negative : styles.positive]}>{formatCurrencyTextbox(investmentNumber)}</Text>
+          <Text style={[styles.investmentAmount, investmentNumber > user.equity ? styles.negative : styles.positive]}>{formatCurrencyTextbox(investmentNumber)}</Text>
         </View>
         <Text style={styles.cashAvailable}>
         {message()}
@@ -106,7 +106,7 @@ const Withdraw = ({ }:any) => {
 
       {/* Continue Button */}
       <TouchableOpacity style={styles.continueButton} onPress={()=> {
-            navigation.navigate('WithdrawCongrats') // withdraw/deposit preview
+            navigation.navigate('SellPreview') // withdraw/deposit preview
         }}>
         <Text style={styles.continueText}>Continue</Text>
       </TouchableOpacity>
@@ -133,60 +133,52 @@ const Withdraw = ({ }:any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white', // Light greenish background color
+    backgroundColor: 'white', 
+  },
+  leftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginTop: 40,
-    height: 100, // temporary to make sure the back arrow is clickable
+    paddingVertical: 15,
+    marginTop: 60,
   },
   backButton: {
-    fontSize: 24,
+    fontSize: 30,
     color: '#000',
+    fontFamily: 'urbanist',
   },
   headerTitle: {
     fontSize: 22,
     fontWeight: 'bold',
+    marginLeft: 15,
     fontFamily: 'urbanist',
-    marginLeft: 20,
-  },
-
-  // account info section
-  leftContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  textContainer: {
-    flexDirection: 'column',
- 
   },
   stockInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: 20,
-    marginBottom: 10,
+    paddingHorizontal: 20,
+    marginVertical: 15,
   },
   stockLogo: {
     width: 60,
     height: 60,
-    marginRight: 15,
+    marginRight: 10,
   },
-  edit: {
-    width: 20,
-    height: 20,
-  },
-  userName: {
+  stockName: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 10,
     fontFamily: 'urbanist',
-    marginBottom: 5,
   },
-  acctInfo: {
+  stockTicker: {
     fontSize: 14,
-    color: '#757575',
+    color: '#888',
     fontFamily: 'urbanist',
   },
   marketPrice: {
@@ -200,9 +192,9 @@ const styles = StyleSheet.create({
   },
   investmentBox: {
     width: '100%',
-    padding: 36,
+    padding: 40,
     borderWidth: 2,
-    borderColor: '#351560',
+    borderColor: '#A0A0A0',
     borderRadius: 30,
     alignItems: 'center',
     marginBottom: 10,
@@ -211,26 +203,23 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: 'bold',
     fontFamily: 'urbanist',
-  },
-  positive: {
 
   },
-  negative: {
-    color: '#F75555',
-  },
   cashAvailable: {
-    fontSize: 16,
-    color: '#757575',
+    fontSize: 14,
+    color: '#888',
     marginBottom: 10,
     fontFamily: 'urbanist',
+
   },
   shareButton: {
     backgroundColor: '#D1D1F7', // Button background color
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 12,
   },
   shareText: {
     color: '#333',
+    fontFamily: 'urbanist',
   },
   continueButton: {
     backgroundColor: '#351560',
@@ -245,6 +234,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'urbanist',
+
   },
   numberPad: {
     flexDirection: 'row',
@@ -254,22 +244,28 @@ const styles = StyleSheet.create({
   },
   numberKey: {
     width: '30%',
-    padding: 15,
+    padding: 20,
     margin: 5,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white', // Match the background color
-    borderRadius: 15,
-    shadowColor: '#351560',
-    shadowOffset: { width: 1, height: 1.5 },
-    shadowOpacity: 1,
-    shadowRadius: 2,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 1,
   },
   numberText: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: 'bold',
     fontFamily: 'urbanist',
   },
+  positive: {
+
+  },
+  negative: {
+    color: '#F75555',
+  },
 });
 
-export default Withdraw;
+export default SellStock;

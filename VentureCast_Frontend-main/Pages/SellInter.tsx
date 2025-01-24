@@ -5,7 +5,7 @@ import Dropdown from './Components/Dropdown';
 
 type RootStackParamList = {
   AddPayment: undefined; // create this page
-  BuyStock: undefined;
+  SellStock: undefined;
 };
 
 const user = {cash: 23087.39, equity:229375.25 };
@@ -25,7 +25,7 @@ const SellInter = () => {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
-    navigation.navigate('BuyStock') // need to go to this page and have calculation prepared from quantity --> global variables
+    navigation.navigate('SellStock') // need to go to this page and have calculation prepared from quantity --> global variables
   };
 
   const formatNumber = (number: number, decimals: number = 2): string => {

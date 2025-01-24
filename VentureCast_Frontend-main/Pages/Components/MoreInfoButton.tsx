@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: 300,
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 35,
     padding: 20,
     alignItems: 'center',
   },
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   optionButton: {
     backgroundColor: '#351560',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 20,
     width: '100%',
     alignItems: 'center',
     marginVertical: 5,

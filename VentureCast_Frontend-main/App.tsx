@@ -13,12 +13,14 @@ import { useNavigation } from '@react-navigation/native';
 // negative red: #F75555
 
 // Next tasks:
-// create remaining pages: Buy/sell/short preview, deposit/withdraw success, 
+// buy stock option on stock page
 // payment method buttons >> edit payment details
 // fix clips/news page to toggle between tabs
     // look into importing stocks from a dummy database for smoother integration
     // watchlist (idk what to do with the modal the "devs" implemented), and trans activity
     // share button/function
+// create remaining pages: do we need deposit/withdraw preview?
+
 
 // go in anywhere i(matt) typed out the format currency function and replace it with the formatCurrency component (adds $ + , and makes 2 decimals )
 
@@ -61,11 +63,18 @@ import Withdraw from './Pages/Withdraw';
 import Deposit from './Pages/Deposit';
 import WithdrawOption from './Pages/WithdrawOption';
 import DepositOption from './Pages/DepositOption';
+import WithdrawCongrats from './Pages/WithdrawCongrats';
+import DepositCongrats from './Pages/DepositCongrats';
 import BuyInter from './Pages/BuyInter';
 import SellInter from './Pages/SellInter';
 import ShortInter from './Pages/ShortInter';
 import ShortStockScreen from './Pages/ShortStock';
 import FundingActivity from './Pages/FundingActivity';
+import BuyCongrats from './Pages/BuyCongrats';
+import BuyPreview from './Pages/BuyPreview';
+import SellCongrats from './Pages/SellCongrats';
+import SellPreview from './Pages/SellPreview';
+import SellStock from './Pages/SellStock';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -303,6 +312,31 @@ const App = () => {
           options={{ headerShown: false }} // Hide header for bottom tabs
         /> 
         <Stack.Screen
+          name="BuyCongrats"
+          component={BuyCongrats} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
+          name="BuyPreview"
+          component={BuyPreview} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
+          name="SellCongrats"
+          component={SellCongrats} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
+          name="SellStock"
+          component={SellStock} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
+          name="SellPreview"
+          component={SellPreview} // Add the buy stock screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        /> 
+        <Stack.Screen
           name="ShortStock"
           component={ShortStockScreen} // Add the buy stock screen
           options={{ headerShown: false }} // Hide header for bottom tabs
@@ -331,7 +365,17 @@ const App = () => {
           name="Deposit"
           component={Deposit} // Add the deposit screen
           options={{ headerShown: false }} // Hide header for bottom tabs
-        />      
+        /> 
+        <Stack.Screen
+          name="WithdrawCongrats"
+          component={WithdrawCongrats} // Add the withdraw screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="DepositCongrats"
+          component={DepositCongrats} // Add the withdraw screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />         
         <Stack.Screen
           name="WithdrawOption"
           component={WithdrawOption} // Add the deposit screen
@@ -393,7 +437,24 @@ const App = () => {
         <Stack.Screen
           name="Portfolio"
           component={PortfolioScreen} // Add the info from a discover item 
-          options={{ headerShown: true }} // Hide header for bottom tabs
+          options={{     
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#351560', // Background color of the header
+            },
+            headerTintColor: '#fff', // Color of back button and title text
+            headerTitleStyle: {
+              fontFamily: 'urbanist',
+              fontSize: 26,
+              fontWeight: 'bold', // Title text styling
+            },//  Option B: Custom Headers
+            headerLeft: () => (
+              <HeaderLeft />
+            ),
+            headerRight: () => (
+              <HeaderRightWatchlist />
+            ),
+          }} 
         />
         <Stack.Screen
           name="About"

@@ -4,10 +4,8 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Dropdown from './Components/Dropdown';
 
 type RootStackParamList = {
-  StockPage: undefined; // Do this for all linked pages
-  BuyPreview: undefined;
-  ClipsPage: undefined;
-  short: undefined;
+
+  DepositCongrats: undefined;
 };
 
 const Deposit = ({ }:any) => {
@@ -118,7 +116,7 @@ const Deposit = ({ }:any) => {
 
       {/* Continue Button */}
       <TouchableOpacity style={styles.continueButton} onPress={()=> {
-            navigation.navigate('BuyPreview')
+            navigation.navigate('DepositCongrats')
         }}>
         <Text style={styles.continueText}>Continue</Text>
       </TouchableOpacity>
