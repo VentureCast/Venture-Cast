@@ -8,7 +8,6 @@ import ClipsElement from './Components/ClipsElement';
 import ViewerPerShareGraph from './Components/ViewerPerShareGraph';
 import NewsItem from './Components/NewsItem';
 import StockItemHeader from './Components/StockItemHeader';
-import GraphHeader from './Components/GraphHeader';
 import { Button } from 'react-native-paper';
 import formatCurrency from './Components/formatCurrency';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -96,11 +95,7 @@ const StockPage = () => {
           />
         </View>
         {/* Line Graph */}
-        {/* <LineGraph background={require('../Assets/Images/DarkBackground.png')} /> */}
-
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'  }}>
-            <GraphHeader data={sampleData} />
-        </View>
+        <LineGraph background={require('../Assets/Images/DarkBackground.png')} />
 
         {/* Stock Live value Section */}
         <View style={styles.balanceBox}>
