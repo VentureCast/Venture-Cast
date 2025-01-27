@@ -7,13 +7,18 @@ import MiniStockScroll from './Components/MiniStockScroll';
 import ClipsElement from './Components/ClipsElement';
 import ViewerPerShareGraph from './Components/ViewerPerShareGraph';
 import NewsItem from './Components/NewsItem';
+import StockItemHeader from './Components/StockItemHeader';
+import GraphHeader from './Components/GraphHeader';
 import { Button } from 'react-native-paper';
+import formatCurrency from './Components/formatCurrency';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
   StockPage: undefined; // Do this for all linked pages
   Portfolio: undefined;
   ClipsPage: undefined;
+  BuyInter: undefined;
+  SellInter: undefined;
 };
 //import { Section } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
@@ -47,7 +52,7 @@ const viewerStats = [
 
 // Portfolio screen starts
 
-const StockPage = ({}:any) => {
+const StockPage = () => {
   // Sample data for stock positions
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -59,7 +64,6 @@ const StockPage = ({}:any) => {
     
   };
 
-
   // use this from here on out because we want the data to be raw numbers, then transformed here.
   const formatNumber = (number: number, decimals: number = 2): string => {
     return number.toLocaleString('en-US', {
@@ -68,12 +72,6 @@ const StockPage = ({}:any) => {
     }); // Formats the number with commas
   };
 
-  const formatCurrency = (number: number, decimals: number = 2): string => {
-    return `$${number.toLocaleString('en-US', {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    })}`; // Adds $ and formats the number
-  };
   const formatPercentage = (number: number, decimals: number = 2): string => {
     return `(${number.toLocaleString('en-US', {
       minimumFractionDigits: decimals,
@@ -81,59 +79,88 @@ const StockPage = ({}:any) => {
     })}%)`; // Adds ( %) and formats the number
   };
 
+  const sampleData = [10, 15, 8, 20, 18, 25, 10, 5, 15, 30];
+
 
   return (
     <>
       <ScrollView style={styles.container}>
-
+        <View style={styles.stockStats}>
+          <StockItemHeader
+            logo={require('../Assets/Images/dude-perfect.png')}
+            name='Dude Perfect'
+            ticker='DUPT'
+            price={marketStats.currentPrice}
+            change={marketStats.change}
+            changePercent={marketStats.changePercent}
+          />
+        </View>
         {/* Line Graph */}
-        <LineGraph background={require('../Assets/Images/DarkBackground.png')}/>
+        {/* <LineGraph background={require('../Assets/Images/DarkBackground.png')} /> */}
+
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'  }}>
+            <GraphHeader data={sampleData} />
+        </View>
 
         {/* Stock Live value Section */}
         <View style={styles.balanceBox}>
-            <Text style={styles.stockTitle}>{formatCurrency(marketStats.currentPrice)}</Text>
-            <View style={styles.stockSubTitle} >
-               {/* arrows and text color changes for positive and down for negative*/}
-              <Image source=
-                { marketStats.changePercent >= 0 ? require('../Assets/Icons/Arrow-Up-Purple.png') : require('../Assets/Icons/Arrow-Down-Purple.png')} 
-                style={styles.stockLiveArrow}
-              />
-              <Text style={[styles.stockSubTitleText, marketStats.changePercent >= 0 ? styles.positive : styles.negative]}>
-              {formatCurrency(marketStats.change)} {formatPercentage(marketStats.changePercent)}</Text>
-              <Text style={styles.stockSubTitleText} >Last Close</Text>
-            </View>
+           <Text style={styles.stockTitle}>{formatCurrency(marketStats.currentPrice)}</Text>
+           <View style={styles.stockSubTitle} >
+              {/* arrows and text color changes for positive and down for negative*/}
+             <Image source=
+               { marketStats.changePercent >= 0 ? require('../Assets/Icons/Arrow-Up-Purple.png') : require('../Assets/Icons/Arrow-Down-Purple.png')} 
+               style={styles.stockLiveArrow}
+             />
+             <Text style={[styles.stockSubTitleText, marketStats.changePercent >= 0 ? styles.positive : styles.negative]}>
+             {formatCurrency(marketStats.change)} {formatPercentage(marketStats.changePercent)}</Text>
+             <Text style={styles.stockSubTitleText} >Last Close</Text>
+           </View>
         </View>
+
+        {/* Buy/Sell buttons -- > want this to take you to but the specific stock (auto fill ticker option*/}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity  onPress={()=> {navigation.navigate('BuyInter')}}>
+            <View style={styles.buyButton}>
+              <Text style={styles.buyButtonText}>Buy</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity  onPress={()=> {navigation.navigate('SellInter')}}>
+            <View style={styles.sellButton}>
+              <Text style={styles.sellButtonText}>Sell</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
           {/* My Position section */}
         <View style={styles.stockSummary}>
           <Text style={styles.sectionTitle}>My Position</Text>
         </View>
         <View style={styles.accountGrid}>
-              <StockDetail
-                image={require('../Assets/Icons/SharesHeld.png')}
-                name={'Shares Held'}
-                value={userHoldings.shares}
-                isPercent = {false}
-              />
-              <StockDetail
-                image={require('../Assets/Icons/CostPerShare.png')}
-                name= 'Cost at Buy'
-                value={formatCurrency(userHoldings.costAtBuy)}
-                isPercent = {false}
-              />
-              <StockDetail
-                image={require('../Assets/Images/equity.png')}
-                name= 'Equity'
-                value={formatCurrency(userHoldings.equity)}
-                isPercent = {false}
-              />
-              <StockDetail
-                image={ require('../Assets/Images/total-return.png')}
-                name= 'Total Return'
-                value={formatCurrency(userHoldings.totalReturn)}
-                isPercent = {false}
-              />
+          <StockDetail
+            image={require('../Assets/Icons/SharesHeld.png')}
+            name={'Shares Held'}
+            value={userHoldings.shares}
+            isPercent = {false}
+          />
+          <StockDetail
+            image={require('../Assets/Icons/CostPerShare.png')}
+            name= 'Cost at Buy'
+            value={formatCurrency(userHoldings.costAtBuy)}
+            isPercent = {false}
+          />
+          <StockDetail
+            image={require('../Assets/Images/equity.png')}
+            name= 'Equity'
+            value={formatCurrency(userHoldings.equity)}
+            isPercent = {false}
+          />
+          <StockDetail
+            image={ require('../Assets/Images/total-return.png')}
+            name= 'Total Return'
+            value={formatCurrency(userHoldings.totalReturn)}
+            isPercent = {false}
+          />
         </View>
-
 
           {/* Market Stats Section */}
         <View style={styles.marketStats}>
@@ -297,6 +324,10 @@ const styles = StyleSheet.create({
   stockSummary: {
     marginLeft: 20,
   },
+  stockStats: {
+    backgroundColor: 'black',
+    paddingHorizontal: 10,
+  },
 
   // the user balance
 
@@ -322,7 +353,7 @@ const styles = StyleSheet.create({
   balanceBox: {
     width: 382,
     height: 96,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#FAFAFA',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 24,
@@ -330,7 +361,48 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 10,
     borderColor: '#EEEEEE',
-    borderWidth: 0.2,
+    borderWidth: 1,
+  },
+  // buy button:
+  buttonContainer: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginTop: 5, 
+    marginBottom: 20,
+  },
+  buyButton: {
+    backgroundColor: '#351560',
+    paddingVertical: 15,
+    paddingHorizontal: 70,
+    borderRadius: 20,
+    marginHorizontal: 5,
+    borderColor: '#351560',
+    borderWidth: 1,
+  },
+  sellButton: {
+    backgroundColor: '#fafafa',
+    paddingVertical: 15,
+    paddingHorizontal: 70,
+    borderRadius: 20,
+    marginHorizontal: 5,
+    borderColor: '#EEEEEE',
+    borderWidth: 1,
+    },
+  buyButtonText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'urbanist',
+    textAlign: 'center',
+  },
+  sellButtonText: {
+    color: '#351560',
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'urbanist',
+    textAlign: 'center',
   },
 // Stock Holdings info section
 
