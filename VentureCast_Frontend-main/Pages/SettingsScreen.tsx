@@ -6,7 +6,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
   Profile: undefined; // Do this for all linked pages
-  Notifications: undefined;
+  NotificationSettings: undefined;
   HelpCenter: undefined;
   ChangePassword: undefined;
   About: undefined;
@@ -50,7 +50,7 @@ const SettingsScreen = ( { }:any ) => {
       <View style={styles.menuItem}>
         {/* <Ionicons name="notifications-outline" size={24} color="#ff3d00" /> */}
         <Image source={require('../Assets/Icons/Notifications.png')} style={styles.menuIcon} />
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Notifications')}>Notifications</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('NotificationSettings')}>Notifications</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 

@@ -75,6 +75,7 @@ import BuyPreview from './Pages/BuyPreview';
 import SellCongrats from './Pages/SellCongrats';
 import SellPreview from './Pages/SellPreview';
 import SellStock from './Pages/SellStock';
+import NotificationSettings from './Pages/NotificationSettings';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -268,6 +269,31 @@ const App = () => {
             headerTitle: () => (
               <Text style={ {
                 fontFamily: 'urbanist',
+                fontSize: 26,
+                fontWeight: 'bold',
+                color: 'white' // this is for when the name is not the same as what we want to display
+              }}>Settings</Text>
+            ),
+            headerLeft: () => (
+              <HeaderLeft />
+            ),
+            headerRight: () => (
+              <HeaderRight />
+            ),
+           }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="NotificationSettings"
+          component={NotificationSettings} // Add the Notifs screen
+          options={{ 
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#351560', // Background color of the header
+            },
+            headerTintColor: '#fff', // Color of back button and title text
+            headerTitle: () => (
+              <Text style={ {
+                fontFamily: 'Urbanist-Regular',
                 fontSize: 26,
                 fontWeight: 'bold',
                 color: 'white' // this is for when the name is not the same as what we want to display
