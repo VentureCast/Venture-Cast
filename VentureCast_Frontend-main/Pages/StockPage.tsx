@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import MarketStat from './Components/MarketStat';
-import LineGraph from './Components/LineGraph';
+// import LineGraph from './Components/LineGraph';
 import MiniStockScroll from './Components/MiniStockScroll';
 import ClipsElement from './Components/ClipsElement';
 import ViewerPerShareGraph from './Components/ViewerPerShareGraph';
@@ -95,8 +95,8 @@ const StockPage = () => {
           />
         </View>
         {/* Line Graph */}
-        <LineGraph background={require('../Assets/Images/DarkBackground.png')} />
-
+        {/* <LineGraph data={sampleData} background={require('../Assets/Images/DarkBackground.png')} /> */}
+        <Image style={styles.backgroundImage} source={require('../Assets/Images/DarkBackground.png')} />
         {/* Stock Live value Section */}
         <View style={styles.balanceBox}>
            <Text style={styles.stockTitle}>{formatCurrency(marketStats.currentPrice)}</Text>
@@ -322,6 +322,10 @@ const styles = StyleSheet.create({
   stockStats: {
     backgroundColor: 'black',
     paddingHorizontal: 10,
+  },
+  backgroundImage: {
+    height: 300,
+    marginBottom: 10,
   },
 
   // the user balance

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity} from 'react-native';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
-import LineGraph from './Components/LineGraph';
+// import LineGraph from './Components/LineGraph';
 import StockItems from './Components/StockItems';
 import formatCurrency from './Components/formatCurrency';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -45,6 +45,8 @@ const PortfolioScreen = () => {
     { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: 207.47, change: 2.37, logo: require('../Assets/Images/jake-paul.png') },
     { id: '4', name: 'Jimmy BeastMode', ticker: 'MBT', price: 82.50, change: 2.94, logo: require('../Assets/Images/JimmyBeast.png') },
   ];
+
+  const sampleData = [0, 1, 2, 3 ,5, ];
 
   const shortData = [
     { id: '1', name: 'Jimmy BeastMode', ticker: 'MBT', price: 82.50, change: 2.94, logo: require('../Assets/Images/JimmyBeast.png') },
@@ -113,7 +115,8 @@ const PortfolioScreen = () => {
       <ScrollView style={styles.container}>
 
         {/* Line Graph */}
-        <LineGraph background={require('../Assets/Images/portfolio-background.png')}/>
+        {/* <LineGraph data={sampleData} background={require('../Assets/Images/portfolio-background.png')}/> */}
+        <Image style={styles.backgroundImage} source={require('../Assets/Images/portfolio-background.png')} />
 
         {/* Account Summary Section */}
         <View style={styles.balanceBox}>
@@ -247,6 +250,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   backgroundImage: {
+    height: 350,
     marginBottom: 10,
   },
   accountSummary: {

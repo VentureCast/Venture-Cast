@@ -16,12 +16,13 @@ import { useNavigation } from '@react-navigation/native';
 // buy stock option on stock page
 // payment method buttons >> edit payment details
 // fix clips/news page to toggle between tabs
-    // look into importing stocks from a dummy database for smoother integration
     // watchlist (idk what to do with the modal the "devs" implemented), and trans activity
     // share button/function
 // create remaining pages: do we need deposit/withdraw preview?
+    // look into importing stocks from a dummy database for smoother integration
 
-
+// Need help: 
+// making the graphs and the video scroll section
 // go in anywhere i(matt) typed out the format currency function and replace it with the formatCurrency component (adds $ + , and makes 2 decimals )
 
 // Import your screens

@@ -21,9 +21,12 @@ const ClipsPage = ({ }: any) => {
       <ScrollView style={styles.container}>
 
         {/* Recent Viral Clips Section */}
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={require('../Assets/Icons/Arrow-Left.png')} style={styles.miniLogo} />
-        </TouchableOpacity>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.backButton}>←</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Back</Text>
+        </View>
         <View style={styles.recentClips}>
           <View style = {styles.recentClipsTitle}>
             <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
@@ -113,6 +116,24 @@ const styles = StyleSheet.create({
   },
   accountSummary: {
     marginLeft: 20,
+  },
+  // header
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    paddingBottom: 0,
+  },
+  backButton: {
+    fontSize: 30,
+    color: '#000',
+    fontFamily: 'urbanist',
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontFamily: 'urbanist',
   },
 
 // stock/short list section
