@@ -286,8 +286,6 @@ const StockPage = () => {
         />
         <Button style={styles.showMoreButton}>Show More</Button>
 
-  
-
         {/* Characteristics Section */}
 
         {/* Stock Positions */}
@@ -299,7 +297,6 @@ const StockPage = () => {
         </View>
 
         {/* Recent Viral Clips Section */}
-     
         <ClipsElement 
           title= '#TrickShot'
           subTitle='Trending Hashtag'

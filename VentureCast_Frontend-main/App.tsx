@@ -13,16 +13,15 @@ import { useNavigation } from '@react-navigation/native';
 // negative red: #F75555
 
 // Next tasks:
-// buy stock option on stock page
-// payment method buttons >> edit payment details
-// fix clips/news page to toggle between tabs
-    // watchlist (idk what to do with the modal the "devs" implemented), and trans activity
-    // share button/function
+// watchlist (idk what to do with the modal the "devs" implemented), and trans activity
+// share button/function
 // create remaining pages: do we need deposit/withdraw preview?
     // look into importing stocks from a dummy database for smoother integration
+    // link items so that pages open corresponding 
 
 // Need help: 
 // making the graphs and the video scroll section
+
 // go in anywhere i(matt) typed out the format currency function and replace it with the formatCurrency component (adds $ + , and makes 2 decimals )
 
 // Import your screens
@@ -77,6 +76,7 @@ import SellCongrats from './Pages/SellCongrats';
 import SellPreview from './Pages/SellPreview';
 import SellStock from './Pages/SellStock';
 import NotificationSettings from './Pages/NotificationSettings';
+import EditPaymentMethod from './Pages/EditPaymentMethod';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -256,6 +256,11 @@ const App = () => {
         <Stack.Screen
           name="AddPayment"
           component={AddPayment} // Add the Notifs screen
+          options={{ headerShown: false }} // Hide header for bottom tabs
+        />
+        <Stack.Screen
+          name="EditPaymentMethod"
+          component={EditPaymentMethod} // Add the Notifs screen
           options={{ headerShown: false }} // Hide header for bottom tabs
         />
         <Stack.Screen
@@ -441,7 +446,7 @@ const App = () => {
           name="ClipsPage"
           component={ClipsPage} // Add the info from a discover item 
           options={{ 
-            headerShown: true,
+            headerShown: false, // temporarily false because header feels clustered, i could just remove back arrow bc logo takes u home
             headerStyle: {
               backgroundColor: '#351560', // Background color of the header
             },

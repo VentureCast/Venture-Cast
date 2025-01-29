@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, } from 'react-native';
-
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, StyleSheet, Image, FlatList } from 'react-native';
+import NewsItem from './Components/NewsItem';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
@@ -10,106 +10,105 @@ type RootStackParamList = {
   stock: undefined;
 };
 
-const ClipsPage = ({ }: any) => {
+export default function ClipsPage() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  // Function to handle stock item press
-// do not know where the portfolio header is created or called, want it gone.
-//also want the gray bar gone so that the logo and the name hover over the 
+  const [tab, setTab] = useState('Clips'); // For toggling between Clips and News
+
+
   return (
     <>
       <ScrollView style={styles.container}>
 
-        {/* Recent Viral Clips Section */}
+        {/* Back button header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.backButton}>←</Text>
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Back</Text>
         </View>
-        <View style={styles.recentClips}>
-          <View style = {styles.recentClipsTitle}>
-            <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
-         {/* need this to be a button that opens up more clips */}
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-          </View>
-          {/* we want each section to pull from a database of clips for the stocks that are presented above the clips */}
 
-          <View  style={styles.clipStockItem}>
-            <View style={styles.stockNameLogo}> 
-              <Image source={require('../Assets/Images/jake-paul.png')} style={styles.stockLogo} />
-              <View>
-                <Text style={styles.stockName}>Jake Paul</Text>
-                <Text style={styles.stockTicker}>JKPL</Text>
-              </View>
-            </View>
-            <Image source={require('../Assets/Icons/Arrow-right.png')} />
+        {/* Tabs */}
+        <View style={styles.subHeader}>
+          <View style={styles.headerTabs}>
+            <TouchableOpacity onPress={() => setTab('Clips')}>
+              <Text style={tab === 'Clips' ? styles.activeTab : styles.inactiveTab}>Clips</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setTab('News')}>
+              <Text style={tab === 'News' ? styles.activeTab : styles.inactiveTab}>News</Text>
+            </TouchableOpacity>
           </View>
-          {/* Replace with real video data */}
-          <FlatList
-            horizontal
-            data={
-              [{ id: '1', video: 'Clip 1',  image: require('../Assets/Images/Clip1.png')}, 
-              { id: '2', video: 'Clip 2', image: require('../Assets/Images/Clip2.png')},
-              { id: '3', video: 'Clip 3', image: require('../Assets/Images/Clip3.png')}, 
-              ]}
-            renderItem={({ item }) => (
-              <View style={styles.clipItem}>
-                <Image style={styles.clipImage} source = {item.image} />
-              </View>
-            )}
-            keyExtractor={item => item.id}
-          />
         </View>
-         {/* CLips and News Section */}
-         <View style={styles.recentClips}>
-          <View style = {styles.recentClipsTitle}>
-            <Text style={styles.sectionTitle}>Clips and News</Text>
-         {/* need this to be a button that opens up more clips */}
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-          </View>
-          {/* we want each section to pull from a database of clips for the stocks that are presented above the clips */}
 
-          <View  style={styles.clipStockItem}>
-            <View style={styles.stockNameLogo}> 
-              <Image source={require('../Assets/Images/jake-paul.png')} style={styles.stockLogo} />
-              <View>
-                <Text style={styles.stockName}>Jake Paul</Text>
-                <Text style={styles.stockTicker}>JKPL</Text>
-              </View>
+        {tab === 'Clips' && (
+        <>
+          <View style={styles.recentClips}>
+            <View style = {styles.recentClipsTitle}>
+              <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
             </View>
-            <Image source={require('../Assets/Icons/Arrow-right.png')} />
-          </View>
-          {/* Replace with real video data */}
-          <FlatList
-            horizontal
-            data={
-              [{ id: '1', video: 'Clip 1',  image: require('../Assets/Images/Clip1.png')}, 
-              { id: '2', video: 'Clip 2', image: require('../Assets/Images/Clip2.png')},
-              { id: '3', video: 'Clip 3', image: require('../Assets/Images/Clip3.png')}, 
-              ]}
-            renderItem={({ item }) => (
-              <View style={styles.clipItem}>
-                <Image style={styles.clipImage} source = {item.image} />
+            {/* we want each section to pull from a database of clips for the stocks that are presented above the clips */}
+            <TouchableOpacity onPress={() => navigation.navigate('StockPage')}>
+              <View  style={styles.clipStockItem}>
+                <View style={styles.stockNameLogo}> 
+                  <Image source={require('../Assets/Images/jake-paul.png')} style={styles.stockLogo} />
+                  <View>
+                    <Text style={styles.stockName}>Jake Paul</Text>
+                    <Text style={styles.stockTicker}>JKPL</Text>
+                  </View>
+                </View>
+                <Image source={require('../Assets/Icons/Arrow-right.png')} />
               </View>
-            )}
-            keyExtractor={item => item.id}
+            </TouchableOpacity>
+            {/* Replace with real video data */}
+            <FlatList
+              horizontal
+              data={[
+                { id: '1', video: 'Clip 1',  image: require('../Assets/Images/Clip1.png')}, 
+                { id: '2', video: 'Clip 2', image: require('../Assets/Images/Clip2.png')},
+                { id: '3', video: 'Clip 3', image: require('../Assets/Images/Clip3.png')}, 
+                { id: '4', video: 'Clip 1',  image: require('../Assets/Images/Clip1.png')}
+                ]}
+              renderItem={({ item }) => (
+                <View style={styles.clipItem}>
+                  <Image style={styles.clipImage} source = {item.image} />
+                </View>
+              )}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        </>
+        )}
+
+        {tab === 'News' && (
+        <>
+          <NewsItem
+            time= "1 day ago"
+            title= 'Forbes'
+            headline='Twitch Roundup: PewDiePie Earnings, Katy Perry Earnings, Dude Perfect Earnings, And ...'
           />
-        </View>
+          <NewsItem
+            time= "2 days ago"
+            title= 'Seeking Alpha'
+            headline='Own The Poll Booths'
+          />
+          <NewsItem
+            time= "2 days ago"
+            title= 'The Motley Fool'
+            headline='Kathie Wood Has Abandoned Dude Perfect -- Should You Follow Her Lead?'
+          />
+        </>
+        )}
       </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  tempBlock: {
-    height: 60,
-    width: '100%',
-    backgroundColor: '#351560',
-  },
+
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop: 60,
   },
   backgroundImage: {
     marginBottom: 10,
@@ -133,6 +132,34 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginLeft: 10,
+    fontFamily: 'urbanist',
+  },
+
+  subHeader: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerTabs: {
+    width: 300,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    backgroundColor: 'white',
+    borderBottomWidth: 2,
+    borderBottomColor: '#351560',
+    marginBottom: 20,
+  },
+  activeTab: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    fontFamily: 'urbanist',
+    color: '#351560', // our actual purple color (prev: custom purple color)
+  },
+  inactiveTab: {
+    fontSize: 24,
+    color: '#8e8e8e', // Lighter grey for inactive
     fontFamily: 'urbanist',
   },
 
@@ -222,13 +249,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  //go back button
-  miniLogo: {
-    width: 23.5,
-    height: 20,
-    marginHorizontal: 20,
+  // news
+  clipsSubTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 20,
+    borderColor: '#EAE7EF',
+    borderBottomWidth: 1,
+    marginHorizontal: 20,
   },
 });
 
-export default ClipsPage;

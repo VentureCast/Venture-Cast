@@ -4,7 +4,8 @@ import PaymentComponent from './Components/PaymentComponent';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
-  AddPayment: undefined; // create this page
+  AddPayment: undefined;
+  EditPaymentMethod: undefined; 
 };
 
 const PaymentMethods = () => {
@@ -12,12 +13,12 @@ const PaymentMethods = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const cardData = [
-    { nameNumber: 'Apple Pay', profileImage: require('../Assets/Icons/ApplePay.png') , page: 'CardDetailsApple'},
-    { nameNumber: 'PayPal', profileImage: require('../Assets/Icons/PayPal.png'), page: 'CardDetailsPayPal'},
-    { nameNumber: 'Google Pay', profileImage: require('../Assets/Icons/GooglePay.png') , page: 'CardDetailsGoogle'},
-    { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/Visa.png') , page: 'CardDetailsVisa'},
-    { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/MasterCard.png') , page: 'CardDetailsMasterCard'},
-    { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/AmEx.png') , page: 'CardDetailsAmEx'},
+    { nameNumber: 'Apple Pay', profileImage: require('../Assets/Icons/ApplePay.png') , page: 'EditPaymentMethod'},
+    { nameNumber: 'PayPal', profileImage: require('../Assets/Icons/PayPal.png'), page: 'EditPaymentMethod'},
+    { nameNumber: 'Google Pay', profileImage: require('../Assets/Icons/GooglePay.png') , page: 'EditPaymentMethod'},
+    { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/Visa.png') , page: 'EditPaymentMethod'},
+    { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/MasterCard.png') , page: 'EditPaymentMethod'},
+    { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/AmEx.png') , page: 'EditPaymentMethod'},
     // Add other items...
   ];
 

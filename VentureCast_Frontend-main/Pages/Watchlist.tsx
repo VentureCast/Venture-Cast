@@ -1,11 +1,10 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import WatchListItem from './Components/WatchlistItem';
-import StaticHeader from './Components/StaticHeader'; 
 
 const WatchListScreen = () => {
   const watchList = [
-    { name: 'Dude Perfect', shortName: 'DUPT', price: 71.05, priceChange: 2.94, profileImage: require('../Assets/Images/dude-perfect.png') },
+    { name: 'Dude Perfect', shortName: 'DUPT', price: 71.50, priceChange: 2.94, profileImage: require('../Assets/Images/dude-perfect.png') },
     { name: 'PewDiePie', shortName: 'PDP', price: 90.79, priceChange: -2.16, profileImage: require('../Assets/Images/pewdiepie.png') },
     { name: 'Jake Paul', shortName: 'JKPI', price: 207.47, priceChange: 2.37, profileImage: require('../Assets/Images/jake-paul.png') },
     // Add other items...
