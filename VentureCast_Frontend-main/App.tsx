@@ -152,9 +152,9 @@ const HomeTabs = ({navigation}:any) => {
         ),
       })}
     >
+      <Tab.Screen name="Home" component={VentureCastHome} />
       <Tab.Screen name="Portfolio" component={PortfolioScreen} />
       <Tab.Screen name="Discover" component={DiscoverScreen} />
-      <Tab.Screen name="Home" component={VentureCastHome} />
       <Tab.Screen name="Trade" component={TradeScreen} /> 
       <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>

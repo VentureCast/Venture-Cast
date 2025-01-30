@@ -80,6 +80,21 @@ const StockPage = () => {
 
   const sampleData = [10, 15, 8, 20, 18, 25, 10, 5, 15, 30];
 
+  /*
+  <View style={styles.balanceBox}>
+           <Text style={styles.stockTitle}>{formatCurrency(marketStats.currentPrice)}</Text>
+           <View style={styles.stockSubTitle} >
+              { arrows and text color changes for positive and down for negative}
+              <Image source=
+              { marketStats.changePercent >= 0 ? require('../Assets/Icons/Arrow-Up-Purple.png') : require('../Assets/Icons/Arrow-Down-Purple.png')} 
+              style={styles.stockLiveArrow}
+            />
+            <Text style={[styles.stockSubTitleText, marketStats.changePercent >= 0 ? styles.positive : styles.negative]}>
+            {formatCurrency(marketStats.change)} {formatPercentage(marketStats.changePercent)}</Text>
+            <Text style={styles.stockSubTitleText} >Last Close</Text>
+          </View>
+       </View>
+  */
 
   return (
     <>
@@ -98,19 +113,7 @@ const StockPage = () => {
         {/* <LineGraph data={sampleData} background={require('../Assets/Images/DarkBackground.png')} /> */}
         <Image style={styles.backgroundImage} source={require('../Assets/Images/DarkBackground.png')} />
         {/* Stock Live value Section */}
-        <View style={styles.balanceBox}>
-           <Text style={styles.stockTitle}>{formatCurrency(marketStats.currentPrice)}</Text>
-           <View style={styles.stockSubTitle} >
-              {/* arrows and text color changes for positive and down for negative*/}
-             <Image source=
-               { marketStats.changePercent >= 0 ? require('../Assets/Icons/Arrow-Up-Purple.png') : require('../Assets/Icons/Arrow-Down-Purple.png')} 
-               style={styles.stockLiveArrow}
-             />
-             <Text style={[styles.stockSubTitleText, marketStats.changePercent >= 0 ? styles.positive : styles.negative]}>
-             {formatCurrency(marketStats.change)} {formatPercentage(marketStats.changePercent)}</Text>
-             <Text style={styles.stockSubTitleText} >Last Close</Text>
-           </View>
-        </View>
+        
 
         {/* Buy/Sell buttons -- > want this to take you to but the specific stock (auto fill ticker option*/}
         <View style={styles.buttonContainer}>
@@ -348,16 +351,16 @@ const styles = StyleSheet.create({
   },
   balanceBox: {
     width: 382,
-    height: 96,
-    backgroundColor: '#FAFAFA',
+    height: 72,
+    //backgroundColor: '#FAFAFA',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 24,
     marginTop: 20,
     marginBottom: 20,
     marginLeft: 10,
-    borderColor: '#EEEEEE',
-    borderWidth: 1,
+    //borderColor: '#EEEEEE',
+    //borderWidth: 1,
   },
   // buy button:
   buttonContainer: {
@@ -365,7 +368,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: 10,
-    marginTop: 5, 
+    marginTop: 10, 
     marginBottom: 20,
   },
   buyButton: {
@@ -378,12 +381,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   sellButton: {
-    backgroundColor: '#fafafa',
+    backgroundColor: '#351560',
     paddingVertical: 15,
     paddingHorizontal: 70,
     borderRadius: 20,
     marginHorizontal: 5,
-    borderColor: '#EEEEEE',
+    borderColor: '#351560',
     borderWidth: 1,
     },
   buyButtonText: {
@@ -394,7 +397,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   sellButtonText: {
-    color: '#351560',
+    color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'urbanist',

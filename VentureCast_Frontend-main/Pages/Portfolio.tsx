@@ -276,10 +276,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist-Regular',
     fontSize: 40,
     fontWeight: 'bold',
+    padding: 5,
   },
   balanceBox: {
-    width: 382,
-    height: 96,
     backgroundColor: '#fafafa',
     justifyContent: 'center',
     alignItems: 'center',
