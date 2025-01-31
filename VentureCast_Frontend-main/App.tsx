@@ -504,7 +504,7 @@ const App = () => {
           options={{ 
             headerShown: true,
             headerStyle: {
-              backgroundColor: 'black', // Background color of the header
+              backgroundColor: '#351560', // Background color of the header
             },
             headerTitle: () => (
               <Text></Text>

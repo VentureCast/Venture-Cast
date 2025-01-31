@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   stockStats: {
-    backgroundColor: 'black',
+    backgroundColor: '#351560',
     paddingHorizontal: 10,
   },
   backgroundImage: {

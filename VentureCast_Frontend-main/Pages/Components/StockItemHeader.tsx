@@ -61,13 +61,13 @@ const styles = StyleSheet.create({
   },
   stockPrice: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
     fontFamily: 'Urbanist-Regular',
   },
   stockChange: {
-    fontSize: 14,
-    marginTop: 4,
+    fontSize: 16,
+    marginTop: 2,
     fontFamily: 'Urbanist-Regular',
     fontWeight: '600',
   },
