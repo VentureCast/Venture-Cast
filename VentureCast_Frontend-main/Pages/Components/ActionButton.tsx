@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#351560',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 22,
     fontFamily: 'Urbanist'
   },
 });

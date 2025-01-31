@@ -45,13 +45,6 @@ const TradeScreen = () => {
             icon={require('../Assets/Icons/Withdraw.png')}
             page= 'WithdrawOption'
             /> 
-
-          <TradeItem 
-            title='Payment Methods'
-            description='Access and manage your bank alternative payment methods.'
-            icon={require('../Assets/Icons/PaymentMethod.png')}
-            page= 'PaymentMethods'
-            />    
         </View>
       </ScrollView>
     </>

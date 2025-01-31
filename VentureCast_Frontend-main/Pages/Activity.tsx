@@ -22,7 +22,7 @@ const ActivityScreen = ({navigation}:any) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.backButton}>←</Text>
           </TouchableOpacity>
-          <Text style={styles.sectionTitle}>Transaction Activity</Text>
+          <Text style={styles.sectionTitle}>Trade Activity</Text>
         </View>
         {ActivityData.map((item, index) => (
           <WatchListItem

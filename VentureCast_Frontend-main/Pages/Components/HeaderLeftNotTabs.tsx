@@ -1,41 +1,37 @@
-// components/HeaderLeft.tsx
+// components/HeaderLeftNotTabs.tsx
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-
 type RootStackParamList = {
-  Home: undefined; // Do this for all linked pages
+  Discover: undefined;
 };
 
-
-//change the image background to a better image
-
-
-const HeaderLeft = () => {
+const HeaderLeftNotTabs = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <View style={styles.miniHeader}>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-        <Image source={require('../../Assets/Images/Frame.png')} style={styles.miniLogo} />
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={styles.backButton}>←</Text>
       </TouchableOpacity>
   </View>
   );
 };
 
 const styles = StyleSheet.create({
-  miniLogo: {
-    width: 20, 
-    height: 20,
+  backButton: {
+    fontSize: 34,
+    color: '#fff',
+    fontFamily: 'urbanist',
+    marginRight: 20,
   },
   miniHeader: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     width: '100%',
     height: 44,
-    padding: 10,
     paddingLeft: 20, 
     backgroundColor: 'transparent'
   },
 });
 
-export default HeaderLeft;
+export default HeaderLeftNotTabs;

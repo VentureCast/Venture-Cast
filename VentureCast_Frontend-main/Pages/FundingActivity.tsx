@@ -44,7 +44,7 @@ const FundingActivity = ({navigation}:any) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.backButton}>←</Text>
           </TouchableOpacity>
-          <Text style={styles.sectionTitle}>Funding Activity</Text>
+          <Text style={styles.sectionTitle}>Transaction Activity</Text>
         </View>
         <View style={styles.details}>
           <Text style={styles.miniTitle}>Total Deposit</Text>

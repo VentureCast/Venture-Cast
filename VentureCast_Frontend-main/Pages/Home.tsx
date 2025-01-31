@@ -77,29 +77,8 @@ const VentureCastHome = () => {
         </View>
       </TouchableOpacity>
       <View style={styles.sectionWatchlist}>     
-      <MiniStockScroll />
+        <MiniStockScroll />
       </View>
-      {/* Clips & News Section -- change the clipitem componet tot he one from portfolio screen, then update portfolio with component */}
-      <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
-        <View style = {styles.clipsSubTitle}>
-              <Text style={styles.sectionTitle}>Clips & News</Text>
-          {/* need this to be a button that opens up more clips */}
-              <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-        </View>
-      </TouchableOpacity>
-      <View style={styles.sectionTitle}>
-        <ClipsElement 
-        title="#InRealLife" 
-        subTitle="Trending Hashtag" 
-        views={827.5}  
-        icon = {require('../Assets/Icons/Play.png')}
-        />
-      </View>
-
-      {/* Deposit to Venture Cast Button: would like this to appear when 
-      the "top-locked" one dissapears adn then stick to the nav tab*/}
-      <ActionButtonDark label="Deposit to VentureCast" onPress={() => navigation.navigate('DepositOption')} large={true} />
-        
     </ScrollView>
   </>
   );

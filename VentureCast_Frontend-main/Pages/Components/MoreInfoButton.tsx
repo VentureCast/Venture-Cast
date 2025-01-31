@@ -46,14 +46,14 @@ const MoreInfoButton = () => {
               style={styles.optionButton}
               onPress={() => handleNavigation('Activity')}
             >
-              <Text style={styles.optionText}>Transaction Activity</Text>
+              <Text style={styles.optionText}>Trade Activity</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.optionButton}
               onPress={() => handleNavigation('FundingActivity')}
             >
-              <Text style={styles.optionText}>Funding Activity</Text>
+              <Text style={styles.optionText}>Transaction Activity</Text>
             </TouchableOpacity>
 
             <TouchableOpacity

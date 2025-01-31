@@ -42,11 +42,11 @@ const StockDetail = ({ name, value, isPercent, image }: any) => {
 
 // data for viewer graph
 const viewerStats = [
-  {id:'1', quarter: 'Q1', fiscalYear: 'FY24', valueOne: -0.22, valueTwo: -0.48, colorOne: '#FFB9B9', colorTwo: '#F75555', margin: 60},
+  {id:'1', quarter: 'Q1', fiscalYear: 'FY24', valueOne: -0.22, valueTwo: -0.48, colorOne: '#F75555', colorTwo: '#C2B8CF', margin: 60},
   {id:'2', quarter: 'Q2', fiscalYear: 'FY24', valueOne: -0.24, valueTwo: -0.48, colorOne: '#12D18E', colorTwo: '#C2B8CF', margin: 60},
   {id:'3', quarter: 'Q3', fiscalYear: 'FY24', valueOne: +0.24, valueTwo: -0.20, colorOne: '#12D18E', colorTwo: '#C2B8CF', margin: 120}, 
-  {id:'4', quarter: 'Q4', fiscalYear: 'FY24', valueOne: -0.65, valueTwo: -0.90, colorOne: '#FFB9B9', colorTwo: '#F75555', margin: 50},
-  {id:'5', quarter: 'Q1', fiscalYear: 'FY25', valueOne: -0.85, valueTwo: -1.05, colorOne: '#FFB9B9', colorTwo: '#F75555', margin: 20},
+  {id:'4', quarter: 'Q4', fiscalYear: 'FY24', valueOne: -0.65, valueTwo: -0.90, colorOne: '#F75555', colorTwo: '#C2B8CF', margin: 50},
+  {id:'5', quarter: 'Q1', fiscalYear: 'FY25', valueOne: -0.85, valueTwo: -1.05, colorOne: '#F75555', colorTwo: '#C2B8CF', margin: 20},
 ];
 
 // Portfolio screen starts
@@ -69,6 +69,10 @@ const StockPage = () => {
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals,
     }); // Formats the number with commas
+  };
+
+  const formatSimpleNumber = (number: number): string => {
+    return number.toLocaleString('en-US'); // Formats the number with commas
   };
 
   const formatPercentage = (number: number, decimals: number = 2): string => {
@@ -102,8 +106,8 @@ const StockPage = () => {
         <View style={styles.stockStats}>
           <StockItemHeader
             logo={require('../Assets/Images/dude-perfect.png')}
-            name='Dude Perfect'
-            ticker='DUPT'
+            name='DUPT'
+            ticker='' // remove this and make name bigger
             price={marketStats.currentPrice}
             change={marketStats.change}
             changePercent={marketStats.changePercent}
@@ -111,7 +115,7 @@ const StockPage = () => {
         </View>
         {/* Line Graph */}
         {/* <LineGraph data={sampleData} background={require('../Assets/Images/DarkBackground.png')} /> */}
-        <Image style={styles.backgroundImage} source={require('../Assets/Images/DarkBackground.png')} />
+        <Image style={styles.backgroundImage} source={require('../Assets/Images/portfolio-background.png')} />
         {/* Stock Live value Section */}
         
 
@@ -135,6 +139,18 @@ const StockPage = () => {
         </View>
         <View style={styles.accountGrid}>
           <StockDetail
+            image={ require('../Assets/Images/total-return.png')}
+            name= 'Total Return'
+            value={formatCurrency(userHoldings.totalReturn)}
+            isPercent = {false}
+          />
+          <StockDetail
+            image={require('../Assets/Images/equity.png')}
+            name= 'Holdings ($USD)'
+            value={formatCurrency(userHoldings.equity)}
+            isPercent = {false}
+          />
+          <StockDetail
             image={require('../Assets/Icons/SharesHeld.png')}
             name={'Shares Held'}
             value={userHoldings.shares}
@@ -142,22 +158,12 @@ const StockPage = () => {
           />
           <StockDetail
             image={require('../Assets/Icons/CostPerShare.png')}
-            name= 'Cost at Buy'
+            name= 'Purchase Price'
             value={formatCurrency(userHoldings.costAtBuy)}
             isPercent = {false}
           />
-          <StockDetail
-            image={require('../Assets/Images/equity.png')}
-            name= 'Equity'
-            value={formatCurrency(userHoldings.equity)}
-            isPercent = {false}
-          />
-          <StockDetail
-            image={ require('../Assets/Images/total-return.png')}
-            name= 'Total Return'
-            value={formatCurrency(userHoldings.totalReturn)}
-            isPercent = {false}
-          />
+
+
         </View>
 
           {/* Market Stats Section */}
@@ -166,17 +172,17 @@ const StockPage = () => {
         </View>
         <MarketStat   
           title='Price-Earnings Ratio'
-          description={marketStats.priceER}
+          description={formatNumber(marketStats.priceER)}
           icon={require('../Assets/Icons/Price-EarningsRatio.png')}
         />
         <MarketStat   
           title='Shares Outstanding'
-          description={formatNumber(marketStats.sharesOutstanding)} // format number function adds commas
+          description={formatSimpleNumber(marketStats.sharesOutstanding)} // format simple number function adds commas
           icon={require('../Assets/Icons/SharesOutstanding.png')}
         />
         <MarketStat   
-          title='Viewers Per Share'
-          description={marketStats.viewPerShare}
+          title='Subscribers Per Share'
+          description={formatNumber(marketStats.viewPerShare)}
           icon={require('../Assets/Icons/ViewPerShare.png')}
         />
         <MarketStat   
@@ -242,7 +248,7 @@ const StockPage = () => {
 
           {/* Viewers Per Share Section */}
         <View style={styles.marketStats}>
-          <Text style={styles.sectionTitle}>Viewers per share</Text>
+          <Text style={styles.sectionTitle}>Subscribers per share</Text>
         </View>
         <View>
           <View style={styles.viewerContainer}>
@@ -264,9 +270,9 @@ const StockPage = () => {
           <Text style={styles.sectionSubTitle}>The creator reported results on Febuary 25, 2025 and missed market expectations.</Text>
         </View>
 
-        {/* News Section */}
-        {/* are we going to link to a "news" page or the clips page???? */}
-        <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
+        {/* News, people also bought, and clips Section */}
+
+        {/* <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
           <View style = {styles.clipsSubTitle}>
             <Text style={styles.sectionTitle}>News</Text>
             <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
@@ -289,9 +295,6 @@ const StockPage = () => {
         />
         <Button style={styles.showMoreButton}>Show More</Button>
 
-        {/* Characteristics Section */}
-
-        {/* Stock Positions */}
         <View style={styles.miniStockScroll}>
           <View style={styles.stockTitleRow}>
             <Text style={styles.sectionTitle}>People also bought</Text>
@@ -299,13 +302,14 @@ const StockPage = () => {
           <MiniStockScroll />
         </View>
 
-        {/* Recent Viral Clips Section */}
         <ClipsElement 
           title= '#TrickShot'
           subTitle='Trending Hashtag'
           icon={require('../Assets/Icons/Play.png')}
           views='543.32'
-        />
+        /> */}
+
+
       </ScrollView>
     </>
   );

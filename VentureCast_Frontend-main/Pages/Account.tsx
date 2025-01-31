@@ -15,11 +15,12 @@ type RootStackParamList = {
   Activity: undefined;
   FundingActivity: undefined;
   VentureCast: undefined;
+  PaymentMethods: undefined;
 };
 // import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
 
 const acctData = [
-  { id: '1', name: 'Cash', value: '23,087.39', change: 0.00, image: require('../Assets/Images/cash.png') },
+  { id: '1', name: 'Cash', value: '23,087.39', change: 0.00, image: require('../Assets/Icons/BuyStock.png') },
   { id: '2', name: 'Daily Change', value: '9,739.36', change: 24.65, image: require('../Assets/Images/daily-change.png') },
   { id: '3', name: 'Equity', value: '186,473.68', change: 55.54, image: require('../Assets/Images/equity.png') },
   { id: '4', name: 'Total Return', value: '66,378.49', change: 24.65, image: require('../Assets/Images/total-return.png') }, //these images are not circles, or same dimensions: we need better ones
@@ -92,14 +93,14 @@ const AccountScreen = () => {
       <View style={styles.menuItem}>
         {/* <Ionicons name="time-outline" size={24} color="#673ab7" /> */}
         <Image source={require('../Assets/Icons/TransactionActivity.png')} style={styles.menuIcon} />
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Activity')}>Transaction History</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Activity')}>Trade History</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
         {/* <Ionicons name="bar-chart-outline" size={24} color="#43a047" /> */}
         <Image source={require('../Assets/Icons/FundingActivity.png')} style={styles.menuIcon} />
-        <Text style={styles.menuText} onPress={() => navigation.navigate('FundingActivity')}>Funding Activity</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('FundingActivity')}>Transaction Activity</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
@@ -114,6 +115,13 @@ const AccountScreen = () => {
         {/* <Ionicons name="cash-outline" size={24} color="#f44336" /> */}
         <Image source={require('../Assets/Icons/Withdraw.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('WithdrawOption')}>Withdraw from VentureCast</Text>
+        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
+      </View> 
+
+      <View style={styles.menuItem}>
+        {/* <Ionicons name="cash-outline" size={24} color="#f44336" /> */}
+        <Image source={require('../Assets/Icons/PaymentMethod.png')} style={styles.menuIcon} />
+        <Text style={styles.menuText} onPress={() => navigation.navigate('PaymentMethods')}>Payment Methods</Text>
         {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 

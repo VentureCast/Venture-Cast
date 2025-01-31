@@ -35,7 +35,7 @@ const Header = ({ balance, percentChange, moneyChange }:any) => {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'transparent',
-    paddingVertical: 40,
+    paddingVertical: 25,
     paddingHorizontal: 20,
     alignItems: 'center',
   },
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   balanceChange: {
     fontFamily: 'Urbanist',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 20,
     marginTop: 5,
   },
   positive: {
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   arrowIcon: {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
     marginRight: 5,
     marginTop: 5,
   },
