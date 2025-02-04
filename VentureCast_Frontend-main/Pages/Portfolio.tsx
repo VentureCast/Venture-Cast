@@ -121,6 +121,7 @@ const PortfolioScreen = () => {
         {/* Account Summary Section */}
         <View style={styles.balanceBox}>
             <Text style={styles.balanceTitle}>{formatCurrency(229375.25)}</Text>
+            <Text style={styles.balanceSubTitle}>Net Account Value</Text>
         </View>
           {/* my acct, new section 2x2 */}
         <View style={styles.accountSummary}>
@@ -200,45 +201,6 @@ const PortfolioScreen = () => {
             <Text style={styles.buttonText}>{showMore2 ? 'Show Less' : 'Show More'}</Text>
           </TouchableOpacity>       
         </View>
- 
-        {/* Recent Viral Clips Section */}
-        <View style={styles.recentClips}>
-          <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
-            <View style = {styles.recentClipsTitle}>
-              <Text style={styles.sectionTitle}>Recent Viral Clips</Text>
-          {/* need this to be a button that opens up more clips */}
-                <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-            </View>       
-          </TouchableOpacity>
-          {/* we want each section to pull from a database of clips for the stocks that are presented above the clips */}
-          <TouchableOpacity onPress={() => navigation.navigate('StockPage')}>
-            <View  style={styles.clipStockItem}>
-              <View style={styles.stockNameLogo}> 
-                <Image source={require('../Assets/Images/jake-paul.png')} style={styles.stockLogo} />
-                <View>
-                  <Text style={styles.stockName}>Jake Paul</Text>
-                  <Text style={styles.stockTicker}>JKPL</Text>
-                </View>
-              </View>
-              <Image source={require('../Assets/Icons/Arrow-right.png')} />
-            </View>
-          </TouchableOpacity>
-          {/* Replace with real video data */}
-          <FlatList
-            horizontal
-            data={[
-              { id: '1', video: 'Clip 1',  image: require('../Assets/Images/Clip1.png')}, 
-              { id: '2', video: 'Clip 2', image: require('../Assets/Images/Clip2.png')},
-              { id: '3', video: 'Clip 3', image: require('../Assets/Images/Clip3.png')}, 
-              ]}
-            renderItem={({ item }) => (
-              <View style={styles.clipItem}>
-                <Image style={styles.clipImage} source = {item.image} />
-              </View>
-            )}
-            keyExtractor={item => item.id}
-          />
-        </View>
       </ScrollView>
     </>
   );
@@ -268,6 +230,7 @@ const styles = StyleSheet.create({
     color: '#351560',
     fontSize: 16,
     fontWeight: 'semibold',
+    fontFamily: 'urbanist-Regular'
   },
 
   // the user balance
@@ -276,18 +239,24 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist-Regular',
     fontSize: 40,
     fontWeight: 'bold',
-    padding: 5,
+    padding: 10,
+  },
+  balanceSubTitle: {
+    fontFamily: 'Urbanist-Regular',
+    fontSize: 14,
+    fontWeight: 'semibold',
+    paddingBottom: 10,
   },
   balanceBox: {
-    backgroundColor: '#fafafa',
+    backgroundColor: '#F5F3F3',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 24,
     marginTop: 20,
     marginBottom: 20,
-    marginLeft: 10,
-    borderColor: '#EEEEEE',
-    borderWidth: 0.2,
+    marginHorizontal: 35,
+    borderColor: '#D3D3D3',
+    borderWidth: 0.6,
   },
 // user acct info section
 

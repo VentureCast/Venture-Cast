@@ -14,7 +14,7 @@ const watchlistData = [
 
 const MiniWatchlist = ({}:any) => {
   return (
-  <View>
+  <View style={styles.shadowContainer}>
     <FlatList 
       data={watchlistData}
       renderItem={({ item }) => (
@@ -25,7 +25,7 @@ const MiniWatchlist = ({}:any) => {
             <Text style={styles.stockText}>{item.name}</Text>
             <Text style={[styles.stockPercentage, 
               item.percentage >= 0 ? styles.positive : styles.negative]}
-              >({item.percentage}%)</Text>
+              >{item.percentage}%</Text>
           </View>
         </View>
         <Image source={item.graph} style={styles.graph} />
@@ -43,12 +43,23 @@ const MiniWatchlist = ({}:any) => {
 //  then duplicate it for the next stock section
 
 const styles = StyleSheet.create({
+
+  shadowContainer: {
+    borderRadius: 20, // Ensure it matches the inner container's borderRadius
+    shadowColor: '#351560', 
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 }, // Moves shadow downward
+    shadowRadius: 5,
+    elevation: 5, // For Android
+  },
   container: {
     flexDirection: 'column',
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#F5F5F5',
+    borderWidth: 0.1,
+    borderColor: '#351560',
     marginRight: 15,
+    backgroundColor: '#fff', // Ensures shadow doesn't affect internals
+    overflow: 'hidden', // Prevents shadow inside the border
   },
   miniWatchlist: {
     flexDirection: 'row',

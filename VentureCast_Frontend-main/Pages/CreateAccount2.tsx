@@ -1,28 +1,45 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView, Alert } from 'react-native';
 import Button from './Components/Button';
 import InputField from './Components/InputField';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-const CreateAccountScreen = ({navigation}:any) => {
+type RootStackParamList = {
+  CameraScreen: undefined; // Do this for all linked pages
+};
+
+const CreateAccountScreen = () => {
+
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const [howDidYouHear, setHowDidYouHear] = useState('');
 
   const handleContinue = () => {
-    // Handle continue action
+    if (password === confirmPassword)
+      return (
+        navigation.navigate('CameraScreen')
+      ); 
+    else 
+      return (
+        Alert.alert('Passwords do not match.')
+      );
   };
   // need to now link over to the ID verification part
 
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          {/* Back icon here */}
-          <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
-
-        <Text style={styles.headerText}>Create an account (cont.)</Text>
+        <Text style={styles.headerTitle}>Create an Account</Text>
+      </View>
 
 
         <InputField
@@ -49,10 +66,10 @@ const CreateAccountScreen = ({navigation}:any) => {
         />
         <InputField
           label="Confirm Password"
-          value={password}
-          onChangeText={setPassword}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
           placeholder="Password"
-          
+          keyboardType='password'
         />
         {/* ^^^^secureTextEntry to hide text^^^ */}
 
@@ -63,7 +80,7 @@ const CreateAccountScreen = ({navigation}:any) => {
           placeholder="e.g., YouTube"
         />
 
-        <Button title="Continue" onPress={() => navigation.navigate('ScanScreen')} />
+        <Button title="Continue" onPress={handleContinue} />
       </View>
     </ScrollView>
   );
@@ -73,35 +90,30 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: '#FFFFFF', // White background
-    paddingVertical: 30,
+    paddingVertical: 10,
   },
-
   container: {
     flex: 1,
     padding: 20,
     backgroundColor: '#FFFFFF',
   },
-
-  // back arrow
-  icon: { 
-    width: 28,
-    height: 28,
-    marginRight: 20,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    },
-    backButton: {
-      height: 40,
-      marginBottom: 30,
-      paddingTop: 20,
-    },
     // header
-    headerText: {
-      fontSize: 28,
-      fontWeight: 'bold',
-      marginBottom: 40,
-      color: '#111',
+    backButtonText: {
+      fontSize: 30,
+      color: '#000',
       fontFamily: 'urbanist',
+    },
+    headerTitle: {
+      fontSize: 22,
+      fontWeight: 'bold',
+      marginLeft: 10,
+      fontFamily: 'urbanist',
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 15,
+      marginTop: 60,
     },
 });
 

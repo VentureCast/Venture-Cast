@@ -7,9 +7,7 @@ type RootStackParamList = {
   Home: undefined; // Do this for all linked pages
 };
 
-
 //change the image background to a better image
-
 
 const HeaderLeft = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -24,8 +22,8 @@ const HeaderLeft = () => {
 
 const styles = StyleSheet.create({
   miniLogo: {
-    width: 20, 
-    height: 20,
+    width: 25, 
+    height: 25,
   },
   miniHeader: {
     flexDirection: 'row',

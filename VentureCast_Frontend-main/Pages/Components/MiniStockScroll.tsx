@@ -3,12 +3,11 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import formatCurrency from './formatCurrency';
 
 type RootStackParamList = {
   StockPage: undefined; // Define your route and parameters here
 };
-
-
 
 const stockScrollData = [
   {id: '1', name: "MrBeast", ticker: "MBT", price: 30.98, percentage: -1.98, graph: require('../../Assets/Graphs/Mega-Nega-1.png'), avatar: require('../../Assets/Images/JimmyBeast.png') },
@@ -19,19 +18,16 @@ const stockScrollData = [
   {id: '6', name: "Bark Rober", ticker: "BKRB", price: 12.34,  percentage: 100.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
   ];
 
-const MiniStockScroll = ({ }:any) => {
+const MiniStockScroll = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const formatPercentage = (number: number): string => {
-    return `(${number.toLocaleString('en-US')}%)`; // Adds ( %) and formats the number
-  };
-  const formatCurrency = (number: number): string => {
-    return `$${number.toLocaleString('en-US')}`; // Adds $ and formats the number
+    return `${number.toLocaleString('en-US')}%`; // Adds ( %) and formats the number
   };
 
   return (
-  <View>
-    <FlatList 
+  <View style={styles.shadowContainer}>
+    <FlatList
       data={stockScrollData}
       renderItem={({ item }) => (
       <TouchableOpacity onPress={() => navigation.navigate('StockPage')}>
@@ -67,12 +63,23 @@ const MiniStockScroll = ({ }:any) => {
 //  then duplicate it for the next stock section
 
 const styles = StyleSheet.create({
+
+  shadowContainer: {
+    borderRadius: 20, // Ensure it matches the inner container's borderRadius
+    shadowColor: '#351560', 
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 }, // Moves shadow downward
+    shadowRadius: 5,
+    elevation: 5, // For Android
+  },
   container: {
     flexDirection: 'column',
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#F5F5F5',
+    borderWidth: 0.1,
+    borderColor: '#351560',
     marginRight: 15,
+    backgroundColor: '#fff', // Ensures shadow doesn't affect internals
+    overflow: 'hidden', // Prevents shadow inside the border
   },
   miniStockScroll: {
     flexDirection: 'row',

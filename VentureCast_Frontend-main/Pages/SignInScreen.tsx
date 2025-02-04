@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import InputField from './Components/InputField';
 import Button from './Components/Button';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const SignInScreen = ({navigation}:any) => {
   const [password, setPassword] = useState('');
@@ -23,10 +22,9 @@ const SignInScreen = ({navigation}:any) => {
       </View>
       <View style={styles.container}>
        
-
         <InputField
-          label="Username"
-          placeholder="Enter username"
+          label="Username or Email"
+          placeholder="Enter username/email"
           value={username}
           onChangeText={setUsername}
         />

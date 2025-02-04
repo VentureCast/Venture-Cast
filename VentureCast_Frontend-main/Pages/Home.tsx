@@ -4,9 +4,7 @@ import Header from './Components/Header';
 import CategoryBox from './Components/CategoryBox';
 import MiniWatchlist from './Components/MiniWatchlist';
 import StockDetailsScreen from './StockDetails';
-import ClipsElement from './Components/ClipsElement';
 import MiniStockScroll from './Components/MiniStockScroll';
-import ActionButtonDark from './Components/ActionButtonDark';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
@@ -14,6 +12,7 @@ type RootStackParamList = {
   Portfolio: undefined;
   ClipsPage: undefined;
   DepositOption: undefined;
+  Discover: undefined;
 };
 
 const userData = [
@@ -43,6 +42,13 @@ const VentureCastHome = () => {
           ))}
       
       {/* Categories Section  graphs need to become functions of change of price(fund) over time*/}
+      <TouchableOpacity onPress={() => navigation.navigate('Discover')}> 
+        <View style = {styles.subTitle}>
+              <Text style={styles.sectionTitle}>Categories</Text>
+          {/* need this to be a button that opens up more clips */}
+              <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+          </View>
+      </TouchableOpacity>
       <View style={styles.categoriesContainer}>
       {categoryData.map(category => (
             <CategoryBox
@@ -71,7 +77,7 @@ const VentureCastHome = () => {
       {/* My Stocks Section */}
       <TouchableOpacity onPress={() => navigation.navigate('Portfolio')}> 
         <View style = {styles.subTitle}>
-              <Text style={styles.sectionTitle}>My Stocks</Text>
+              <Text style={styles.sectionTitle}>My Positions</Text>
           {/* need this to be a button that opens up more clips */}
               <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
         </View>

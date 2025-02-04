@@ -6,9 +6,11 @@ import Button from './Components/Button';
 // import { Ionicons } from '@expo/vector-icons';
 
 const CreateAccount = ({ navigation }:any) => {
-  const [fullName, setFullName] = useState('Andrew Seinfeld');
+  const [firstName, setFirstName] = useState('Alexander');
+  const [middleName, setMiddleName] = useState('Scott');
+  const [lastName, setLastName] = useState('Creighton');
   const [dateOfBirth, setDateOfBirth] = useState('12/27/1995');
-  const [address, setAddress] = useState('1340 Beaver In California, USA');
+  const [address, setAddress] = useState('221B Baker Street, London');
 
   const handleContinue = () => {
     // Logic for continue button 
@@ -17,12 +19,15 @@ const CreateAccount = ({ navigation }:any) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        {/* Back icon here */}
-        <Image style={styles.icon} source={require('../Assets/Icons/Arrow-Left.png')} />
-      </TouchableOpacity>
-      <Text style={styles.headerText}>Create an account</Text>
-      <InputField label="Full Legal Name" value={fullName} onChangeText={setFullName} placeholder="Full Legal Name"/>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Create an Account</Text>
+      </View>
+      <InputField label="First Name" value={firstName} onChangeText={setFirstName} placeholder="First Name"/>
+      <InputField label="Middle Name" value={middleName} onChangeText={setMiddleName} placeholder="Middle Name"/>
+      <InputField label="Last Name" value={lastName} onChangeText={setLastName} placeholder="Last Name"/>
       <InputField label="Date of Birth" value={dateOfBirth} onChangeText={setDateOfBirth} placeholder="MM/DD/YYYY" keyboardType="numeric" />
       <InputField label="Address" value={address} onChangeText={setAddress} placeholder="Address" />
       <Button title="Continue" onPress={() => navigation.navigate('CreateAccountStep2')} />
@@ -84,17 +89,22 @@ const styles = StyleSheet.create({
     fontFamily: 'urbanist',
   },
   // back arrow
-  icon: { 
-    width: 28,
-    height: 28,
-    marginRight: 20,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    backButtonText: {
+      fontSize: 30,
+      color: '#000',
+      fontFamily: 'urbanist',
     },
-    backButton: {
-      height: 60,
-      marginBottom: 30,
-      paddingTop: 40,
+    headerTitle: {
+      fontSize: 22,
+      fontWeight: 'bold',
+      marginLeft: 10,
+      fontFamily: 'urbanist',
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 15,
+      marginTop: 60,
     },
 });
 

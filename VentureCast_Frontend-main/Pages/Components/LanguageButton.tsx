@@ -6,10 +6,9 @@ import {
   Modal,
   TouchableOpacity,
   StyleSheet,
+  ScrollView
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
-
 
 // need the button to actually change the language
 

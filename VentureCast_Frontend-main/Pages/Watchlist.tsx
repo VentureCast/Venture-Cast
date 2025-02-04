@@ -28,7 +28,7 @@ const WatchListScreen = ( ) => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={styles.backButton}>←</Text>
             </TouchableOpacity>
-            <Text style={styles.sectionTitle}>Watchlist</Text>
+            <Text style={styles.sectionTitle}>My Watchlist</Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('Discover')}>
             <Text style={styles.backButton}>+</Text>

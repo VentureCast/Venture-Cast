@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import InputField from './Components/InputField';
 import Button from './Components/Button';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const FinalResetPassword = ({navigation}:any) => {
   const [password, setPassword] = useState('');

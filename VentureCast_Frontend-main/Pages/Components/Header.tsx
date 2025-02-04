@@ -26,7 +26,7 @@ const Header = ({ balance, percentChange, moneyChange }:any) => {
         </View>
       </View>
       <View style={styles.actionButtonContainer}>
-        <ActionButton label="Deposit Funds" onPress={() => navigation.navigate('DepositOption')} large={false} />
+        <ActionButton label="Deposit" onPress={() => navigation.navigate('DepositOption')} large={false} />
       </View>
     </ImageBackground>
   );

@@ -143,23 +143,6 @@ const handleSearch = (query: string) => {
             />
           ))}
       </View>
-      
-      {/* Clips & News Section -- change the clipitem componet tot he one from portfolio screen, then update portfolio with component */}
-      <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
-        <View style = {styles.clipsSubTitle}>
-              <Text style={styles.sectionTitle}>Clips & News</Text>
-          {/* need this to be a button that opens up more clips */}
-              <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-        </View>
-      </TouchableOpacity>
-      <View style={styles.sectionTitle}>
-        <ClipsElement 
-        title="#InRealLife" 
-        subTitle="Trending Hashtag" 
-        views={827.5}  
-        icon = {require('../Assets/Icons/Play.png')}
-        />
-      </View>
     </ScrollView>
   </>
   );
