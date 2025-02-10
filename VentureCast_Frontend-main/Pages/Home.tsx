@@ -13,6 +13,7 @@ type RootStackParamList = {
   ClipsPage: undefined;
   DepositOption: undefined;
   Discover: undefined;
+  Watchlist: undefined;
 };
 
 const userData = [
@@ -61,13 +62,13 @@ const VentureCastHome = () => {
       </View>
 
       {/* Watch List Section */}
-      
+      <TouchableOpacity onPress={() => navigation.navigate('Watchlist')}> 
         <View style = {styles.subTitle}>
             <Text style={styles.sectionTitle}>Watchlist</Text>
          {/* need this to be a button that opens up more clips */}
             <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
         </View>
-
+      </TouchableOpacity>
       <View>
         <View style={styles.sectionWatchlist}>
             <MiniWatchlist />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-const NotificationItem = ({ title, day,month, year, hour, minute, description, icon }:any) => {
+const NotificationItem = ({ title, day, month, year, hour, minute, description, icon }:any) => {
 
   return (
     // if date is within 1 day of notif display (in row witgh title): <Image source={require(../Assets/Icons/NewNotif.png)} style={styles.newNotif}/>
@@ -10,7 +10,7 @@ const NotificationItem = ({ title, day,month, year, hour, minute, description, i
         <Image source={icon} style={styles.icon} />
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.time}>{month}/{day}/{year} | {hour}:{minute}</Text>
+          <Text style={styles.time}>{day}/{month}/{year} | {hour}:{minute}</Text>
         </View>
       </View>
       <Text style={styles.description}>{description}</Text>

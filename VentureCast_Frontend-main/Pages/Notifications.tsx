@@ -6,7 +6,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 type RootStackParamList = {
   SettingsScreen: undefined; // Do this for all linked pages
 };
-const NotificationScreen = ({}:any) => {
+const NotificationScreen = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 

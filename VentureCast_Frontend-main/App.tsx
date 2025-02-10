@@ -78,6 +78,7 @@ import SellPreview from './Pages/SellPreview';
 import SellStock from './Pages/SellStock';
 import NotificationSettings from './Pages/NotificationSettings';
 import EditPaymentMethod from './Pages/EditPaymentMethod';
+import GraphPage from './Pages/GraphPage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -305,6 +306,11 @@ const App = () => {
         <Stack.Screen
           name="FundingActivity"
           component={FundingActivity} // Add the Transaction Activity screen
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen
+          name="GraphPage"
+          component={GraphPage} // Add the Transaction Activity screen
           options={{ headerShown: false }} 
         />
         <Stack.Screen

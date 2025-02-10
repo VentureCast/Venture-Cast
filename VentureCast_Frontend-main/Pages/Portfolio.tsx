@@ -12,6 +12,7 @@ type RootStackParamList = {
   Portfolio: undefined;
   ClipsPage: undefined;
   short: undefined;
+  GraphPage: undefined;
 };
 
 //Account details : cash, equity, daily change and such in a 2x2 grid 
@@ -116,8 +117,9 @@ const PortfolioScreen = () => {
 
         {/* Line Graph */}
         {/* <LineGraph data={sampleData} background={require('../Assets/Images/portfolio-background.png')}/> */}
-        <Image style={styles.backgroundImage} source={require('../Assets/Images/portfolio-background.png')} />
-
+        <TouchableOpacity onPress={() => navigation.navigate('GraphPage')}>
+          <Image style={styles.backgroundImage} source={require('../Assets/Images/portfolio-background.png')} />
+        </TouchableOpacity>
         {/* Account Summary Section */}
         <View style={styles.balanceBox}>
             <Text style={styles.balanceTitle}>{formatCurrency(229375.25)}</Text>
