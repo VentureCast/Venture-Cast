@@ -23,9 +23,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     alignItems: 'flex-start',
     shadowColor: '#351560', 
-    shadowOpacity: 0.4,
-    shadowOffset: { width: 0, height: 0 }, // Moves shadow downward
-    shadowRadius: 0.5,
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 }, // Moves shadow downward
   },
   categoryBoxText:{
     marginLeft: 10,

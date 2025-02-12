@@ -4,12 +4,12 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 
 const watchlistData = [
-  {id: '1', ticker: 'MBT',name: "MrBeast", percentage: -1.98, graph: require('../../Assets/Graphs/big-negative-graph-1.png'), avatar: require('../../Assets/Images/JimmyBeast.png') },
-  {id: '2', ticker: 'BLL',name: "Billie", percentage: 2.45, graph: require('../../Assets/Graphs/big-positive-graph-1.png'), avatar: require('../../Assets/Images/Billy-Eyelash.png')},
-  {id: '3', ticker: 'MKRB',name: "Mark Rober", percentage: 10.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  {id: '4', ticker: 'SKRB',name: "Shark Rober", percentage: 1.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  {id: '5', ticker: 'CKRB',name: "Clark Rober", percentage: 5.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  {id: '6', ticker: 'BKRB',name: "Bark Rober", percentage: 100.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
+  {id: '1', name: "MrBeast", percentage: -1.98, graph: require('../../Assets/Graphs/big-negative-graph-1.png'), avatar: require('../../Assets/Images/JimmyBeast.png') },
+  {id: '2', name: "Billie", percentage: 2.45, graph: require('../../Assets/Graphs/big-positive-graph-1.png'), avatar: require('../../Assets/Images/Billy-Eyelash.png')},
+  {id: '3', name: "Mark Rober", percentage: 10.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
+  {id: '4', name: "Shark Rober", percentage: 1.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
+  {id: '5', name: "Clark Rober", percentage: 5.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
+  {id: '6', name: "Bark Rober", percentage: 100.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
   ];
 
 const MiniWatchlist = ({}:any) => {
@@ -22,7 +22,7 @@ const MiniWatchlist = ({}:any) => {
         <View style={styles.miniWatchlist}>
           <Image source={item.avatar} style={styles.stockAvatar} />
           <View style = {styles.textContainer}>
-            <Text style={styles.stockText}>{item.ticker}</Text>
+            <Text style={styles.stockText}>{item.name}</Text>
             <Text style={[styles.stockPercentage, 
               item.percentage >= 0 ? styles.positive : styles.negative]}
               >{item.percentage}%</Text>
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     borderRadius: 20, // Ensure it matches the inner container's borderRadius
     shadowColor: '#351560', 
     shadowOpacity: 0.5,
-    shadowOffset: { width: 1, height: 2 }, // Moves shadow downward
-    shadowRadius: 1,
+    shadowOffset: { width: 0, height: 2 }, // Moves shadow downward
+    shadowRadius: 5,
     elevation: 5, // For Android
   },
   container: {
@@ -57,22 +57,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 0.1,
     borderColor: '#351560',
-    marginRight: 10,
+    marginRight: 15,
     backgroundColor: '#fff', // Ensures shadow doesn't affect internals
     overflow: 'hidden', // Prevents shadow inside the border
   },
   miniWatchlist: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 7,
+    padding: 10,
   },
   textContainer: {
     flexDirection: 'column',
     marginLeft: 10,
   },
   stockAvatar: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     borderRadius: 25,
   },
   stockText: {
@@ -80,12 +80,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
     color: '#333',
+    marginTop: 5,
   },
   stockPercentage: {
     fontSize: 12,
     fontFamily: 'Urbanist',
     fontWeight: 'bold',
     color: '#E53935',
+    marginTop: 5,
   },
   positive: {
     color: '#12D18E',
@@ -94,11 +96,10 @@ const styles = StyleSheet.create({
     color: '#F75555',
   },
   graph: {
-    borderBottomEndRadius: 20,
     borderBottomStartRadius: 20,
-    marginTop:5,
-    height: 75,
-    width: 120,
+    borderBottomEndRadius: 20,
+    height: 95,
+    width:160,
   },
 });
 

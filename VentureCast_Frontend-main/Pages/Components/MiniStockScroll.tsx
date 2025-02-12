@@ -36,12 +36,14 @@ const MiniStockScroll = () => {
             <Image source={item.avatar} style={styles.stockAvatar} />
             <View style = {styles.infoContainer}>
               <View style = {styles.textContainer}>
+                <Text style={styles.stockText}>{item.name}</Text>
                 <Text style={styles.stockTicker}>{item.ticker}</Text>
               </View>
               <View style={styles.numberContainer}>
                 <Text style={[styles.stockPercentage, 
                 item.percentage >= 0 ? styles.positive : styles.negative]}
                 >{formatPercentage(item.percentage)}</Text>
+                <Text style={styles.stockPrice}>{formatCurrency(item.price)}</Text>
               </View>
             </View>
           </View>
@@ -66,8 +68,8 @@ const styles = StyleSheet.create({
     borderRadius: 20, // Ensure it matches the inner container's borderRadius
     shadowColor: '#351560', 
     shadowOpacity: 0.5,
-    shadowOffset: { width: 1, height: 2 }, // Moves shadow downward
-    shadowRadius: 1,
+    shadowOffset: { width: 0, height: 2 }, // Moves shadow downward
+    shadowRadius: 5,
     elevation: 5, // For Android
   },
   container: {
@@ -75,21 +77,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 0.1,
     borderColor: '#351560',
-    marginRight: 10,
+    marginRight: 15,
     backgroundColor: '#fff', // Ensures shadow doesn't affect internals
     overflow: 'hidden', // Prevents shadow inside the border
   },
   miniStockScroll: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 7,
-    width: 100,
+    padding: 10,
   },
   infoContainer: {
     marginLeft: 10,
   },
   textContainer: {
     flexDirection: 'column',
+    width: 130,
+    marginBottom: 5,
   },
   stockAvatar: {
     width: 40,
@@ -101,16 +104,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
     color: '#333',
+    marginTop: 5,
   },
   stockTicker: {
     fontFamily: 'Urbanist',
-    fontWeight: '700',
-    fontSize: 14,
-    color: '#212121',
+    fontWeight: '500',
+    fontSize: 9.55,
+    color: '#757575',
+    marginTop: 5,
   },
   numberContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  stockPrice: {
+    justifyContent: 'flex-end',
+    fontSize: 12,
+    fontFamily: 'Urbanist',
+    fontWeight: 'bold',
+    color: '#212121',
   },
   stockPercentage: {
     fontSize: 12,
@@ -125,11 +137,10 @@ const styles = StyleSheet.create({
     color: '#F75555',
   },
   graph: {
-    borderBottomEndRadius: 20,
     borderBottomStartRadius: 20,
-    marginTop:5,
-    height: 75,
-    width: 120,
+    borderBottomEndRadius: 20,
+    height: 80,
+    width: 200,
   },
 });
 
