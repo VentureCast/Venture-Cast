@@ -2,13 +2,29 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { supabase } from "./supabaseClient"
+
 
 type RootStackParamList = {
   CreateAccount: undefined; // Do this for all linked pages
   SignIn: undefined;
 };
 
+
 const VentureCast = ({ }:any) => {
+
+  // const handleGoogleSignIn = async () => {
+  //   const { user, session, error } = await supabase.auth.signInWithOAuth({
+  //     provider: 'google',
+  //   });
+
+  //   if (error) {
+  //     console.log('Error during sign-in:', error.message);
+  //   } else {
+  //     setUser(user); // Store user details after successful sign-in
+  //   }
+  // };
+
   
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
