@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "@supabase/supabase-js": "^2.47.16",
+    "expo-auth-session": "^6.0.3",
+    "expo-web-browser": "^14.0.2",
+    "react-native-app-auth": "^8.0.1",
     "react-native-url-polyfill": "^2.0.0",
     "url": "^0.11.4"
   },

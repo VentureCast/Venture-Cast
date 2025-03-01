@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-
+import { ClerkProvider, SignedIn, SignedOut, useAuth } from '@clerk/clerk-react';
 //COLORS:
 //Dark Purple: #351560
 //Gray button fill: #EAE7EF

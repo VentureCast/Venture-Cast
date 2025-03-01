@@ -2,7 +2,9 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { supabase } from "./supabaseClient"
+import { supabase } from '../supabaseClient';
+import GoogleAuth from '../GoogleAuth';
+
 
 
 type RootStackParamList = {
@@ -12,19 +14,6 @@ type RootStackParamList = {
 
 
 const VentureCast = ({ }:any) => {
-
-  // const handleGoogleSignIn = async () => {
-  //   const { user, session, error } = await supabase.auth.signInWithOAuth({
-  //     provider: 'google',
-  //   });
-
-  //   if (error) {
-  //     console.log('Error during sign-in:', error.message);
-  //   } else {
-  //     setUser(user); // Store user details after successful sign-in
-  //   }
-  // };
-
   
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -46,7 +35,7 @@ const VentureCast = ({ }:any) => {
         {/* Authentication buttons need to link to actual google and apple logins */}
         <TouchableOpacity style={styles.authButton}>
           <Image source={require('../Assets/Images/google.png')} style={styles.authLogo} />
-          <Text style={styles.authButtonText}>Continue with Google</Text>
+          <GoogleAuth/>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.authButton}>
