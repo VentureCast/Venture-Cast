@@ -2,8 +2,17 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { supabase } from '../supabaseClient';
-import GoogleAuth from '../GoogleAuth';
+import {supabase} from '../supabaseClient'
+import { AppState } from 'react-native'
+import 'react-native-url-polyfill/auto'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { createClient } from '@supabase/supabase-js'
+import { useState } from 'react'
+import { Alert} from 'react-native'
+import { Button, Input } from '@rneui/themed'
+import Auth from './Components/Auth'
+import { Session } from '@supabase/supabase-js'
+import {useEffect } from 'react'
 
 
 
@@ -17,52 +26,68 @@ const VentureCast = ({ }:any) => {
   
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+  const [session, setSession] = useState<Session | null>(null)
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
+
   return (
-    <ScrollView style={styles.scrollContainer}>
-      <View style={styles.container}>
+    <View>
+      <Auth/>
+      {session && session.user && <Text>{session.user.id}</Text>}
+    </View>
+    // <ScrollView style={styles.scrollContainer}>
+    //   <View style={styles.container}>
 
-        {/* Logo */}
-        <View style={styles.logoContainer}>
-          <Image source={require('../Assets/Images/Login.png')} style={styles.logo} />
-        </View>
+    //     {/* Logo */}
+    //     <View style={styles.logoContainer}>
+    //       <Image source={require('../Assets/Images/Login.png')} style={styles.logo} />
+    //     </View>
 
-        {/* Title and Subtitle */}
-        <Text style={styles.title}>Welcome to VentureCast</Text>
-        <Text style={styles.subtitle}>
-          The best app to invest in content creators with as little as $1.00
-        </Text>
+    //     {/* Title and Subtitle */}
+    //     <Text style={styles.title}>Welcome to VentureCast</Text>
+    //     <Text style={styles.subtitle}>
+    //       The best app to invest in content creators with as little as $1.00
+    //     </Text>
 
-        {/* Authentication buttons need to link to actual google and apple logins */}
-        <TouchableOpacity style={styles.authButton}>
-          <Image source={require('../Assets/Images/google.png')} style={styles.authLogo} />
-          <GoogleAuth/>
-        </TouchableOpacity>
+    //     {/* Authentication buttons need to link to actual google and apple logins */}
+    //     <TouchableOpacity style={styles.authButton}>
+    //       <Image source={require('../Assets/Images/google.png')} style={styles.authLogo} />
+    //       <Text style={styles.authButtonText}>Continue with Google</Text>
+    //     </TouchableOpacity>
 
-        <TouchableOpacity style={styles.authButton}>
-          <Image source={require('../Assets/Images/apple.png')} style={styles.authLogo} />
-          <Text style={styles.authButtonText}>Continue with Apple</Text>
-        </TouchableOpacity>
+    //     <TouchableOpacity style={styles.authButton}>
+    //       <Image source={require('../Assets/Images/apple.png')} style={styles.authLogo} />
+    //       <Text style={styles.authButtonText}>Continue with Apple</Text>
+    //     </TouchableOpacity>
 
-        {/* Sign up and Sign in buttons */}
-        <TouchableOpacity
-          style={styles.signUpButton}
-          onPress={() => navigation.navigate('CreateAccount')}
-        >
-          <Text style={styles.signUpText}>Sign up</Text>
-        </TouchableOpacity>
+    //     {/* Sign up and Sign in buttons */}
+    //     <TouchableOpacity
+    //       style={styles.signUpButton}
+    //       onPress={() => navigation.navigate('CreateAccount')}
+    //     >
+    //       <Text style={styles.signUpText}>Sign up</Text>
+    //     </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.signInButton}
-          onPress={() => navigation.navigate('SignIn')}
-        >
-          <Text style={styles.signInText}>Sign in</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    //     <TouchableOpacity
+    //       style={styles.signInButton}
+    //       onPress={() => navigation.navigate('SignIn')}
+    //     >
+    //       <Text style={styles.signInText}>Sign in</Text>
+    //     </TouchableOpacity>
+    //   </View>
+    // </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  
   scrollContainer: {
     backgroundColor: '#fff'
   },
