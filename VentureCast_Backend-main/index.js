@@ -4,10 +4,11 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
-const Streamer = require('./routes/Streamer')
+const Streamer = require('./routes/Streamers')
 const passport = require('passport');
 const session = require('express-session');
 const connectDB = require('./config/db');
+const stripeRoutes = require('./routes/stripe');
 
 require('dotenv').config();
 
@@ -30,7 +31,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
-app.use('/streamer',Streamer)
+app.use('/streamer', Streamer)
+app.use('/stripe', stripeRoutes);
 
 // Listen on port
 const PORT = process.env.PORT || 5000;
