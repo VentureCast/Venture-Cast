@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { supabase } from "./supabaseClient"
+import { supabase } from "../supabaseClient"
 
 
 type RootStackParamList = {

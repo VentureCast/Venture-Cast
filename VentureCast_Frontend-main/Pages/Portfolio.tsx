@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import Dropdown from './Components/Dropdown'; // does not do anything but is visible
 // import LineGraph from './Components/LineGraph';
 import StockItems from './Components/StockItems';
 import formatCurrency from './Components/formatCurrency';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useUser } from '../UserProvider';
+import { supabase } from '../supabaseClient';
 
 type RootStackParamList = {
   StockPage: undefined; // Do this for all linked pages
@@ -38,13 +40,70 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
 
 const PortfolioScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  // Sample data for stock positions
-  const stockData = [
-    { id: '1', name: 'Dude Perfect', ticker: 'DUPT', price: 71.05, change: 2.94, logo: require('../Assets/Images/dude-perfect.png') },
-    { id: '2', name: 'PewDiePie', ticker: 'PDP', price: 90.79, change: -2.16, logo: require('../Assets/Images/pewdiepie.png') },
-    { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: 207.47, change: 2.37, logo: require('../Assets/Images/jake-paul.png') },
-    { id: '4', name: 'Jimmy BeastMode', ticker: 'MBT', price: 82.50, change: 2.94, logo: require('../Assets/Images/JimmyBeast.png') },
-  ];
+  const { user } = useUser();
+  const [holdings, setHoldings] = useState<any[]>([]);
+  const [streamers, setStreamers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchHoldingsAndStreamers = async () => {
+      if (!user) return;
+      setLoading(true);
+      // Fetch holdings
+      const { data: holdingsData, error: holdingsError } = await supabase
+        .from('Holdings')
+        .select('*')
+        .eq('user_id', user.id);
+      if (holdingsError || !holdingsData) {
+        setHoldings([]);
+        setStreamers([]);
+        setLoading(false);
+        return;
+      }
+      setHoldings(holdingsData);
+      // Get unique streamer_ids
+      const streamerIds = [...new Set(holdingsData.map(h => h.streamer_id))];
+      if (streamerIds.length === 0) {
+        setStreamers([]);
+        setLoading(false);
+        return;
+      }
+      // Fetch all relevant streamers
+      const { data: streamersData, error: streamersError } = await supabase
+        .from('Streamers')
+        .select('streamer_id, username, ticker_name')
+        .in('streamer_id', streamerIds);
+      if (streamersError || !streamersData) {
+        setStreamers([]);
+      } else {
+        setStreamers(streamersData);
+      }
+      setLoading(false);
+    };
+    fetchHoldingsAndStreamers();
+  }, [user]);
+
+  // Dummy data for image, price, percent
+  const dummyImage = require('../Assets/Images/dude-perfect.png');
+  const dummyPrice = 100.00;
+  const dummyPercent = 5.0;
+
+  // Map streamer_id to streamer info
+  const streamerMap = Object.fromEntries(
+    streamers.map(s => [s.streamer_id, s])
+  );
+
+  const stockData = holdings.map(h => {
+    const streamer = streamerMap[h.streamer_id] || {};
+    return {
+      id: h.portfolio_id,
+      name: streamer.username || h.streamer_id, // fallback to id if not found
+      ticker: streamer.ticker_name || 'DUMMY',
+      price: dummyPrice,
+      change: dummyPercent,
+      logo: dummyImage,
+    };
+  });
 
   const sampleData = [0, 1, 2, 3 ,5, ];
 
@@ -109,6 +168,14 @@ const PortfolioScreen = () => {
     }
     setDisplayedPositions2(sortedPositions);
   };
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#351560" />
+      </View>
+    );
+  }
 
   return (
     <>

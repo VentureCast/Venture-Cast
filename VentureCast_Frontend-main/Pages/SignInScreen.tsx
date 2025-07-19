@@ -1,15 +1,35 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
 import InputField from './Components/InputField';
 import Button from './Components/Button';
+import { supabase } from '../supabaseClient';
+import { useNavigation } from '@react-navigation/native';
 
-const SignInScreen = ({navigation}:any) => {
+const SignInScreen = ({ navigation: navFromProps }: any) => {
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigation = navFromProps || useNavigation();
 
-
-  const handleSignIn = () => {
-    // Handle sign in action
+  const handleSignIn = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const lowerEmail = email.trim().toLowerCase();
+      const { data, error } = await supabase.auth.signInWithPassword({ email: lowerEmail, password });
+      if (error) {
+        setError(error.message);
+      } else if (data && data.user) {
+        navigation.navigate('Home');
+      } else {
+        setError('Unknown error.');
+      }
+    } catch (e: any) {
+      setError(e.message || 'Unknown error.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -21,14 +41,13 @@ const SignInScreen = ({navigation}:any) => {
         <Text style={styles.title}>Sign In</Text>
       </View>
       <View style={styles.container}>
-       
         <InputField
-          label="Username or Email"
-          placeholder="Enter username/email"
-          value={username}
-          onChangeText={setUsername}
+          label="Email"
+          placeholder="Enter email"
+          value={email}
+          autoCapitalize="none"
+          onChangeText={text => setEmail(text)}
         />
-
         <InputField
           label="Password"
           placeholder="Enter password"
@@ -36,13 +55,12 @@ const SignInScreen = ({navigation}:any) => {
           onChangeText={setPassword}
           isPassword
         />
-
+        {error && <Text style={{ color: 'red', marginBottom: 10 }}>{error}</Text>}
         <TouchableOpacity style={styles.resetButton} onPress={() => navigation.navigate('ResetPassword')}>
           <Text style={styles.resetText}>Forgot your password? </Text>
         </TouchableOpacity>
-
-        <Button title="Continue" onPress={() => navigation.navigate('2FA')} />
-
+        <Button title={loading ? 'Signing in...' : 'Continue'} onPress={handleSignIn} disabled={loading} />
+        {loading && <ActivityIndicator style={{ marginTop: 10 }} />}
         <Text style={styles.faceIdText}>Login with Face ID</Text>
       </View>
     </ScrollView>

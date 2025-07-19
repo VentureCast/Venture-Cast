@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
+import { UserProvider } from './UserProvider';
+import 'react-native-url-polyfill/auto';
 
 //COLORS:
 //Dark Purple: #351560
@@ -165,395 +167,397 @@ const HomeTabs = ({navigation}:any) => {
 // Main App Navigation
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="VentureCast">
-        <Stack.Screen
-          name="VentureCast"
-          component={VentureCast}
-          options={{ title: 'VentureCast', headerShown: false}}
-        />
-        <Stack.Screen
-          name="CreateAccount"
-          component={CreateAccount}
-          options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
-        />
-        <Stack.Screen
-          name="CreateAccountStep2"
-          component={CreateAccountScreen}
-          options={{ gestureEnabled: false, headerShown: false}} // Security: Disable gestures
-        />
-        <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{ gestureEnabled: false , headerShown: false}} // Security: Disable gestures
-        />
-        <Stack.Screen
-          name="2FA"
-          component={TwoFA}
-          options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
-        />
-        <Stack.Screen
-          name="ChangePassword"
-          component={ChangePassword} // change pass screen 1
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="ResetPassword"
-          component={ResetPassword} // reset pass screen 1
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="ResetPassword2FA"
-          component={ResetPassword2FA} // reset pass screen 2
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="FinalResetPassword"
-          component={FinalResetPassword} // reset pass screen 3
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeTabs} // Add the Bottom Tab Navigator as the Home screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="Profile"
-          component={ProfileScreen} // Add the Bottom Tab Navigator as the Home screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="Watchlist"
-          component={WatchListScreen} // Add the Watchlist screen
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Notifications"
-          component={NotificationScreen} // Add the Notifs screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="PaymentMethods"
-          component={PaymentMethods} // Add the Notifs screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="AddPayment"
-          component={AddPayment} // Add the Notifs screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="EditPaymentMethod"
-          component={EditPaymentMethod} // Add the Notifs screen
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="SettingsScreen"
-          component={SettingsScreen} // Add the Notifs screen
-          options={{ 
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTintColor: '#fff', // Color of back button and title text
-            headerTitle: () => (
-              <Text style={ {
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="VentureCast">
+          <Stack.Screen
+            name="VentureCast"
+            component={VentureCast}
+            options={{ title: 'VentureCast', headerShown: false}}
+          />
+          <Stack.Screen
+            name="CreateAccount"
+            component={CreateAccount}
+            options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
+          />
+          <Stack.Screen
+            name="CreateAccountStep2"
+            component={CreateAccountScreen}
+            options={{ gestureEnabled: false, headerShown: false}} // Security: Disable gestures
+          />
+          <Stack.Screen
+            name="SignIn"
+            component={SignInScreen}
+            options={{ gestureEnabled: false , headerShown: false}} // Security: Disable gestures
+          />
+          <Stack.Screen
+            name="2FA"
+            component={TwoFA}
+            options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
+          />
+          <Stack.Screen
+            name="ChangePassword"
+            component={ChangePassword} // change pass screen 1
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="ResetPassword"
+            component={ResetPassword} // reset pass screen 1
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="ResetPassword2FA"
+            component={ResetPassword2FA} // reset pass screen 2
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="FinalResetPassword"
+            component={FinalResetPassword} // reset pass screen 3
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeTabs} // Add the Bottom Tab Navigator as the Home screen
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen} // Add the Bottom Tab Navigator as the Home screen
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="Watchlist"
+            component={WatchListScreen} // Add the Watchlist screen
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Notifications"
+            component={NotificationScreen} // Add the Notifs screen
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="PaymentMethods"
+            component={PaymentMethods} // Add the Notifs screen
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="AddPayment"
+            component={AddPayment} // Add the Notifs screen
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="EditPaymentMethod"
+            component={EditPaymentMethod} // Add the Notifs screen
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="SettingsScreen"
+            component={SettingsScreen} // Add the Notifs screen
+            options={{ 
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTintColor: '#fff', // Color of back button and title text
+              headerTitle: () => (
+                <Text style={ {
+                  fontFamily: 'urbanist',
+                  fontSize: 26,
+                  fontWeight: 'bold',
+                  color: 'white' // this is for when the name is not the same as what we want to display
+                }}>Settings</Text>
+              ),
+              headerLeft: () => (
+                <HeaderLeftNotTabs />
+              ),
+              headerRight: () => (
+                <HeaderRight />
+              ),
+             }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="NotificationSettings"
+            component={NotificationSettings} // Add the Notifs screen
+            options={{ 
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTintColor: '#fff', // Color of back button and title text
+              headerTitle: () => (
+                <Text style={ {
+                  fontFamily: 'Urbanist-Regular',
+                  fontSize: 26,
+                  fontWeight: 'bold',
+                  color: 'white' // this is for when the name is not the same as what we want to display
+                }}>Settings</Text>
+              ),
+              headerLeft: () => (
+                <HeaderLeftNotTabs />
+              ),
+              headerRight: () => (
+                <HeaderRight />
+              ),
+             }}
+          />
+          <Stack.Screen
+            name="Activity"
+            component={ActivityScreen} // Add the Trade Activity screen
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen
+            name="FundingActivity"
+            component={FundingActivity} // Add the Transaction Activity screen
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen
+            name="Discover"
+            component={DiscoverScreen} // Add the Notifs screen
+            options={{ 
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTintColor: '#fff', // Color of back button and title text
+              headerTitleStyle: {
                 fontFamily: 'urbanist',
                 fontSize: 26,
-                fontWeight: 'bold',
-                color: 'white' // this is for when the name is not the same as what we want to display
-              }}>Settings</Text>
-            ),
-            headerLeft: () => (
-              <HeaderLeftNotTabs />
-            ),
-            headerRight: () => (
-              <HeaderRight />
-            ),
-           }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="NotificationSettings"
-          component={NotificationSettings} // Add the Notifs screen
-          options={{ 
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTintColor: '#fff', // Color of back button and title text
-            headerTitle: () => (
-              <Text style={ {
-                fontFamily: 'Urbanist-Regular',
-                fontSize: 26,
-                fontWeight: 'bold',
-                color: 'white' // this is for when the name is not the same as what we want to display
-              }}>Settings</Text>
-            ),
-            headerLeft: () => (
-              <HeaderLeftNotTabs />
-            ),
-            headerRight: () => (
-              <HeaderRight />
-            ),
-           }}
-        />
-        <Stack.Screen
-          name="Activity"
-          component={ActivityScreen} // Add the Trade Activity screen
-          options={{ headerShown: false }} 
-        />
-        <Stack.Screen
-          name="FundingActivity"
-          component={FundingActivity} // Add the Transaction Activity screen
-          options={{ headerShown: false }} 
-        />
-        <Stack.Screen
-          name="Discover"
-          component={DiscoverScreen} // Add the Notifs screen
-          options={{ 
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTintColor: '#fff', // Color of back button and title text
-            headerTitleStyle: {
-              fontFamily: 'urbanist',
-              fontSize: 26,
-              fontWeight: 'bold', // Title text styling
-            },//  Option B: Custom Headers
-            headerLeft: () => (
-              <HeaderLeftNotTabs />
-            ),
-            headerRight: () => (
-              <HeaderRight />
-            ),
-          }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="HomeScreen"
-          component={VentureCastHome} // Add the home screen
-          options={{ 
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTintColor: '#fff', // Color of back button and title text
-            headerTitleStyle: {
-              fontFamily: 'urbanist',
-              fontSize: 26,
-              fontWeight: 'bold', // Title text styling
-            },//  Option B: Custom Headers
-            headerLeft: () => (
-              <HeaderLeftNotTabs />
-            ),
-            headerRight: () => (
-              <HeaderRight />
-            ),
-          }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="Trade"
-          component={TradeScreen} // Add the trade screen
-          options={{ 
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTintColor: '#fff', // Color of back button and title text
-            headerTitleStyle: {
-              fontFamily: 'urbanist',
-              fontSize: 26,
-              fontWeight: 'bold', // Title text styling
-            },//  Option B: Custom Headers
-            headerLeft: () => (
-              <HeaderLeftNotTabs />
-            ),
-            headerRight: () => (
-              <HeaderRight />
-            ),
-          }} // Hide header for bottom tabs        
-        />
-        <Stack.Screen
-          name="BuyStock"
-          component={BuyStockScreen} // Add the buy stock screen
-          options={{ headerShown: false }} 
-        /> 
-        <Stack.Screen
-          name="BuyCongrats"
-          component={BuyCongrats} // Add the buy stock screen final
-          options={{ headerShown: false }} 
-        /> 
-        <Stack.Screen
-          name="BuyPreview"
-          component={BuyPreview} // Add the preview to the buy stock screen
-          options={{ headerShown: false }} 
-        /> 
-        <Stack.Screen
-          name="SellCongrats"
-          component={SellCongrats} // Add the sell stock final screen
-          options={{ headerShown: false }} 
-        /> 
-        <Stack.Screen
-          name="SellStock"
-          component={SellStock} // Add the sell stock screen
-          options={{ headerShown: false }}
-        /> 
-        <Stack.Screen
-          name="SellPreview"
-          component={SellPreview} // Add the preview to sell stock screen
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ShortStock"
-          component={ShortStockScreen} // Add the short stock screen
-          options={{ headerShown: false }}
-        /> 
-        <Stack.Screen
-          name="BuyInter"
-          component={BuyInter} // Add the buy intermediate screen
-          options={{ headerShown: false }} 
-        /> 
-        <Stack.Screen
-          name="ShortInter"
-          component={ShortInter} // Add the short intermediate  screen
-          options={{ headerShown: false }} 
-        /> 
-        <Stack.Screen
-          name="SellInter"
-          component={SellInter} // Add the sell intermediate stock screen
-          options={{ headerShown: false }} 
-        /> 
-        <Stack.Screen
-          name="Withdraw"
-          component={Withdraw} // Add the withdraw screen
-          options={{ headerShown: false }} 
-        />      
-        <Stack.Screen
-          name="Deposit"
-          component={Deposit} // Add the deposit screen
-          options={{ headerShown: false }} 
-        /> 
-        <Stack.Screen
-          name="WithdrawCongrats"
-          component={WithdrawCongrats} // Add the withdraw final screen
-          options={{ headerShown: false }} 
-        />
-        <Stack.Screen
-          name="DepositCongrats"
-          component={DepositCongrats} // Add the deposit final screen
-          options={{ headerShown: false }} 
-        />         
-        <Stack.Screen
-          name="WithdrawOption"
-          component={WithdrawOption} // Add the withdraw options screen
-          options={{ headerShown: false }} 
-        />   
-        <Stack.Screen
-          name="DepositOption"
-          component={DepositOption} // Add the deposit options screen
-          options={{ headerShown: false }} 
-        />  
-        <Stack.Screen
-          name="DiscoverSubPage"
-          component={DiscoverSubPage} // Add the info from a discover item 
-          options={{ 
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTitle: () => (
-              <Text style={ {
+                fontWeight: 'bold', // Title text styling
+              },//  Option B: Custom Headers
+              headerLeft: () => (
+                <HeaderLeftNotTabs />
+              ),
+              headerRight: () => (
+                <HeaderRight />
+              ),
+            }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="HomeScreen"
+            component={VentureCastHome} // Add the home screen
+            options={{ 
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTintColor: '#fff', // Color of back button and title text
+              headerTitleStyle: {
                 fontFamily: 'urbanist',
                 fontSize: 26,
-                fontWeight: 'bold',
-                color: 'white' // this is for when the name is not the same as what we want to display
-              }}>Discover</Text>
-            ),
-            headerLeft: () => (
-              <HeaderLeftNotTabs />
-            ),
-            headerRight: () => (
-              <HeaderRight />
-            ),
-           }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="ClipsPage"
-          component={ClipsPage} // Add the info from a discover item 
-          options={{ 
-            headerShown: false, // temporarily false because header feels clustered, i could just remove back arrow bc logo takes u home
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTitle: () => (
-              <Text style={ {
+                fontWeight: 'bold', // Title text styling
+              },//  Option B: Custom Headers
+              headerLeft: () => (
+                <HeaderLeftNotTabs />
+              ),
+              headerRight: () => (
+                <HeaderRight />
+              ),
+            }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="Trade"
+            component={TradeScreen} // Add the trade screen
+            options={{ 
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTintColor: '#fff', // Color of back button and title text
+              headerTitleStyle: {
                 fontFamily: 'urbanist',
-                fontSize: 22,
-                fontWeight: 'bold',
-                color: 'white' // this is for when the name is not the same as what we want to display
-              }}>Clips</Text>
-            ),
-            headerLeft: () => (
-              <HeaderLeftNotTabs />
-            ),
-            headerRight: () => (
-              <HeaderRight />
-            ),
-          }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="Portfolio"
-          component={PortfolioScreen} // Add the info from a discover item 
-          options={{     
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTintColor: '#fff', // Color of back button and title text
-            headerTitleStyle: {
-              fontFamily: 'urbanist',
-              fontSize: 26,
-              fontWeight: 'bold', // Title text styling
-            },//  Option B: Custom Headers
-            headerLeft: () => (
-              <HeaderLeftNotTabs />
-            ),
-            headerRight: () => (
-              <HeaderRight />
-            ),
-          }} 
-        />
-        <Stack.Screen
-          name="About"
-          component={AboutVentureCastScreen} // Add the info from a discover item 
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="HelpCenter"
-          component={HelpCenter} // Add the info from a discover item 
-          options={{ headerShown: false }} // Hide header for bottom tabs
-        />
-        <Stack.Screen
-          name="StockPage"
-          component={StockPage} // Add the info from a discover item 
-          options={{ 
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#351560', // Background color of the header
-            },
-            headerTitle: () => (
-              <Text></Text>
-            ),
-            headerLeft: () => (
-              <HeaderLeftStock />
-            ),
-            headerRight: () => (
-              <HeaderRightStock />
-            ),
-          }} // Hide header for bottom tabs
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+                fontSize: 26,
+                fontWeight: 'bold', // Title text styling
+              },//  Option B: Custom Headers
+              headerLeft: () => (
+                <HeaderLeftNotTabs />
+              ),
+              headerRight: () => (
+                <HeaderRight />
+              ),
+            }} // Hide header for bottom tabs        
+          />
+          <Stack.Screen
+            name="BuyStock"
+            component={BuyStockScreen} // Add the buy stock screen
+            options={{ headerShown: false }} 
+          /> 
+          <Stack.Screen
+            name="BuyCongrats"
+            component={BuyCongrats} // Add the buy stock screen final
+            options={{ headerShown: false }} 
+          /> 
+          <Stack.Screen
+            name="BuyPreview"
+            component={BuyPreview} // Add the preview to the buy stock screen
+            options={{ headerShown: false }} 
+          /> 
+          <Stack.Screen
+            name="SellCongrats"
+            component={SellCongrats} // Add the sell stock final screen
+            options={{ headerShown: false }} 
+          /> 
+          <Stack.Screen
+            name="SellStock"
+            component={SellStock} // Add the sell stock screen
+            options={{ headerShown: false }}
+          /> 
+          <Stack.Screen
+            name="SellPreview"
+            component={SellPreview} // Add the preview to sell stock screen
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ShortStock"
+            component={ShortStockScreen} // Add the short stock screen
+            options={{ headerShown: false }}
+          /> 
+          <Stack.Screen
+            name="BuyInter"
+            component={BuyInter} // Add the buy intermediate screen
+            options={{ headerShown: false }} 
+          /> 
+          <Stack.Screen
+            name="ShortInter"
+            component={ShortInter} // Add the short intermediate  screen
+            options={{ headerShown: false }} 
+          /> 
+          <Stack.Screen
+            name="SellInter"
+            component={SellInter} // Add the sell intermediate stock screen
+            options={{ headerShown: false }} 
+          /> 
+          <Stack.Screen
+            name="Withdraw"
+            component={Withdraw} // Add the withdraw screen
+            options={{ headerShown: false }} 
+          />      
+          <Stack.Screen
+            name="Deposit"
+            component={Deposit} // Add the deposit screen
+            options={{ headerShown: false }} 
+          /> 
+          <Stack.Screen
+            name="WithdrawCongrats"
+            component={WithdrawCongrats} // Add the withdraw final screen
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen
+            name="DepositCongrats"
+            component={DepositCongrats} // Add the deposit final screen
+            options={{ headerShown: false }} 
+          />         
+          <Stack.Screen
+            name="WithdrawOption"
+            component={WithdrawOption} // Add the withdraw options screen
+            options={{ headerShown: false }} 
+          />   
+          <Stack.Screen
+            name="DepositOption"
+            component={DepositOption} // Add the deposit options screen
+            options={{ headerShown: false }} 
+          />  
+          <Stack.Screen
+            name="DiscoverSubPage"
+            component={DiscoverSubPage} // Add the info from a discover item 
+            options={{ 
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTitle: () => (
+                <Text style={ {
+                  fontFamily: 'urbanist',
+                  fontSize: 26,
+                  fontWeight: 'bold',
+                  color: 'white' // this is for when the name is not the same as what we want to display
+                }}>Discover</Text>
+              ),
+              headerLeft: () => (
+                <HeaderLeftNotTabs />
+              ),
+              headerRight: () => (
+                <HeaderRight />
+              ),
+             }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="ClipsPage"
+            component={ClipsPage} // Add the info from a discover item 
+            options={{ 
+              headerShown: false, // temporarily false because header feels clustered, i could just remove back arrow bc logo takes u home
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTitle: () => (
+                <Text style={ {
+                  fontFamily: 'urbanist',
+                  fontSize: 22,
+                  fontWeight: 'bold',
+                  color: 'white' // this is for when the name is not the same as what we want to display
+                }}>Clips</Text>
+              ),
+              headerLeft: () => (
+                <HeaderLeftNotTabs />
+              ),
+              headerRight: () => (
+                <HeaderRight />
+              ),
+            }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="Portfolio"
+            component={PortfolioScreen} // Add the info from a discover item 
+            options={{     
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTintColor: '#fff', // Color of back button and title text
+              headerTitleStyle: {
+                fontFamily: 'urbanist',
+                fontSize: 26,
+                fontWeight: 'bold', // Title text styling
+              },//  Option B: Custom Headers
+              headerLeft: () => (
+                <HeaderLeftNotTabs />
+              ),
+              headerRight: () => (
+                <HeaderRight />
+              ),
+            }} 
+          />
+          <Stack.Screen
+            name="About"
+            component={AboutVentureCastScreen} // Add the info from a discover item 
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="HelpCenter"
+            component={HelpCenter} // Add the info from a discover item 
+            options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          <Stack.Screen
+            name="StockPage"
+            component={StockPage} // Add the info from a discover item 
+            options={{ 
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: '#351560', // Background color of the header
+              },
+              headerTitle: () => (
+                <Text></Text>
+              ),
+              headerLeft: () => (
+                <HeaderLeftStock />
+              ),
+              headerRight: () => (
+                <HeaderRightStock />
+              ),
+            }} // Hide header for bottom tabs
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 };
 

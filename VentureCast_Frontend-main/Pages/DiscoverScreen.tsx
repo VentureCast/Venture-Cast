@@ -90,23 +90,26 @@ const handleSearch = (query: string) => {
         onRequestClose={() => setSearchModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            {/* Search Bar */}
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search..."
-              value={searchQuery}
-              onChangeText={handleSearch}
-            />
-            {/* Close Button */}
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setSearchModalVisible(false)}
-            >
-              <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
-
-            {/* Results */}
+          <View style={styles.tallModalContent}>
+            {/* Close Button above search bar, top right aligned with search bar */}
+            <View style={styles.closeButtonAboveRowRightAligned}>
+              <TouchableOpacity
+                style={styles.closeButtonOvalSmall}
+                onPress={() => setSearchModalVisible(false)}
+              >
+                <Text style={styles.closeButtonOvalTextSmall}>Close</Text>
+              </TouchableOpacity>
+            </View>
+            {/* Search Bar full width */}
+            <View style={{ paddingTop: 20, paddingBottom: 20 }}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search..."
+                value={searchQuery}
+                onChangeText={handleSearch}
+              />
+            </View>
+            {/* Results (scrollable) */}
             <FlatList
               data={filteredTrendData}
               keyExtractor={(item) => item.id}
@@ -118,6 +121,8 @@ const handleSearch = (query: string) => {
                   <Text style={styles.noResultsText}>No results found</Text>
                 ) : null
               }
+              style={{ flex: 1 }}
+              contentContainerStyle={{ paddingBottom: 20 }}
             />
           </View>
         </View>
@@ -182,12 +187,15 @@ modalOverlay: {
   justifyContent: 'center',
   alignItems: 'center',
 },
-modalContent: {
+tallModalContent: {
   backgroundColor: '#FFFFFF',
   borderRadius: 20,
-  width: '90%',
-  maxHeight: '80%',
+  width: '94%',
+  height: '88%', // nearly full height
+  marginTop: '6%',
+  marginBottom: '6%',
   padding: 20,
+  position: 'relative',
 },
 searchInput: {
   borderColor: '#ccc',
@@ -196,16 +204,26 @@ searchInput: {
   padding: 10,
   marginBottom: 20,
 },
-closeButton: {
-  padding: 10,
-  backgroundColor: '#F75555',
-  borderRadius: 20,
+topRow: {
+  flexDirection: 'row',
   alignItems: 'center',
-  marginBottom: 10,
+  marginBottom: 20,
 },
-closeButtonText: {
-  color: '#FFFFFF',
+closeButtonOval: {
+  backgroundColor: '#fff',
+  borderColor: '#351560',
+  borderWidth: 2,
+  borderRadius: 20,
+  paddingVertical: 6,
+  paddingHorizontal: 18,
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginLeft: 0,
+},
+closeButtonOvalText: {
+  color: '#351560',
   fontWeight: 'bold',
+  fontSize: 16,
 },
 noResultsText: {
   textAlign: 'center',
@@ -293,6 +311,35 @@ sectionWatchlist: {
   paddingHorizontal: 20,
   paddingVertical: 15,
   flexDirection: 'row',
+},
+
+// Add new styles at the end:
+closeButtonAboveRow: {
+  alignItems: 'center',
+  marginTop: 10,
+  marginBottom: 0,
+},
+closeButtonOvalSmall: {
+  backgroundColor: '#fff',
+  borderColor: '#351560',
+  borderWidth: 2,
+  borderRadius: 14,
+  paddingVertical: 2,
+  paddingHorizontal: 14,
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+closeButtonOvalTextSmall: {
+  color: '#351560',
+  fontWeight: 'bold',
+  fontSize: 13,
+},
+closeButtonAboveRowRightAligned: {
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  marginTop: 4,
+  marginBottom: 0,
 },
 });
 
