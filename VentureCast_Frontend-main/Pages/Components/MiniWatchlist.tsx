@@ -56,7 +56,7 @@ const MiniWatchlist = () => {
             const streamer = Array.isArray(item.Streamers) ? item.Streamers[0] : item.Streamers;
             return {
               id: item.streamer_id || `item-${index}`,
-              name: streamer?.username || streamer?.ticker_name || 'Unknown',
+              name: streamer?.ticker_name || 'Unknown',
               percentage: Math.random() * 20 - 10, // Random percentage between -10 and 10 for demo
               graph: Math.random() > 0.5 ? 
                 require('../../Assets/Graphs/big-positive-graph-1.png') : 

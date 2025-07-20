@@ -146,16 +146,16 @@ const PortfolioScreen = () => {
       const stats = statsMap[h.streamer_id] || {};
       const price = stats.current_price || 100.00;
       const averageCost = h.average_cost || 100.00;
-      
-      // Calculate trend percentage: (current_price / average_cost - 1) * 100
+      // Show streamer name (username) again
+      const name = streamer.username || h.streamer_id;
+      const ticker = streamer.ticker_name || 'DUMMY';
       const trendPercent = Number(((price / averageCost) - 1) * 100).toFixed(2);
-      
       return {
         id: h.portfolio_id,
-        name: streamer.username || h.streamer_id, // fallback to id if not found
-        ticker: streamer.ticker_name || 'DUMMY',
-        price: price, // Use current_price from StreamerStats, fallback to 100.00
-        change: trendPercent, // Use calculated trend percentage
+        name: name, // Show streamer name
+        ticker: ticker,
+        price: price,
+        change: trendPercent,
         logo: dummyImage,
       };
     });

@@ -1,28 +1,109 @@
 // components/MiniStockScroll.tsx
 //this appears only on the homepage (as of now)
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import formatCurrency from './formatCurrency';
+import { useUser } from '../../UserProvider';
+import { supabase } from '../../supabaseClient';
 
 type RootStackParamList = {
-  StockPage: undefined; // Define your route and parameters here
+  StockPage: undefined;
 };
 
-const stockScrollData = [
-  {id: '1', name: "MrBeast", ticker: "MBT", price: 30.98, percentage: -1.98, graph: require('../../Assets/Graphs/Mega-Nega-1.png'), avatar: require('../../Assets/Images/JimmyBeast.png') },
-  {id: '2', name: "Dude Perfect", ticker: "DUPT", price: 71.05, percentage: 2.94, graph: require('../../Assets/Graphs/Mega-Posi-1.png'), avatar: require('../../Assets/Images/dude-perfect.png')},
-  {id: '3', name: "Mark Rober", ticker: "MKRB", price: 89.03,  percentage: 10.45, graph: require('../../Assets/Graphs/Mega-Posi-1.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  {id: '4', name: "PewDiePie", ticker: "PDP", price: 98.30,  percentage: 14.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/pewdiepie.png')},
-  {id: '5', name: "Clark Rober", ticker: "CKRB", price: 39.08,  percentage: 5.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  {id: '6', name: "Bark Rober", ticker: "BKRB", price: 12.34,  percentage: 100.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  ];
+const defaultGraphs = [
+  require('../../Assets/Graphs/Mega-Nega-1.png'),
+  require('../../Assets/Graphs/Mega-Posi-1.png'),
+  require('../../Assets/Graphs/big-positive-graph-2.png'),
+];
+const defaultAvatars = [
+  require('../../Assets/Images/JimmyBeast.png'),
+  require('../../Assets/Images/dude-perfect.png'),
+  require('../../Assets/Images/MahkyMahk.png'),
+  require('../../Assets/Images/pewdiepie.png'),
+];
 
 const MiniStockScroll = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { user } = useUser();
+  const [holdings, setHoldings] = useState<any[]>([]);
+  const [streamers, setStreamers] = useState<any[]>([]);
+  const [streamerStats, setStreamerStats] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user) return;
+      // Fetch holdings
+      const { data: holdingsData, error: holdingsError } = await supabase
+        .from('Holdings')
+        .select('*')
+        .eq('user_id', user.id);
+      if (holdingsError || !holdingsData) {
+        setHoldings([]);
+        setStreamers([]);
+        setStreamerStats([]);
+        return;
+      }
+      setHoldings(holdingsData);
+      const streamerIds = [...new Set(holdingsData.map(h => h.streamer_id))];
+      if (streamerIds.length === 0) {
+        setStreamers([]);
+        setStreamerStats([]);
+        return;
+      }
+      // Fetch streamers
+      const { data: streamersData } = await supabase
+        .from('Streamers')
+        .select('streamer_id, username, ticker_name')
+        .in('streamer_id', streamerIds);
+      setStreamers(streamersData || []);
+      // Fetch streamer stats
+      const { data: statsData } = await supabase
+        .from('StreamerStats')
+        .select('streamer_id, current_price')
+        .in('streamer_id', streamerIds);
+      setStreamerStats(statsData || []);
+    };
+    fetchData();
+  }, [user]);
+
+  const streamerMap = useMemo(() => {
+    return Object.fromEntries(streamers.map(s => [s.streamer_id, s]));
+  }, [streamers]);
+  const statsMap = useMemo(() => {
+    return Object.fromEntries(streamerStats.map(s => [s.streamer_id, s]));
+  }, [streamerStats]);
+
+  // Build stock data for display
+  const stockScrollData = useMemo(() => {
+    return holdings.map((h, idx) => {
+      const streamer = streamerMap[h.streamer_id] || {};
+      const stats = statsMap[h.streamer_id] || {};
+      const price = stats.current_price || 100.00;
+      const averageCost = h.average_cost || 100.00;
+      const shares = h.shares_owned || 0;
+      const trendPercent = Number(((price / averageCost) - 1) * 100).toFixed(2);
+      // Use dummy graph and avatar, cycle through defaults
+      const graph = defaultGraphs[idx % defaultGraphs.length];
+      const avatar = defaultAvatars[idx % defaultAvatars.length];
+      return {
+        id: h.portfolio_id || idx,
+        name: streamer.ticker_name || 'DUMMY',
+        ticker: streamer.ticker_name || 'DUMMY',
+        price: price,
+        percentage: Number(trendPercent),
+        graph,
+        avatar,
+        equityValue: price * shares,
+      };
+    })
+    // Sort by equity value descending
+    .sort((a, b) => b.equityValue - a.equityValue);
+    // Show all positions (no slice)
+  }, [holdings, streamerMap, statsMap]);
 
   const formatPercentage = (number: number): string => {
-    return `${number.toLocaleString('en-US')}%`; // Adds ( %) and formats the number
+    return `${number.toLocaleString('en-US')}%`;
   };
 
   return (
@@ -37,7 +118,6 @@ const MiniStockScroll = () => {
             <View style = {styles.infoContainer}>
               <View style = {styles.textContainer}>
                 <Text style={styles.stockText}>{item.name}</Text>
-                <Text style={styles.stockTicker}>{item.ticker}</Text>
               </View>
               <View style={styles.numberContainer}>
                 <Text style={[styles.stockPercentage, 
@@ -51,9 +131,9 @@ const MiniStockScroll = () => {
         </View>
       </TouchableOpacity>
          )}
-         keyExtractor={(item) => item.id}
-         horizontal={true} // Enable horizontal scrolling
-         showsHorizontalScrollIndicator={true} // show the scroll indicator
+         keyExtractor={(item) => String(item.id)}
+         horizontal={true}
+         showsHorizontalScrollIndicator={true}
       />
    </View>
   );
