@@ -1,41 +1,130 @@
 // components/MiniWatchlist.tsx
 //this appears only on the homepage (as of now)
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import { supabase } from '../../supabaseClient';
+import { useUser } from '../../UserProvider';
 
-const watchlistData = [
-  {id: '1', name: "MrBeast", percentage: -1.98, graph: require('../../Assets/Graphs/big-negative-graph-1.png'), avatar: require('../../Assets/Images/JimmyBeast.png') },
-  {id: '2', name: "Billie", percentage: 2.45, graph: require('../../Assets/Graphs/big-positive-graph-1.png'), avatar: require('../../Assets/Images/Billy-Eyelash.png')},
-  {id: '3', name: "Mark Rober", percentage: 10.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  {id: '4', name: "Shark Rober", percentage: 1.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  {id: '5', name: "Clark Rober", percentage: 5.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  {id: '6', name: "Bark Rober", percentage: 100.45, graph: require('../../Assets/Graphs/big-positive-graph-2.png'), avatar: require('../../Assets/Images/MahkyMahk.png')},
-  ];
+// Default data for fallback
+const defaultPercentage = '2.50';
+const defaultGraph = require('../../Assets/Graphs/big-positive-graph-1.png');
+const defaultAvatar = require('../../Assets/Images/Billy-Eyelash.png');
 
-const MiniWatchlist = ({}:any) => {
-  return (
-  <View style={styles.shadowContainer}>
-    <FlatList 
-      data={watchlistData}
-      renderItem={({ item }) => (
-      <View style={styles.container}>
-        <View style={styles.miniWatchlist}>
-          <Image source={item.avatar} style={styles.stockAvatar} />
-          <View style = {styles.textContainer}>
-            <Text style={styles.stockText}>{item.name}</Text>
-            <Text style={[styles.stockPercentage, 
-              item.percentage >= 0 ? styles.positive : styles.negative]}
-              >{item.percentage}%</Text>
-          </View>
+interface WatchlistItem {
+  id: string;
+  name: string;
+  percentage: number;
+  graph: any;
+  avatar: any;
+}
+
+const MiniWatchlist = () => {
+  const { user } = useUser();
+  const [watchlistData, setWatchlistData] = useState<WatchlistItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      if (!user) {
+        setWatchlistData([]);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        
+        // Fetch watchlist data with streamer information
+        const { data, error } = await supabase
+          .from('Watchlists')
+          .select(`
+            streamer_id,
+            Streamers (
+              streamer_id,
+              username,
+              ticker_name
+            )
+          `)
+          .eq('user_id', user.id);
+
+        if (error) {
+          console.error('Error fetching watchlist:', error);
+          setWatchlistData([]);
+        } else if (data && data.length > 0) {
+          // Transform the data to match the expected format
+          const transformedData: WatchlistItem[] = data.map((item: any, index: number) => {
+            const streamer = Array.isArray(item.Streamers) ? item.Streamers[0] : item.Streamers;
+            return {
+              id: item.streamer_id || `item-${index}`,
+              name: streamer?.username || streamer?.ticker_name || 'Unknown',
+              percentage: Math.random() * 20 - 10, // Random percentage between -10 and 10 for demo
+              graph: Math.random() > 0.5 ? 
+                require('../../Assets/Graphs/big-positive-graph-1.png') : 
+                require('../../Assets/Graphs/big-negative-graph-1.png'),
+              avatar: defaultAvatar
+            };
+          });
+          
+          setWatchlistData(transformedData);
+        } else {
+          setWatchlistData([]);
+        }
+      } catch (error) {
+        console.error('Error in fetchWatchlist:', error);
+        setWatchlistData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWatchlist();
+  }, [user]);
+
+  if (loading) {
+    return (
+      <View style={styles.shadowContainer}>
+        <View style={styles.container}>
+          <Text style={styles.loadingText}>Loading watchlist...</Text>
         </View>
-        <Image source={item.graph} style={styles.graph} />
       </View>
-         )}
-         keyExtractor={(item) => item.id}
-         horizontal={true} // Enable horizontal scrolling
-         showsHorizontalScrollIndicator={true} // show the scroll indicator
+    );
+  }
+
+  if (watchlistData.length === 0) {
+    return (
+      <View style={styles.shadowContainer}>
+        <View style={styles.container}>
+          <Text style={styles.emptyText}>No items in watchlist</Text>
+        </View>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.shadowContainer}>
+      <FlatList 
+        data={watchlistData}
+        renderItem={({ item }) => (
+          <View style={styles.container}>
+            <View style={styles.miniWatchlist}>
+              <Image source={item.avatar} style={styles.stockAvatar} />
+              <View style={styles.textContainer}>
+                <Text style={styles.stockText}>{item.name}</Text>
+                <Text style={[styles.stockPercentage, 
+                  item.percentage >= 0 ? styles.positive : styles.negative]}
+                >
+                  {item.percentage.toFixed(2)}%
+                </Text>
+              </View>
+            </View>
+            <Image source={item.graph} style={styles.graph} />
+          </View>
+        )}
+        keyExtractor={(item) => item.id}
+        horizontal={true}
+        showsHorizontalScrollIndicator={true}
       />
-   </View>
+    </View>
   );
 };
 
@@ -43,14 +132,13 @@ const MiniWatchlist = ({}:any) => {
 //  then duplicate it for the next stock section
 
 const styles = StyleSheet.create({
-
   shadowContainer: {
-    borderRadius: 20, // Ensure it matches the inner container's borderRadius
+    borderRadius: 20,
     shadowColor: '#351560', 
     shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 2 }, // Moves shadow downward
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
-    elevation: 5, // For Android
+    elevation: 5,
   },
   container: {
     flexDirection: 'column',
@@ -58,8 +146,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.1,
     borderColor: '#351560',
     marginRight: 15,
-    backgroundColor: '#fff', // Ensures shadow doesn't affect internals
-    overflow: 'hidden', // Prevents shadow inside the border
+    backgroundColor: '#fff',
+    overflow: 'hidden',
   },
   miniWatchlist: {
     flexDirection: 'row',
@@ -99,7 +187,21 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
     height: 95,
-    width:160,
+    width: 160,
+  },
+  loadingText: {
+    fontFamily: 'Urbanist',
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    padding: 20,
+  },
+  emptyText: {
+    fontFamily: 'Urbanist',
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    padding: 20,
   },
 });
 

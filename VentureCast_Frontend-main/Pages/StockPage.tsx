@@ -10,10 +10,10 @@ import NewsItem from './Components/NewsItem';
 import StockItemHeader from './Components/StockItemHeader';
 import { Button } from 'react-native-paper';
 import formatCurrency from './Components/formatCurrency';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useNavigation, NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 
 type RootStackParamList = {
-  StockPage: undefined; // Do this for all linked pages
+  StockPage: { streamer_id: string } | undefined;
   Portfolio: undefined;
   ClipsPage: undefined;
   BuyInter: undefined;
@@ -54,6 +54,8 @@ const viewerStats = [
 const StockPage = () => {
   // Sample data for stock positions
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'StockPage'>>();
+  const streamerId = route.params?.streamer_id;
 
   const userHoldings = {totalReturn: 1946.75, equity: 22935.46 , costAtBuy: 73.86, shares: 284.17, targetPrice: 117.25, estimatedReturn: 65.20, };
 

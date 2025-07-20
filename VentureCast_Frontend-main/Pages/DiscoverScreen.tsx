@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity, FlatList, Modal, TextInput} from 'react-native';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import TrendBox from './Components/TrendBox';
 import ClipsElement from './Components/ClipsElement';
 import ClipTrend from './Components/ClipTrend';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { supabase } from '../supabaseClient';
 
 type RootStackParamList = {
   StockPage: undefined; // Do this for all linked pages
@@ -37,33 +38,48 @@ const clipsData = [
 
 const DiscoverScreen = () => {
 
-  const trendData = [
-    {id: '1', name: "All Stocks", icon: require('../Assets/Icons/check.png') },
-    {id: '2', name: "Gambling", icon: require('../Assets/Icons/gambling.png')},
-    {id: '3', name: "Chatting", icon: require('../Assets/Icons/chatting.png')},
-    {id: '4', name: "Cooking", icon: require('../Assets/Icons/burger.png') },
-    {id: '5', name: "Lifestyle", icon: require('../Assets/Icons/cool.png')},
-    {id: '6', name: "IRL", icon: require('../Assets/Icons/firework.png')},
-    {id: '7', name: "Trending", icon: require('../Assets/Icons/TV.png') },
-    {id: '8', name: "Electronics", icon: require('../Assets/Icons/monitor.png')},
-    {id: '9', name: "Cars", icon: require('../Assets/Icons/car.png')},
-    ];
+  const [categories, setCategories] = useState<any[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
 
-    const [searchQuery, setSearchQuery] = useState('');
-    const [filteredTrendData, setFilteredTrendData] = useState< 
-    { id: string; name: string; icon: any }[] >([]); // Define the type explicitly    
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setCategoriesLoading(true);
+      const { data, error } = await supabase
+        .from('categories')
+        .select('id, name');
+      if (error) {
+        setCategories([]);
+      } else {
+        setCategories(data || []);
+      }
+      setCategoriesLoading(false);
+    };
+    fetchCategories();
+  }, []);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredStreamerData, setFilteredStreamerData] = useState<any[]>([]);
   const [isSearchModalVisible, setSearchModalVisible] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
 
-// Search handler
-const handleSearch = (query: string) => {
+// Search handler for streamer usernames
+const handleSearch = async (query: string) => {
   setSearchQuery(query);
   if (query.trim()) {
-    const newData = trendData.filter((trend) =>
-      trend.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredTrendData(newData);
+    setSearchLoading(true);
+    // Fetch matching streamers from Supabase (prefix match)
+    const { data, error } = await supabase
+      .from('Streamers')
+      .select('streamer_id, username, ticker_name')
+      .ilike('username', `${query}%`); // Only usernames starting with query
+    if (error) {
+      setFilteredStreamerData([]);
+    } else {
+      setFilteredStreamerData(data || []);
+    }
+    setSearchLoading(false);
   } else {
-    setFilteredTrendData([]); // Clear results when query is empty
+    setFilteredStreamerData([]); // Clear results when query is empty
   }
 };
 
@@ -104,39 +120,59 @@ const handleSearch = (query: string) => {
             <View style={{ paddingTop: 20, paddingBottom: 20 }}>
               <TextInput
                 style={styles.searchInput}
-                placeholder="Search..."
+                placeholder="Search streamers..."
                 value={searchQuery}
                 onChangeText={handleSearch}
               />
             </View>
             {/* Results (scrollable) */}
-            <FlatList
-              data={filteredTrendData}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <TrendBox name={item.name} icon={item.icon} />
-              )}
-              ListEmptyComponent={
-                searchQuery ? (
-                  <Text style={styles.noResultsText}>No results found</Text>
-                ) : null
-              }
-              style={{ flex: 1 }}
-              contentContainerStyle={{ paddingBottom: 20 }}
-            />
+            {searchLoading ? (
+              <Text style={{ textAlign: 'center', marginTop: 20 }}>Searching...</Text>
+            ) : (
+              <FlatList
+                data={filteredStreamerData}
+                keyExtractor={(item) => item.streamer_id}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setSearchModalVisible(false);
+                      navigation.navigate('StockPage', { streamer_id: item.streamer_id });
+                    }}
+                  >
+                    <View style={{ padding: 12, borderBottomWidth: 1, borderColor: '#eee' }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.username}</Text>
+                      <Text style={{ color: '#888' }}>{item.ticker_name}</Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+                ListEmptyComponent={
+                  searchQuery ? (
+                    <Text style={styles.noResultsText}>No results found</Text>
+                  ) : null
+                }
+                style={{ flex: 1 }}
+                contentContainerStyle={{ paddingBottom: 20 }}
+              />
+            )}
           </View>
         </View>
       </Modal>
     <ScrollView style={styles.container}>
-      <View style={styles.categoriesContainer}>
-      {trendData.map(trend => (
+      {categoriesLoading ? (
+        <View style={{ padding: 20 }}>
+          <Text>Loading categories...</Text>
+        </View>
+      ) : (
+        <View style={styles.categoriesContainer}>
+          {categories.map(category => (
             <TrendBox
-              key={trend.id}
-              name={trend.name}
-              icon={trend.icon}
+              key={category.id}
+              name={category.name}
+              icon={require('../Assets/Icons/check.png')} // Placeholder icon
             />
           ))}
-      </View>
+        </View>
+      )}
 
       <View style={styles.clipsContainer}>
       {clipsData.map(trend => (

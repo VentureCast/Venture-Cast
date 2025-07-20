@@ -1,11 +1,12 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity, Dimensions } from 'react-native';
 import Header from './Components/Header';
 import CategoryBox from './Components/CategoryBox';
 import MiniWatchlist from './Components/MiniWatchlist';
 import StockDetailsScreen from './StockDetails';
 import MiniStockScroll from './Components/MiniStockScroll';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { supabase } from '../supabaseClient';
 
 type RootStackParamList = {
   StockPage: undefined; // Do this for all linked pages
@@ -19,15 +20,38 @@ const userData = [
   {id: '1', balance: '229,375.25', moneyChange:'66,378.49', percentChange: '24.65' }
 ]
 
-//category data, should be imported from database
-const categoryData = [
-{id: '1', name: "Gaming", percentage: '3.57', graph: require('../Assets/Graphs/Positive-Graph-1.png') },
-{id: '2', name: "Gambling", percentage:'-1.96', graph: require('../Assets/Graphs/Negative-Graph-1.png')},
-{id: '3', name: "Chatting", percentage: '2.85', graph: require('../Assets/Graphs/Positive-Graph-2.png')},
-];
+const defaultPercentage = '2.50';
+const defaultGraph = require('../Assets/Graphs/Positive-Graph-1.png');
+
+const screenWidth = Dimensions.get('window').width;
+const numVisible = 3;
+const horizontalPadding = 20; // total horizontal padding (10 left, 10 right)
+const boxHeight = 140; // Adjust as needed for shadow and content
+const boxSpacing = 20; // Increased space between boxes
+const boxWidth = (screenWidth - horizontalPadding * 2 - boxSpacing * (numVisible - 1)) / numVisible;
 
 const VentureCastHome = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [categories, setCategories] = useState<any[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setCategoriesLoading(true);
+      const { data, error } = await supabase
+        .from('Categories')
+        .select('category_id, name');
+      console.log('Fetched categories:', data, 'Error:', error); // Debug output
+      if (error) {
+        setCategories([]);
+      } else {
+        setCategories(data || []);
+      }
+      setCategoriesLoading(false);
+    };
+    fetchCategories();
+  }, []);
+
   return (
   <>
    {/* balance and header also need to be imported data from user database*/}
@@ -49,16 +73,39 @@ const VentureCastHome = () => {
               <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
           </View>
       </TouchableOpacity>
-      <View style={styles.categoriesContainer}>
-      {categoryData.map(category => (
-            <CategoryBox
-              key={category.id}
-              graph={category.graph}
-              name={category.name}
-              percentage={category.percentage}
-            />
-          ))}
-      </View>
+      {categoriesLoading ? (
+        <View style={{ padding: 20 }}>
+          <Text>Loading categories...</Text>
+        </View>
+      ) : (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ marginVertical: 10 }}
+          contentContainerStyle={{ paddingLeft: horizontalPadding, paddingRight: horizontalPadding }}
+        >
+          <View style={styles.categoriesContainer}>
+            {categories.map((category, idx) => (
+              <View
+                key={category.category_id}
+                style={{
+                  width: boxWidth,
+                  height: boxHeight,
+                  marginRight: idx === categories.length - 1 ? 0 : boxSpacing,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <CategoryBox
+                  graph={defaultGraph}
+                  name={category.name}
+                  percentage={defaultPercentage}
+                />
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      )}
 
       {/* Watch List Section */}
       
@@ -102,9 +149,8 @@ const styles = StyleSheet.create({
   },
   categoriesContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 20,
-    paddingHorizontal: 10,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   sectionTitle: {
     alignContent: 'flex-start',
