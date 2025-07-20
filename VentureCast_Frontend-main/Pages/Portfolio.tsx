@@ -25,9 +25,11 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
         <View style={styles.accountDetailContainer}>
           <Text style={styles.detailName}>{name}</Text>
           <Text style={styles.detailValue}>{formatCurrency(value)}</Text>
-          <Text style={[styles.stockChange, changePercent >= 0 ? styles.positive : styles.negative]}>
-            ({changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`})
-          </Text>
+          {changePercent !== 0 && (
+            <Text style={[styles.stockChange, changePercent >= 0 ? styles.positive : styles.negative]}>
+              ({changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`})
+            </Text>
+          )}
         </View>
       </View>
   );
@@ -44,12 +46,30 @@ const PortfolioScreen = () => {
   const [holdings, setHoldings] = useState<any[]>([]);
   const [streamers, setStreamers] = useState<any[]>([]);
   const [streamerStats, setStreamerStats] = useState<any[]>([]);
+  const [userCash, setUserCash] = useState<number>(0);
   const [loading, setLoading] = useState(true);
+  const [showMore1, setShowMore1] = useState(false);
+  const [showMore2, setShowMore2] = useState(false);
+  const [sortField1, setSortField1] = useState<string>('');
+  const [sortDirection1, setSortDirection1] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     const fetchHoldingsAndStreamers = async () => {
-      if (!user) return;
+      if (!user) {
+        return;
+      }
       setLoading(true);
+      
+      // Fetch user cash
+      const { data: userData, error: userError } = await supabase
+        .from('Users')
+        .select('cash')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (!userError && userData) {
+        setUserCash(userData.cash || 0);
+      }
       
       // Fetch holdings
       const { data: holdingsData, error: holdingsError } = await supabase
@@ -141,6 +161,35 @@ const PortfolioScreen = () => {
     });
   }, [holdings, streamerMap, statsMap]);
 
+  // Calculate real equity and trend values based on holdings
+  const equityData = useMemo(() => {
+    let totalCurrentValue = 0;
+    let totalAverageCost = 0;
+    
+    holdings.forEach(h => {
+      const stats = statsMap[h.streamer_id] || {};
+      const currentPrice = stats.current_price || 100.00;
+      const shares = h.shares_owned || 0;
+      const averageCost = h.average_cost || 100.00;
+      
+      totalCurrentValue += currentPrice * shares;
+      totalAverageCost += averageCost * shares;
+    });
+    
+    const cash = userCash;
+    const equity = totalCurrentValue; // Equity is just the current value of holdings
+    const trendPercent = totalAverageCost > 0 ? ((totalCurrentValue / totalAverageCost) - 1) * 100 : 0;
+    const dailyChange = totalCurrentValue - totalAverageCost;
+    
+    return {
+      cash,
+      equity,
+      dailyChange,
+      trendPercent: Number(trendPercent.toFixed(2)),
+      totalReturn: dailyChange
+    };
+  }, [holdings, statsMap, userCash]);
+
   const sampleData = [0, 1, 2, 3 ,5, ];
 
   const shortData = [
@@ -151,17 +200,13 @@ const PortfolioScreen = () => {
   ];
 
   const acctData = [
-    { id: '1', name: 'Cash', value: 23087.39, change: 0.00, image: require('../Assets/Images/cash.png') },
-    { id: '2', name: 'Daily Change', value: 9739.36, change: 24.65, image: require('../Assets/Images/daily-change.png') },
-    { id: '3', name: 'Equity', value: 186473.68, change: 55.54, image: require('../Assets/Images/equity.png') },
-    { id: '4', name: 'Total Return', value: 66378.49, change: 24.65, image: require('../Assets/Images/total-return.png') }, //these images are not circles, or same dimensions: we need better ones
+    { id: '1', name: 'Cash', value: equityData.cash, change: 0.00, image: require('../Assets/Images/cash.png') },
+    { id: '2', name: 'Daily Change', value: equityData.dailyChange, change: equityData.trendPercent, image: require('../Assets/Images/daily-change.png') },
+    { id: '3', name: 'Equity', value: equityData.equity, change: equityData.trendPercent, image: require('../Assets/Images/equity.png') },
+    { id: '4', name: 'Total Return', value: equityData.totalReturn, change: equityData.trendPercent, image: require('../Assets/Images/total-return.png') },
   ];
 
-  const [showMore1, setShowMore1] = useState(false);
-  const [showMore2, setShowMore2] = useState(false);
-
   // Calculate displayed positions directly
-  const displayedPositions1 = showMore1 ? stockData : stockData.slice(0, 3);
   const displayedPositions2 = showMore2 ? shortData : shortData.slice(0, 3);
 
   const handleShowMore1 = () => {
@@ -173,18 +218,54 @@ const PortfolioScreen = () => {
   };
 
   const handleSort1 = (type: string) => {
-    // Since we're calculating displayedPositions directly, sorting will be handled
-    // by the component re-rendering with the new sort applied
-    // For now, we'll keep the original sorting logic but it won't persist
-    // as the component will recalculate based on the original data
+    if (sortField1 === type) {
+      // Toggle direction if same field is clicked again
+      setSortDirection1(sortDirection1 === 'asc' ? 'desc' : 'asc');
+    } else {
+      // New field, set to ascending
+      setSortField1(type);
+      setSortDirection1('asc');
+    }
   };
 
   const handleSort2 = (type: string) => {
-    // Since we're calculating displayedPositions directly, sorting will be handled
-    // by the component re-rendering with the new sort applied
-    // For now, we'll keep the original sorting logic but it won't persist
-    // as the component will recalculate based on the original data
+    // Similar logic for short positions when they're re-enabled
   };
+
+  // Sort the stock data based on current sort field and direction
+  const sortedStockData = useMemo(() => {
+    if (!sortField1) return stockData;
+    
+    const sorted = [...stockData].sort((a, b) => {
+      let aValue: any, bValue: any;
+      
+      switch (sortField1) {
+        case 'Price':
+          aValue = a.price;
+          bValue = b.price;
+          break;
+        case 'Name':
+          aValue = a.name.toLowerCase();
+          bValue = b.name.toLowerCase();
+          break;
+        case 'Percent':
+          aValue = a.change;
+          bValue = b.change;
+          break;
+        default:
+          return 0;
+      }
+      
+      if (aValue < bValue) return sortDirection1 === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection1 === 'asc' ? 1 : -1;
+      return 0;
+    });
+    
+    return sorted;
+  }, [stockData, sortField1, sortDirection1]);
+
+  // Update displayed positions to use sorted data
+  const displayedPositions1 = showMore1 ? sortedStockData : sortedStockData.slice(0, 3);
 
   if (loading) {
     return (
@@ -204,8 +285,8 @@ const PortfolioScreen = () => {
 
         {/* Account Summary Section */}
         <View style={styles.balanceBox}>
-            <Text style={styles.balanceTitle}>{formatCurrency(229375.25)}</Text>
             <Text style={styles.balanceSubTitle}>Net Account Value</Text>
+            <Text style={styles.balanceTitle}>{formatCurrency(equityData.cash + equityData.equity)}</Text>
         </View>
           {/* my acct, new section 2x2 */}
         <View style={styles.accountSummary}>
@@ -256,8 +337,8 @@ const PortfolioScreen = () => {
           )}
         </View>
 
-
-        {/* short Positions */} 
+        {/* short Positions - COMMENTED OUT FOR NOW */}
+        {false && (
         <View style={styles.stockList}>
           <View style={styles.stockTitleRow}>
             <Text style={styles.sectionTitle}>My Short Positions</Text>
@@ -289,6 +370,7 @@ const PortfolioScreen = () => {
             </TouchableOpacity>
           )}
         </View>
+        )}
       </ScrollView>
     </>
   );
