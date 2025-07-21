@@ -10,7 +10,7 @@ import { useUser } from '../UserProvider';
 import { supabase } from '../supabaseClient';
 
 type RootStackParamList = {
-  StockPage: undefined; // Do this for all linked pages
+  StockPage: { streamer_id: string };
   Portfolio: undefined;
   ClipsPage: undefined;
   short: undefined;
@@ -146,13 +146,13 @@ const PortfolioScreen = () => {
       const stats = statsMap[h.streamer_id] || {};
       const price = stats.current_price || 100.00;
       const averageCost = h.average_cost || 100.00;
-      // Show streamer name (username) again
       const name = streamer.username || h.streamer_id;
       const ticker = streamer.ticker_name || 'DUMMY';
       const trendPercent = Number(((price / averageCost) - 1) * 100).toFixed(2);
       return {
         id: h.portfolio_id,
-        name: name, // Show streamer name
+        streamer_id: h.streamer_id,
+        name: name,
         ticker: ticker,
         price: price,
         change: trendPercent,
@@ -324,7 +324,7 @@ const PortfolioScreen = () => {
               price={stock.price}
               change={stock.change}
               changePercent={stock.change}
-              onPress={() => navigation.navigate('StockPage')} // Pass the stock data to the details screen
+              onPress={() => navigation.navigate('StockPage', { streamer_id: stock.streamer_id })}
             />
             ))
           } 
@@ -405,18 +405,6 @@ const styles = StyleSheet.create({
 
   // the user balance
 
-  balanceTitle: {
-    fontFamily: 'Urbanist-Regular',
-    fontSize: 40,
-    fontWeight: 'bold',
-    padding: 10,
-  },
-  balanceSubTitle: {
-    fontFamily: 'Urbanist-Regular',
-    fontSize: 14,
-    fontWeight: 'semibold',
-    paddingBottom: 10,
-  },
   balanceBox: {
     backgroundColor: '#F5F3F3',
     justifyContent: 'center',
@@ -428,6 +416,19 @@ const styles = StyleSheet.create({
     borderColor: '#D3D3D3',
     borderWidth: 0.6,
   },
+  balanceSubTitle: {
+    fontSize: 14,
+    fontWeight: 'semibold',
+    fontFamily: 'Urbanist-Regular',
+    paddingTop: 10,
+  },
+  balanceTitle: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    fontFamily: 'Urbanist-Regular',
+    padding: 10,
+  },
+
 // user acct info section
 
   accountGrid: {

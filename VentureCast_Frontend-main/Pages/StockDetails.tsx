@@ -1,16 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useNavigation, NavigationProp, useRoute, RouteProp } from '@react-navigation/native';
+import { supabase } from '../supabaseClient';
 
 type RootStackParamList = {
   Orders: undefined; // Do this for all linked pages
   Portfolio: undefined;
   ClipsPage: undefined;
+  StockDetails: { streamer_id: string } | undefined;
 };
 
-const StockDetailsScreen = ({ }: any) => {
-
+const StockDetailsScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'StockDetails'>>();
+  const streamerId = route.params?.streamer_id;
+
+  const [streamer, setStreamer] = useState<any>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!streamerId) return;
+      setLoading(true);
+      // Fetch streamer info
+      const { data: streamerData } = await supabase
+        .from('Streamers')
+        .select('streamer_id, username, ticker_name')
+        .eq('streamer_id', streamerId)
+        .single();
+      setStreamer(streamerData);
+      // Fetch streamer stats
+      const { data: statsData } = await supabase
+        .from('StreamerStats')
+        .select('streamer_id, current_price, average_cost')
+        .eq('streamer_id', streamerId)
+        .single();
+      setStats(statsData);
+      setLoading(false);
+    };
+    fetchData();
+  }, [streamerId]);
+
+  const price = stats?.current_price || 100.00;
+  const averageCost = stats?.average_cost || 100.00;
+  const trendPercent = useMemo(() => {
+    if (!averageCost) return '0.00';
+    return (((price / averageCost) - 1) * 100).toFixed(2);
+  }, [price, averageCost]);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -39,12 +84,12 @@ const StockDetailsScreen = ({ }: any) => {
             style={styles.stockImage}
           />
           <View style={styles.stockDetails}>
-            <Text style={styles.stockName}>Taylor Swift</Text>
-            <Text style={styles.stockTicker}>TYST</Text>
+            <Text style={styles.stockName}>{streamer?.ticker_name || 'TICKER'}</Text>
+            <Text style={styles.stockTicker}>{streamer?.username || streamerId}</Text>
           </View>
           <View style={styles.stockPriceInfo}>
             <Text style={styles.lastCloseText}>Last close</Text>
-            <Text style={styles.stockPrice}>$207.47</Text>
+            <Text style={styles.stockPrice}>${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Text>
           </View>
         </View>
 
@@ -55,9 +100,9 @@ const StockDetailsScreen = ({ }: any) => {
 
         {/* Stock Performance */}
         <View style={styles.performanceContainer}>
-          <Text style={styles.performancePrice}>$207.47</Text>
+          <Text style={styles.performancePrice}>${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Text>
           <Text style={styles.performanceChange}>
-            +$6.45 <Text style={styles.percentageChange}>(+2.37%)</Text>
+            {Number(trendPercent) >= 0 ? '+' : ''}{trendPercent}%
           </Text>
           <Text style={styles.lastCloseLabel}>Last close</Text>
         </View>
@@ -82,8 +127,8 @@ const StockDetailsScreen = ({ }: any) => {
           <Text style={styles.buttonText}>Sell</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buyButton}>
-          <Text style={styles.buttonText} onPress={()=>{
-            navigation.navigate('Orders')
+          <Text style={styles.buttonText} onPress={() => {
+            navigation.navigate('Orders');
           }}>Buy</Text>
         </TouchableOpacity>
       </View>

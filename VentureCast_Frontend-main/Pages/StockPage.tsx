@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import MarketStat from './Components/MarketStat';
@@ -11,9 +11,11 @@ import StockItemHeader from './Components/StockItemHeader';
 import { Button } from 'react-native-paper';
 import formatCurrency from './Components/formatCurrency';
 import { useNavigation, NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
+import { supabase } from '../supabaseClient';
+import { useUser } from '../UserProvider';
 
 type RootStackParamList = {
-  StockPage: { streamer_id: string } | undefined;
+  StockPage: { streamer_id: string };
   Portfolio: undefined;
   ClipsPage: undefined;
   BuyInter: undefined;
@@ -52,11 +54,100 @@ const viewerStats = [
 // Portfolio screen starts
 
 const StockPage = () => {
-  // Sample data for stock positions
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'StockPage'>>();
   const streamerId = route.params?.streamer_id;
+  const { user } = useUser();
 
+  const [streamer, setStreamer] = useState<any>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [holding, setHolding] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [timeoutReached, setTimeoutReached] = useState(false);
+
+  useEffect(() => {
+    if (!streamerId || !user) {
+      setError('No streamer or user selected.');
+      setLoading(false);
+      return;
+    }
+    setError(null);
+    setTimeoutReached(false);
+    const timeout = setTimeout(() => setTimeoutReached(true), 8000);
+    const fetchData = async () => {
+      setLoading(true);
+      // Fetch streamer info
+      const { data: streamerData, error: streamerError } = await supabase
+        .from('Streamers')
+        .select('streamer_id, username, ticker_name')
+        .eq('streamer_id', streamerId)
+        .single();
+      if (streamerError || !streamerData) {
+        setError('Streamer not found.');
+        setLoading(false);
+        clearTimeout(timeout);
+        return;
+      }
+      setStreamer(streamerData);
+      // Fetch streamer stats
+      const { data: statsData, error: statsError } = await supabase
+        .from('StreamerStats')
+        .select('streamer_id, current_price')
+        .eq('streamer_id', streamerId)
+        .single();
+      if (statsError || !statsData) {
+        setError('Streamer stats not found.');
+        setLoading(false);
+        clearTimeout(timeout);
+        return;
+      }
+      setStats(statsData);
+      // Fetch holding for this user and streamer
+      const { data: holdingData, error: holdingError } = await supabase
+        .from('Holdings')
+        .select('average_cost, shares_owned')
+        .eq('streamer_id', streamerId)
+        .eq('user_id', user.id)
+        .single();
+      if (holdingError) {
+        setHolding(null);
+      } else {
+        setHolding(holdingData);
+      }
+      setLoading(false);
+      clearTimeout(timeout);
+    };
+    fetchData();
+    return () => clearTimeout(timeout);
+  }, [streamerId, user]);
+
+  const price = stats?.current_price || 100.00;
+  const averageCost = holding?.average_cost || 100.00;
+  const trendPercent = useMemo(() => {
+    if (!averageCost) return '0.00';
+    return (((price / averageCost) - 1) * 100).toFixed(2);
+  }, [price, averageCost]);
+
+  const sharesHeld = holding?.shares_owned || 0;
+  const purchasePrice = holding?.average_cost || 0;
+  const holdingsValue = price * sharesHeld;
+  const totalReturn = holdingsValue - (sharesHeld * purchasePrice);
+
+  if (!streamerId || !user) {
+    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>No streamer or user selected.</Text></View>;
+  }
+  if (error) {
+    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>{error}</Text></View>;
+  }
+  if (timeoutReached) {
+    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Request timed out. Please try again.</Text></View>;
+  }
+  if (loading) {
+    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Loading...</Text></View>;
+  }
+
+  // Sample data for stock positions
   const userHoldings = {totalReturn: 1946.75, equity: 22935.46 , costAtBuy: 73.86, shares: 284.17, targetPrice: 117.25, estimatedReturn: 65.20, };
 
   const marketStats = {
@@ -108,9 +199,9 @@ const StockPage = () => {
         <View style={styles.stockStats}>
           <StockItemHeader
             logo={require('../Assets/Images/dude-perfect.png')}
-            name='DUPT'
-            ticker='' // remove this and make name bigger
-            price={marketStats.currentPrice}
+            name={streamer?.ticker_name || 'DUPT'}
+            ticker={streamer?.ticker_name || ''}
+            price={price}
             change={marketStats.change}
             changePercent={marketStats.changePercent}
           />
@@ -141,31 +232,29 @@ const StockPage = () => {
         </View>
         <View style={styles.accountGrid}>
           <StockDetail
-            image={ require('../Assets/Images/total-return.png')}
-            name= 'Total Return'
-            value={formatCurrency(userHoldings.totalReturn)}
-            isPercent = {false}
+            image={require('../Assets/Images/total-return.png')}
+            name='Total Return'
+            value={formatCurrency(totalReturn)}
+            isPercent={false}
           />
           <StockDetail
             image={require('../Assets/Images/equity.png')}
-            name= 'Holdings ($USD)'
-            value={formatCurrency(userHoldings.equity)}
-            isPercent = {false}
+            name='Holdings ($USD)'
+            value={formatCurrency(holdingsValue)}
+            isPercent={false}
           />
           <StockDetail
             image={require('../Assets/Icons/SharesHeld.png')}
-            name={'Shares Held'}
-            value={userHoldings.shares}
-            isPercent = {false}
+            name='Shares Held'
+            value={sharesHeld}
+            isPercent={false}
           />
           <StockDetail
             image={require('../Assets/Icons/CostPerShare.png')}
-            name= 'Purchase Price'
-            value={formatCurrency(userHoldings.costAtBuy)}
-            isPercent = {false}
+            name='Purchase Price'
+            value={formatCurrency(purchasePrice)}
+            isPercent={false}
           />
-
-
         </View>
 
           {/* Market Stats Section */}

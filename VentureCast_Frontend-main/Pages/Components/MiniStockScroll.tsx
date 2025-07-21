@@ -8,7 +8,7 @@ import { useUser } from '../../UserProvider';
 import { supabase } from '../../supabaseClient';
 
 type RootStackParamList = {
-  StockPage: undefined;
+  StockPage: { streamer_id: string };
 };
 
 const defaultGraphs = [
@@ -88,6 +88,7 @@ const MiniStockScroll = () => {
       const avatar = defaultAvatars[idx % defaultAvatars.length];
       return {
         id: h.portfolio_id || idx,
+        streamer_id: h.streamer_id,
         name: streamer.ticker_name || 'DUMMY',
         ticker: streamer.ticker_name || 'DUMMY',
         price: price,
@@ -111,7 +112,7 @@ const MiniStockScroll = () => {
     <FlatList
       data={stockScrollData}
       renderItem={({ item }) => (
-      <TouchableOpacity onPress={() => navigation.navigate('StockPage')}>
+      <TouchableOpacity onPress={() => navigation.navigate('StockPage', { streamer_id: item.streamer_id })}>
         <View style={styles.container}>
           <View style={styles.miniStockScroll}>
             <Image source={item.avatar} style={styles.stockAvatar} />
