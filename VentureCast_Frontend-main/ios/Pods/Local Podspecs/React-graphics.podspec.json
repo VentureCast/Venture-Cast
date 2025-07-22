@@ -29,24 +29,14 @@
     "CLANG_CXX_LANGUAGE_STANDARD": "c++20"
   },
   "dependencies": {
-    "glog": [
-
-    ],
+    "glog": [],
     "RCT-Folly/Fabric": [
       "2024.01.01.00"
     ],
-    "React-jsi": [
-
-    ],
-    "React-jsiexecutor": [
-
-    ],
-    "React-utils": [
-
-    ],
-    "DoubleConversion": [
-
-    ],
+    "React-jsi": [],
+    "React-jsiexecutor": [],
+    "React-utils": [],
+    "DoubleConversion": [],
     "fmt": [
       "9.1.0"
     ]

@@ -136,6 +136,7 @@ RNSScreenStackHeaderConfigProps::RNSScreenStackHeaderConfigProps(
     backButtonDisplayMode(convertRawProp(context, rawProps, "backButtonDisplayMode", sourceProps.backButtonDisplayMode, {RNSScreenStackHeaderConfigBackButtonDisplayMode::Default})),
     hideBackButton(convertRawProp(context, rawProps, "hideBackButton", sourceProps.hideBackButton, {false})),
     backButtonInCustomView(convertRawProp(context, rawProps, "backButtonInCustomView", sourceProps.backButtonInCustomView, {false})),
+    blurEffect(convertRawProp(context, rawProps, "blurEffect", sourceProps.blurEffect, {RNSScreenStackHeaderConfigBlurEffect::None})),
     topInsetEnabled(convertRawProp(context, rawProps, "topInsetEnabled", sourceProps.topInsetEnabled, {false}))
       {}
 RNSScreenStackHeaderSubviewProps::RNSScreenStackHeaderSubviewProps(

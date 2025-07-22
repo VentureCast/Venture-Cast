@@ -34,26 +34,12 @@
     "RCT-Folly": [
       "2024.01.01.00"
     ],
-    "RCTTypeSafety": [
-
-    ],
-    "React-jsi": [
-
-    ],
-    "React-Core/RCTImageHeaders": [
-
-    ],
-    "React-RCTNetwork": [
-
-    ],
-    "ReactCodegen": [
-
-    ],
-    "ReactCommon": [
-
-    ],
-    "React-NativeModulesApple": [
-
-    ]
+    "RCTTypeSafety": [],
+    "React-jsi": [],
+    "React-Core/RCTImageHeaders": [],
+    "React-RCTNetwork": [],
+    "ReactCodegen": [],
+    "ReactCommon": [],
+    "React-NativeModulesApple": []
   }
 }

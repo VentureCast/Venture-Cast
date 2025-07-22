@@ -28,7 +28,7 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
         <View style={styles.accountDetailContainer}>
           <Text style={styles.detailName}>{name}</Text>
           <Text style={styles.detailValue}>${value}</Text>
-          {changePercent !== 0 && (
+          {changePercent !== undefined && changePercent !== null && changePercent !== 0 && (
             <Text style={[styles.stockChange, changePercent >= 0 ? styles.positive : styles.negative]}>
               ({changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`})
             </Text>
@@ -76,7 +76,7 @@ const AccountScreen = () => {
       // Fetch streamer stats
       const { data: statsData } = await supabase
         .from('StreamerStats')
-        .select('streamer_id, current_price')
+        .select('streamer_id, current_price, day_1_price')
         .in('streamer_id', streamerIds);
       setStreamerStats(statsData || []);
     };
@@ -90,33 +90,39 @@ const AccountScreen = () => {
   // Calculate values
   const equityData = useMemo(() => {
     let totalCurrentValue = 0;
+    let totalDay1Value = 0;
     let totalAverageCost = 0;
     holdings.forEach(h => {
       const stats = statsMap[h.streamer_id] || {};
       const currentPrice = stats.current_price || 100.00;
+      const day1Price = stats.day_1_price || 100.00;
       const shares = h.shares_owned || 0;
       const averageCost = h.average_cost || 100.00;
       totalCurrentValue += currentPrice * shares;
+      totalDay1Value += day1Price * shares;
       totalAverageCost += averageCost * shares;
     });
     const cash = userCash;
     const equity = totalCurrentValue;
-    const trendPercent = totalAverageCost > 0 ? ((totalCurrentValue / totalAverageCost) - 1) * 100 : 0;
-    const dailyChange = totalCurrentValue - totalAverageCost;
+    const trendPercentDay1 = totalDay1Value > 0 ? ((totalCurrentValue / totalDay1Value) - 1) * 100 : 0;
+    const trendPercentAvgCost = totalAverageCost > 0 ? ((totalCurrentValue / totalAverageCost) - 1) * 100 : 0;
+    const dailyChange = totalCurrentValue - totalDay1Value;
+    const totalReturn = totalCurrentValue - totalAverageCost;
     return {
       cash,
       equity,
       dailyChange,
-      trendPercent: Number(trendPercent.toFixed(2)),
-      totalReturn: dailyChange
+      trendPercentDay1: Number(trendPercentDay1.toFixed(2)),
+      trendPercentAvgCost: Number(trendPercentAvgCost.toFixed(2)),
+      totalReturn
     };
   }, [holdings, statsMap, userCash]);
 
   const acctData = [
     { id: '1', name: 'Cash', value: equityData.cash.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: 0.00, image: require('../Assets/Icons/BuyStock.png') },
-    { id: '2', name: 'Daily Change', value: equityData.dailyChange.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: equityData.trendPercent, image: require('../Assets/Images/daily-change.png') },
-    { id: '3', name: 'Equity', value: equityData.equity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: equityData.trendPercent, image: require('../Assets/Images/equity.png') },
-    { id: '4', name: 'Total Return', value: equityData.totalReturn.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: equityData.trendPercent, image: require('../Assets/Images/total-return.png') },
+    { id: '3', name: 'Equity', value: equityData.equity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), image: require('../Assets/Images/equity.png') },
+    { id: '2', name: 'Daily Change', value: equityData.dailyChange.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: equityData.trendPercentDay1, image: require('../Assets/Images/daily-change.png') },
+    { id: '4', name: 'Total Return', value: equityData.totalReturn.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: equityData.trendPercentAvgCost, image: require('../Assets/Images/total-return.png') },
   ];
 
   return (

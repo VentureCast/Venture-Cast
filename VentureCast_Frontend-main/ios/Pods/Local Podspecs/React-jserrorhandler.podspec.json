@@ -24,11 +24,7 @@
     "RCT-Folly/Fabric": [
       "2024.01.01.00"
     ],
-    "React-jsi": [
-
-    ],
-    "React-debug": [
-
-    ]
+    "React-jsi": [],
+    "React-debug": []
   }
 }

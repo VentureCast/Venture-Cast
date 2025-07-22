@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import MarketStat from './Components/MarketStat';
-// import LineGraph from './Components/LineGraph';
+import LineGraph from './Components/LineGraph';
 import MiniStockScroll from './Components/MiniStockScroll';
 import ClipsElement from './Components/ClipsElement';
 import ViewerPerShareGraph from './Components/ViewerPerShareGraph';
@@ -93,7 +93,7 @@ const StockPage = () => {
       // Fetch streamer stats
       const { data: statsData, error: statsError } = await supabase
         .from('StreamerStats')
-        .select('streamer_id, current_price')
+        .select('streamer_id, current_price, day_1_price, day_2_price, day_3_price, day_4_price, day_5_price, day_6_price, day_7_price')
         .eq('streamer_id', streamerId)
         .single();
       if (statsError || !statsData) {
@@ -123,16 +123,35 @@ const StockPage = () => {
   }, [streamerId, user]);
 
   const price = stats?.current_price || 100.00;
-  const averageCost = holding?.average_cost || 100.00;
+  const day1Price = stats?.day_1_price || 100.00;
   const trendPercent = useMemo(() => {
-    if (!averageCost) return '0.00';
-    return (((price / averageCost) - 1) * 100).toFixed(2);
-  }, [price, averageCost]);
+    if (!day1Price) return '0.00';
+    return Number(((price / day1Price - 1) * 100).toFixed(2));
+  }, [price, day1Price]);
 
   const sharesHeld = holding?.shares_owned || 0;
   const purchasePrice = holding?.average_cost || 0;
   const holdingsValue = price * sharesHeld;
   const totalReturn = holdingsValue - (sharesHeld * purchasePrice);
+
+  // Prepare weekly trend data for the graph
+  const weeklyTrendData = useMemo(() => {
+    if (!stats) return Array(8).fill(0);
+    // Collect all prices, fallback to current_price if missing
+    const prices = [
+      stats.day_7_price,
+      stats.day_6_price,
+      stats.day_5_price,
+      stats.day_4_price,
+      stats.day_3_price,
+      stats.day_2_price,
+      stats.day_1_price,
+      stats.current_price,
+    ].map(x => (x !== undefined && x !== null ? Number(x) : Number(stats.current_price) || 0));
+    // Ensure length 8
+    while (prices.length < 8) prices.unshift(prices[0]);
+    return prices;
+  }, [stats]);
 
   if (!streamerId || !user) {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>No streamer or user selected.</Text></View>;
@@ -199,16 +218,23 @@ const StockPage = () => {
         <View style={styles.stockStats}>
           <StockItemHeader
             logo={require('../Assets/Images/dude-perfect.png')}
-            name={streamer?.ticker_name || 'DUPT'}
+            name={streamer?.username || 'Streamer'}
             ticker={streamer?.ticker_name || ''}
             price={price}
-            change={marketStats.change}
-            changePercent={marketStats.changePercent}
+            change={trendPercent}
+            changePercent={trendPercent}
           />
         </View>
-        {/* Line Graph */}
-        {/* <LineGraph data={sampleData} background={require('../Assets/Images/DarkBackground.png')} /> */}
-        <Image style={styles.backgroundImage} source={require('../Assets/Images/portfolio-background.png')} />
+        {/* Weekly Trend Graph */}
+        <View style={{ alignItems: 'center', marginVertical: 10 }}>
+          <LineGraph data={weeklyTrendData} />
+          {/* X-axis labels 7 to 0 */}
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginTop: -20 }}>
+            {[7,6,5,4,3,2,1,0].map((d, i) => (
+              <Text key={i} style={{ color: '#fff', fontSize: 12 }}>{d}</Text>
+            ))}
+          </View>
+        </View>
         {/* Stock Live value Section */}
         
 

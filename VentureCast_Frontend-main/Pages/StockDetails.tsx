@@ -33,7 +33,7 @@ const StockDetailsScreen = () => {
       // Fetch streamer stats
       const { data: statsData } = await supabase
         .from('StreamerStats')
-        .select('streamer_id, current_price, average_cost')
+        .select('streamer_id, current_price, day_1_price')
         .eq('streamer_id', streamerId)
         .single();
       setStats(statsData);
@@ -43,11 +43,11 @@ const StockDetailsScreen = () => {
   }, [streamerId]);
 
   const price = stats?.current_price || 100.00;
-  const averageCost = stats?.average_cost || 100.00;
+  const day1Price = stats?.day_1_price || 100.00;
   const trendPercent = useMemo(() => {
-    if (!averageCost) return '0.00';
-    return (((price / averageCost) - 1) * 100).toFixed(2);
-  }, [price, averageCost]);
+    if (!day1Price) return '0.00';
+    return (((price / day1Price) - 1) * 100).toFixed(2);
+  }, [price, day1Price]);
 
   if (loading) {
     return (
