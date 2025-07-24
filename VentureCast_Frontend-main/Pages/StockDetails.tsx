@@ -26,7 +26,7 @@ const StockDetailsScreen = () => {
       // Fetch streamer info
       const { data: streamerData } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name')
+        .select('streamer_id, username, ticker_name, profile_picture_path')
         .eq('streamer_id', streamerId)
         .single();
       setStreamer(streamerData);

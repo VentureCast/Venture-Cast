@@ -1,23 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 import WatchListItem from './Components/WatchlistItem';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { supabase } from '../supabaseClient';
 
 type RootStackParamList = {
   Discover: undefined; // Do this for all linked pages
 };
 
+interface WatchListItemType {
+  name: string;
+  shortName: string;
+  price: number;
+  priceChange: number;
+  profileImage: any;
+}
 
 const WatchListScreen = ( ) => {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const watchList = [
-    { name: 'Dude Perfect', shortName: 'DUPT', price: 71.50, priceChange: 2.94, profileImage: require('../Assets/Images/dude-perfect.png') },
-    { name: 'PewDiePie', shortName: 'PDP', price: 90.79, priceChange: -2.16, profileImage: require('../Assets/Images/pewdiepie.png') },
-    { name: 'Jake Paul', shortName: 'JKPI', price: 207.47, priceChange: 2.37, profileImage: require('../Assets/Images/jake-paul.png') },
-    // Add other items... 
-  ];
+  const [watchList, setWatchList] = useState<WatchListItemType[]>([]);
+
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      // Fetch all streamers in the user's watchlist
+      const { data, error } = await supabase
+        .from('Watchlists')
+        .select(`streamer_id, Streamers (username, ticker_name, profile_picture_path)`);
+      if (!error && data) {
+        setWatchList(data.map(item => {
+          const streamer = Array.isArray(item.Streamers) ? item.Streamers[0] : item.Streamers;
+          return {
+            name: streamer?.username || 'Unknown',
+            shortName: streamer?.ticker_name || '',
+            price: 0, // TODO: Add price if needed
+            priceChange: 0, // TODO: Add priceChange if needed
+            profileImage: streamer?.profile_picture_path ? { uri: streamer.profile_picture_path } : require('../Assets/Images/dude-perfect.png'),
+          };
+        }));
+      } else {
+        setWatchList([]);
+      }
+    };
+    fetchWatchlist();
+  }, []);
 
   return (
     <>

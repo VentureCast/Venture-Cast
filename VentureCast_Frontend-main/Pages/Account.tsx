@@ -44,6 +44,7 @@ const AccountScreen = () => {
   const [holdings, setHoldings] = useState<any[]>([]);
   const [streamerStats, setStreamerStats] = useState<any[]>([]);
   const [userCash, setUserCash] = useState<number>(0);
+  const [streamers, setStreamers] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchPortfolioData = async () => {
@@ -79,6 +80,12 @@ const AccountScreen = () => {
         .select('streamer_id, current_price, day_1_price')
         .in('streamer_id', streamerIds);
       setStreamerStats(statsData || []);
+      // Fetch streamers for profile images
+      const { data: streamersData } = await supabase
+        .from('Streamers')
+        .select('streamer_id, profile_picture_path')
+        .in('streamer_id', streamerIds);
+      setStreamers(streamersData || []);
     };
     fetchPortfolioData();
   }, [user]);
@@ -86,6 +93,10 @@ const AccountScreen = () => {
   const statsMap = useMemo(() => {
     return Object.fromEntries(streamerStats.map(s => [s.streamer_id, s]));
   }, [streamerStats]);
+
+  const streamerMap = useMemo(() => {
+    return Object.fromEntries((streamers || []).map(s => [s.streamer_id, s]));
+  }, [streamers]);
 
   // Calculate values
   const equityData = useMemo(() => {
@@ -129,8 +140,9 @@ const AccountScreen = () => {
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>
       {/* Profile Header */}
       <View style={styles.profileHeader}>
+        {/* TODO: Replace with user's actual profile image if available */}
         <Image
-          source={require('../Assets/Images/JimmyBeast.png') } // Replace with actual profile image URL
+          source={require('../Assets/Images/JimmyBeast.png')}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>

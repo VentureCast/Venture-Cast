@@ -54,7 +54,7 @@ const MiniStockScroll = () => {
       // Fetch streamers
       const { data: streamersData } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name')
+        .select('streamer_id, username, ticker_name, profile_picture_path')
         .in('streamer_id', streamerIds);
       setStreamers(streamersData || []);
       // Fetch streamer stats
@@ -83,9 +83,10 @@ const MiniStockScroll = () => {
       const day1Price = stats.day_1_price || 100.00;
       const shares = h.shares_owned || 0;
       const trendPercent = Number(((price / day1Price) - 1) * 100).toFixed(2);
-      // Use dummy graph and avatar, cycle through defaults
       const graph = defaultGraphs[idx % defaultGraphs.length];
-      const avatar = defaultAvatars[idx % defaultAvatars.length];
+      const avatar = streamer.profile_picture_path
+        ? { uri: streamer.profile_picture_path }
+        : defaultAvatars[idx % defaultAvatars.length];
       return {
         id: h.portfolio_id || idx,
         streamer_id: h.streamer_id,

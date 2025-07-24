@@ -80,7 +80,7 @@ const StockPage = () => {
       // Fetch streamer info
       const { data: streamerData, error: streamerError } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name')
+        .select('streamer_id, username, ticker_name, profile_picture_path')
         .eq('streamer_id', streamerId)
         .single();
       if (streamerError || !streamerData) {
@@ -166,7 +166,14 @@ const StockPage = () => {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Loading...</Text></View>;
   }
 
-  // Removed userHoldings and marketStats dummy objects as they are not used in the main logic.
+  // Sample data for stock positions
+  const userHoldings = {totalReturn: 1946.75, equity: 22935.46 , costAtBuy: 73.86, shares: 284.17, targetPrice: 117.25, estimatedReturn: 65.20, };
+
+  const marketStats = {
+    currentPrice: 80.71, changePercent: 9.27, change: 6.85, priceER: 0.5, 
+    sharesOutstanding: 2789786, viewPerShare: 1.43, yearHigh: 85.45, yearLow: 69.29, 
+    
+  };
 
   // use this from here on out because we want the data to be raw numbers, then transformed here.
   const formatNumber = (number: number, decimals: number = 2): string => {
@@ -210,7 +217,7 @@ const StockPage = () => {
       <ScrollView style={styles.container}>
         <View style={styles.stockStats}>
           <StockItemHeader
-            logo={require('../Assets/Images/dude-perfect.png')}
+            logo={streamer?.profile_picture_path ? { uri: streamer.profile_picture_path } : require('../Assets/Images/dude-perfect.png')}
             name={streamer?.username || 'Streamer'}
             ticker={streamer?.ticker_name || ''}
             price={price}

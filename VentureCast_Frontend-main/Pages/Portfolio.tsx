@@ -99,7 +99,7 @@ const PortfolioScreen = () => {
       // Fetch all relevant streamers
       const { data: streamersData, error: streamersError } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name')
+        .select('streamer_id, username, ticker_name, profile_picture_path')
         .in('streamer_id', streamerIds);
       
       if (streamersError || !streamersData) {
@@ -152,7 +152,9 @@ const PortfolioScreen = () => {
         ticker: ticker,
         price: price,
         change: trendPercent,
-        logo: require('../Assets/Images/dude-perfect.png'),
+        logo: streamer.profile_picture_path
+          ? { uri: streamer.profile_picture_path }
+          : require('../Assets/Images/dude-perfect.png'),
       };
     });
   }, [holdings, streamerMap, statsMap]);

@@ -18,6 +18,7 @@ export default function ProfileScreen( { navigation }:any ) {
       </View>
 
       <View style={styles.profileContainer}>
+        {/* TODO: Replace with user's actual profile image if available */}
         <Image 
           source={require('../../Assets/Images/JimmyBeast.png')}
           style={styles.profileImage}
