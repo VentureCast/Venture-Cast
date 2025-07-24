@@ -14,9 +14,6 @@ const BuyStockScreen = ({ }:any) => {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const user = {firstName: 'Alexander', lastName: 'Creighton', cash: 23087.39, accountNumber: '**** **** **** 4321',
-   stockName: 'DUPT', stockLongName: 'Dude Perfect', stockCost: 71.50}; //user data
-
   const [investmentAmount, setInvestmentAmount] = useState('0');
 
   const formatNumberTextbox = (number: number): string => {
@@ -61,10 +58,10 @@ const BuyStockScreen = ({ }:any) => {
   const investmentNumber = parseFloat(investmentAmount)
 
   const message = () => {
-    if (user.cash < investmentNumber) {
-      return ("Not enough cash for purchase")
-    } else {
+    if (investmentNumber > 0) {
       return (formatCurrency(investmentNumber) + ` worth of ${user.stockName} will be purchased`)
+    } else {
+      return ("Not enough cash for purchase")
     }
   }
 

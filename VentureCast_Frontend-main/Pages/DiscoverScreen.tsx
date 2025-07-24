@@ -15,9 +15,7 @@ type RootStackParamList = {
 
 
 
-const userData = [
-  {id: '1', balance: '229,375.25', moneyChange:'66,378.49', percentChange: '24.65' }
-]
+// Removed userData and clipsData dummy arrays as they are not used in the main logic.
 
 //category data, should be imported from database
 

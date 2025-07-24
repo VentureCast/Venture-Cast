@@ -4,12 +4,7 @@ import WatchListItem from './Components/WatchlistItem';
 import StaticHeader from './Components/StaticHeader'; 
 
 const ActivityScreen = ({navigation}:any) => {
-  const ActivityData = [
-    { name: 'Dude Perfect', shortName: 'DUPT', price: 73331.50, priceChange: 2.94, profileImage: require('../Assets/Images/dude-perfect.png') },
-    { name: 'PewDiePie', shortName: 'PDP', price: 900.79, priceChange: -2.16, profileImage: require('../Assets/Images/pewdiepie.png') },
-    { name: 'Jake Paul', shortName: 'JKPI', price: 2007.47, priceChange: 2.37, profileImage: require('../Assets/Images/jake-paul.png') },
-    // Add other items...
-  ];
+  // Removed ActivityData dummy array if not used in the UI.
 
 
   return (
@@ -24,7 +19,7 @@ const ActivityScreen = ({navigation}:any) => {
           </TouchableOpacity>
           <Text style={styles.sectionTitle}>Trade Activity</Text>
         </View>
-        {ActivityData.map((item, index) => (
+        {/* Removed ActivityData.map((item, index) => (
           <WatchListItem
             key={index}
             profileImage={item.profileImage}
@@ -33,7 +28,7 @@ const ActivityScreen = ({navigation}:any) => {
             price={item.price}
             priceChange={item.priceChange}
           />
-        ))}
+        ))} */}
       </ScrollView>
     </>
   );

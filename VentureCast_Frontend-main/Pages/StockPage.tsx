@@ -166,14 +166,7 @@ const StockPage = () => {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Loading...</Text></View>;
   }
 
-  // Sample data for stock positions
-  const userHoldings = {totalReturn: 1946.75, equity: 22935.46 , costAtBuy: 73.86, shares: 284.17, targetPrice: 117.25, estimatedReturn: 65.20, };
-
-  const marketStats = {
-    currentPrice: 80.71, changePercent: 9.27, change: 6.85, priceER: 0.5, 
-    sharesOutstanding: 2789786, viewPerShare: 1.43, yearHigh: 85.45, yearLow: 69.29, 
-    
-  };
+  // Removed userHoldings and marketStats dummy objects as they are not used in the main logic.
 
   // use this from here on out because we want the data to be raw numbers, then transformed here.
   const formatNumber = (number: number, decimals: number = 2): string => {

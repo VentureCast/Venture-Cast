@@ -17,13 +17,6 @@ type RootStackParamList = {
   Discover: undefined;
 };
 
-const userData = [
-  {id: '1', balance: '229,375.25', moneyChange:'66,378.49', percentChange: '24.65' }
-]
-
-const defaultPercentage = '2.50';
-const defaultGraph = require('../Assets/Graphs/Positive-Graph-1.png');
-
 const screenWidth = Dimensions.get('window').width;
 const numVisible = 3;
 const horizontalPadding = 20; // total horizontal padding (10 left, 10 right)
@@ -178,9 +171,9 @@ const VentureCastHome = () => {
                 }}
               >
                 <CategoryBox
-                  graph={defaultGraph}
+                  graph={require('../Assets/Graphs/Positive-Graph-1.png')}
                   name={category.name}
-                  percentage={defaultPercentage}
+                  percentage={'2.50'}
                 />
               </View>
             ))}
