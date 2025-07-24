@@ -1,9 +1,14 @@
 // components/MiniWatchlist.tsx
 //this appears only on the homepage (as of now)
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { supabase } from '../../supabaseClient';
 import { useUser } from '../../UserProvider';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  StockPage: { streamer_id: string };
+};
 
 // Default data for fallback
 const defaultPercentage = '2.50';
@@ -22,6 +27,7 @@ const MiniWatchlist = () => {
   const { user } = useUser();
   const [watchlistData, setWatchlistData] = useState<WatchlistItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     const fetchWatchlist = async () => {
@@ -105,20 +111,22 @@ const MiniWatchlist = () => {
       <FlatList 
         data={watchlistData}
         renderItem={({ item }) => (
-          <View style={styles.container}>
-            <View style={styles.miniWatchlist}>
-              <Image source={item.avatar} style={styles.stockAvatar} />
-              <View style={styles.textContainer}>
-                <Text style={styles.stockText}>{item.name}</Text>
-                <Text style={[styles.stockPercentage, 
-                  item.percentage >= 0 ? styles.positive : styles.negative]}
-                >
-                  {item.percentage.toFixed(2)}%
-                </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('StockPage', { streamer_id: item.id })}>
+            <View style={styles.container}>
+              <View style={styles.miniWatchlist}>
+                <Image source={item.avatar} style={styles.stockAvatar} />
+                <View style={styles.textContainer}>
+                  <Text style={styles.stockText}>{item.name}</Text>
+                  <Text style={[styles.stockPercentage, 
+                    item.percentage >= 0 ? styles.positive : styles.negative]}
+                  >
+                    {item.percentage.toFixed(2)}%
+                  </Text>
+                </View>
               </View>
+              <Image source={item.graph} style={styles.graph} />
             </View>
-            <Image source={item.graph} style={styles.graph} />
-          </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
         horizontal={true}

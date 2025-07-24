@@ -216,7 +216,7 @@ const App = () => {
             options={{ headerShown: false }} // Hide header for bottom tabs
           />
           <Stack.Screen
-            name="Home"
+            name="MainTabs"
             component={HomeTabs} // Add the Bottom Tab Navigator as the Home screen
             options={{ headerShown: false }} // Hide header for bottom tabs
           />

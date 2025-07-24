@@ -10,7 +10,7 @@ import { useUser } from '../UserProvider';
 import { supabase } from '../supabaseClient';
 
 type RootStackParamList = {
-  StockPage: undefined; // Do this for all linked pages
+  StockPage: { streamer_id: string };
   Portfolio: undefined;
   ClipsPage: undefined;
   short: undefined;
@@ -25,7 +25,7 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
         <View style={styles.accountDetailContainer}>
           <Text style={styles.detailName}>{name}</Text>
           <Text style={styles.detailValue}>{formatCurrency(value)}</Text>
-          {changePercent !== 0 && (
+          {changePercent !== undefined && changePercent !== null && changePercent !== 0 && (
             <Text style={[styles.stockChange, changePercent >= 0 ? styles.positive : styles.negative]}>
               ({changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`})
             </Text>
@@ -111,7 +111,7 @@ const PortfolioScreen = () => {
       // Fetch streamer stats for current prices
       const { data: statsData, error: statsError } = await supabase
         .from('StreamerStats')
-        .select('streamer_id, current_price')
+        .select('streamer_id, current_price, day_1_price')
         .in('streamer_id', streamerIds);
       
       if (statsError || !statsData) {
@@ -145,14 +145,14 @@ const PortfolioScreen = () => {
       const streamer = streamerMap[h.streamer_id] || {};
       const stats = statsMap[h.streamer_id] || {};
       const price = stats.current_price || 100.00;
-      const averageCost = h.average_cost || 100.00;
-      // Show streamer name (username) again
+      const day1Price = stats.day_1_price || 100.00;
       const name = streamer.username || h.streamer_id;
       const ticker = streamer.ticker_name || 'DUMMY';
-      const trendPercent = Number(((price / averageCost) - 1) * 100).toFixed(2);
+      const trendPercent = Number(((price / day1Price) - 1) * 100).toFixed(2);
       return {
         id: h.portfolio_id,
-        name: name, // Show streamer name
+        streamer_id: h.streamer_id,
+        name: name,
         ticker: ticker,
         price: price,
         change: trendPercent,
@@ -164,29 +164,31 @@ const PortfolioScreen = () => {
   // Calculate real equity and trend values based on holdings
   const equityData = useMemo(() => {
     let totalCurrentValue = 0;
+    let totalDay1Value = 0;
     let totalAverageCost = 0;
-    
     holdings.forEach(h => {
       const stats = statsMap[h.streamer_id] || {};
       const currentPrice = stats.current_price || 100.00;
+      const day1Price = stats.day_1_price || 100.00;
       const shares = h.shares_owned || 0;
       const averageCost = h.average_cost || 100.00;
-      
       totalCurrentValue += currentPrice * shares;
+      totalDay1Value += day1Price * shares;
       totalAverageCost += averageCost * shares;
     });
-    
     const cash = userCash;
-    const equity = totalCurrentValue; // Equity is just the current value of holdings
-    const trendPercent = totalAverageCost > 0 ? ((totalCurrentValue / totalAverageCost) - 1) * 100 : 0;
-    const dailyChange = totalCurrentValue - totalAverageCost;
-    
+    const equity = totalCurrentValue;
+    const trendPercentDay1 = totalDay1Value > 0 ? ((totalCurrentValue / totalDay1Value) - 1) * 100 : 0;
+    const trendPercentAvgCost = totalAverageCost > 0 ? ((totalCurrentValue / totalAverageCost) - 1) * 100 : 0;
+    const dailyChange = totalCurrentValue - totalDay1Value;
+    const totalReturn = totalCurrentValue - totalAverageCost;
     return {
       cash,
       equity,
       dailyChange,
-      trendPercent: Number(trendPercent.toFixed(2)),
-      totalReturn: dailyChange
+      trendPercentDay1: Number(trendPercentDay1.toFixed(2)),
+      trendPercentAvgCost: Number(trendPercentAvgCost.toFixed(2)),
+      totalReturn
     };
   }, [holdings, statsMap, userCash]);
 
@@ -201,9 +203,9 @@ const PortfolioScreen = () => {
 
   const acctData = [
     { id: '1', name: 'Cash', value: equityData.cash, change: 0.00, image: require('../Assets/Images/cash.png') },
-    { id: '2', name: 'Daily Change', value: equityData.dailyChange, change: equityData.trendPercent, image: require('../Assets/Images/daily-change.png') },
-    { id: '3', name: 'Equity', value: equityData.equity, change: equityData.trendPercent, image: require('../Assets/Images/equity.png') },
-    { id: '4', name: 'Total Return', value: equityData.totalReturn, change: equityData.trendPercent, image: require('../Assets/Images/total-return.png') },
+    { id: '3', name: 'Equity', value: equityData.equity, image: require('../Assets/Images/equity.png') },
+    { id: '2', name: 'Daily Change', value: equityData.dailyChange, change: equityData.trendPercentDay1, image: require('../Assets/Images/daily-change.png') },
+    { id: '4', name: 'Total Return', value: equityData.totalReturn, change: equityData.trendPercentAvgCost, image: require('../Assets/Images/total-return.png') },
   ];
 
   // Calculate displayed positions directly
@@ -324,7 +326,7 @@ const PortfolioScreen = () => {
               price={stock.price}
               change={stock.change}
               changePercent={stock.change}
-              onPress={() => navigation.navigate('StockPage')} // Pass the stock data to the details screen
+              onPress={() => navigation.navigate('StockPage', { streamer_id: stock.streamer_id })}
             />
             ))
           } 
@@ -405,18 +407,6 @@ const styles = StyleSheet.create({
 
   // the user balance
 
-  balanceTitle: {
-    fontFamily: 'Urbanist-Regular',
-    fontSize: 40,
-    fontWeight: 'bold',
-    padding: 10,
-  },
-  balanceSubTitle: {
-    fontFamily: 'Urbanist-Regular',
-    fontSize: 14,
-    fontWeight: 'semibold',
-    paddingBottom: 10,
-  },
   balanceBox: {
     backgroundColor: '#F5F3F3',
     justifyContent: 'center',
@@ -428,6 +418,19 @@ const styles = StyleSheet.create({
     borderColor: '#D3D3D3',
     borderWidth: 0.6,
   },
+  balanceSubTitle: {
+    fontSize: 14,
+    fontWeight: 'semibold',
+    fontFamily: 'Urbanist-Regular',
+    paddingTop: 10,
+  },
+  balanceTitle: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    fontFamily: 'Urbanist-Regular',
+    paddingBottom: 10,
+  },
+
 // user acct info section
 
   accountGrid: {

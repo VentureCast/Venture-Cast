@@ -1,6 +1,6 @@
 {
   "name": "RNCCheckbox",
-  "version": "0.5.17",
+  "version": "0.5.20",
   "summary": "React Native Checkbox native modules for Android , iOS and Windows",
   "license": "MIT",
   "authors": "Nicholas Lee <nicholaslee119@gmail.com>",
@@ -18,8 +18,6 @@
     "BEMCheckBox": [
       "~> 1.4"
     ],
-    "React-Core": [
-
-    ]
+    "React-Core": []
   }
 }

@@ -5,7 +5,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
   Portfolio: undefined; 
-  Home: undefined; 
+  MainTabs: undefined; 
 };
 
 
@@ -38,7 +38,7 @@ const BuyCongrats = () => {
             <Text style={styles.buttonText}>View My Portfolio</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() =>  navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() =>  navigation.navigate('MainTabs')}>
           <View style={styles.homeButton}>
             <Text style={styles.homeButtonText}>Home</Text>
           </View>

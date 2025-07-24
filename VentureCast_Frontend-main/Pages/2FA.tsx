@@ -47,7 +47,7 @@ const TwoFA = ({navigation}:any) => {
 
         <Text style={styles.resendText}>Resend</Text>
 
-        <Button title="Confirm" onPress={()=> navigation.navigate('Home')} />
+        <Button title="Confirm" onPress={()=> navigation.navigate('MainTabs')} />
       </View>
     </ScrollView>
   );

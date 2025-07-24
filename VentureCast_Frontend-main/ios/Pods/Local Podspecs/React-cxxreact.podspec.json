@@ -21,24 +21,16 @@
   },
   "header_dir": "cxxreact",
   "dependencies": {
-    "boost": [
-
-    ],
-    "DoubleConversion": [
-
-    ],
+    "boost": [],
+    "DoubleConversion": [],
     "fmt": [
       "9.1.0"
     ],
     "RCT-Folly": [
       "2024.01.01.00"
     ],
-    "glog": [
-
-    ],
-    "React-jsinspector": [
-
-    ],
+    "glog": [],
+    "React-jsinspector": [],
     "React-callinvoker": [
       "0.75.4"
     ],
@@ -57,9 +49,7 @@
     "React-debug": [
       "0.75.4"
     ],
-    "hermes-engine": [
-
-    ]
+    "hermes-engine": []
   },
   "resource_bundles": {
     "React-cxxreact_privacy": "PrivacyInfo.xcprivacy"

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useUser } from '../UserProvider';
+import { supabase } from '../supabaseClient';
 
 type RootStackParamList = {
   Profile: undefined; // Do this for all linked pages
@@ -19,13 +21,6 @@ type RootStackParamList = {
 };
 // import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
 
-const acctData = [
-  { id: '1', name: 'Cash', value: '23,087.39', change: 0.00, image: require('../Assets/Icons/BuyStock.png') },
-  { id: '2', name: 'Daily Change', value: '9,739.36', change: 24.65, image: require('../Assets/Images/daily-change.png') },
-  { id: '3', name: 'Equity', value: '186,473.68', change: 55.54, image: require('../Assets/Images/equity.png') },
-  { id: '4', name: 'Total Return', value: '66,378.49', change: 24.65, image: require('../Assets/Images/total-return.png') }, //these images are not circles, or same dimensions: we need better ones
-];
-
 const AccountDetail = ({ name, value, changePercent, image }: any) => {
   return (
       <View style={styles.accountDetail}>
@@ -33,19 +28,102 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
         <View style={styles.accountDetailContainer}>
           <Text style={styles.detailName}>{name}</Text>
           <Text style={styles.detailValue}>${value}</Text>
-          <Text style={[styles.stockChange, changePercent >= 0 ? styles.positive : styles.negative]}>
-            ({changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`})
-          </Text>
+          {changePercent !== undefined && changePercent !== null && changePercent !== 0 && (
+            <Text style={[styles.stockChange, changePercent >= 0 ? styles.positive : styles.negative]}>
+              ({changePercent >= 0 ? `+${changePercent}%` : `${changePercent}%`})
+            </Text>
+          )}
         </View>
       </View>
   );
 };
 
 const AccountScreen = () => {
-
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { user } = useUser();
+  const [holdings, setHoldings] = useState<any[]>([]);
+  const [streamerStats, setStreamerStats] = useState<any[]>([]);
+  const [userCash, setUserCash] = useState<number>(0);
 
+  useEffect(() => {
+    const fetchPortfolioData = async () => {
+      if (!user) return;
+      // Fetch user cash
+      const { data: userData, error: userError } = await supabase
+        .from('Users')
+        .select('cash')
+        .eq('user_id', user.id)
+        .single();
+      if (!userError && userData) {
+        setUserCash(userData.cash || 0);
+      }
+      // Fetch holdings
+      const { data: holdingsData, error: holdingsError } = await supabase
+        .from('Holdings')
+        .select('*')
+        .eq('user_id', user.id);
+      if (holdingsError || !holdingsData) {
+        setHoldings([]);
+        setStreamerStats([]);
+        return;
+      }
+      setHoldings(holdingsData);
+      const streamerIds = [...new Set(holdingsData.map(h => h.streamer_id))];
+      if (streamerIds.length === 0) {
+        setStreamerStats([]);
+        return;
+      }
+      // Fetch streamer stats
+      const { data: statsData } = await supabase
+        .from('StreamerStats')
+        .select('streamer_id, current_price, day_1_price')
+        .in('streamer_id', streamerIds);
+      setStreamerStats(statsData || []);
+    };
+    fetchPortfolioData();
+  }, [user]);
 
+  const statsMap = useMemo(() => {
+    return Object.fromEntries(streamerStats.map(s => [s.streamer_id, s]));
+  }, [streamerStats]);
+
+  // Calculate values
+  const equityData = useMemo(() => {
+    let totalCurrentValue = 0;
+    let totalDay1Value = 0;
+    let totalAverageCost = 0;
+    holdings.forEach(h => {
+      const stats = statsMap[h.streamer_id] || {};
+      const currentPrice = stats.current_price || 100.00;
+      const day1Price = stats.day_1_price || 100.00;
+      const shares = h.shares_owned || 0;
+      const averageCost = h.average_cost || 100.00;
+      totalCurrentValue += currentPrice * shares;
+      totalDay1Value += day1Price * shares;
+      totalAverageCost += averageCost * shares;
+    });
+    const cash = userCash;
+    const equity = totalCurrentValue;
+    const trendPercentDay1 = totalDay1Value > 0 ? ((totalCurrentValue / totalDay1Value) - 1) * 100 : 0;
+    const trendPercentAvgCost = totalAverageCost > 0 ? ((totalCurrentValue / totalAverageCost) - 1) * 100 : 0;
+    const dailyChange = totalCurrentValue - totalDay1Value;
+    const totalReturn = totalCurrentValue - totalAverageCost;
+    return {
+      cash,
+      equity,
+      dailyChange,
+      trendPercentDay1: Number(trendPercentDay1.toFixed(2)),
+      trendPercentAvgCost: Number(trendPercentAvgCost.toFixed(2)),
+      totalReturn
+    };
+  }, [holdings, statsMap, userCash]);
+
+  const acctData = [
+    { id: '1', name: 'Cash', value: equityData.cash.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: 0.00, image: require('../Assets/Icons/BuyStock.png') },
+    { id: '3', name: 'Equity', value: equityData.equity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), image: require('../Assets/Images/equity.png') },
+    { id: '2', name: 'Daily Change', value: equityData.dailyChange.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: equityData.trendPercentDay1, image: require('../Assets/Images/daily-change.png') },
+    { id: '4', name: 'Total Return', value: equityData.totalReturn.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: equityData.trendPercentAvgCost, image: require('../Assets/Images/total-return.png') },
+  ];
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>

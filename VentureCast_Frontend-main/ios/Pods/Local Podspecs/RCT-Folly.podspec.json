@@ -14,15 +14,9 @@
   "module_name": "folly",
   "header_mappings_dir": ".",
   "dependencies": {
-    "boost": [
-
-    ],
-    "DoubleConversion": [
-
-    ],
-    "glog": [
-
-    ],
+    "boost": [],
+    "DoubleConversion": [],
+    "glog": [],
     "fmt": [
       "9.1.0"
     ]

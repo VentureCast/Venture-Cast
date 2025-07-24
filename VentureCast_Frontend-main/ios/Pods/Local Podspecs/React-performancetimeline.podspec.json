@@ -21,9 +21,7 @@
     "HEADER_SEARCH_PATHS": "\"$(PODS_ROOT)/RCT-Folly\" \"$(PODS_ROOT)/boost\""
   },
   "dependencies": {
-    "React-cxxreact": [
-
-    ],
+    "React-cxxreact": [],
     "RCT-Folly": [
       "2024.01.01.00"
     ]

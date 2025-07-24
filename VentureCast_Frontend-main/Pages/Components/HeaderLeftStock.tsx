@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
-  Home: undefined; // Define your route and parameters here
+  MainTabs: undefined; // Define your route and parameters here
 };
 
 //change the image background to a better image
@@ -17,7 +17,7 @@ const HeaderLeftStock = () => {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image source={require('../../Assets/Icons/Arrow-Left-White.png')} style={styles.miniLogo} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity onPress={() => navigation.navigate('MainTabs')}>
         <Image source={require('../../Assets/Icons/VentureCast-Header.png')} />
       </TouchableOpacity>
     </View>

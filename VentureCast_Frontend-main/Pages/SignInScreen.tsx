@@ -21,7 +21,7 @@ const SignInScreen = ({ navigation: navFromProps }: any) => {
       if (error) {
         setError(error.message);
       } else if (data && data.user) {
-        navigation.navigate('Home');
+        navigation.navigate('MainTabs');
       } else {
         setError('Unknown error.');
       }
