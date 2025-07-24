@@ -41,7 +41,7 @@ const FinalResetPassword = ({navigation}:any) => {
           <Text style={styles.resetText}>Forgot your password? </Text>
         </TouchableOpacity>
 
-        <Button title="Continue" onPress={() => navigation.navigate('Home')} />
+        <Button title="Continue" onPress={() => navigation.navigate('MainTabs')} />
       </View>
     </ScrollView>
   );
