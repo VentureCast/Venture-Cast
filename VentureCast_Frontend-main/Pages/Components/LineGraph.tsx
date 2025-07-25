@@ -45,35 +45,65 @@ const LineGraph = ({ data }: { data: number[] }) => {
   const range = maxValue - minValue;
   const padding = range * 0.1; // 10% padding
 
+  // Generate date labels
+  const generateDateLabels = () => {
+    const today = new Date();
+    const weekAgo = new Date(today);
+    weekAgo.setDate(today.getDate() - 7);
+    
+    const formatDate = (date: Date) => {
+      return date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    };
+    
+    return [
+      formatDate(weekAgo),  // Left most (7 days ago)
+      '', '', '', '', '', '',  // Empty labels for middle points
+      formatDate(today)      // Right most (today)
+    ];
+  };
+
   return (
     <View style={{ 
       alignItems: 'center', 
       width: '100%',
       paddingVertical: 10,
+      paddingHorizontal: 40,
       backgroundColor: 'transparent'
     }}>
+      <Text style={{ 
+        color: '#000', 
+        fontSize: 14, 
+        fontWeight: '600',
+        marginBottom: 10,
+        opacity: 0.8
+      }}>
+        Weekly Price Trend
+      </Text>
       <LineChart
         data={{
-          labels: ['7', '6', '5', '4', '3', '2', '1', '0'],
+          labels: generateDateLabels(),
           datasets: [
             {
               data: chartData,
-              color: () => '#00FF88', // Green color for positive trend
+              color: () => '#351560', // Purple color for trend (matches buy/sell buttons)
               strokeWidth: 3,
             },
           ],
         }}
-        width={screenWidth * 0.9}
+        width={screenWidth*0.95}
         height={200}
         yAxisLabel={'$'}
         yAxisSuffix={''}
         chartConfig={{
-          backgroundColor: 'transparent',
-          backgroundGradientFrom: 'transparent',
-          backgroundGradientTo: 'transparent',
+          backgroundColor: '#FFFFFF',
+          backgroundGradientFrom: '#FFFFFF',
+          backgroundGradientTo: '#FFFFFF',
           decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          color: (opacity = 1) => `rgba(53, 21, 96, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: { 
             borderRadius: 16,
             paddingRight: 0,
@@ -82,37 +112,29 @@ const LineGraph = ({ data }: { data: number[] }) => {
           propsForDots: {
             r: '3',
             strokeWidth: '2',
-            stroke: '#00FF88',
-            fill: '#351560',
+            stroke: '#351560',
+            fill: '#FFFFFF',
           },
           propsForBackgroundLines: {
             strokeDasharray: '',
-            stroke: 'rgba(255, 255, 255, 0.1)',
+            stroke: 'rgba(53, 21, 96, 0.2)',
             strokeWidth: 1,
           },
         }}
-        bezier
         style={{ 
           borderRadius: 16,
-          paddingRight: 0,
-          paddingLeft: 0,
+          paddingRight: 60,
+          paddingLeft: 40,
         }}
         fromZero={false}
+        withShadow={false}
         withVerticalLines={false}
         withHorizontalLines={true}
         withVerticalLabels={true}
         withHorizontalLabels={true}
         segments={4}
       />
-      <Text style={{ 
-        color: '#fff', 
-        fontSize: 14, 
-        marginTop: 8,
-        fontWeight: '600',
-        opacity: 0.8
-      }}>
-        Weekly Price Trend
-      </Text>
+    
     </View>
   );
 };
