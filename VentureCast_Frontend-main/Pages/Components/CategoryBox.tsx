@@ -2,14 +2,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-const CategoryBox = ({ name, percentage, graph}:any) => {
+const CategoryBox = ({ name }:any) => {
   return (
     <View style={styles.categoryBox}>
-      <View style={styles.categoryBoxText}>
-        <Text style={styles.categoryText}>{name}</Text>
-        <Text style={[styles.categoryPercentage, percentage >= 0 ? styles.positive : styles.negative]}>{percentage}%</Text>
-      </View>
-     <Image style = {styles.graph} source={graph} />
+      <Text style={styles.categoryText}>{name}</Text>
     </View>
   );
 };
@@ -20,37 +16,23 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderColor: '#351560',
     borderWidth: 0.1,
-    paddingTop: 10,
-    alignItems: 'flex-start',
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
     shadowColor: '#351560', 
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 2 }, // Moves shadow downward
-  },
-  categoryBoxText:{
-    marginLeft: 10,
+    shadowRadius: 5,
+    elevation: 5,
+    width: 120,
+    height: 80,
   },
   categoryText: {
     fontSize: 16,
     color: '#212121',
     fontFamily: 'Urbanist',
     fontWeight: 'bold',
-  },
-  categoryPercentage: {
-    fontSize: 14,
-    marginTop: 5,
-  },
-  positive: {
-    color: '#12D18E',
-  },
-  negative: {
-    color: '#F75555',
-  },
-  graph: {
-    borderBottomEndRadius: 20,
-    borderBottomStartRadius: 20,
-    marginTop:5,
-    height: 75,
-    width: 120,
+    textAlign: 'center',
   },
 });
 

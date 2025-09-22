@@ -96,10 +96,10 @@ const PortfolioScreen = () => {
         return;
       }
       
-      // Fetch all relevant streamers
+      // Fetch all relevant streamers (ticker_name, profile_picture_path)
       const { data: streamersData, error: streamersError } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name, profile_picture_path')
+        .select('streamer_id, ticker_name, profile_picture_path, display_name')
         .in('streamer_id', streamerIds);
       
       if (streamersError || !streamersData) {
@@ -108,9 +108,9 @@ const PortfolioScreen = () => {
         setStreamers(streamersData);
       }
       
-      // Fetch streamer stats for current prices
+      // Fetch streamer prices for current prices
       const { data: statsData, error: statsError } = await supabase
-        .from('StreamerStats')
+        .from('StreamerPrice')
         .select('streamer_id, current_price, day_1_price')
         .in('streamer_id', streamerIds);
       
@@ -142,7 +142,7 @@ const PortfolioScreen = () => {
       const stats = statsMap[h.streamer_id] || {};
       const price = stats.current_price || 100.00;
       const day1Price = stats.day_1_price || 100.00;
-      const name = streamer.username || h.streamer_id;
+      const name = streamer.display_name || streamer.ticker_name || h.streamer_id;
       const ticker = streamer.ticker_name || 'DUMMY';
       const trendPercent = Number(((price / day1Price) - 1) * 100).toFixed(2);
       return {

@@ -77,10 +77,10 @@ const StockPage = () => {
     const timeout = setTimeout(() => setTimeoutReached(true), 8000);
     const fetchData = async () => {
       setLoading(true);
-      // Fetch streamer info
+      // Fetch streamer display info directly from Streamers (display_name)
       const { data: streamerData, error: streamerError } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name, profile_picture_path')
+        .select('streamer_id, ticker_name, profile_picture_path, display_name')
         .eq('streamer_id', streamerId)
         .single();
       if (streamerError || !streamerData) {
@@ -90,9 +90,9 @@ const StockPage = () => {
         return;
       }
       setStreamer(streamerData);
-      // Fetch streamer stats
+      // Fetch streamer prices
       const { data: statsData, error: statsError } = await supabase
-        .from('StreamerStats')
+        .from('StreamerPrice')
         .select('streamer_id, current_price, day_1_price, day_2_price, day_3_price, day_4_price, day_5_price, day_6_price, day_7_price')
         .eq('streamer_id', streamerId)
         .single();
@@ -200,7 +200,7 @@ const StockPage = () => {
         <View style={styles.stockStats}>
           <StockItemHeader
             logo={streamer?.profile_picture_path ? { uri: streamer.profile_picture_path } : require('../Assets/Images/dude-perfect.png')}
-            name={streamer?.username || 'Streamer'}
+            name={streamer?.display_name || 'Streamer'}
             ticker={streamer?.ticker_name || ''}
             price={price}
             change={trendPercent}

@@ -23,16 +23,22 @@ const StockDetailsScreen = () => {
     const fetchData = async () => {
       if (!streamerId) return;
       setLoading(true);
-      // Fetch streamer info
-      const { data: streamerData } = await supabase
+      // Fetch streamer info (name from StreamerInfo, others from Streamers)
+      const { data: streamerBase } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name, profile_picture_path')
+        .select('streamer_id, ticker_name, profile_picture_path')
         .eq('streamer_id', streamerId)
         .single();
+      const { data: info } = await supabase
+        .from('StreamerInfo')
+        .select('name')
+        .eq('streamer_id', streamerId)
+        .single();
+      const streamerData = streamerBase ? { ...streamerBase, username: info?.name } : null;
       setStreamer(streamerData);
-      // Fetch streamer stats
+      // Fetch streamer prices
       const { data: statsData } = await supabase
-        .from('StreamerStats')
+        .from('StreamerPrice')
         .select('streamer_id, current_price, day_1_price')
         .eq('streamer_id', streamerId)
         .single();

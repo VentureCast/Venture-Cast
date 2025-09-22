@@ -74,9 +74,9 @@ const AccountScreen = () => {
         setStreamerStats([]);
         return;
       }
-      // Fetch streamer stats
+      // Fetch streamer prices
       const { data: statsData } = await supabase
-        .from('StreamerStats')
+        .from('StreamerPrice')
         .select('streamer_id, current_price, day_1_price')
         .in('streamer_id', streamerIds);
       setStreamerStats(statsData || []);

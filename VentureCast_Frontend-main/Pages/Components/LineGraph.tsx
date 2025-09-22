@@ -33,7 +33,6 @@ const LineGraph = ({ data }: { data: number[] }) => {
     // Final validation
     processedData = processedData.map(x => (typeof x === 'number' && isFinite(x) ? x : 0));
     
-    console.log('LineGraph processed data:', processedData);
     return processedData;
   };
 
