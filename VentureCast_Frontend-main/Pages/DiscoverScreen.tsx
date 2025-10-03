@@ -15,9 +15,7 @@ type RootStackParamList = {
 
 
 
-const userData = [
-  {id: '1', balance: '229,375.25', moneyChange:'66,378.49', percentChange: '24.65' }
-]
+// Removed userData and clipsData dummy arrays as they are not used in the main logic.
 
 //category data, should be imported from database
 
@@ -62,7 +60,7 @@ const DiscoverScreen = () => {
   const [isSearchModalVisible, setSearchModalVisible] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
 
-// Search handler for streamer usernames
+// Search handler for streamer tickers (from Streamers.ticker_name)
 const handleSearch = async (query: string) => {
   setSearchQuery(query);
   if (query.trim()) {
@@ -70,8 +68,8 @@ const handleSearch = async (query: string) => {
     // Fetch matching streamers from Supabase (prefix match)
     const { data, error } = await supabase
       .from('Streamers')
-      .select('streamer_id, username, ticker_name')
-      .ilike('username', `${query}%`); // Only usernames starting with query
+      .select('streamer_id, ticker_name')
+      .ilike('ticker_name', `${query}%`); // Only tickers starting with query
     if (error) {
       setFilteredStreamerData([]);
     } else {
@@ -140,8 +138,7 @@ const handleSearch = async (query: string) => {
                     }}
                   >
                     <View style={{ padding: 12, borderBottomWidth: 1, borderColor: '#eee' }}>
-                      <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.username}</Text>
-                      <Text style={{ color: '#888' }}>{item.ticker_name}</Text>
+                      <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.ticker_name}</Text>
                     </View>
                   </TouchableOpacity>
                 )}

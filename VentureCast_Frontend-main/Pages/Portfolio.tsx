@@ -96,10 +96,10 @@ const PortfolioScreen = () => {
         return;
       }
       
-      // Fetch all relevant streamers
+      // Fetch all relevant streamers (ticker_name, profile_picture_path)
       const { data: streamersData, error: streamersError } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name')
+        .select('streamer_id, ticker_name, profile_picture_path, display_name')
         .in('streamer_id', streamerIds);
       
       if (streamersError || !streamersData) {
@@ -108,9 +108,9 @@ const PortfolioScreen = () => {
         setStreamers(streamersData);
       }
       
-      // Fetch streamer stats for current prices
+      // Fetch streamer prices for current prices
       const { data: statsData, error: statsError } = await supabase
-        .from('StreamerStats')
+        .from('StreamerPrice')
         .select('streamer_id, current_price, day_1_price')
         .in('streamer_id', streamerIds);
       
@@ -124,10 +124,6 @@ const PortfolioScreen = () => {
     };
     fetchHoldingsAndStreamers();
   }, [user]);
-
-  // Dummy data for image, percent
-  const dummyImage = require('../Assets/Images/dude-perfect.png');
-  const dummyPercent = 5.0;
 
   // Memoize streamerMap to prevent recreation on every render
   const streamerMap = useMemo(() => {
@@ -146,7 +142,7 @@ const PortfolioScreen = () => {
       const stats = statsMap[h.streamer_id] || {};
       const price = stats.current_price || 100.00;
       const day1Price = stats.day_1_price || 100.00;
-      const name = streamer.username || h.streamer_id;
+      const name = streamer.display_name || streamer.ticker_name || h.streamer_id;
       const ticker = streamer.ticker_name || 'DUMMY';
       const trendPercent = Number(((price / day1Price) - 1) * 100).toFixed(2);
       return {
@@ -156,7 +152,9 @@ const PortfolioScreen = () => {
         ticker: ticker,
         price: price,
         change: trendPercent,
-        logo: dummyImage,
+        logo: streamer.profile_picture_path
+          ? { uri: streamer.profile_picture_path }
+          : require('../Assets/Images/dude-perfect.png'),
       };
     });
   }, [holdings, streamerMap, statsMap]);
@@ -192,15 +190,6 @@ const PortfolioScreen = () => {
     };
   }, [holdings, statsMap, userCash]);
 
-  const sampleData = [0, 1, 2, 3 ,5, ];
-
-  const shortData = [
-    { id: '1', name: 'Jimmy BeastMode', ticker: 'MBT', price: 82.50, change: 2.94, logo: require('../Assets/Images/JimmyBeast.png') },
-    { id: '2', name: 'PewDiePie', ticker: 'PDP', price: 90.79, change: -2.16, logo: require('../Assets/Images/pewdiepie.png') },
-    { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: 207.47, change: 2.37, logo: require('../Assets/Images/jake-paul.png') },
-    { id: '4', name: 'Dude Perfect', ticker: 'DUPT', price: 7.23, change: 5.89, logo: require('../Assets/Images/dude-perfect.png') },
-  ];
-
   const acctData = [
     { id: '1', name: 'Cash', value: equityData.cash, change: 0.00, image: require('../Assets/Images/cash.png') },
     { id: '3', name: 'Equity', value: equityData.equity, image: require('../Assets/Images/equity.png') },
@@ -209,7 +198,16 @@ const PortfolioScreen = () => {
   ];
 
   // Calculate displayed positions directly
-  const displayedPositions2 = showMore2 ? shortData : shortData.slice(0, 3);
+  const displayedPositions2 = showMore2 ? [
+    { id: '1', name: 'Jimmy BeastMode', ticker: 'MBT', price: 82.50, change: 2.94, logo: require('../Assets/Images/JimmyBeast.png') },
+    { id: '2', name: 'PewDiePie', ticker: 'PDP', price: 90.79, change: -2.16, logo: require('../Assets/Images/pewdiepie.png') },
+    { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: 207.47, change: 2.37, logo: require('../Assets/Images/jake-paul.png') },
+    { id: '4', name: 'Dude Perfect', ticker: 'DUPT', price: 7.23, change: 5.89, logo: require('../Assets/Images/dude-perfect.png') },
+  ] : [
+    { id: '1', name: 'Jimmy BeastMode', ticker: 'MBT', price: 82.50, change: 2.94, logo: require('../Assets/Images/JimmyBeast.png') },
+    { id: '2', name: 'PewDiePie', ticker: 'PDP', price: 90.79, change: -2.16, logo: require('../Assets/Images/pewdiepie.png') },
+    { id: '3', name: 'Jake Paul', ticker: 'JKPI', price: 207.47, change: 2.37, logo: require('../Assets/Images/jake-paul.png') },
+  ];
 
   const handleShowMore1 = () => {
     setShowMore1((prev) => !prev);
@@ -366,7 +364,7 @@ const PortfolioScreen = () => {
           }
 
          {/* Show more button only when there are more than 3 items */}
-          {shortData.length > 3 && (
+          {displayedPositions2.length > 3 && (
             <TouchableOpacity style={styles.button} onPress={handleShowMore2}>
               <Text style={styles.buttonText}>{showMore2 ? 'Show Less' : 'Show More'}</Text>
             </TouchableOpacity>

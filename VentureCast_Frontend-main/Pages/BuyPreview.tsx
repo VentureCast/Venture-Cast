@@ -12,9 +12,6 @@ const BuyPreview = ({ }:any) => {
 
   const [investmentAmount, setInvestmentAmount] = useState('10000');
 
-  const user = {firstName: 'Alexander', lastName: 'Creighton', cash: 23087.39, accountNumber: '**** **** **** 4321',
-  stockName: 'DUPT', stockLongName: 'Dude Perfect', stockCost: 71.50}; //user data
-
   return (
     <View style={styles.container}>
       {/* Header */}

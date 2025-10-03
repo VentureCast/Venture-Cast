@@ -6,6 +6,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import formatCurrency from './formatCurrency';
 import { useUser } from '../../UserProvider';
 import { supabase } from '../../supabaseClient';
+import SimpleLineGraph from './SimpleLineGraph';
 
 type RootStackParamList = {
   StockPage: { streamer_id: string };
@@ -51,16 +52,23 @@ const MiniStockScroll = () => {
         setStreamerStats([]);
         return;
       }
-      // Fetch streamers
+      // Fetch streamers (ticker_name, profile_picture_path)
       const { data: streamersData } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name')
+        .select('streamer_id, ticker_name, profile_picture_path')
         .in('streamer_id', streamerIds);
       setStreamers(streamersData || []);
-      // Fetch streamer stats
+      // Fetch names from StreamerInfo
+      const { data: infoData } = await supabase
+        .from('StreamerInfo')
+        .select('streamer_id, name')
+        .in('streamer_id', streamerIds);
+      const nameMap = Object.fromEntries((infoData || []).map((i: any) => [i.streamer_id, i.name]));
+      setStreamers((prev: any[]) => (prev || []).map(s => ({ ...s, username: nameMap[s.streamer_id] || s.username })));
+      // Fetch streamer prices with history for graphs
       const { data: statsData } = await supabase
-        .from('StreamerStats')
-        .select('streamer_id, current_price, day_1_price')
+        .from('StreamerPrice')
+        .select('streamer_id, current_price, day_1_price, day_2_price, day_3_price, day_4_price, day_5_price, day_6_price, day_7_price')
         .in('streamer_id', streamerIds);
       setStreamerStats(statsData || []);
     };
@@ -80,12 +88,25 @@ const MiniStockScroll = () => {
       const streamer = streamerMap[h.streamer_id] || {};
       const stats = statsMap[h.streamer_id] || {};
       const price = stats.current_price || 100.00;
-      const day1Price = stats.day_1_price || 100.00;
+      const day7Price = stats.day_7_price || 100.00;
       const shares = h.shares_owned || 0;
-      const trendPercent = Number(((price / day1Price) - 1) * 100).toFixed(2);
-      // Use dummy graph and avatar, cycle through defaults
-      const graph = defaultGraphs[idx % defaultGraphs.length];
-      const avatar = defaultAvatars[idx % defaultAvatars.length];
+      const trendPercent = Number(((price / day7Price) - 1) * 100).toFixed(2);
+      
+      // Prepare price history data for the graph
+      const priceHistory = [
+        stats.day_7_price,
+        stats.day_6_price,
+        stats.day_5_price,
+        stats.day_4_price,
+        stats.day_3_price,
+        stats.day_2_price,
+        stats.day_1_price,
+        stats.current_price,
+      ].map(x => (x !== undefined && x !== null ? Number(x) : Number(price) || 100.00));
+      
+      const avatar = streamer.profile_picture_path
+        ? { uri: streamer.profile_picture_path }
+        : defaultAvatars[idx % defaultAvatars.length];
       return {
         id: h.portfolio_id || idx,
         streamer_id: h.streamer_id,
@@ -93,7 +114,7 @@ const MiniStockScroll = () => {
         ticker: streamer.ticker_name || 'DUMMY',
         price: price,
         percentage: Number(trendPercent),
-        graph,
+        priceHistory,
         avatar,
         equityValue: price * shares,
       };
@@ -120,15 +141,14 @@ const MiniStockScroll = () => {
               <View style = {styles.textContainer}>
                 <Text style={styles.stockText}>{item.name}</Text>
               </View>
-              <View style={styles.numberContainer}>
-                <Text style={[styles.stockPercentage, 
-                item.percentage >= 0 ? styles.positive : styles.negative]}
-                >{formatPercentage(item.percentage)}</Text>
-                <Text style={styles.stockPrice}>{formatCurrency(item.price)}</Text>
-              </View>
+            </View>
+            <View style={styles.priceContainer}>
+              <Text style={styles.stockPrice}>{formatCurrency(item.price)}</Text>
             </View>
           </View>
-          <Image source={item.graph} style={styles.graph} />
+          <View style={styles.graphContainer}>
+            <SimpleLineGraph data={item.priceHistory} isPositive={item.percentage >= 0} />
+          </View>
         </View>
       </TouchableOpacity>
          )}
@@ -165,15 +185,18 @@ const styles = StyleSheet.create({
   miniStockScroll: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 10,
   },
   infoContainer: {
     marginLeft: 10,
+    justifyContent: 'center',
   },
   textContainer: {
     flexDirection: 'column',
-    width: 130,
+    width: 90,
     marginBottom: 5,
+    justifyContent: 'center',
   },
   stockAvatar: {
     width: 40,
@@ -183,7 +206,7 @@ const styles = StyleSheet.create({
   stockText: {
     fontFamily: 'Urbanist',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 16,
     color: '#333',
     marginTop: 5,
   },
@@ -196,11 +219,11 @@ const styles = StyleSheet.create({
   },
   numberContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   stockPrice: {
     justifyContent: 'flex-end',
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Urbanist',
     fontWeight: 'bold',
     color: '#212121',
@@ -217,11 +240,18 @@ const styles = StyleSheet.create({
   negative: {
     color: '#F75555',
   },
-  graph: {
+  priceContainer: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  graphContainer: {
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
     height: 80,
     width: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 5,
   },
 });
 

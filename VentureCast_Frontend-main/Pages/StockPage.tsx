@@ -77,10 +77,10 @@ const StockPage = () => {
     const timeout = setTimeout(() => setTimeoutReached(true), 8000);
     const fetchData = async () => {
       setLoading(true);
-      // Fetch streamer info
+      // Fetch streamer display info directly from Streamers (display_name)
       const { data: streamerData, error: streamerError } = await supabase
         .from('Streamers')
-        .select('streamer_id, username, ticker_name')
+        .select('streamer_id, ticker_name, profile_picture_path, display_name')
         .eq('streamer_id', streamerId)
         .single();
       if (streamerError || !streamerData) {
@@ -90,9 +90,9 @@ const StockPage = () => {
         return;
       }
       setStreamer(streamerData);
-      // Fetch streamer stats
+      // Fetch streamer prices
       const { data: statsData, error: statsError } = await supabase
-        .from('StreamerStats')
+        .from('StreamerPrice')
         .select('streamer_id, current_price, day_1_price, day_2_price, day_3_price, day_4_price, day_5_price, day_6_price, day_7_price')
         .eq('streamer_id', streamerId)
         .single();
@@ -194,31 +194,13 @@ const StockPage = () => {
     })}%)`; // Adds ( %) and formats the number
   };
 
-  const sampleData = [10, 15, 8, 20, 18, 25, 10, 5, 15, 30];
-
-  /*
-  <View style={styles.balanceBox}>
-           <Text style={styles.stockTitle}>{formatCurrency(marketStats.currentPrice)}</Text>
-           <View style={styles.stockSubTitle} >
-              { arrows and text color changes for positive and down for negative}
-              <Image source=
-              { marketStats.changePercent >= 0 ? require('../Assets/Icons/Arrow-Up-Purple.png') : require('../Assets/Icons/Arrow-Down-Purple.png')} 
-              style={styles.stockLiveArrow}
-            />
-            <Text style={[styles.stockSubTitleText, marketStats.changePercent >= 0 ? styles.positive : styles.negative]}>
-            {formatCurrency(marketStats.change)} {formatPercentage(marketStats.changePercent)}</Text>
-            <Text style={styles.stockSubTitleText} >Last Close</Text>
-          </View>
-       </View>
-  */
-
   return (
     <>
       <ScrollView style={styles.container}>
         <View style={styles.stockStats}>
           <StockItemHeader
-            logo={require('../Assets/Images/dude-perfect.png')}
-            name={streamer?.username || 'Streamer'}
+            logo={streamer?.profile_picture_path ? { uri: streamer.profile_picture_path } : require('../Assets/Images/dude-perfect.png')}
+            name={streamer?.display_name || 'Streamer'}
             ticker={streamer?.ticker_name || ''}
             price={price}
             change={trendPercent}
@@ -226,14 +208,8 @@ const StockPage = () => {
           />
         </View>
         {/* Weekly Trend Graph */}
-        <View style={{ alignItems: 'center', marginVertical: 10 }}>
+        <View style={{ alignItems: 'center', marginTop: 10 }}>
           <LineGraph data={weeklyTrendData} />
-          {/* X-axis labels 7 to 0 */}
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginTop: -20 }}>
-            {[7,6,5,4,3,2,1,0].map((d, i) => (
-              <Text key={i} style={{ color: '#fff', fontSize: 12 }}>{d}</Text>
-            ))}
-          </View>
         </View>
         {/* Stock Live value Section */}
         

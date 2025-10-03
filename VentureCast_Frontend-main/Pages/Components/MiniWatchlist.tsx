@@ -48,7 +48,8 @@ const MiniWatchlist = () => {
             Streamers (
               streamer_id,
               username,
-              ticker_name
+              ticker_name,
+              profile_picture_path
             )
           `)
           .eq('user_id', user.id);
@@ -67,7 +68,7 @@ const MiniWatchlist = () => {
               graph: Math.random() > 0.5 ? 
                 require('../../Assets/Graphs/big-positive-graph-1.png') : 
                 require('../../Assets/Graphs/big-negative-graph-1.png'),
-              avatar: defaultAvatar
+              avatar: streamer?.profile_picture_path ? { uri: streamer.profile_picture_path } : defaultAvatar
             };
           });
           

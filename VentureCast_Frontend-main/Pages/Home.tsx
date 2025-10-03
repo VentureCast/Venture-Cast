@@ -2,9 +2,8 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity, Dimensions } from 'react-native';
 import Header from './Components/Header';
 import CategoryBox from './Components/CategoryBox';
-import MiniWatchlist from './Components/MiniWatchlist';
+import MiniStockCard from './Components/MiniStockCard';
 import StockDetailsScreen from './StockDetails';
-import MiniStockScroll from './Components/MiniStockScroll';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { supabase } from '../supabaseClient';
 import { useUser } from '../UserProvider';
@@ -15,19 +14,12 @@ type RootStackParamList = {
   ClipsPage: undefined;
   DepositOption: undefined;
   Discover: undefined;
+  Watchlist: undefined;
 };
-
-const userData = [
-  {id: '1', balance: '229,375.25', moneyChange:'66,378.49', percentChange: '24.65' }
-]
-
-const defaultPercentage = '2.50';
-const defaultGraph = require('../Assets/Graphs/Positive-Graph-1.png');
 
 const screenWidth = Dimensions.get('window').width;
 const numVisible = 3;
 const horizontalPadding = 20; // total horizontal padding (10 left, 10 right)
-const boxHeight = 140; // Adjust as needed for shadow and content
 const boxSpacing = 20; // Increased space between boxes
 const boxWidth = (screenWidth - horizontalPadding * 2 - boxSpacing * (numVisible - 1)) / numVisible;
 
@@ -68,9 +60,9 @@ const VentureCastHome = () => {
         setStreamerStats([]);
         return;
       }
-      // Fetch streamer stats
+      // Fetch streamer prices
       const { data: statsData } = await supabase
-        .from('StreamerStats')
+        .from('StreamerPrice')
         .select('streamer_id, current_price')
         .in('streamer_id', streamerIds);
       setStreamerStats(statsData || []);
@@ -171,16 +163,14 @@ const VentureCastHome = () => {
                 key={category.category_id}
                 style={{
                   width: boxWidth,
-                  height: boxHeight,
+                  height: 100,
                   marginRight: idx === categories.length - 1 ? 0 : boxSpacing,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
                 <CategoryBox
-                  graph={defaultGraph}
                   name={category.name}
-                  percentage={defaultPercentage}
                 />
               </View>
             ))}
@@ -189,16 +179,17 @@ const VentureCastHome = () => {
       )}
 
       {/* Watch List Section */}
-      
+      <TouchableOpacity onPress={() => navigation.navigate('Watchlist')}>
         <View style = {styles.subTitle}>
             <Text style={styles.sectionTitle}>Watchlist</Text>
          {/* need this to be a button that opens up more clips */}
             <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
         </View>
+      </TouchableOpacity>
 
       <View>
         <View style={styles.sectionWatchlist}>
-            <MiniWatchlist />
+            <MiniStockCard type="watchlist" />
         </View>
       </View>
 
@@ -211,7 +202,7 @@ const VentureCastHome = () => {
         </View>
       </TouchableOpacity>
       <View style={styles.sectionWatchlist}>     
-        <MiniStockScroll />
+        <MiniStockCard type="positions" />
       </View>
     </ScrollView>
   </>
