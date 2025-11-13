@@ -1,0 +1,123 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: venturecast-mongodb
+    restart: unless-stopped
+    environment:
+      # MongoDB runs without authentication in development
+      # For production, add authentication via environment variables
+      MONGO_INITDB_DATABASE: venture-cast-backend
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - venturecast-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # Backend Service
+  backend:
+    build:
+      context: ./VentureCast_Backend-main
+      dockerfile: Dockerfile.dev
+    container_name: venturecast-backend
+    restart: unless-stopped
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    env_file:
+      - ./VentureCast_Backend-main/.env  # Uses existing backend .env file
+    environment:
+      # Override MongoDB URI to use Docker network
+      MONGODB_URI: mongodb://mongodb:27017/venture-cast-backend
+      NODE_ENV: development
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./VentureCast_Backend-main:/app
+      - /app/node_modules
+    networks:
+      - venturecast-network
+    command: nodemon --legacy-watch index.js
+
+  # Frontend Service (React Native Metro Bundler)
+  frontend:
+    build:
+      context: ./VentureCast_Frontend-main
+      dockerfile: Dockerfile.dev
+    container_name: venturecast-frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      REACT_NATIVE_PACKAGER_HOSTNAME: 0.0.0.0
+    ports:
+      - "8081:8081"   # Metro bundler
+      - "8097:8097"   # React Native debugger
+      - "19000:19000" # Expo (if using)
+      - "19001:19001" # Expo (if using)
+    volumes:
+      - ./VentureCast_Frontend-main:/app
+      - /app/node_modules
+      - /app/.yarn/cache
+      - /app/.yarn/unplugged
+    networks:
+      - venturecast-network
+    stdin_open: true
+    tty: true
+
+  # Redis for session management (optional but recommended)
+  redis:
+    image: redis:7-alpine
+    container_name: venturecast-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - venturecast-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Nginx Reverse Proxy (optional for production)
+  nginx:
+    image: nginx:alpine
+    container_name: venturecast-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - venturecast-network
+    profiles:
+      - production
+
+networks:
+  venturecast-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+  redis_data:
+    driver: local
