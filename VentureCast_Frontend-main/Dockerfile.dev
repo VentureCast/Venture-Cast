@@ -1,0 +1,33 @@
+# Development Dockerfile for React Native with hot-reload
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    bash
+
+# Copy package files
+COPY package.json yarn.lock ./
+COPY .yarnrc.yml ./
+COPY .yarn ./.yarn
+
+# Enable Yarn Berry
+RUN corepack enable && \
+    corepack prepare yarn@3.6.4 --activate
+
+# Install dependencies
+RUN yarn install
+
+# Expose ports
+EXPOSE 8081
+EXPOSE 8097
+EXPOSE 19000
+EXPOSE 19001
+
+# Start Metro bundler with reset cache option
+CMD ["yarn", "start", "--reset-cache", "--host", "0.0.0.0"]
