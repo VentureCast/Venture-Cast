@@ -9,28 +9,7 @@ RUN apk add --no-cache \
     python3 \
     make \
     g++ \
-    bash \
-    git \
-    openssh
-
-# Install watchman for better file watching on macOS/Linux
-RUN apk add --no-cache --virtual .build-deps \
-    autoconf \
-    automake \
-    libtool \
-    linux-headers \
-    python3-dev && \
-    cd /tmp && \
-    git clone https://github.com/facebook/watchman.git && \
-    cd watchman && \
-    git checkout v2023.08.14.00 && \
-    ./autogen.sh && \
-    ./configure --without-python --without-pcre --enable-lenient && \
-    make && \
-    make install && \
-    cd / && \
-    rm -rf /tmp/watchman && \
-    apk del .build-deps
+    bash
 
 # Copy package files
 COPY package.json yarn.lock ./

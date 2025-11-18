@@ -6,21 +6,34 @@ Welcome to the VentureCast documentation! This folder contains guides and refere
 
 ### Docker & Development
 
-1. **[Docker Setup Guide](./docker-setup.md)** 🚀
-   - Complete guide for setting up Docker
+1. **[Docker Hybrid Setup](./docker-hybrid-setup.md)** ⭐ **RECOMMENDED**
+   - Best approach for development
+   - Backend + databases in Docker, frontend locally
+   - Avoids Yarn PnP/Docker volume conflicts
+   - Fast, reliable development experience
+   - **Start here for quickest setup!**
+
+2. **[Docker Setup Guide](./docker-setup.md)** 🚀
+   - Complete guide for full Docker setup
    - Step-by-step instructions for new developers
    - Development workflow with Docker
    - Database management
    - Adding dependencies
    - Production deployment
 
-2. **[Docker Quick Reference](./docker-quick-reference.md)** ⚡
+3. **[Docker Testing Guide](./docker-testing.md)** 🧪
+   - Test your Docker setup
+   - Automated and manual testing procedures
+   - Health checks and monitoring
+   - Performance testing
+
+4. **[Docker Quick Reference](./docker-quick-reference.md)** ⚡
    - Essential commands cheat sheet
    - Common tasks and shortcuts
    - Quick debugging commands
    - Keep this open while developing!
 
-3. **[Docker Troubleshooting](./docker-troubleshooting.md)** 🔧
+5. **[Docker Troubleshooting](./docker-troubleshooting.md)** 🔧
    - Common problems and solutions
    - Error messages explained
    - Diagnostic commands
@@ -46,11 +59,14 @@ Welcome to the VentureCast documentation! This folder contains guides and refere
 ## 🎯 Quick Links for New Developers
 
 **First time setup?** Start here:
-1. Read [Docker Setup Guide](./docker-setup.md) - Section "Quick Start"
-2. Keep [Docker Quick Reference](./docker-quick-reference.md) handy
-3. If you hit issues, check [Docker Troubleshooting](./docker-troubleshooting.md)
+1. Read [Docker Hybrid Setup](./docker-hybrid-setup.md) - **RECOMMENDED** ⭐
+2. Or read [Docker Setup Guide](./docker-setup.md) - Section "Quick Start" for full Docker setup
+3. Test with [Docker Testing Guide](./docker-testing.md)
+4. Keep [Docker Quick Reference](./docker-quick-reference.md) handy
+5. If you hit issues, check [Docker Troubleshooting](./docker-troubleshooting.md)
 
 **Daily development?**
+- [Docker Hybrid Setup](./docker-hybrid-setup.md) - Section "Daily Workflow" ⭐
 - [Docker Quick Reference](./docker-quick-reference.md) - All commands you need
 - [Docker Setup Guide](./docker-setup.md) - Section "Daily Development Workflow"
 
@@ -87,7 +103,7 @@ Venture-Cast/
 
 ## 🚀 Getting Started
 
-### For New Developers
+### For New Developers (Recommended Hybrid Setup)
 
 1. **Clone the repository**
    ```bash
@@ -95,35 +111,43 @@ Venture-Cast/
    cd Venture-Cast
    ```
 
-2. **Run the setup script**
+2. **Set up backend .env file** (see [docker-hybrid-setup.md](./docker-hybrid-setup.md))
    ```bash
-   ./scripts/docker-setup.sh
+   # Create VentureCast_Backend-main/.env with your API keys
    ```
 
-3. **Start Docker**
+3. **Start backend services in Docker**
    ```bash
-   docker-compose up -d
+   docker-compose up -d backend mongodb redis
    # or
-   make up
+   make dev-backend
    ```
 
-4. **Verify everything is running**
+4. **Start frontend locally** (in a new terminal)
    ```bash
-   docker-compose ps
-   make health
+   cd VentureCast_Frontend-main
+   yarn start
    ```
 
-5. **Check the logs**
+5. **Run the mobile app** (in another terminal)
    ```bash
-   docker-compose logs -f
-   # or
-   make logs
+   cd VentureCast_Frontend-main
+   yarn ios    # or yarn android
    ```
+
+### Alternative: Full Docker Setup
+
+If you prefer to run everything in Docker (may have Yarn PnP issues):
+
+1. Follow steps 1-2 above
+2. Start all services: `docker-compose up -d` or `make up`
+3. Test the setup: `make test-docker`
+4. See [docker-setup.md](./docker-setup.md) for details
 
 ### Access Points
 
 - Backend API: http://localhost:3001
-- Frontend Metro: http://localhost:8081
+- Frontend Metro: http://localhost:8081 (if running in Docker)
 - MongoDB: localhost:27017
 - Redis: localhost:6379
 

@@ -2,6 +2,14 @@
 
 This guide will help you get VentureCast running with Docker in just a few minutes!
 
+> **⚠️ RECOMMENDED APPROACH**: Due to Yarn PnP (Plug'n'Play) complexities with Docker volumes, we recommend a **hybrid setup** for the best development experience:
+> - **Backend, MongoDB, Redis**: Run in Docker ✅
+> - **Frontend (Metro Bundler)**: Run locally ✅
+>
+> See [docker-hybrid-setup.md](docker-hybrid-setup.md) for detailed instructions.
+>
+> This guide shows the full Docker setup, but you may experience frontend container restart issues due to Yarn PnP lockfile conflicts with volume mounts.
+
 ## 📋 Prerequisites
 
 Before you begin, make sure you have:

@@ -19,6 +19,7 @@ help:
 	@echo "  make shell-mongo    - Open MongoDB shell"
 	@echo "  make clean          - Remove all containers, networks, and volumes"
 	@echo "  make test           - Run tests in containers"
+	@echo "  make test-docker    - Test Docker setup and services"
 	@echo "  make init           - Initialize project (copy env files, install deps)"
 
 # Initialize project
@@ -111,6 +112,10 @@ test:
 	docker-compose exec backend npm test
 	@echo "Running frontend tests..."
 	docker-compose exec frontend yarn test
+
+# Test Docker setup
+test-docker:
+	@./scripts/test-docker.sh
 
 # Development helpers
 dev-backend:
