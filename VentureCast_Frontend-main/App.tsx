@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { UserProvider } from './UserProvider';
+import { StripeProvider } from './StripeProvider';
 import 'react-native-url-polyfill/auto';
 
 //COLORS:
@@ -80,6 +81,11 @@ import SellPreview from './Pages/SellPreview';
 import SellStock from './Pages/SellStock';
 import NotificationSettings from './Pages/NotificationSettings';
 import EditPaymentMethod from './Pages/EditPaymentMethod';
+// Stripe integration screens
+import KYCOnboarding from './Pages/KYCOnboarding';
+import AddBankAccount from './Pages/AddBankAccount';
+import DepositScreen from './Pages/DepositScreen';
+import WithdrawScreen from './Pages/WithdrawScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -168,8 +174,9 @@ const HomeTabs = ({navigation}:any) => {
 const App = () => {
   return (
     <UserProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="VentureCast">
+      <StripeProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="VentureCast">
           <Stack.Screen
             name="VentureCast"
             component={VentureCast}
@@ -533,8 +540,29 @@ const App = () => {
           />
           <Stack.Screen
             name="HelpCenter"
-            component={HelpCenter} // Add the info from a discover item 
+            component={HelpCenter} // Add the info from a discover item
             options={{ headerShown: false }} // Hide header for bottom tabs
+          />
+          {/* Stripe Integration Screens */}
+          <Stack.Screen
+            name="KYCOnboarding"
+            component={KYCOnboarding}
+            options={{ headerShown: false, gestureEnabled: false }}
+          />
+          <Stack.Screen
+            name="AddBankAccount"
+            component={AddBankAccount}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="StripeDeposit"
+            component={DepositScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="StripeWithdraw"
+            component={WithdrawScreen}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="StockPage"
@@ -555,8 +583,9 @@ const App = () => {
               ),
             }} // Hide header for bottom tabs
           />
-        </Stack.Navigator>
-      </NavigationContainer>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </StripeProvider>
     </UserProvider>
   );
 };

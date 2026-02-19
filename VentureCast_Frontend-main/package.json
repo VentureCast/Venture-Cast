@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "@react-navigation/stack": "^6.4.1",
+    "@stripe/stripe-react-native": "^0.38.0",
     "@supabase/supabase-js": "^2.47.16",
     "d3-shape": "^3.2.0",
     "expo-image-picker": "^15.0.7",
@@ -38,6 +39,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.2.0",
     "react-native-video": "^6.10.0",
+    "react-native-webview": "^13.6.3",
     "url": "^0.11.4",
     "url-polyfill": "^1.1.12",
     "whatwg-url": "^14.1.0"
