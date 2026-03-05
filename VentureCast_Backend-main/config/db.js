@@ -1,23 +1,43 @@
 const mongoose = require("mongoose");
+const logger = require("../utils/logger");
+
+const MAX_RETRIES = 5;
+let retryCount = 0;
 
 const connectDB = async () => {
     try {
-        // Use environment variable for MongoDB URI, fallback to localhost for non-Docker development
         const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/venture-cast-backend';
 
         await mongoose.connect(mongoUri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
         });
 
-        console.log("MongoDB connected successfully");
-        console.log("Database:", mongoose.connection.name);
+        retryCount = 0;
+        logger.info("MongoDB connected successfully");
+        logger.info(`Database: ${mongoose.connection.name}`);
     } catch (err) {
-        console.error("MongoDB connection error:", err);
-        // Retry connection after 5 seconds for Docker startup timing
-        console.log("Retrying MongoDB connection in 5 seconds...");
-        setTimeout(connectDB, 5000);
+        retryCount++;
+        logger.error("MongoDB connection error:", { error: err.message, attempt: retryCount });
+
+        if (retryCount >= MAX_RETRIES) {
+            logger.error(`Failed to connect after ${MAX_RETRIES} attempts. Exiting.`);
+            process.exit(1);
+        }
+
+        const delay = Math.min(1000 * Math.pow(2, retryCount - 1), 16000);
+        logger.info(`Retrying MongoDB connection in ${delay / 1000}s (attempt ${retryCount}/${MAX_RETRIES})...`);
+        setTimeout(connectDB, delay);
     }
 };
+
+mongoose.connection.on('error', (err) => {
+    logger.error('MongoDB connection error (post-connect):', { error: err.message });
+});
+
+mongoose.connection.on('disconnected', () => {
+    logger.warn('MongoDB disconnected');
+});
 
 module.exports = connectDB;

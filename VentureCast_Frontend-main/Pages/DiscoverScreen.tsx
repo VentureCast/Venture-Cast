@@ -1,25 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity, FlatList, Modal, TextInput} from 'react-native';
-import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import TrendBox from './Components/TrendBox';
 import ClipsElement from './Components/ClipsElement';
 import ClipTrend from './Components/ClipTrend';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { supabase } from '../supabaseClient';
+import api from '../services/api';
 
 type RootStackParamList = {
-  StockPage: undefined; // Do this for all linked pages
+  StockPage: { streamer_id: string };
   Portfolio: undefined;
   ClipsPage: undefined;
 };
-
-
-
-const userData = [
-  {id: '1', balance: '229,375.25', moneyChange:'66,378.49', percentChange: '24.65' }
-]
-
-//category data, should be imported from database
 
 const clipsData = [
   {id: '1', description: 'Most common names in streaming today', name: "Top 50",  image: require('../Assets/Images/Top50.png') },
@@ -34,23 +25,18 @@ const clipsData = [
   {id: '10', description: 'All the biggest aestetic trends', name: "Design", image: require('../Assets/Images/Design.png')},
   ];
 
-
-
 const DiscoverScreen = () => {
-
   const [categories, setCategories] = useState<any[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
       setCategoriesLoading(true);
-      const { data, error } = await supabase
-        .from('categories')
-        .select('id, name');
-      if (error) {
+      try {
+        const data = await api.getCategories();
+        setCategories(data.categories || []);
+      } catch {
         setCategories([]);
-      } else {
-        setCategories(data || []);
       }
       setCategoriesLoading(false);
     };
@@ -62,33 +48,26 @@ const DiscoverScreen = () => {
   const [isSearchModalVisible, setSearchModalVisible] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
 
-// Search handler for streamer usernames
-const handleSearch = async (query: string) => {
-  setSearchQuery(query);
-  if (query.trim()) {
-    setSearchLoading(true);
-    // Fetch matching streamers from Supabase (prefix match)
-    const { data, error } = await supabase
-      .from('Streamers')
-      .select('streamer_id, username, ticker_name')
-      .ilike('username', `${query}%`); // Only usernames starting with query
-    if (error) {
-      setFilteredStreamerData([]);
+  const handleSearch = async (query: string) => {
+    setSearchQuery(query);
+    if (query.trim()) {
+      setSearchLoading(true);
+      try {
+        const data = await api.searchStreamers(query);
+        setFilteredStreamerData(data.streamers || []);
+      } catch {
+        setFilteredStreamerData([]);
+      }
+      setSearchLoading(false);
     } else {
-      setFilteredStreamerData(data || []);
+      setFilteredStreamerData([]);
     }
-    setSearchLoading(false);
-  } else {
-    setFilteredStreamerData([]); // Clear results when query is empty
-  }
-};
+  };
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
   <>
-   {/* balance and header also need to be imported data from user database*/}
-      {/* Search Button */}
     <View style={styles.searchBar}>
       <TouchableOpacity
         style={styles.searchButton}
@@ -107,7 +86,6 @@ const handleSearch = async (query: string) => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.tallModalContent}>
-            {/* Close Button above search bar, top right aligned with search bar */}
             <View style={styles.closeButtonAboveRowRightAligned}>
               <TouchableOpacity
                 style={styles.closeButtonOvalSmall}
@@ -116,7 +94,6 @@ const handleSearch = async (query: string) => {
                 <Text style={styles.closeButtonOvalTextSmall}>Close</Text>
               </TouchableOpacity>
             </View>
-            {/* Search Bar full width */}
             <View style={{ paddingTop: 20, paddingBottom: 20 }}>
               <TextInput
                 style={styles.searchInput}
@@ -125,23 +102,22 @@ const handleSearch = async (query: string) => {
                 onChangeText={handleSearch}
               />
             </View>
-            {/* Results (scrollable) */}
             {searchLoading ? (
               <Text style={{ textAlign: 'center', marginTop: 20 }}>Searching...</Text>
             ) : (
               <FlatList
                 data={filteredStreamerData}
-                keyExtractor={(item) => item.streamer_id}
+                keyExtractor={(item) => item._id}
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     onPress={() => {
                       setSearchModalVisible(false);
-                      navigation.navigate('StockPage', { streamer_id: item.streamer_id });
+                      navigation.navigate('StockPage', { streamer_id: item._id });
                     }}
                   >
                     <View style={{ padding: 12, borderBottomWidth: 1, borderColor: '#eee' }}>
-                      <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.username}</Text>
-                      <Text style={{ color: '#888' }}>{item.ticker_name}</Text>
+                      <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.name}</Text>
+                      <Text style={{ color: '#888' }}>{item.ticker}</Text>
                     </View>
                   </TouchableOpacity>
                 )}
@@ -168,7 +144,7 @@ const handleSearch = async (query: string) => {
             <TrendBox
               key={category.id}
               name={category.name}
-              icon={require('../Assets/Icons/check.png')} // Placeholder icon
+              icon={require('../Assets/Icons/check.png')}
             />
           ))}
         </View>
@@ -189,16 +165,9 @@ const handleSearch = async (query: string) => {
   );
 };
 
-
-// notes for second session:
-// the deposit funds button to the header component
-//
-
 const styles = StyleSheet.create({
-  // search bar
 searchBar: {
   backgroundColor: 'white',
-
 },
 searchButton: {
   margin: 10,
@@ -227,7 +196,7 @@ tallModalContent: {
   backgroundColor: '#FFFFFF',
   borderRadius: 20,
   width: '94%',
-  height: '88%', // nearly full height
+  height: '88%',
   marginTop: '6%',
   marginBottom: '6%',
   padding: 20,
@@ -266,16 +235,15 @@ noResultsText: {
   color: '#F75555',
   marginTop: 20,
 },
- // main page
 container: {
   backgroundColor: '#FFFFFF',
   paddingBottom: 20,
 },
 categoriesContainer: {
   flex: 1,
-  flexDirection: 'row', // Arrange items in rows
-  flexWrap: 'wrap', // Wrap to the next row if needed
-  alignItems: 'center', // Center items vertically
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  alignItems: 'center',
   justifyContent: 'flex-start',
   padding: 20,
 },
@@ -288,15 +256,14 @@ sectionTitle: {
   },
 clipsContainer: {
   flex: 1,
-  flexDirection: 'row', // Arrange items in rows
-  flexWrap: 'wrap', // Wrap to the next row if needed
-  alignItems: 'center', // Center items vertically
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  alignItems: 'center',
   justifyContent: 'flex-start',
   padding: 20,
 },
-// static header
 miniLogo: {
-  width: 20, 
+  width: 20,
   height: 20,
   marginHorizontal: 5,
 },
@@ -319,11 +286,9 @@ miniHeader: {
   width: '100%',
   height: 44,
   padding: 10,
-  paddingLeft: 20, 
+  paddingLeft: 20,
   backgroundColor: '#351560'
 },
-
-  //  SubTitles
 subTitle: {
   flexDirection: 'row',
   justifyContent: 'space-between',
@@ -341,15 +306,11 @@ clipsSubTitle: {
   borderBottomWidth: 1,
   marginHorizontal: 20,
 },
-
-//Watchlist section
 sectionWatchlist: {
   paddingHorizontal: 20,
   paddingVertical: 15,
   flexDirection: 'row',
 },
-
-// Add new styles at the end:
 closeButtonAboveRow: {
   alignItems: 'center',
   marginTop: 10,

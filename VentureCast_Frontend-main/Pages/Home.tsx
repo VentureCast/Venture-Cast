@@ -6,129 +6,78 @@ import MiniWatchlist from './Components/MiniWatchlist';
 import StockDetailsScreen from './StockDetails';
 import MiniStockScroll from './Components/MiniStockScroll';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { supabase } from '../supabaseClient';
 import { useUser } from '../UserProvider';
+import api from '../services/api';
 
 type RootStackParamList = {
-  StockPage: undefined; // Do this for all linked pages
+  StockPage: undefined;
   Portfolio: undefined;
   ClipsPage: undefined;
   DepositOption: undefined;
   Discover: undefined;
 };
 
-const userData = [
-  {id: '1', balance: '229,375.25', moneyChange:'66,378.49', percentChange: '24.65' }
-]
-
 const defaultPercentage = '2.50';
 const defaultGraph = require('../Assets/Graphs/Positive-Graph-1.png');
 
 const screenWidth = Dimensions.get('window').width;
 const numVisible = 3;
-const horizontalPadding = 20; // total horizontal padding (10 left, 10 right)
-const boxHeight = 140; // Adjust as needed for shadow and content
-const boxSpacing = 20; // Increased space between boxes
+const horizontalPadding = 20;
+const boxHeight = 140;
+const boxSpacing = 20;
 const boxWidth = (screenWidth - horizontalPadding * 2 - boxSpacing * (numVisible - 1)) / numVisible;
 
 const VentureCastHome = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { user } = useUser();
+  const { user, token } = useUser();
   const [categories, setCategories] = useState<any[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
-  const [holdings, setHoldings] = useState<any[]>([]);
-  const [streamerStats, setStreamerStats] = useState<any[]>([]);
-  const [userCash, setUserCash] = useState<number>(0);
+  const [portfolioData, setPortfolioData] = useState<any>(null);
+
+  useEffect(() => {
+    if (user && token) {
+      api.setToken(token);
+      api.setUserId(user._id);
+    }
+  }, [user, token]);
 
   useEffect(() => {
     const fetchPortfolioData = async () => {
-      if (!user) return;
-      // Fetch user cash
-      const { data: userData, error: userError } = await supabase
-        .from('Users')
-        .select('cash')
-        .eq('user_id', user.id)
-        .single();
-      if (!userError && userData) {
-        setUserCash(userData.cash || 0);
+      if (!user || !token) return;
+      try {
+        const data = await api.getPortfolio(user._id);
+        setPortfolioData(data);
+      } catch {
+        setPortfolioData(null);
       }
-      // Fetch holdings
-      const { data: holdingsData, error: holdingsError } = await supabase
-        .from('Holdings')
-        .select('*')
-        .eq('user_id', user.id);
-      if (holdingsError || !holdingsData) {
-        setHoldings([]);
-        setStreamerStats([]);
-        return;
-      }
-      setHoldings(holdingsData);
-      const streamerIds = [...new Set(holdingsData.map(h => h.streamer_id))];
-      if (streamerIds.length === 0) {
-        setStreamerStats([]);
-        return;
-      }
-      // Fetch streamer stats
-      const { data: statsData } = await supabase
-        .from('StreamerStats')
-        .select('streamer_id, current_price')
-        .in('streamer_id', streamerIds);
-      setStreamerStats(statsData || []);
     };
     fetchPortfolioData();
-  }, [user]);
+  }, [user, token]);
 
-  const statsMap = useMemo(() => {
-    return Object.fromEntries(streamerStats.map(s => [s.streamer_id, s]));
-  }, [streamerStats]);
+  const totalAccountValue = portfolioData?.summary?.totalAccountValue || 0;
+  const costBasis = portfolioData?.summary?.totalCost || 0;
+  const cashBalance = portfolioData?.summary?.cashBalance || 0;
 
-  // Calculate total account value (cash + equity)
-  const totalAccountValue = useMemo(() => {
-    let totalCurrentValue = 0;
-    holdings.forEach(h => {
-      const stats = statsMap[h.streamer_id] || {};
-      const currentPrice = stats.current_price || 100.00;
-      const shares = h.shares_owned || 0;
-      totalCurrentValue += currentPrice * shares;
-    });
-    return userCash + totalCurrentValue;
-  }, [holdings, statsMap, userCash]);
-
-  // Calculate cost basis (cash + sum of average_cost * shares_owned)
-  const costBasis = useMemo(() => {
-    let totalCost = 0;
-    holdings.forEach(h => {
-      const shares = h.shares_owned || 0;
-      const averageCost = h.average_cost || 100.00;
-      totalCost += averageCost * shares;
-    });
-    return userCash + totalCost;
-  }, [holdings, userCash]);
-
-  // Calculate trend percent
   const trendPercent = useMemo(() => {
-    if (costBasis === 0) return '0.00';
-    const trend = ((totalAccountValue / costBasis) - 1) * 100;
+    const totalCostWithCash = costBasis + cashBalance;
+    if (totalCostWithCash === 0) return '0.00';
+    const trend = ((totalAccountValue / totalCostWithCash) - 1) * 100;
     return trend.toFixed(2);
-  }, [totalAccountValue, costBasis]);
+  }, [totalAccountValue, costBasis, cashBalance]);
 
-  // Calculate money change (current account value - cost basis)
   const moneyChange = useMemo(() => {
-    const diff = totalAccountValue - costBasis;
+    const diff = (portfolioData?.summary?.totalGainLoss) || 0;
     return diff.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }, [totalAccountValue, costBasis]);
+  }, [portfolioData]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       setCategoriesLoading(true);
-      const { data, error } = await supabase
-        .from('Categories')
-        .select('category_id, name');
-      console.log('Fetched categories:', data, 'Error:', error); // Debug output
-      if (error) {
+      try {
+        const data = await api.getCategories();
+        setCategories(data.categories || []);
+      } catch {
         setCategories([]);
-      } else {
-        setCategories(data || []);
       }
       setCategoriesLoading(false);
     };
@@ -137,20 +86,18 @@ const VentureCastHome = () => {
 
   return (
   <>
-   {/* balance and header also need to be imported data from user database*/}
     <ScrollView contentContainerStyle={styles.container}>
       <Header
-        key={user?.id || 'header'}
+        key={user?._id || 'header'}
         moneyChange={moneyChange}
         balance={totalAccountValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         percentChange={trendPercent}
       />
-      
-      {/* Categories Section  graphs need to become functions of change of price(fund) over time*/}
-      <TouchableOpacity onPress={() => navigation.navigate('Discover')}> 
-        <View style = {styles.subTitle}>
+
+      {/* Categories Section */}
+      <TouchableOpacity onPress={() => navigation.navigate('Discover')}>
+        <View style={styles.subTitle}>
               <Text style={styles.sectionTitle}>Categories</Text>
-          {/* need this to be a button that opens up more clips */}
               <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
           </View>
       </TouchableOpacity>
@@ -168,7 +115,7 @@ const VentureCastHome = () => {
           <View style={styles.categoriesContainer}>
             {categories.map((category, idx) => (
               <View
-                key={category.category_id}
+                key={category.id}
                 style={{
                   width: boxWidth,
                   height: boxHeight,
@@ -189,10 +136,8 @@ const VentureCastHome = () => {
       )}
 
       {/* Watch List Section */}
-      
-        <View style = {styles.subTitle}>
+        <View style={styles.subTitle}>
             <Text style={styles.sectionTitle}>Watchlist</Text>
-         {/* need this to be a button that opens up more clips */}
             <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
         </View>
 
@@ -203,25 +148,19 @@ const VentureCastHome = () => {
       </View>
 
       {/* My Stocks Section */}
-      <TouchableOpacity onPress={() => navigation.navigate('Portfolio')}> 
-        <View style = {styles.subTitle}>
+      <TouchableOpacity onPress={() => navigation.navigate('Portfolio')}>
+        <View style={styles.subTitle}>
               <Text style={styles.sectionTitle}>My Positions</Text>
-          {/* need this to be a button that opens up more clips */}
               <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
         </View>
       </TouchableOpacity>
-      <View style={styles.sectionWatchlist}>     
+      <View style={styles.sectionWatchlist}>
         <MiniStockScroll />
       </View>
     </ScrollView>
   </>
   );
 };
-
-
-// notes for second session:
-// the deposit funds button to the header component
-//
 
 const styles = StyleSheet.create({
   container: {
@@ -240,10 +179,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontFamily: 'Urbanist-Regular',
     },
-
-// static header
 miniLogo: {
-  width: 20, 
+  width: 20,
   height: 20,
   marginHorizontal: 5,
 },
@@ -266,11 +203,9 @@ miniHeader: {
   width: '100%',
   height: 44,
   padding: 10,
-  paddingLeft: 20, 
+  paddingLeft: 20,
   backgroundColor: '#351560'
 },
-  //  SubTitles
-
   subTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -288,18 +223,14 @@ miniHeader: {
     borderBottomWidth: 1,
     marginHorizontal: 20,
   },
-
-  //Watchlist section
-
   sectionWatchlist: {
     paddingHorizontal: 20,
     paddingVertical: 15,
     flexDirection: 'row',
   },
-  // idek what is going on, jk i do
   temp: {
     height: 50,
-  } 
+  }
 });
 
 export default VentureCastHome;

@@ -1,11 +1,11 @@
 // components/MiniStockScroll.tsx
-//this appears only on the homepage (as of now)
+// This appears only on the homepage (as of now)
 import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import formatCurrency from './formatCurrency';
 import { useUser } from '../../UserProvider';
-import { supabase } from '../../supabaseClient';
+import api from '../../services/api';
 
 type RootStackParamList = {
   StockPage: { streamer_id: string };
@@ -25,83 +25,49 @@ const defaultAvatars = [
 
 const MiniStockScroll = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { user } = useUser();
-  const [holdings, setHoldings] = useState<any[]>([]);
-  const [streamers, setStreamers] = useState<any[]>([]);
-  const [streamerStats, setStreamerStats] = useState<any[]>([]);
+  const { user, token } = useUser();
+  const [portfolioData, setPortfolioData] = useState<any>(null);
+
+  useEffect(() => {
+    if (user && token) {
+      api.setToken(token);
+      api.setUserId(user._id);
+    }
+  }, [user, token]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!user) return;
-      // Fetch holdings
-      const { data: holdingsData, error: holdingsError } = await supabase
-        .from('Holdings')
-        .select('*')
-        .eq('user_id', user.id);
-      if (holdingsError || !holdingsData) {
-        setHoldings([]);
-        setStreamers([]);
-        setStreamerStats([]);
-        return;
+      if (!user || !token) return;
+      try {
+        const data = await api.getPortfolio(user._id);
+        setPortfolioData(data);
+      } catch {
+        setPortfolioData(null);
       }
-      setHoldings(holdingsData);
-      const streamerIds = [...new Set(holdingsData.map(h => h.streamer_id))];
-      if (streamerIds.length === 0) {
-        setStreamers([]);
-        setStreamerStats([]);
-        return;
-      }
-      // Fetch streamers
-      const { data: streamersData } = await supabase
-        .from('Streamers')
-        .select('streamer_id, username, ticker_name')
-        .in('streamer_id', streamerIds);
-      setStreamers(streamersData || []);
-      // Fetch streamer stats
-      const { data: statsData } = await supabase
-        .from('StreamerStats')
-        .select('streamer_id, current_price, day_1_price')
-        .in('streamer_id', streamerIds);
-      setStreamerStats(statsData || []);
     };
     fetchData();
-  }, [user]);
+  }, [user, token]);
 
-  const streamerMap = useMemo(() => {
-    return Object.fromEntries(streamers.map(s => [s.streamer_id, s]));
-  }, [streamers]);
-  const statsMap = useMemo(() => {
-    return Object.fromEntries(streamerStats.map(s => [s.streamer_id, s]));
-  }, [streamerStats]);
-
-  // Build stock data for display
   const stockScrollData = useMemo(() => {
-    return holdings.map((h, idx) => {
-      const streamer = streamerMap[h.streamer_id] || {};
-      const stats = statsMap[h.streamer_id] || {};
-      const price = stats.current_price || 100.00;
-      const day1Price = stats.day_1_price || 100.00;
-      const shares = h.shares_owned || 0;
-      const trendPercent = Number(((price / day1Price) - 1) * 100).toFixed(2);
-      // Use dummy graph and avatar, cycle through defaults
+    if (!portfolioData?.portfolio) return [];
+    return portfolioData.portfolio.map((item: any, idx: number) => {
+      const gainPercent = Number(item.gainLossPercent || 0);
       const graph = defaultGraphs[idx % defaultGraphs.length];
       const avatar = defaultAvatars[idx % defaultAvatars.length];
       return {
-        id: h.portfolio_id || idx,
-        streamer_id: h.streamer_id,
-        name: streamer.ticker_name || 'DUMMY',
-        ticker: streamer.ticker_name || 'DUMMY',
-        price: price,
-        percentage: Number(trendPercent),
+        id: item.streamer?._id || String(idx),
+        streamer_id: item.streamer?._id || '',
+        name: item.streamer?.name?.substring(0, 4).toUpperCase() || 'N/A',
+        ticker: item.streamer?.name?.substring(0, 4).toUpperCase() || 'N/A',
+        price: item.currentPrice || 0,
+        percentage: gainPercent,
         graph,
         avatar,
-        equityValue: price * shares,
+        equityValue: item.currentValue || 0,
       };
     })
-    // Sort by equity value descending
-    .sort((a, b) => b.equityValue - a.equityValue);
-    // Show all positions (no slice)
-  }, [holdings, streamerMap, statsMap]);
+    .sort((a: any, b: any) => b.equityValue - a.equityValue);
+  }, [portfolioData]);
 
   const formatPercentage = (number: number): string => {
     return `${number.toLocaleString('en-US')}%`;
@@ -116,12 +82,12 @@ const MiniStockScroll = () => {
         <View style={styles.container}>
           <View style={styles.miniStockScroll}>
             <Image source={item.avatar} style={styles.stockAvatar} />
-            <View style = {styles.infoContainer}>
-              <View style = {styles.textContainer}>
+            <View style={styles.infoContainer}>
+              <View style={styles.textContainer}>
                 <Text style={styles.stockText}>{item.name}</Text>
               </View>
               <View style={styles.numberContainer}>
-                <Text style={[styles.stockPercentage, 
+                <Text style={[styles.stockPercentage,
                 item.percentage >= 0 ? styles.positive : styles.negative]}
                 >{formatPercentage(item.percentage)}</Text>
                 <Text style={styles.stockPrice}>{formatCurrency(item.price)}</Text>
@@ -140,18 +106,14 @@ const MiniStockScroll = () => {
   );
 };
 
-// session 2:
-//  then duplicate it for the next stock section
-
 const styles = StyleSheet.create({
-
   shadowContainer: {
-    borderRadius: 20, // Ensure it matches the inner container's borderRadius
-    shadowColor: '#351560', 
+    borderRadius: 20,
+    shadowColor: '#351560',
     shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 2 }, // Moves shadow downward
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
-    elevation: 5, // For Android
+    elevation: 5,
   },
   container: {
     flexDirection: 'column',
@@ -159,8 +121,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.1,
     borderColor: '#351560',
     marginRight: 15,
-    backgroundColor: '#fff', // Ensures shadow doesn't affect internals
-    overflow: 'hidden', // Prevents shadow inside the border
+    backgroundColor: '#fff',
+    overflow: 'hidden',
   },
   miniStockScroll: {
     flexDirection: 'row',

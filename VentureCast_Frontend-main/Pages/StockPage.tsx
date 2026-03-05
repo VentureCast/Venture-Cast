@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import MarketStat from './Components/MarketStat';
 import LineGraph from './Components/LineGraph';
 import MiniStockScroll from './Components/MiniStockScroll';
@@ -11,60 +10,57 @@ import StockItemHeader from './Components/StockItemHeader';
 import { Button } from 'react-native-paper';
 import formatCurrency from './Components/formatCurrency';
 import { useNavigation, NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
-import { supabase } from '../supabaseClient';
 import { useUser } from '../UserProvider';
+import api from '../services/api';
 
 type RootStackParamList = {
   StockPage: { streamer_id: string };
   Portfolio: undefined;
   ClipsPage: undefined;
-  BuyInter: undefined;
-  SellInter: undefined;
+  BuyInter: { streamerId: string; stockName: string; stockLongName: string; stockCost: number };
+  SellInter: { streamerId: string; stockName: string; stockLongName: string; stockCost: number; sharesOwned: number };
 };
-//import { Section } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
-
-//stock details : shares held, Cost per Share, Equity and Total return in a 2x2 grid 
-
 
 const StockDetail = ({ name, value, isPercent, image }: any) => {
-
   return (
       <View style={styles.accountDetail}>
         <Image source={image} style={styles.detailLogo} />
         <View style={styles.accountDetailContainer}>
           <Text style={styles.detailName}>{name}</Text>
           <Text style={styles.detailValue}>{value}</Text>
-        </View> 
+        </View>
       </View>
   );
 };
-
-// Reusable component for Line Graph (Placeholder for now)
-//moved to a component --> LineGraph
 
 // data for viewer graph
 const viewerStats = [
   {id:'1', quarter: 'Q1', fiscalYear: 'FY24', valueOne: -0.22, valueTwo: -0.48, colorOne: '#F75555', colorTwo: '#C2B8CF', margin: 60},
   {id:'2', quarter: 'Q2', fiscalYear: 'FY24', valueOne: -0.24, valueTwo: -0.48, colorOne: '#12D18E', colorTwo: '#C2B8CF', margin: 60},
-  {id:'3', quarter: 'Q3', fiscalYear: 'FY24', valueOne: +0.24, valueTwo: -0.20, colorOne: '#12D18E', colorTwo: '#C2B8CF', margin: 120}, 
+  {id:'3', quarter: 'Q3', fiscalYear: 'FY24', valueOne: +0.24, valueTwo: -0.20, colorOne: '#12D18E', colorTwo: '#C2B8CF', margin: 120},
   {id:'4', quarter: 'Q4', fiscalYear: 'FY24', valueOne: -0.65, valueTwo: -0.90, colorOne: '#F75555', colorTwo: '#C2B8CF', margin: 50},
   {id:'5', quarter: 'Q1', fiscalYear: 'FY25', valueOne: -0.85, valueTwo: -1.05, colorOne: '#F75555', colorTwo: '#C2B8CF', margin: 20},
 ];
-
-// Portfolio screen starts
 
 const StockPage = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'StockPage'>>();
   const streamerId = route.params?.streamer_id;
-  const { user } = useUser();
+  const { user, token } = useUser();
 
   const [streamer, setStreamer] = useState<any>(null);
-  const [stats, setStats] = useState<any>(null);
+  const [shareInfo, setShareInfo] = useState<any>(null);
   const [holding, setHolding] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [timeoutReached, setTimeoutReached] = useState(false);
+
+  useEffect(() => {
+    if (user && token) {
+      api.setToken(token);
+      api.setUserId(user._id);
+    }
+  }, [user, token]);
 
   useEffect(() => {
     if (!streamerId || !user) {
@@ -77,43 +73,37 @@ const StockPage = () => {
     const timeout = setTimeout(() => setTimeoutReached(true), 8000);
     const fetchData = async () => {
       setLoading(true);
-      // Fetch streamer info
-      const { data: streamerData, error: streamerError } = await supabase
-        .from('Streamers')
-        .select('streamer_id, username, ticker_name')
-        .eq('streamer_id', streamerId)
-        .single();
-      if (streamerError || !streamerData) {
-        setError('Streamer not found.');
-        setLoading(false);
-        clearTimeout(timeout);
-        return;
-      }
-      setStreamer(streamerData);
-      // Fetch streamer stats
-      const { data: statsData, error: statsError } = await supabase
-        .from('StreamerStats')
-        .select('streamer_id, current_price, day_1_price, day_2_price, day_3_price, day_4_price, day_5_price, day_6_price, day_7_price')
-        .eq('streamer_id', streamerId)
-        .single();
-      if (statsError || !statsData) {
-        setError('Streamer stats not found.');
-        setLoading(false);
-        clearTimeout(timeout);
-        return;
-      }
-      setStats(statsData);
-      // Fetch holding for this user and streamer
-      const { data: holdingData, error: holdingError } = await supabase
-        .from('Holdings')
-        .select('average_cost, shares_owned')
-        .eq('streamer_id', streamerId)
-        .eq('user_id', user.id)
-        .single();
-      if (holdingError) {
-        setHolding(null);
-      } else {
-        setHolding(holdingData);
+      try {
+        // Fetch streamer info
+        const streamerData = await api.getStreamer(streamerId);
+        if (!streamerData) {
+          setError('Streamer not found.');
+          setLoading(false);
+          clearTimeout(timeout);
+          return;
+        }
+        setStreamer(streamerData);
+
+        // Fetch share info
+        try {
+          const shareData = await api.getShareInfo(streamerId);
+          setShareInfo(shareData);
+        } catch {
+          setShareInfo(null);
+        }
+
+        // Fetch user's holding for this streamer from portfolio
+        try {
+          const portfolioData = await api.getPortfolio(user._id);
+          const userHolding = portfolioData.portfolio.find(
+            (p: any) => p.streamer?._id === streamerId
+          );
+          setHolding(userHolding || null);
+        } catch {
+          setHolding(null);
+        }
+      } catch (err: any) {
+        setError(err.message || 'Failed to load data.');
       }
       setLoading(false);
       clearTimeout(timeout);
@@ -122,36 +112,22 @@ const StockPage = () => {
     return () => clearTimeout(timeout);
   }, [streamerId, user]);
 
-  const price = stats?.current_price || 100.00;
-  const day1Price = stats?.day_1_price || 100.00;
+  const price = shareInfo?.sharePrice || 0;
   const trendPercent = useMemo(() => {
-    if (!day1Price) return '0.00';
-    return Number(((price / day1Price - 1) * 100).toFixed(2));
-  }, [price, day1Price]);
+    return '0.00'; // Price history not yet available from backend
+  }, [price]);
 
-  const sharesHeld = holding?.shares_owned || 0;
-  const purchasePrice = holding?.average_cost || 0;
+  const sharesHeld = holding?.sharesOwned || 0;
+  const purchasePrice = holding?.averageCost || 0;
   const holdingsValue = price * sharesHeld;
   const totalReturn = holdingsValue - (sharesHeld * purchasePrice);
 
-  // Prepare weekly trend data for the graph
+  // Placeholder weekly trend data for the graph
   const weeklyTrendData = useMemo(() => {
-    if (!stats) return Array(8).fill(0);
-    // Collect all prices, fallback to current_price if missing
-    const prices = [
-      stats.day_7_price,
-      stats.day_6_price,
-      stats.day_5_price,
-      stats.day_4_price,
-      stats.day_3_price,
-      stats.day_2_price,
-      stats.day_1_price,
-      stats.current_price,
-    ].map(x => (x !== undefined && x !== null ? Number(x) : Number(stats.current_price) || 0));
-    // Ensure length 8
-    while (prices.length < 8) prices.unshift(prices[0]);
-    return prices;
-  }, [stats]);
+    if (!price) return Array(8).fill(0);
+    // Generate slight variations around current price for visual display
+    return Array(8).fill(price).map((p, i) => p * (0.97 + Math.random() * 0.06));
+  }, [price]);
 
   if (!streamerId || !user) {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>No streamer or user selected.</Text></View>;
@@ -166,51 +142,28 @@ const StockPage = () => {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Loading...</Text></View>;
   }
 
-  // Sample data for stock positions
-  const userHoldings = {totalReturn: 1946.75, equity: 22935.46 , costAtBuy: 73.86, shares: 284.17, targetPrice: 117.25, estimatedReturn: 65.20, };
-
   const marketStats = {
-    currentPrice: 80.71, changePercent: 9.27, change: 6.85, priceER: 0.5, 
-    sharesOutstanding: 2789786, viewPerShare: 1.43, yearHigh: 85.45, yearLow: 69.29, 
-    
+    currentPrice: price, changePercent: 0, change: 0, priceER: 0.5,
+    sharesOutstanding: shareInfo?.totalShares || 0, viewPerShare: 1.43, yearHigh: price * 1.1, yearLow: price * 0.9,
   };
 
-  // use this from here on out because we want the data to be raw numbers, then transformed here.
   const formatNumber = (number: number, decimals: number = 2): string => {
     return number.toLocaleString('en-US', {
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals,
-    }); // Formats the number with commas
+    });
   };
 
   const formatSimpleNumber = (number: number): string => {
-    return number.toLocaleString('en-US'); // Formats the number with commas
+    return number.toLocaleString('en-US');
   };
 
   const formatPercentage = (number: number, decimals: number = 2): string => {
     return `(${number.toLocaleString('en-US', {
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals,
-    })}%)`; // Adds ( %) and formats the number
+    })}%)`;
   };
-
-  const sampleData = [10, 15, 8, 20, 18, 25, 10, 5, 15, 30];
-
-  /*
-  <View style={styles.balanceBox}>
-           <Text style={styles.stockTitle}>{formatCurrency(marketStats.currentPrice)}</Text>
-           <View style={styles.stockSubTitle} >
-              { arrows and text color changes for positive and down for negative}
-              <Image source=
-              { marketStats.changePercent >= 0 ? require('../Assets/Icons/Arrow-Up-Purple.png') : require('../Assets/Icons/Arrow-Down-Purple.png')} 
-              style={styles.stockLiveArrow}
-            />
-            <Text style={[styles.stockSubTitleText, marketStats.changePercent >= 0 ? styles.positive : styles.negative]}>
-            {formatCurrency(marketStats.change)} {formatPercentage(marketStats.changePercent)}</Text>
-            <Text style={styles.stockSubTitleText} >Last Close</Text>
-          </View>
-       </View>
-  */
 
   return (
     <>
@@ -218,8 +171,8 @@ const StockPage = () => {
         <View style={styles.stockStats}>
           <StockItemHeader
             logo={require('../Assets/Images/dude-perfect.png')}
-            name={streamer?.username || 'Streamer'}
-            ticker={streamer?.ticker_name || ''}
+            name={streamer?.name || 'Streamer'}
+            ticker={streamer?.ticker || ''}
             price={price}
             change={trendPercent}
             changePercent={trendPercent}
@@ -228,31 +181,39 @@ const StockPage = () => {
         {/* Weekly Trend Graph */}
         <View style={{ alignItems: 'center', marginVertical: 10 }}>
           <LineGraph data={weeklyTrendData} />
-          {/* X-axis labels 7 to 0 */}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginTop: -20 }}>
             {[7,6,5,4,3,2,1,0].map((d, i) => (
               <Text key={i} style={{ color: '#fff', fontSize: 12 }}>{d}</Text>
             ))}
           </View>
         </View>
-        {/* Stock Live value Section */}
-        
 
-        {/* Buy/Sell buttons -- > want this to take you to but the specific stock (auto fill ticker option*/}
+        {/* Buy/Sell buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity  onPress={()=> {navigation.navigate('BuyInter')}}>
+          <TouchableOpacity onPress={() => navigation.navigate('BuyInter', {
+            streamerId,
+            stockName: streamer?.ticker || '',
+            stockLongName: streamer?.name || '',
+            stockCost: price,
+          })}>
             <View style={styles.buyButton}>
               <Text style={styles.buyButtonText}>Buy</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity  onPress={()=> {navigation.navigate('SellInter')}}>
+          <TouchableOpacity onPress={() => navigation.navigate('SellInter', {
+            streamerId,
+            stockName: streamer?.ticker || '',
+            stockLongName: streamer?.name || '',
+            stockCost: price,
+            sharesOwned: sharesHeld,
+          })}>
             <View style={styles.sellButton}>
               <Text style={styles.sellButtonText}>Sell</Text>
             </View>
           </TouchableOpacity>
         </View>
 
-          {/* My Position section */}
+        {/* My Position section */}
         <View style={styles.stockSummary}>
           <Text style={styles.sectionTitle}>My Position</Text>
         </View>
@@ -283,61 +244,61 @@ const StockPage = () => {
           />
         </View>
 
-          {/* Market Stats Section */}
+        {/* Market Stats Section */}
         <View style={styles.marketStats}>
           <Text style={styles.sectionTitle}>Market Statistics</Text>
         </View>
-        <MarketStat   
+        <MarketStat
           title='Price-Earnings Ratio'
           description={formatNumber(marketStats.priceER)}
           icon={require('../Assets/Icons/Price-EarningsRatio.png')}
         />
-        <MarketStat   
+        <MarketStat
           title='Shares Outstanding'
-          description={formatSimpleNumber(marketStats.sharesOutstanding)} // format simple number function adds commas
+          description={formatSimpleNumber(marketStats.sharesOutstanding)}
           icon={require('../Assets/Icons/SharesOutstanding.png')}
         />
-        <MarketStat   
+        <MarketStat
           title='Subscribers Per Share'
           description={formatNumber(marketStats.viewPerShare)}
           icon={require('../Assets/Icons/ViewPerShare.png')}
         />
-        <MarketStat   
+        <MarketStat
           title='1 Year High'
           description={formatCurrency(marketStats.yearHigh)}
           icon={require('../Assets/Icons/YearHigh.png')}
         />
-        <MarketStat   
+        <MarketStat
           title='1 Year Low'
           description={formatCurrency(marketStats.yearLow)}
           icon={require('../Assets/Icons/YearLow.png')}
         />
 
-          {/* Experts Section */}
+        {/* Experts Section */}
         <View style={styles.miniStockScroll}>
           <View style={styles.stockTitleRow}>
             <Text style={styles.sectionTitle}>What the experts say</Text>
           </View>
           <Text style={styles.sectionSubTitle}>VentureCast Analyst Rating</Text>
-          <View  style={styles.expertsContainer}>
+          <View style={styles.expertsContainer}>
             <Image source={require('../Assets/Icons/BUY.png')} style={styles.bigBuy} />
             <View style={styles.dataColumn}>
               <View style={styles.graphContainer}>
-                <View style = {styles.emptyGraph}>
+                <View style={styles.emptyGraph}>
                   <View style={styles.buyGraph}></View>
                 </View>
                 <Text style={styles.buyText}>70%</Text>
                 <Text style={styles.buyText}>Buy</Text>
               </View>
               <View style={styles.graphContainer}>
-                <View style = {styles.emptyGraph}>
+                <View style={styles.emptyGraph}>
                   <View style={styles.holdGraph}></View>
                 </View>
                 <Text style={styles.holdText}>25%</Text>
                 <Text style={styles.holdText}>Hold</Text>
               </View>
               <View style={styles.graphContainer}>
-                <View style = {styles.emptyGraph}>
+                <View style={styles.emptyGraph}>
                   <View style={styles.sellGraph}></View>
                 </View>
                 <Text style={styles.sellText}>5%</Text>
@@ -348,29 +309,30 @@ const StockPage = () => {
         </View>
         <View style={styles.accountGrid}>
           <StockDetail
-            image={ require('../Assets/Icons/TargetPrice.png')}
-            name= 'Target Price'
-            value={formatCurrency(userHoldings.targetPrice)}
-            isPercent = {false}
+            image={require('../Assets/Icons/TargetPrice.png')}
+            name='Target Price'
+            value={formatCurrency(price * 1.15)}
+            isPercent={false}
           />
           <View style={styles.accountDetail}>
             <Image source={require('../Assets/Icons/EstimatedReturn.png')} style={styles.detailLogo} />
             <View style={styles.accountDetailContainer}>
               <Text style={styles.detailName}>Est. Return</Text>
-              <Text style={[styles.detailValue, userHoldings.estimatedReturn >= 0 ? styles.positive : styles.negative]}
-              >{formatPercentage(userHoldings.estimatedReturn)}</Text>
-            </View> 
+              <Text style={[styles.detailValue, styles.positive]}>
+                {formatPercentage(15.0)}
+              </Text>
+            </View>
           </View>
         </View>
 
-          {/* Viewers Per Share Section */}
+        {/* Viewers Per Share Section */}
         <View style={styles.marketStats}>
           <Text style={styles.sectionTitle}>Subscribers per share</Text>
         </View>
         <View>
           <View style={styles.viewerContainer}>
             {viewerStats.map(viewer => (
-            <ViewerPerShareGraph 
+            <ViewerPerShareGraph
               key={viewer.id}
               quarter={viewer.quarter}
               fiscalYear={viewer.fiscalYear}
@@ -386,47 +348,6 @@ const StockPage = () => {
         <View style={styles.sectionBaseline}>
           <Text style={styles.sectionSubTitle}>The creator reported results on Febuary 25, 2025 and missed market expectations.</Text>
         </View>
-
-        {/* News, people also bought, and clips Section */}
-
-        {/* <TouchableOpacity onPress={() => navigation.navigate('ClipsPage')}>
-          <View style = {styles.clipsSubTitle}>
-            <Text style={styles.sectionTitle}>News</Text>
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
-          </View>
-        </TouchableOpacity>
-        <NewsItem
-          time= "1 day ago"
-          title= 'Forbes'
-          headline='Twitch Roundup: PewDiePie Earnings, Katy Perry Earnings, Dude Perfect Earnings, And ...'
-        />
-        <NewsItem
-          time= "2 days ago"
-          title= 'Seeking Alpha'
-          headline='Own The Poll Booths'
-        />
-        <NewsItem
-          time= "2 days ago"
-          title= 'The Motley Fool'
-          headline='Kathie Wood Has Abandoned Dude Perfect -- Should You Follow Her Lead?'
-        />
-        <Button style={styles.showMoreButton}>Show More</Button>
-
-        <View style={styles.miniStockScroll}>
-          <View style={styles.stockTitleRow}>
-            <Text style={styles.sectionTitle}>People also bought</Text>
-          </View>
-          <MiniStockScroll />
-        </View>
-
-        <ClipsElement 
-          title= '#TrickShot'
-          subTitle='Trending Hashtag'
-          icon={require('../Assets/Icons/Play.png')}
-          views='543.32'
-        /> */}
-
-
       </ScrollView>
     </>
   );
@@ -448,9 +369,6 @@ const styles = StyleSheet.create({
     height: 300,
     marginBottom: 10,
   },
-
-  // the user balance
-
   stockTitle: {
     fontFamily: 'Urbanist-Regular',
     fontSize: 40,
@@ -473,23 +391,19 @@ const styles = StyleSheet.create({
   balanceBox: {
     width: 382,
     height: 72,
-    //backgroundColor: '#FAFAFA',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 24,
     marginTop: 20,
     marginBottom: 20,
     marginLeft: 10,
-    //borderColor: '#EEEEEE',
-    //borderWidth: 1,
   },
-  // buy button:
   buttonContainer: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: 10,
-    marginTop: 10, 
+    marginTop: 10,
     marginBottom: 20,
   },
   buyButton: {
@@ -524,19 +438,17 @@ const styles = StyleSheet.create({
     fontFamily: 'urbanist',
     textAlign: 'center',
   },
-// Stock Holdings info section
-
   accountGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap', // Wrap items to the next row
-    justifyContent: 'space-between', // Even spacing between items
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
     paddingRight: 0,
     paddingLeft: 0,
     marginLeft: 8,
   },
   accountText: {
     fontSize: 16,
-    color: '#6c757d',    
+    color: '#6c757d',
     fontFamily: 'Urbanist-Regular',
   },
   accountTextChange: {
@@ -551,7 +463,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   detailLogo: {
-    width: 60, 
+    width: 60,
     height: 60,
     marginRight: 8,
   },
@@ -569,16 +481,13 @@ const styles = StyleSheet.create({
   accountDetailContainer: {
     flexDirection: 'column',
     alignItems: 'flex-start',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     width: 109,
     height: 53,
   },
-// market stats
   marketStats: {
     margin: 20,
   },
-// People also bought section
-
   stockTitleRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -591,7 +500,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginBottom: 20,
     marginRight: 20,
-    marginTop:20,   
+    marginTop:20,
   },
   sectionTitle: {
     alignContent: 'flex-start',
@@ -607,18 +516,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontFamily: 'Urbanist-Regular',
   },
-    //stock items
   positive: {
     color: '#12D18E',
   },
   negative: {
     color: '#F75555',
   },
-
-  // graph; yet to be completed
-
-
-  // section title format (with arrow)
   rightArrow: {
     justifyContent: 'flex-end',
   },
@@ -629,9 +532,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#e0e0e0',
   },
-
-  // experts section
-
   expertsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -643,10 +543,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   dataColumn: {
-
   },
   graphContainer: {
-    //color: '#351560'
     marginVertical: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -654,26 +552,26 @@ const styles = StyleSheet.create({
   },
   emptyGraph: {
     backgroundColor: '#EEE',
-    width:  160, 
+    width:  160,
     height: 8,
     borderRadius: 20,
     marginRight: 10,
   },
   buyGraph: {
     backgroundColor: '#351560',
-    width: 112, 
+    width: 112,
     height: 8,
     borderRadius: 20,
   },
   holdGraph: {
     backgroundColor: '#FFC107',
-    width: 40, 
+    width: 40,
     height: 8,
     borderRadius: 20,
   },
   sellGraph: {
     backgroundColor: '#F75555',
-    width: 8, 
+    width: 8,
     height: 8,
     borderRadius: 20,
   },
@@ -695,8 +593,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginHorizontal: 10,
   },
-
-  // viewers per share
   viewerContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -709,8 +605,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     paddingTop: 10,
   },
-
-  //news section title
   clipsSubTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -719,11 +613,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginHorizontal: 20,
   },
-
-  //news section
-  // newsContainer: {
-  // flexDirection: 'column'
-  // },
   showMoreButton: {
     justifyContent: 'center',
   },

@@ -127,6 +127,7 @@ const TransactionSchema = new mongoose.Schema({
 // Indexes
 TransactionSchema.index({ userId: 1, createdAt: -1 });
 TransactionSchema.index({ stripePaymentIntentId: 1 });
+TransactionSchema.index({ stripeOutboundTransferId: 1 });
 TransactionSchema.index({ status: 1 });
 TransactionSchema.index({ type: 1, createdAt: -1 });
 

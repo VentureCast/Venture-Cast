@@ -2,10 +2,10 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, Switch, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useUser } from '../UserProvider';
-import { supabase } from '../supabaseClient';
+import api from '../services/api';
 
 type RootStackParamList = {
-  Profile: undefined; // Do this for all linked pages
+  Profile: undefined;
   Portfolio: undefined;
   Notifications: undefined;
   Language: undefined;
@@ -19,7 +19,6 @@ type RootStackParamList = {
   VentureCast: undefined;
   PaymentMethods: undefined;
 };
-// import { Ionicons } from '@expo/vector-icons'; // Icons used for the menu
 
 const AccountDetail = ({ name, value, changePercent, image }: any) => {
   return (
@@ -40,83 +39,43 @@ const AccountDetail = ({ name, value, changePercent, image }: any) => {
 
 const AccountScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { user } = useUser();
-  const [holdings, setHoldings] = useState<any[]>([]);
-  const [streamerStats, setStreamerStats] = useState<any[]>([]);
-  const [userCash, setUserCash] = useState<number>(0);
+  const { user, token, signOut } = useUser();
+  const [portfolioData, setPortfolioData] = useState<any>(null);
+
+  useEffect(() => {
+    if (user && token) {
+      api.setToken(token);
+      api.setUserId(user._id);
+    }
+  }, [user, token]);
 
   useEffect(() => {
     const fetchPortfolioData = async () => {
-      if (!user) return;
-      // Fetch user cash
-      const { data: userData, error: userError } = await supabase
-        .from('Users')
-        .select('cash')
-        .eq('user_id', user.id)
-        .single();
-      if (!userError && userData) {
-        setUserCash(userData.cash || 0);
+      if (!user || !token) return;
+      try {
+        const data = await api.getPortfolio(user._id);
+        setPortfolioData(data);
+      } catch {
+        setPortfolioData(null);
       }
-      // Fetch holdings
-      const { data: holdingsData, error: holdingsError } = await supabase
-        .from('Holdings')
-        .select('*')
-        .eq('user_id', user.id);
-      if (holdingsError || !holdingsData) {
-        setHoldings([]);
-        setStreamerStats([]);
-        return;
-      }
-      setHoldings(holdingsData);
-      const streamerIds = [...new Set(holdingsData.map(h => h.streamer_id))];
-      if (streamerIds.length === 0) {
-        setStreamerStats([]);
-        return;
-      }
-      // Fetch streamer stats
-      const { data: statsData } = await supabase
-        .from('StreamerStats')
-        .select('streamer_id, current_price, day_1_price')
-        .in('streamer_id', streamerIds);
-      setStreamerStats(statsData || []);
     };
     fetchPortfolioData();
-  }, [user]);
+  }, [user, token]);
 
-  const statsMap = useMemo(() => {
-    return Object.fromEntries(streamerStats.map(s => [s.streamer_id, s]));
-  }, [streamerStats]);
-
-  // Calculate values
   const equityData = useMemo(() => {
-    let totalCurrentValue = 0;
-    let totalDay1Value = 0;
-    let totalAverageCost = 0;
-    holdings.forEach(h => {
-      const stats = statsMap[h.streamer_id] || {};
-      const currentPrice = stats.current_price || 100.00;
-      const day1Price = stats.day_1_price || 100.00;
-      const shares = h.shares_owned || 0;
-      const averageCost = h.average_cost || 100.00;
-      totalCurrentValue += currentPrice * shares;
-      totalDay1Value += day1Price * shares;
-      totalAverageCost += averageCost * shares;
-    });
-    const cash = userCash;
-    const equity = totalCurrentValue;
-    const trendPercentDay1 = totalDay1Value > 0 ? ((totalCurrentValue / totalDay1Value) - 1) * 100 : 0;
-    const trendPercentAvgCost = totalAverageCost > 0 ? ((totalCurrentValue / totalAverageCost) - 1) * 100 : 0;
-    const dailyChange = totalCurrentValue - totalDay1Value;
-    const totalReturn = totalCurrentValue - totalAverageCost;
+    if (!portfolioData?.summary) {
+      return { cash: 0, equity: 0, dailyChange: 0, trendPercentDay1: 0, trendPercentAvgCost: 0, totalReturn: 0 };
+    }
+    const summary = portfolioData.summary;
     return {
-      cash,
-      equity,
-      dailyChange,
-      trendPercentDay1: Number(trendPercentDay1.toFixed(2)),
-      trendPercentAvgCost: Number(trendPercentAvgCost.toFixed(2)),
-      totalReturn
+      cash: summary.cashBalance || 0,
+      equity: summary.totalValue || 0,
+      dailyChange: 0, // Day-over-day change not yet tracked
+      trendPercentDay1: 0,
+      trendPercentAvgCost: Number(summary.totalGainLossPercent || 0),
+      totalReturn: summary.totalGainLoss || 0,
     };
-  }, [holdings, statsMap, userCash]);
+  }, [portfolioData]);
 
   const acctData = [
     { id: '1', name: 'Cash', value: equityData.cash.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: 0.00, image: require('../Assets/Icons/BuyStock.png') },
@@ -125,20 +84,24 @@ const AccountScreen = () => {
     { id: '4', name: 'Total Return', value: equityData.totalReturn.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), change: equityData.trendPercentAvgCost, image: require('../Assets/Images/total-return.png') },
   ];
 
+  const handleLogout = async () => {
+    await signOut();
+    navigation.navigate('VentureCast');
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>
       {/* Profile Header */}
       <View style={styles.profileHeader}>
         <Image
-          source={require('../Assets/Images/JimmyBeast.png') } // Replace with actual profile image URL
+          source={require('../Assets/Images/JimmyBeast.png') }
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>
-          <Text style={styles.profileName}>Alexander Creighton</Text>
-          <Text style={styles.profileEmail}>acreighton01@joinventurecast.com</Text>
+          <Text style={styles.profileName}>{user?.name || 'User'}</Text>
+          <Text style={styles.profileEmail}>{user?.email || ''}</Text>
         </View>
         <TouchableOpacity>
-          {/* <Ionicons name="pencil-outline" size={24} color="black" /> */}
         </TouchableOpacity>
       </View>
       <View style={styles.accountGrid}>
@@ -155,80 +118,58 @@ const AccountScreen = () => {
 
       {/* Menu Items */}
       <View style={styles.menuItem}>
-        {/* <Ionicons name="person-outline" size={24} color="#ffab00" /> */}
         <Image source={require('../Assets/Icons/ProfileColor.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Profile')}>Personal Info</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="notifications-outline" size={24} color="#ff3d00" /> */}
         <Image source={require('../Assets/Icons/Notifications.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Notifications')}>Notifications</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="time-outline" size={24} color="#673ab7" /> */}
         <Image source={require('../Assets/Icons/TransactionActivity.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Activity')}>Trade History</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="bar-chart-outline" size={24} color="#43a047" /> */}
         <Image source={require('../Assets/Icons/FundingActivity.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('FundingActivity')}>Transaction Activity</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="card-outline" size={24} color="#ff9100" /> */}
         <Image source={require('../Assets/Icons/Deposit.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('DepositOption')}>Deposit to VentureCast</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="cash-outline" size={24} color="#f44336" /> */}
         <Image source={require('../Assets/Icons/Withdraw.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('WithdrawOption')}>Withdraw from VentureCast</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
-      </View> 
+      </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="cash-outline" size={24} color="#f44336" /> */}
         <Image source={require('../Assets/Icons/PaymentMethod.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('PaymentMethods')}>Payment Methods</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="help-circle-outline" size={24} color="#6200ea" /> */}
         <Image source={require('../Assets/Icons/Help.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('HelpCenter')}>Help</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="lock-closed-outline" size={24} color="#795548" /> */}
         <Image source={require('../Assets/Icons/ChangePassword.png')} style={styles.menuIcon} />
-        <Text style={styles.menuText}  onPress={() => navigation.navigate('ChangePassword')}>Change Password</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
+        <Text style={styles.menuText} onPress={() => navigation.navigate('ChangePassword')}>Change Password</Text>
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="information-circle-outline" size={24} color="#2196f3" /> */}
         <Image source={require('../Assets/Icons/About.png')} style={styles.menuIcon} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('About')}>About Venture Cast</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
       </View>
 
       <View style={styles.menuItem}>
-        {/* <Ionicons name="log-out-outline" size={24} color="#d32f2f" /> */}
         <Image source={require('../Assets/Icons/LogOut.png')} style={styles.menuIcon} />
-        <Text style={styles.logOut} onPress={() => navigation.navigate('VentureCast')}>Log Out</Text>
-        {/* <Ionicons name="chevron-forward-outline" size={24} color="black" /> */}
+        <Text style={styles.logOut} onPress={handleLogout}>Log Out</Text>
       </View>
     </ScrollView>
   );
@@ -313,17 +254,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily: 'urbanist',
   },
-  // account money details
   accountGrid: {
     flex: 1,
-    flexDirection: 'row', // Arrange items in rows
-    flexWrap: 'wrap', // Wrap to the next row if needed
-    alignItems: 'center', // Center items vertically
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
     justifyContent: 'space-between'
   },
   accountText: {
     fontSize: 16,
-    color: '#6c757d',    
+    color: '#6c757d',
     fontFamily: 'Urbanist-Regular',
   },
   accountTextChange: {
@@ -340,7 +280,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   detailLogo: {
-    width: 56, 
+    width: 56,
     height: 56,
     marginRight: 8,
   },
@@ -356,7 +296,7 @@ const styles = StyleSheet.create({
   },
   accountDetailContainer: {
     flexDirection: 'column',
-    alignItems: 'flex-start', 
+    alignItems: 'flex-start',
   },
   stockChange: {
     fontSize: 14,
@@ -370,7 +310,6 @@ const styles = StyleSheet.create({
   negative: {
     color: '#F75555',
   },
-
 });
 
 export default AccountScreen;

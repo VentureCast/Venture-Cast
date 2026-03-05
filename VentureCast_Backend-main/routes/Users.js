@@ -1,67 +1,106 @@
-// Fetch specific columns from Users table
-const { data: usersData, error: usersError } = await supabase
-  .from('Users')
-  .select('user_id, username, email, password_hash');
+const express = require('express');
+const User = require('../models/User');
+const { authenticateToken, verifyOwnership } = require('../middleware/auth');
+const logger = require('../utils/logger');
+const validate = require('../middleware/validate');
+const { updateUserSchema } = require('../middleware/schemas/userSchemas');
 
-if (usersError) console.error('Error fetching users data:', usersError);
+const router = express.Router();
 
-// Fetch all columns
-const { data: allUsers, error: allUsersError } = await supabase
-  .from('Users')
-  .select('*');
+/**
+ * GET /auth/me
+ * Get current authenticated user
+ */
+router.get('/auth/me', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select('-password');
 
-if (allUsersError) console.error('Error fetching all users data:', allUsersError);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
 
-// Fetch with filters
-const { data: filteredUsers, error: filteredUsersError } = await supabase
-  .from('Users')
-  .select('*')
-  .eq('column', 'Equal to')
-  .gt('column', 'Greater than')
-  .lt('column', 'Less than')
-  .gte('column', 'Greater than or equal to')
-  .lte('column', 'Less than or equal to')
-  .like('column', '%CaseSensitive%')
-  .ilike('column', '%CaseInsensitive%')
-  .is('column', null)
-  .in('column', ['Array', 'Values'])
-  .neq('column', 'Not equal to')
-  .contains('array_column', ['array', 'contains'])
-  .containedBy('array_column', ['contained', 'by']);
+    res.json(user);
+  } catch (error) {
+    logger.error('Error fetching current user:', error);
+    res.status(500).json({ error: 'Failed to fetch user data' });
+  }
+});
 
-if (filteredUsersError) console.error('Error fetching filtered users data:', filteredUsersError);
+/**
+ * GET /users/:userId
+ * Get user by ID (protected - must be authenticated and own the resource)
+ */
+router.get('/users/:userId', authenticateToken, verifyOwnership, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).select('-password');
 
-// Insert new record
-const { data: insertUser, error: insertUserError } = await supabase
-  .from('Users')
-  .insert([{ some_column: 'someValue', other_column: 'otherValue' }])
-  .select();
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
 
-if (insertUserError) console.error('Error inserting user data:', insertUserError);
+    res.json(user);
+  } catch (error) {
+    logger.error('Error fetching user:', error);
+    res.status(500).json({ error: 'Failed to fetch user' });
+  }
+});
 
-// Update record
-const { data: updateUser, error: updateUserError } = await supabase
-  .from('Users')
-  .update({ other_column: 'otherValue' })
-  .eq('some_column', 'someValue')
-  .select();
+/**
+ * PATCH /users/:userId
+ * Update user profile
+ */
+router.patch('/users/:userId', authenticateToken, verifyOwnership, validate(updateUserSchema), async (req, res) => {
+  try {
+    const allowedUpdates = ['name', 'email', 'phoneNumber', 'dateOfBirth', 'address'];
+    const updates = {};
 
-if (updateUserError) console.error('Error updating user data:', updateUserError);
+    // Filter only allowed fields
+    allowedUpdates.forEach(field => {
+      if (req.body[field] !== undefined) {
+        updates[field] = req.body[field];
+      }
+    });
 
-// Delete record
-const { error: deleteUserError } = await supabase
-  .from('Users')
-  .delete()
-  .eq('some_column', 'someValue');
+    const user = await User.findByIdAndUpdate(
+      req.params.userId,
+      { $set: updates },
+      { new: true, runValidators: true }
+    ).select('-password');
 
-if (deleteUserError) console.error('Error deleting user data:', deleteUserError);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
 
-// Real-time updates for Users table
-const usersChannel = supabase
-  .channel('custom-all-channel')
-  .on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'Users' },
-    (payload) => console.log('Change received!', payload)
-  )
-  .subscribe();
+    res.json(user);
+  } catch (error) {
+    logger.error('Error updating user:', error);
+    res.status(500).json({ error: 'Failed to update user' });
+  }
+});
+
+/**
+ * GET /users/:userId/balance
+ * Get user's treasury balance
+ */
+router.get('/users/:userId/balance', authenticateToken, verifyOwnership, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).select('treasuryBalance');
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({
+      balance: user.treasuryBalance || {
+        available: 0,
+        pending: 0,
+        currency: 'usd'
+      }
+    });
+  } catch (error) {
+    logger.error('Error fetching balance:', error);
+    res.status(500).json({ error: 'Failed to fetch balance' });
+  }
+});
+
+module.exports = router;
