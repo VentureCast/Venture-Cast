@@ -1,0 +1,1045 @@
+{
+  "data": {
+    "segments": [
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Mn0=",
+        "start_time": "2025-10-17T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h22m38s",
+          "duration_seconds": 15758,
+          "duration_formatted": "4h22m38s",
+          "video_id": "2593823829",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-17T02:02:27Z",
+          "video_url": "https://www.twitch.tv/videos/2593823829",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Mn0=",
+        "start_time": "2025-10-18T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h59m35s",
+          "duration_seconds": 14375,
+          "duration_formatted": "3h59m35s",
+          "video_id": "2594688363",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-18T02:04:57Z",
+          "video_url": "https://www.twitch.tv/videos/2594688363",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Mn0=",
+        "start_time": "2025-10-19T01:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0M30=",
+        "start_time": "2025-10-20T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h1m39s",
+          "duration_seconds": 14499,
+          "duration_formatted": "4h1m39s",
+          "video_id": "2596481279",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-20T02:02:42Z",
+          "video_url": "https://www.twitch.tv/videos/2596481279",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJhOWI5ZDUyOS01NTk0LTQ1MTYtOWQxMy0xNTU0MjYzNmE0YTkiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0M30=",
+        "start_time": "2025-10-21T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h2m37s",
+          "duration_seconds": 14557,
+          "duration_formatted": "4h2m37s",
+          "video_id": "2597278746",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-21T02:01:32Z",
+          "video_url": "https://www.twitch.tv/videos/2597278746",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI5YzA5YzZmOC1iMWJiLTQzYjEtOTAyMS05MzZiYTI2Y2U1NWUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0M30=",
+        "start_time": "2025-10-22T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h12m9s",
+          "duration_seconds": 15129,
+          "duration_formatted": "4h12m9s",
+          "video_id": "2598109087",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-22T02:01:52Z",
+          "video_url": "https://www.twitch.tv/videos/2598109087",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJmZTYzN2U4NC05ZDk5LTQyMGEtOWEwNS0wYWQ2MjRiOTZlY2QiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0M30=",
+        "start_time": "2025-10-23T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h11m11s",
+          "duration_seconds": 15071,
+          "duration_formatted": "4h11m11s",
+          "video_id": "2598942774",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-23T02:02:13Z",
+          "video_url": "https://www.twitch.tv/videos/2598942774",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0M30=",
+        "start_time": "2025-10-24T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h6m34s",
+          "duration_seconds": 14794,
+          "duration_formatted": "4h6m34s",
+          "video_id": "2599776764",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-24T02:03:19Z",
+          "video_url": "https://www.twitch.tv/videos/2599776764",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0M30=",
+        "start_time": "2025-10-25T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0M30=",
+        "start_time": "2025-10-26T01:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NH0=",
+        "start_time": "2025-10-27T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h31m55s",
+          "duration_seconds": 16315,
+          "duration_formatted": "4h31m55s",
+          "video_id": "2602400714",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-27T02:03:24Z",
+          "video_url": "https://www.twitch.tv/videos/2602400714",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJhOWI5ZDUyOS01NTk0LTQ1MTYtOWQxMy0xNTU0MjYzNmE0YTkiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NH0=",
+        "start_time": "2025-10-28T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h9m46s",
+          "duration_seconds": 14986,
+          "duration_formatted": "4h9m46s",
+          "video_id": "2603208640",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-28T02:02:53Z",
+          "video_url": "https://www.twitch.tv/videos/2603208640",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI5YzA5YzZmOC1iMWJiLTQzYjEtOTAyMS05MzZiYTI2Y2U1NWUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NH0=",
+        "start_time": "2025-10-29T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h1m3s",
+          "duration_seconds": 14463,
+          "duration_formatted": "4h1m3s",
+          "video_id": "2604057723",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-29T02:03:25Z",
+          "video_url": "https://www.twitch.tv/videos/2604057723",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJmZTYzN2U4NC05ZDk5LTQyMGEtOWEwNS0wYWQ2MjRiOTZlY2QiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NH0=",
+        "start_time": "2025-10-30T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h8m47s",
+          "duration_seconds": 14927,
+          "duration_formatted": "4h8m47s",
+          "video_id": "2604895167",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-30T02:05:21Z",
+          "video_url": "https://www.twitch.tv/videos/2604895167",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NH0=",
+        "start_time": "2025-10-31T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h38m5s",
+          "duration_seconds": 13085,
+          "duration_formatted": "3h38m5s",
+          "video_id": "2605754777",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-10-31T02:20:26Z",
+          "video_url": "https://www.twitch.tv/videos/2605754777",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NH0=",
+        "start_time": "2025-11-01T01:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h16m2s",
+          "duration_seconds": 15362,
+          "duration_formatted": "4h16m2s",
+          "video_id": "2606599274",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-01T02:02:41Z",
+          "video_url": "https://www.twitch.tv/videos/2606599274",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NH0=",
+        "start_time": "2025-11-02T01:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NX0=",
+        "start_time": "2025-11-03T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h20m1s",
+          "duration_seconds": 15601,
+          "duration_formatted": "4h20m1s",
+          "video_id": "2608444729",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-03T03:03:23Z",
+          "video_url": "https://www.twitch.tv/videos/2608444729",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJhOWI5ZDUyOS01NTk0LTQ1MTYtOWQxMy0xNTU0MjYzNmE0YTkiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NX0=",
+        "start_time": "2025-11-04T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h16m36s",
+          "duration_seconds": 15396,
+          "duration_formatted": "4h16m36s",
+          "video_id": "2609259925",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-04T03:00:31Z",
+          "video_url": "https://www.twitch.tv/videos/2609259925",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI5YzA5YzZmOC1iMWJiLTQzYjEtOTAyMS05MzZiYTI2Y2U1NWUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NX0=",
+        "start_time": "2025-11-05T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h6m40s",
+          "duration_seconds": 14800,
+          "duration_formatted": "4h6m40s",
+          "video_id": "2610098834",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-05T03:01:13Z",
+          "video_url": "https://www.twitch.tv/videos/2610098834",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJmZTYzN2U4NC05ZDk5LTQyMGEtOWEwNS0wYWQ2MjRiOTZlY2QiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NX0=",
+        "start_time": "2025-11-06T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h6m49s",
+          "duration_seconds": 14809,
+          "duration_formatted": "4h6m49s",
+          "video_id": "2610934598",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-06T03:01:43Z",
+          "video_url": "https://www.twitch.tv/videos/2610934598",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NX0=",
+        "start_time": "2025-11-07T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h9m59s",
+          "duration_seconds": 14999,
+          "duration_formatted": "4h9m59s",
+          "video_id": "2611758889",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-07T03:02:38Z",
+          "video_url": "https://www.twitch.tv/videos/2611758889",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NX0=",
+        "start_time": "2025-11-08T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0NX0=",
+        "start_time": "2025-11-09T02:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Nn0=",
+        "start_time": "2025-11-10T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJhOWI5ZDUyOS01NTk0LTQ1MTYtOWQxMy0xNTU0MjYzNmE0YTkiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Nn0=",
+        "start_time": "2025-11-11T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h11m29s",
+          "duration_seconds": 15089,
+          "duration_formatted": "4h11m29s",
+          "video_id": "2615267593",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-11T03:03:17Z",
+          "video_url": "https://www.twitch.tv/videos/2615267593",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI5YzA5YzZmOC1iMWJiLTQzYjEtOTAyMS05MzZiYTI2Y2U1NWUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Nn0=",
+        "start_time": "2025-11-12T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h13m25s",
+          "duration_seconds": 15205,
+          "duration_formatted": "4h13m25s",
+          "video_id": "2616165816",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-12T03:02:54Z",
+          "video_url": "https://www.twitch.tv/videos/2616165816",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJmZTYzN2U4NC05ZDk5LTQyMGEtOWEwNS0wYWQ2MjRiOTZlY2QiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Nn0=",
+        "start_time": "2025-11-13T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h0m27s",
+          "duration_seconds": 14427,
+          "duration_formatted": "4h27s",
+          "video_id": "2617044014",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-13T03:03:00Z",
+          "video_url": "https://www.twitch.tv/videos/2617044014",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Nn0=",
+        "start_time": "2025-11-14T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h4m44s",
+          "duration_seconds": 14684,
+          "duration_formatted": "4h4m44s",
+          "video_id": "2617874112",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-14T03:02:28Z",
+          "video_url": "https://www.twitch.tv/videos/2617874112",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Nn0=",
+        "start_time": "2025-11-15T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h2m59s",
+          "duration_seconds": 14579,
+          "duration_formatted": "4h2m59s",
+          "video_id": "2618759087",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-15T03:03:08Z",
+          "video_url": "https://www.twitch.tv/videos/2618759087",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0Nn0=",
+        "start_time": "2025-11-16T02:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0N30=",
+        "start_time": "2025-11-17T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h4m33s",
+          "duration_seconds": 14673,
+          "duration_formatted": "4h4m33s",
+          "video_id": "2620599682",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-17T03:03:50Z",
+          "video_url": "https://www.twitch.tv/videos/2620599682",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJhOWI5ZDUyOS01NTk0LTQ1MTYtOWQxMy0xNTU0MjYzNmE0YTkiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0N30=",
+        "start_time": "2025-11-18T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h1m35s",
+          "duration_seconds": 14495,
+          "duration_formatted": "4h1m35s",
+          "video_id": "2621416279",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-18T03:02:44Z",
+          "video_url": "https://www.twitch.tv/videos/2621416279",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI5YzA5YzZmOC1iMWJiLTQzYjEtOTAyMS05MzZiYTI2Y2U1NWUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0N30=",
+        "start_time": "2025-11-19T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h59m19s",
+          "duration_seconds": 14359,
+          "duration_formatted": "3h59m19s",
+          "video_id": "2622243691",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-19T03:03:52Z",
+          "video_url": "https://www.twitch.tv/videos/2622243691",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJmZTYzN2U4NC05ZDk5LTQyMGEtOWEwNS0wYWQ2MjRiOTZlY2QiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0N30=",
+        "start_time": "2025-11-20T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h20m13s",
+          "duration_seconds": 15613,
+          "duration_formatted": "4h20m13s",
+          "video_id": "2623080450",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-20T03:02:37Z",
+          "video_url": "https://www.twitch.tv/videos/2623080450",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0N30=",
+        "start_time": "2025-11-21T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h17m26s",
+          "duration_seconds": 15446,
+          "duration_formatted": "4h17m26s",
+          "video_id": "2623915300",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-21T03:00:10Z",
+          "video_url": "https://www.twitch.tv/videos/2623915300",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0N30=",
+        "start_time": "2025-11-22T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0N30=",
+        "start_time": "2025-11-23T02:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OH0=",
+        "start_time": "2025-11-24T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h7m15s",
+          "duration_seconds": 14835,
+          "duration_formatted": "4h7m15s",
+          "video_id": "2626577408",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-24T03:04:52Z",
+          "video_url": "https://www.twitch.tv/videos/2626577408",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJhOWI5ZDUyOS01NTk0LTQ1MTYtOWQxMy0xNTU0MjYzNmE0YTkiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OH0=",
+        "start_time": "2025-11-25T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h38m21s",
+          "duration_seconds": 13101,
+          "duration_formatted": "3h38m21s",
+          "video_id": "2627382720",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-25T03:02:13Z",
+          "video_url": "https://www.twitch.tv/videos/2627382720",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI5YzA5YzZmOC1iMWJiLTQzYjEtOTAyMS05MzZiYTI2Y2U1NWUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OH0=",
+        "start_time": "2025-11-26T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h6m52s",
+          "duration_seconds": 14812,
+          "duration_formatted": "4h6m52s",
+          "video_id": "2628207191",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-26T03:02:44Z",
+          "video_url": "https://www.twitch.tv/videos/2628207191",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJmZTYzN2U4NC05ZDk5LTQyMGEtOWEwNS0wYWQ2MjRiOTZlY2QiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OH0=",
+        "start_time": "2025-11-27T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h58m33s",
+          "duration_seconds": 14313,
+          "duration_formatted": "3h58m33s",
+          "video_id": "2629025558",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-11-27T03:02:42Z",
+          "video_url": "https://www.twitch.tv/videos/2629025558",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OH0=",
+        "start_time": "2025-11-28T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OH0=",
+        "start_time": "2025-11-29T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OH0=",
+        "start_time": "2025-11-30T02:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OX0=",
+        "start_time": "2025-12-01T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h56m25s",
+          "duration_seconds": 14185,
+          "duration_formatted": "3h56m25s",
+          "video_id": "2632401924",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-01T03:02:16Z",
+          "video_url": "https://www.twitch.tv/videos/2632401924",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJhOWI5ZDUyOS01NTk0LTQ1MTYtOWQxMy0xNTU0MjYzNmE0YTkiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OX0=",
+        "start_time": "2025-12-02T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h12m12s",
+          "duration_seconds": 15132,
+          "duration_formatted": "4h12m12s",
+          "video_id": "2633193658",
+          "video_title": "🟨SPOOKY TIME🟨",
+          "video_created_at": "2025-12-02T03:01:30Z",
+          "video_url": "https://www.twitch.tv/videos/2633193658",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI5YzA5YzZmOC1iMWJiLTQzYjEtOTAyMS05MzZiYTI2Y2U1NWUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OX0=",
+        "start_time": "2025-12-03T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h55m56s",
+          "duration_seconds": 14156,
+          "duration_formatted": "3h55m56s",
+          "video_id": "2634023254",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-03T03:02:16Z",
+          "video_url": "https://www.twitch.tv/videos/2634023254",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJmZTYzN2U4NC05ZDk5LTQyMGEtOWEwNS0wYWQ2MjRiOTZlY2QiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OX0=",
+        "start_time": "2025-12-04T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h16m56s",
+          "duration_seconds": 15416,
+          "duration_formatted": "4h16m56s",
+          "video_id": "2634855291",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-04T03:03:33Z",
+          "video_url": "https://www.twitch.tv/videos/2634855291",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OX0=",
+        "start_time": "2025-12-05T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h6m29s",
+          "duration_seconds": 14789,
+          "duration_formatted": "4h6m29s",
+          "video_id": "2635687113",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-05T03:01:42Z",
+          "video_url": "https://www.twitch.tv/videos/2635687113",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OX0=",
+        "start_time": "2025-12-06T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h58m43s",
+          "duration_seconds": 14323,
+          "duration_formatted": "3h58m43s",
+          "video_id": "2636548591",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-06T03:02:22Z",
+          "video_url": "https://www.twitch.tv/videos/2636548591",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo0OX0=",
+        "start_time": "2025-12-07T02:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo1MH0=",
+        "start_time": "2025-12-08T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h50m51s",
+          "duration_seconds": 13851,
+          "duration_formatted": "3h50m51s",
+          "video_id": "2638339944",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-08T03:02:39Z",
+          "video_url": "https://www.twitch.tv/videos/2638339944",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJhOWI5ZDUyOS01NTk0LTQ1MTYtOWQxMy0xNTU0MjYzNmE0YTkiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo1MH0=",
+        "start_time": "2025-12-09T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h3m17s",
+          "duration_seconds": 14597,
+          "duration_formatted": "4h3m17s",
+          "video_id": "2639151185",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-09T03:03:03Z",
+          "video_url": "https://www.twitch.tv/videos/2639151185",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI5YzA5YzZmOC1iMWJiLTQzYjEtOTAyMS05MzZiYTI2Y2U1NWUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo1MH0=",
+        "start_time": "2025-12-10T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h11m53s",
+          "duration_seconds": 15113,
+          "duration_formatted": "4h11m53s",
+          "video_id": "2639971989",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-10T02:57:50Z",
+          "video_url": "https://www.twitch.tv/videos/2639971989",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJmZTYzN2U4NC05ZDk5LTQyMGEtOWEwNS0wYWQ2MjRiOTZlY2QiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo1MH0=",
+        "start_time": "2025-12-11T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h53m28s",
+          "duration_seconds": 14008,
+          "duration_formatted": "3h53m28s",
+          "video_id": "2640807041",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-11T03:03:20Z",
+          "video_url": "https://www.twitch.tv/videos/2640807041",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiJlODg0ZWYzNS0zN2M5LTQ3ZDctOWZlOS1hMWU5YzQ5ODQ4NjIiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo1MH0=",
+        "start_time": "2025-12-12T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h3m43s",
+          "duration_seconds": 14623,
+          "duration_formatted": "4h3m43s",
+          "video_id": "2641627287",
+          "video_title": "🟨LOSING MY MIND🟨 ͏",
+          "video_created_at": "2025-12-12T03:00:54Z",
+          "video_url": "https://www.twitch.tv/videos/2641627287",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIzZDczYmMwYi0xOWY2LTQ0OGUtYjJhZS00ZmYwNDM4YjdhMTAiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo1MH0=",
+        "start_time": "2025-12-13T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "3h54m16s",
+          "duration_seconds": 14056,
+          "duration_formatted": "3h54m16s",
+          "video_id": "2642480196",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-13T03:02:54Z",
+          "video_url": "https://www.twitch.tv/videos/2642480196",
+          "game_id": null,
+          "game_name": null
+        }
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiIwM2ZiM2JiMS0wMGViLTQ5ZmItYjA3Yy00YTBiN2NlMjMyZTciLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo1MH0=",
+        "start_time": "2025-12-14T02:00:00Z",
+        "end_time": null,
+        "title": "Night Off",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true
+      },
+      {
+        "id": "eyJzZWdtZW50SUQiOiI2NmIyZmZjMy00OTM3LTQ4ZjAtOTNiNy1kMGU0ZGMzNWEzNDUiLCJpc29ZZWFyIjoyMDI1LCJpc29XZWVrIjo1MX0=",
+        "start_time": "2025-12-15T02:30:00Z",
+        "end_time": null,
+        "title": "🟨LOSING MY MIND🟨",
+        "canceled_until": null,
+        "category": null,
+        "is_recurring": true,
+        "actual_duration": {
+          "duration_string": "4h6m46s",
+          "duration_seconds": 14806,
+          "duration_formatted": "4h6m46s",
+          "video_id": "2644258963",
+          "video_title": "🟨LOSING MY MIND🟨",
+          "video_created_at": "2025-12-15T03:03:34Z",
+          "video_url": "https://www.twitch.tv/videos/2644258963",
+          "game_id": null,
+          "game_name": null
+        }
+      }
+    ],
+    "broadcaster_id": "267160288",
+    "broadcaster_name": "caseoh_",
+    "vacation": null
+  },
+  "pagination": {}
+}

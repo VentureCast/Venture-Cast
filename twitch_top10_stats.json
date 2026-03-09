@@ -1,0 +1,197 @@
+{
+  "fetched_at": "2026-03-05T22:07:30.380770+00:00",
+  "period": "past_30_days",
+  "total_streamers": 10,
+  "streamers": [
+    {
+      "channel_name": "TheBurntPeanut",
+      "channel_id": "472066926",
+      "platform": "Twitch",
+      "followers": 2013515,
+      "past_30_days": {
+        "rank": 1,
+        "avg_viewers": 58879,
+        "peak_viewers": 352502,
+        "hours_watched": 11011424,
+        "minutes_streamed": 11221,
+        "followers_gained": 225319,
+        "streams_count": 26,
+        "total_duration_seconds": 699230,
+        "total_duration_formatted": "194h 13m 50s",
+        "average_duration_seconds": 26893,
+        "average_duration_formatted": "7h 28m 13s"
+      }
+    },
+    {
+      "channel_name": "Jynxzi",
+      "channel_id": "411377640",
+      "platform": "Twitch",
+      "followers": 9116517,
+      "past_30_days": {
+        "rank": 2,
+        "avg_viewers": 53845,
+        "peak_viewers": 500919,
+        "hours_watched": 10714230,
+        "minutes_streamed": 11939,
+        "followers_gained": 267901,
+        "streams_count": 29,
+        "total_duration_seconds": 695123,
+        "total_duration_formatted": "193h 5m 23s",
+        "average_duration_seconds": 23969,
+        "average_duration_formatted": "6h 39m 29s"
+      }
+    },
+    {
+      "channel_name": "Caedrel",
+      "channel_id": "92038375",
+      "platform": "Twitch",
+      "followers": 1525505,
+      "past_30_days": {
+        "rank": 3,
+        "avg_viewers": 47989,
+        "peak_viewers": 296503,
+        "hours_watched": 8777199,
+        "minutes_streamed": 10974,
+        "followers_gained": 17758,
+        "streams_count": 25,
+        "total_duration_seconds": 678863,
+        "total_duration_formatted": "188h 34m 23s",
+        "average_duration_seconds": 27154,
+        "average_duration_formatted": "7h 32m 34s"
+      }
+    },
+    {
+      "channel_name": "zackrawrr",
+      "channel_id": "552120296",
+      "platform": "Twitch",
+      "followers": 2295384,
+      "past_30_days": {
+        "rank": 4,
+        "avg_viewers": 45739,
+        "peak_viewers": 346836,
+        "hours_watched": 8748254,
+        "minutes_streamed": 11476,
+        "followers_gained": 43860,
+        "streams_count": 8,
+        "total_duration_seconds": 227646,
+        "total_duration_formatted": "63h 14m 6s",
+        "average_duration_seconds": 28455,
+        "average_duration_formatted": "7h 54m 15s"
+      }
+    },
+    {
+      "channel_name": "HasanAbi",
+      "channel_id": "207813352",
+      "platform": "Twitch",
+      "followers": 3045545,
+      "past_30_days": {
+        "rank": 5,
+        "avg_viewers": 36954,
+        "peak_viewers": 357084,
+        "hours_watched": 7977131,
+        "minutes_streamed": 12952,
+        "followers_gained": 16166,
+        "streams_count": 30,
+        "total_duration_seconds": 775645,
+        "total_duration_formatted": "215h 27m 25s",
+        "average_duration_seconds": 25854,
+        "average_duration_formatted": "7h 10m 54s"
+      }
+    },
+    {
+      "channel_name": "fps_shaka",
+      "channel_id": "49207184",
+      "platform": "Twitch",
+      "followers": 1643177,
+      "past_30_days": {
+        "rank": 6,
+        "avg_viewers": 27647,
+        "peak_viewers": 67937,
+        "hours_watched": 8054040,
+        "minutes_streamed": 17479,
+        "followers_gained": 19954,
+        "streams_count": 38,
+        "total_duration_seconds": 1030719,
+        "total_duration_formatted": "286h 18m 39s",
+        "average_duration_seconds": 27124,
+        "average_duration_formatted": "7h 32m 4s"
+      }
+    },
+    {
+      "channel_name": "加藤純一うん〇ちゃん",
+      "channel_id": "545050196",
+      "platform": "Twitch",
+      "followers": 1153570,
+      "past_30_days": {
+        "rank": 7,
+        "avg_viewers": 28399,
+        "peak_viewers": 61056,
+        "hours_watched": 7826632,
+        "minutes_streamed": 16536,
+        "followers_gained": 7215,
+        "streams_count": 39,
+        "total_duration_seconds": 981849,
+        "total_duration_formatted": "272h 44m 9s",
+        "average_duration_seconds": 25175,
+        "average_duration_formatted": "6h 59m 35s"
+      }
+    },
+    {
+      "channel_name": "StRoGo",
+      "channel_id": "233741947",
+      "platform": "Twitch",
+      "followers": 1865316,
+      "past_30_days": {
+        "rank": 8,
+        "avg_viewers": 41610,
+        "peak_viewers": 156564,
+        "hours_watched": 6516173,
+        "minutes_streamed": 9396,
+        "followers_gained": 78265,
+        "streams_count": 27,
+        "total_duration_seconds": 535726,
+        "total_duration_formatted": "148h 48m 46s",
+        "average_duration_seconds": 19841,
+        "average_duration_formatted": "5h 30m 41s"
+      }
+    },
+    {
+      "channel_name": "VirginiaTV",
+      "channel_id": "1438731755",
+      "platform": "Twitch",
+      "followers": 124442,
+      "past_30_days": {
+        "rank": 9,
+        "avg_viewers": 287688,
+        "peak_viewers": 663302,
+        "hours_watched": 1678180,
+        "minutes_streamed": 350,
+        "followers_gained": 94393,
+        "streams_count": 0,
+        "total_duration_seconds": 0,
+        "total_duration_formatted": "0s",
+        "average_duration_seconds": 0,
+        "average_duration_formatted": "0s"
+      }
+    },
+    {
+      "channel_name": "caseoh_",
+      "channel_id": "267160288",
+      "platform": "Twitch",
+      "followers": 8234857,
+      "past_30_days": {
+        "rank": 10,
+        "avg_viewers": 59322,
+        "peak_viewers": 299903,
+        "hours_watched": 5912407,
+        "minutes_streamed": 5980,
+        "followers_gained": 130005,
+        "streams_count": 25,
+        "total_duration_seconds": 357330,
+        "total_duration_formatted": "99h 15m 30s",
+        "average_duration_seconds": 14293,
+        "average_duration_formatted": "3h 58m 13s"
+      }
+    }
+  ]
+}

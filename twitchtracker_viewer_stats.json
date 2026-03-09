@@ -1,0 +1,1010 @@
+{
+  "fetched_at": "2026-03-05T21:43:19.595194+00:00",
+  "data_sources": {
+    "past_30_days": "TwitchTracker public API (/api/channels/summary)",
+    "all_time": "TwitchTracker channel page scraping (lifetime overview + monthly history)",
+    "past_7_days": "TwitchTracker channel page scraping (period performance)",
+    "past_3_months": "TwitchTracker channel page scraping (period performance)",
+    "recent_streams": "TwitchTracker channel page scraping (per-stream rows)"
+  },
+  "streamers": [
+    {
+      "channel_name": "xQc",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 11,
+        "avg_viewers": 24343,
+        "peak_viewers": 336323,
+        "hours_watched": 4832569,
+        "minutes_streamed": 11911,
+        "followers_gained": 32503,
+        "followers_total": 12309168
+      },
+      "all_time": {
+        "total_hours_streamed": 24642.5,
+        "all_time_peak_viewers": 336323,
+        "total_followers": 12309168,
+        "total_games_streamed": 1125,
+        "avg_viewers_weighted": 37880,
+        "months_tracked": 113
+      },
+      "past_7_days": {
+        "avg_viewers": 23995,
+        "max_viewers": 35201,
+        "duration_minutes": 2351,
+        "hours_watched": 940190,
+        "followers_gained": 10577,
+        "streams_count": 5,
+        "active_days": 6
+      },
+      "past_3_months": {
+        "avg_viewers": 24875,
+        "max_viewers": 336323,
+        "duration_minutes": 37952,
+        "hours_watched": 15734351,
+        "followers_gained": 88196,
+        "streams_count": 70,
+        "active_days": 87
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-03 23:03:05",
+          "avg_viewers": 26022,
+          "followers_gained": 270,
+          "duration_minutes": 501
+        },
+        {
+          "date": "2026-03-02 21:55:22",
+          "avg_viewers": 28516,
+          "followers_gained": 251,
+          "duration_minutes": 469
+        },
+        {
+          "date": "2026-03-01 22:49:39",
+          "avg_viewers": 28364,
+          "followers_gained": 903,
+          "duration_minutes": 635
+        },
+        {
+          "date": "2026-02-28 21:08:13",
+          "avg_viewers": 35142,
+          "followers_gained": 1879,
+          "duration_minutes": 656
+        },
+        {
+          "date": "2026-02-27 15:34:01",
+          "avg_viewers": 35201,
+          "followers_gained": 861,
+          "duration_minutes": 90
+        },
+        {
+          "date": "2026-02-25 22:30:52",
+          "avg_viewers": 27870,
+          "followers_gained": 697,
+          "duration_minutes": 594
+        },
+        {
+          "date": "2026-02-24 21:29:53",
+          "avg_viewers": 29275,
+          "followers_gained": 646,
+          "duration_minutes": 575
+        },
+        {
+          "date": "2026-02-23 01:41:42",
+          "avg_viewers": 27840,
+          "followers_gained": 740,
+          "duration_minutes": 433
+        },
+        {
+          "date": "2026-02-21 21:50:45",
+          "avg_viewers": 336323,
+          "followers_gained": 2201,
+          "duration_minutes": 624
+        },
+        {
+          "date": "2026-02-20 02:07:30",
+          "avg_viewers": 26518,
+          "followers_gained": 1584,
+          "duration_minutes": 477
+        }
+      ]
+    },
+    {
+      "channel_name": "HasanAbi",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 5,
+        "avg_viewers": 36954,
+        "peak_viewers": 357084,
+        "hours_watched": 7977131,
+        "minutes_streamed": 12952,
+        "followers_gained": 16166,
+        "followers_total": 3045545
+      },
+      "all_time": {
+        "total_hours_streamed": 20347.7,
+        "all_time_peak_viewers": 357084,
+        "total_followers": 3045847,
+        "total_games_streamed": 268,
+        "avg_viewers_weighted": 22574,
+        "months_tracked": 97
+      },
+      "past_7_days": {
+        "avg_viewers": 43034,
+        "max_viewers": 61018,
+        "duration_minutes": 3411,
+        "hours_watched": 2446508,
+        "followers_gained": 6011,
+        "streams_count": 8,
+        "active_days": 7
+      },
+      "past_3_months": {
+        "avg_viewers": 33432,
+        "max_viewers": 357084,
+        "duration_minutes": 36335,
+        "hours_watched": 20245668,
+        "followers_gained": 81962,
+        "streams_count": 82,
+        "active_days": 86
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-05 20:00:52",
+          "avg_viewers": 43799,
+          "followers_gained": 89,
+          "duration_minutes": 85
+        },
+        {
+          "date": "2026-03-04 19:22:56",
+          "avg_viewers": 49035,
+          "followers_gained": 401,
+          "duration_minutes": 462
+        },
+        {
+          "date": "2026-03-03 18:45:24",
+          "avg_viewers": 55472,
+          "followers_gained": 662,
+          "duration_minutes": 589
+        },
+        {
+          "date": "2026-03-02 18:48:25",
+          "avg_viewers": 53971,
+          "followers_gained": 673,
+          "duration_minutes": 476
+        },
+        {
+          "date": "2026-03-01 18:59:01",
+          "avg_viewers": 55557,
+          "followers_gained": 810,
+          "duration_minutes": 435
+        },
+        {
+          "date": "2026-02-28 16:05:14",
+          "avg_viewers": 61018,
+          "followers_gained": 2072,
+          "duration_minutes": 649
+        },
+        {
+          "date": "2026-02-27 18:57:53",
+          "avg_viewers": 34917,
+          "followers_gained": 83,
+          "duration_minutes": 427
+        },
+        {
+          "date": "2026-02-26 19:24:55",
+          "avg_viewers": 36241,
+          "followers_gained": 79,
+          "duration_minutes": 410
+        },
+        {
+          "date": "2026-02-25 18:53:48",
+          "avg_viewers": 36944,
+          "followers_gained": 184,
+          "duration_minutes": 481
+        },
+        {
+          "date": "2026-02-24 19:09:39",
+          "avg_viewers": 70039,
+          "followers_gained": 5189,
+          "duration_minutes": 585
+        }
+      ]
+    },
+    {
+      "channel_name": "Northernlion",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 93,
+        "avg_viewers": 13217,
+        "peak_viewers": 23399,
+        "hours_watched": 1350568,
+        "minutes_streamed": 6131,
+        "followers_gained": 10847,
+        "followers_total": 923373
+      },
+      "all_time": {
+        "total_hours_streamed": 9571,
+        "all_time_peak_viewers": 50421,
+        "total_followers": 923977,
+        "total_games_streamed": 1002,
+        "avg_viewers_weighted": 7211,
+        "months_tracked": 113
+      },
+      "past_7_days": {
+        "avg_viewers": 12813,
+        "max_viewers": 21239,
+        "duration_minutes": 1576,
+        "hours_watched": 336564,
+        "followers_gained": 2304,
+        "streams_count": 6,
+        "active_days": 6
+      },
+      "past_3_months": {
+        "avg_viewers": 12488,
+        "max_viewers": 23399,
+        "duration_minutes": 15897,
+        "hours_watched": 3308703,
+        "followers_gained": 25784,
+        "streams_count": 54,
+        "active_days": 54
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-05 17:02:13",
+          "avg_viewers": 21239,
+          "followers_gained": 471,
+          "duration_minutes": 271
+        },
+        {
+          "date": "2026-03-04 17:02:06",
+          "avg_viewers": 15060,
+          "followers_gained": 158,
+          "duration_minutes": 312
+        },
+        {
+          "date": "2026-03-03 16:59:31",
+          "avg_viewers": 15091,
+          "followers_gained": 227,
+          "duration_minutes": 315
+        },
+        {
+          "date": "2026-03-02 17:00:54",
+          "avg_viewers": 19107,
+          "followers_gained": 267,
+          "duration_minutes": 314
+        },
+        {
+          "date": "2026-02-27 17:01:30",
+          "avg_viewers": 12880,
+          "followers_gained": 291,
+          "duration_minutes": 323
+        },
+        {
+          "date": "2026-02-26 16:58:38",
+          "avg_viewers": 15273,
+          "followers_gained": 219,
+          "duration_minutes": 316
+        },
+        {
+          "date": "2026-02-25 17:04:30",
+          "avg_viewers": 18735,
+          "followers_gained": 323,
+          "duration_minutes": 290
+        },
+        {
+          "date": "2026-02-24 17:03:13",
+          "avg_viewers": 17500,
+          "followers_gained": 292,
+          "duration_minutes": 301
+        },
+        {
+          "date": "2026-02-23 17:01:09",
+          "avg_viewers": 17942,
+          "followers_gained": 327,
+          "duration_minutes": 303
+        },
+        {
+          "date": "2026-02-20 16:59:05",
+          "avg_viewers": 15079,
+          "followers_gained": 248,
+          "duration_minutes": 305
+        }
+      ]
+    },
+    {
+      "channel_name": "shroud",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 85,
+        "avg_viewers": 8842,
+        "peak_viewers": 34590,
+        "hours_watched": 1565430,
+        "minutes_streamed": 10623,
+        "followers_gained": -5660,
+        "followers_total": 11310426
+      },
+      "all_time": {
+        "total_hours_streamed": 21466.9,
+        "all_time_peak_viewers": 516289,
+        "total_followers": 11310718,
+        "total_games_streamed": 460,
+        "avg_viewers_weighted": 22734,
+        "months_tracked": 104
+      },
+      "past_7_days": {
+        "avg_viewers": 14159,
+        "max_viewers": 32865,
+        "duration_minutes": 2804,
+        "hours_watched": 661713,
+        "followers_gained": 1670,
+        "streams_count": 7,
+        "active_days": 7
+      },
+      "past_3_months": {
+        "avg_viewers": 10688,
+        "max_viewers": 49137,
+        "duration_minutes": 28846,
+        "hours_watched": 5138529,
+        "followers_gained": -7639,
+        "streams_count": 60,
+        "active_days": 69
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-05 17:12:44",
+          "avg_viewers": 21281,
+          "followers_gained": 570,
+          "duration_minutes": 244
+        },
+        {
+          "date": "2026-03-03 20:45:04",
+          "avg_viewers": 23487,
+          "followers_gained": 107,
+          "duration_minutes": 269
+        },
+        {
+          "date": "2026-03-02 18:24:08",
+          "avg_viewers": 11282,
+          "followers_gained": 15616,
+          "duration_minutes": 605
+        },
+        {
+          "date": "2026-02-28 18:16:44",
+          "avg_viewers": 12630,
+          "followers_gained": 227,
+          "duration_minutes": 358
+        },
+        {
+          "date": "2026-02-27 18:24:55",
+          "avg_viewers": 19514,
+          "followers_gained": 449,
+          "duration_minutes": 510
+        },
+        {
+          "date": "2026-02-26 17:06:45",
+          "avg_viewers": 34590,
+          "followers_gained": 1531,
+          "duration_minutes": 668
+        },
+        {
+          "date": "2026-02-25 19:11:44",
+          "avg_viewers": 8630,
+          "followers_gained": 9358,
+          "duration_minutes": 683
+        },
+        {
+          "date": "2026-02-23 19:11:41",
+          "avg_viewers": 10951,
+          "followers_gained": 8437,
+          "duration_minutes": 435
+        },
+        {
+          "date": "2026-02-20 19:17:29",
+          "avg_viewers": 8301,
+          "followers_gained": 9260,
+          "duration_minutes": 296
+        },
+        {
+          "date": "2026-02-17 19:21:57",
+          "avg_viewers": 6786,
+          "followers_gained": 12363,
+          "duration_minutes": 659
+        }
+      ]
+    },
+    {
+      "channel_name": "sodapoppin",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 42,
+        "avg_viewers": 15129,
+        "peak_viewers": 29521,
+        "hours_watched": 2554595,
+        "minutes_streamed": 10131,
+        "followers_gained": 2871,
+        "followers_total": 8967891
+      },
+      "all_time": {
+        "total_hours_streamed": 18114.5,
+        "all_time_peak_viewers": 157979,
+        "total_followers": 8967836,
+        "total_games_streamed": 2347,
+        "avg_viewers_weighted": 19297,
+        "months_tracked": 110
+      },
+      "past_7_days": {
+        "avg_viewers": 12328,
+        "max_viewers": 18735,
+        "duration_minutes": 2722,
+        "hours_watched": 559297,
+        "followers_gained": 640,
+        "streams_count": 8,
+        "active_days": 7
+      },
+      "past_3_months": {
+        "avg_viewers": 14047,
+        "max_viewers": 29521,
+        "duration_minutes": 24477,
+        "hours_watched": 5730650,
+        "followers_gained": 4736,
+        "streams_count": 59,
+        "active_days": 68
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-05 18:14:28",
+          "avg_viewers": 12971,
+          "followers_gained": 16961,
+          "duration_minutes": 349
+        },
+        {
+          "date": "2026-03-03 20:00:33",
+          "avg_viewers": 16418,
+          "followers_gained": 203,
+          "duration_minutes": 324
+        },
+        {
+          "date": "2026-03-01 21:05:00",
+          "avg_viewers": 14240,
+          "followers_gained": 107,
+          "duration_minutes": 330
+        },
+        {
+          "date": "2026-03-01 18:01:58",
+          "avg_viewers": 14557,
+          "followers_gained": 71,
+          "duration_minutes": 183
+        },
+        {
+          "date": "2026-02-28 18:52:22",
+          "avg_viewers": 15731,
+          "followers_gained": 181,
+          "duration_minutes": 682
+        },
+        {
+          "date": "2026-02-27 15:09:49",
+          "avg_viewers": 18735,
+          "followers_gained": 121,
+          "duration_minutes": 445
+        },
+        {
+          "date": "2026-02-26 19:52:23",
+          "avg_viewers": 15925,
+          "followers_gained": 106,
+          "duration_minutes": 312
+        },
+        {
+          "date": "2026-02-25 18:00:08",
+          "avg_viewers": 20600,
+          "followers_gained": 63,
+          "duration_minutes": 384
+        },
+        {
+          "date": "2026-02-23 18:08:35",
+          "avg_viewers": 16875,
+          "followers_gained": 49,
+          "duration_minutes": 356
+        },
+        {
+          "date": "2026-02-22 16:39:36",
+          "avg_viewers": 26720,
+          "followers_gained": 753,
+          "duration_minutes": 455
+        }
+      ]
+    },
+    {
+      "channel_name": "summit1g",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 22,
+        "avg_viewers": 9672,
+        "peak_viewers": 20043,
+        "hours_watched": 3615456,
+        "minutes_streamed": 22428,
+        "followers_gained": 4072,
+        "followers_total": 6382165
+      },
+      "all_time": {
+        "total_hours_streamed": 34368.6,
+        "all_time_peak_viewers": 310998,
+        "total_followers": 6382149,
+        "total_games_streamed": 410,
+        "avg_viewers_weighted": 18193,
+        "months_tracked": 113
+      },
+      "past_7_days": {
+        "avg_viewers": 10365,
+        "max_viewers": 17653,
+        "duration_minutes": 5223,
+        "hours_watched": 902234,
+        "followers_gained": 792,
+        "streams_count": 9,
+        "active_days": 7
+      },
+      "past_3_months": {
+        "avg_viewers": 9280,
+        "max_viewers": 23215,
+        "duration_minutes": 62876,
+        "hours_watched": 9724595,
+        "followers_gained": 16255,
+        "streams_count": 93,
+        "active_days": 90
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-05 20:44:37",
+          "avg_viewers": 4540,
+          "followers_gained": 15082,
+          "duration_minutes": 750
+        },
+        {
+          "date": "2026-03-03 20:43:08",
+          "avg_viewers": 13339,
+          "followers_gained": 113,
+          "duration_minutes": 741
+        },
+        {
+          "date": "2026-03-02 20:51:53",
+          "avg_viewers": 13523,
+          "followers_gained": 27,
+          "duration_minutes": 833
+        },
+        {
+          "date": "2026-03-01 22:47:23",
+          "avg_viewers": 15654,
+          "followers_gained": 132,
+          "duration_minutes": 777
+        },
+        {
+          "date": "2026-02-28 18:52:42",
+          "avg_viewers": 13969,
+          "followers_gained": 113,
+          "duration_minutes": 682
+        },
+        {
+          "date": "2026-02-28 07:06:11",
+          "avg_viewers": 4872,
+          "followers_gained": 13734,
+          "duration_minutes": 492
+        },
+        {
+          "date": "2026-02-26 19:44:30",
+          "avg_viewers": 17653,
+          "followers_gained": 531,
+          "duration_minutes": 910
+        },
+        {
+          "date": "2026-02-25 20:59:16",
+          "avg_viewers": 14528,
+          "followers_gained": 14931,
+          "duration_minutes": 708
+        },
+        {
+          "date": "2026-02-23 19:59:09",
+          "avg_viewers": 17457,
+          "followers_gained": 44,
+          "duration_minutes": 775
+        },
+        {
+          "date": "2026-02-22 21:09:23",
+          "avg_viewers": 16179,
+          "followers_gained": 50,
+          "duration_minutes": 705
+        }
+      ]
+    },
+    {
+      "channel_name": "Caedrel",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 3,
+        "avg_viewers": 47989,
+        "peak_viewers": 296503,
+        "hours_watched": 8777199,
+        "minutes_streamed": 10974,
+        "followers_gained": 17758,
+        "followers_total": 1525505
+      },
+      "all_time": {
+        "total_hours_streamed": 10849.6,
+        "all_time_peak_viewers": 422292,
+        "total_followers": 1525742,
+        "total_games_streamed": 138,
+        "avg_viewers_weighted": 24073,
+        "months_tracked": 103
+      },
+      "past_7_days": {
+        "avg_viewers": 42197,
+        "max_viewers": 159377,
+        "duration_minutes": 3896,
+        "hours_watched": 2740007,
+        "followers_gained": 3982,
+        "streams_count": 7,
+        "active_days": 7
+      },
+      "past_3_months": {
+        "avg_viewers": 38899,
+        "max_viewers": 313788,
+        "duration_minutes": 32414,
+        "hours_watched": 21014541,
+        "followers_gained": 52505,
+        "streams_count": 76,
+        "active_days": 66
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-05 08:26:17",
+          "avg_viewers": 36533,
+          "followers_gained": 235,
+          "duration_minutes": 308
+        },
+        {
+          "date": "2026-03-04 08:29:17",
+          "avg_viewers": 43247,
+          "followers_gained": 293,
+          "duration_minutes": 315
+        },
+        {
+          "date": "2026-03-03 09:17:55",
+          "avg_viewers": 16025,
+          "followers_gained": 258,
+          "duration_minutes": 437
+        },
+        {
+          "date": "2026-03-01 14:15:40",
+          "avg_viewers": 159377,
+          "followers_gained": 1211,
+          "duration_minutes": 659
+        },
+        {
+          "date": "2026-03-01 07:24:00",
+          "avg_viewers": 76247,
+          "followers_gained": 267,
+          "duration_minutes": 201
+        },
+        {
+          "date": "2026-02-28 07:32:50",
+          "avg_viewers": 88866,
+          "followers_gained": 1114,
+          "duration_minutes": 1032
+        },
+        {
+          "date": "2026-02-27 08:40:05",
+          "avg_viewers": 58949,
+          "followers_gained": 675,
+          "duration_minutes": 944
+        },
+        {
+          "date": "2026-02-26 08:36:01",
+          "avg_viewers": 37631,
+          "followers_gained": 325,
+          "duration_minutes": 688
+        },
+        {
+          "date": "2026-02-23 14:43:48",
+          "avg_viewers": 75835,
+          "followers_gained": 245,
+          "duration_minutes": 231
+        },
+        {
+          "date": "2026-02-22 14:47:44",
+          "avg_viewers": 76545,
+          "followers_gained": 399,
+          "duration_minutes": 527
+        }
+      ]
+    },
+    {
+      "channel_name": "DougDoug",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 909,
+        "avg_viewers": 5719,
+        "peak_viewers": 9958,
+        "hours_watched": 140814,
+        "minutes_streamed": 1477,
+        "followers_gained": 7541,
+        "followers_total": 1188642
+      },
+      "all_time": {
+        "total_hours_streamed": 3099.3,
+        "all_time_peak_viewers": 23718,
+        "total_followers": 1190216,
+        "total_games_streamed": 161,
+        "avg_viewers_weighted": 5186,
+        "months_tracked": 84
+      },
+      "past_7_days": {
+        "avg_viewers": 5830,
+        "max_viewers": 9958,
+        "duration_minutes": 463,
+        "hours_watched": 44987,
+        "followers_gained": 1934,
+        "streams_count": 2,
+        "active_days": 4
+      },
+      "past_3_months": {
+        "avg_viewers": 5510,
+        "max_viewers": 9958,
+        "duration_minutes": 4860,
+        "hours_watched": 446275,
+        "followers_gained": 27634,
+        "streams_count": 16,
+        "active_days": 28
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-04 22:25:33",
+          "avg_viewers": 6303,
+          "followers_gained": 446,
+          "duration_minutes": 269
+        },
+        {
+          "date": "2026-02-26 23:40:08",
+          "avg_viewers": 9958,
+          "followers_gained": 360,
+          "duration_minutes": 194
+        },
+        {
+          "date": "2026-02-25 23:23:48",
+          "avg_viewers": 7058,
+          "followers_gained": 439,
+          "duration_minutes": 211
+        },
+        {
+          "date": "2026-02-20 21:11:14",
+          "avg_viewers": 8214,
+          "followers_gained": 363,
+          "duration_minutes": 273
+        },
+        {
+          "date": "2026-02-12 22:09:17",
+          "avg_viewers": 5609,
+          "followers_gained": 687,
+          "duration_minutes": 475
+        },
+        {
+          "date": "2026-02-09 22:13:08",
+          "avg_viewers": 6967,
+          "followers_gained": 948,
+          "duration_minutes": 321
+        },
+        {
+          "date": "2026-02-02 21:30:11",
+          "avg_viewers": 7455,
+          "followers_gained": 166,
+          "duration_minutes": 334
+        },
+        {
+          "date": "2026-01-23 22:54:20",
+          "avg_viewers": 5121,
+          "followers_gained": 248,
+          "duration_minutes": 250
+        },
+        {
+          "date": "2026-01-22 21:30:32",
+          "avg_viewers": 6286,
+          "followers_gained": 179,
+          "duration_minutes": 394
+        },
+        {
+          "date": "2026-01-19 20:17:30",
+          "avg_viewers": 5032,
+          "followers_gained": 101,
+          "duration_minutes": 287
+        }
+      ]
+    },
+    {
+      "channel_name": "pokimane",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 1765,
+        "avg_viewers": 5019,
+        "peak_viewers": 8628,
+        "hours_watched": 44596,
+        "minutes_streamed": 533,
+        "followers_gained": -6643,
+        "followers_total": 9372336
+      },
+      "all_time": {
+        "total_hours_streamed": 7029.4,
+        "all_time_peak_viewers": 138482,
+        "total_followers": 9372336,
+        "total_games_streamed": 149,
+        "avg_viewers_weighted": 13253,
+        "months_tracked": 111
+      },
+      "past_7_days": {
+        "avg_viewers": 5412,
+        "max_viewers": 8628,
+        "duration_minutes": 82,
+        "hours_watched": 7396,
+        "followers_gained": 595,
+        "streams_count": 1,
+        "active_days": 1
+      },
+      "past_3_months": {
+        "avg_viewers": 6164,
+        "max_viewers": 22217,
+        "duration_minutes": 2459,
+        "hours_watched": 252601,
+        "followers_gained": -22870,
+        "streams_count": 18,
+        "active_days": 21
+      },
+      "recent_streams": [
+        {
+          "date": "2026-02-27 15:32:14",
+          "avg_viewers": 8628,
+          "followers_gained": 595,
+          "duration_minutes": 82
+        },
+        {
+          "date": "2026-02-24 20:17:04",
+          "avg_viewers": 8317,
+          "followers_gained": 6469,
+          "duration_minutes": 122
+        },
+        {
+          "date": "2026-02-09 00:52:46",
+          "avg_viewers": 3744,
+          "followers_gained": 5476,
+          "duration_minutes": 137
+        },
+        {
+          "date": "2026-02-02 23:48:43",
+          "avg_viewers": 4787,
+          "followers_gained": 5719,
+          "duration_minutes": 67
+        },
+        {
+          "date": "2026-01-24 18:01:49",
+          "avg_viewers": 5212,
+          "followers_gained": 3823,
+          "duration_minutes": 98
+        },
+        {
+          "date": "2026-01-19 20:10:00",
+          "avg_viewers": 3669,
+          "followers_gained": 6429,
+          "duration_minutes": 142
+        },
+        {
+          "date": "2026-01-05 19:12:33",
+          "avg_viewers": 4171,
+          "followers_gained": 6048,
+          "duration_minutes": 187
+        },
+        {
+          "date": "2025-12-20 02:02:20",
+          "avg_viewers": 8468,
+          "followers_gained": 22217,
+          "duration_minutes": 145
+        }
+      ]
+    },
+    {
+      "channel_name": "Ludwig",
+      "platform": "Twitch",
+      "past_30_days": {
+        "rank": 86,
+        "avg_viewers": 10253,
+        "peak_viewers": 23884,
+        "hours_watched": 1532842,
+        "minutes_streamed": 8970,
+        "followers_gained": 18017,
+        "followers_total": 3613216
+      },
+      "all_time": {
+        "total_hours_streamed": 8093.7,
+        "all_time_peak_viewers": 165293,
+        "total_followers": 3613508,
+        "total_games_streamed": 363,
+        "avg_viewers_weighted": 12424,
+        "months_tracked": 71
+      },
+      "past_7_days": {
+        "avg_viewers": 7920,
+        "max_viewers": 13083,
+        "duration_minutes": 1501,
+        "hours_watched": 198140,
+        "followers_gained": 1873,
+        "streams_count": 6,
+        "active_days": 6
+      },
+      "past_3_months": {
+        "avg_viewers": 10078,
+        "max_viewers": 23884,
+        "duration_minutes": 29633,
+        "hours_watched": 4977554,
+        "followers_gained": 55864,
+        "streams_count": 62,
+        "active_days": 69
+      },
+      "recent_streams": [
+        {
+          "date": "2026-03-05 01:54:06",
+          "avg_viewers": 8084,
+          "followers_gained": 280,
+          "duration_minutes": 310
+        },
+        {
+          "date": "2026-03-03 22:55:33",
+          "avg_viewers": 10777,
+          "followers_gained": 390,
+          "duration_minutes": 389
+        },
+        {
+          "date": "2026-03-03 02:20:55",
+          "avg_viewers": 12547,
+          "followers_gained": 438,
+          "duration_minutes": 264
+        },
+        {
+          "date": "2026-03-02 01:07:47",
+          "avg_viewers": 9273,
+          "followers_gained": 231,
+          "duration_minutes": 297
+        },
+        {
+          "date": "2026-02-27 15:26:39",
+          "avg_viewers": 13083,
+          "followers_gained": 317,
+          "duration_minutes": 88
+        },
+        {
+          "date": "2026-02-26 21:30:10",
+          "avg_viewers": 3547,
+          "followers_gained": 6,
+          "duration_minutes": 154
+        },
+        {
+          "date": "2026-02-24 22:49:57",
+          "avg_viewers": 13668,
+          "followers_gained": 721,
+          "duration_minutes": 485
+        },
+        {
+          "date": "2026-02-24 00:14:02",
+          "avg_viewers": 9908,
+          "followers_gained": 275,
+          "duration_minutes": 330
+        },
+        {
+          "date": "2026-02-22 17:15:20",
+          "avg_viewers": 16524,
+          "followers_gained": 797,
+          "duration_minutes": 519
+        },
+        {
+          "date": "2026-02-21 17:11:58",
+          "avg_viewers": 16817,
+          "followers_gained": 767,
+          "duration_minutes": 383
+        }
+      ]
+    }
+  ]
+}

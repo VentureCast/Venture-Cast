@@ -1,0 +1,56 @@
+{
+  "fetched_at": "2026-03-05T22:07:26.469528+00:00",
+  "count": 10,
+  "channels": [
+    {
+      "login": "theburntpeanut",
+      "display_name": "TheBurntPeanut",
+      "rank": 1
+    },
+    {
+      "login": "jynxzi",
+      "display_name": "Jynxzi",
+      "rank": 2
+    },
+    {
+      "login": "caedrel",
+      "display_name": "Caedrel",
+      "rank": 3
+    },
+    {
+      "login": "zackrawrr",
+      "display_name": "zackrawrr",
+      "rank": 4
+    },
+    {
+      "login": "hasanabi",
+      "display_name": "HasanAbi",
+      "rank": 5
+    },
+    {
+      "login": "fps_shaka",
+      "display_name": "fps_shaka",
+      "rank": 6
+    },
+    {
+      "login": "kato_junichi0817",
+      "display_name": "加藤純一うん〇ちゃん",
+      "rank": 7
+    },
+    {
+      "login": "strogo",
+      "display_name": "StRoGo",
+      "rank": 8
+    },
+    {
+      "login": "virginiatv",
+      "display_name": "VirginiaTV",
+      "rank": 9
+    },
+    {
+      "login": "caseoh_",
+      "display_name": "caseoh_",
+      "rank": 10
+    }
+  ]
+}

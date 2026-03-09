@@ -58,7 +58,7 @@ services:
       NODE_ENV: development
       REACT_NATIVE_PACKAGER_HOSTNAME: 0.0.0.0
     ports:
-      - "8081:8081"   # Metro bundler
+      - "8082:8081"   # Metro bundler
       - "8097:8097"   # React Native debugger
       - "19000:19000" # Expo (if using)
       - "19001:19001" # Expo (if using)

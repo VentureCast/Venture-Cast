@@ -1,0 +1,197 @@
+{
+  "fetched_at": "2026-03-05T21:56:52.614920+00:00",
+  "period": "past_30_days",
+  "note": "Follower counts require a user access token with moderator:read:followers scope. Values may be null when using an app-only (client-credentials) token.",
+  "streamers": [
+    {
+      "channel_name": "xQc",
+      "channel_id": "71092938",
+      "platform": "Twitch",
+      "followers": 12309110,
+      "past_30_days": {
+        "streams_count": 25,
+        "total_duration_seconds": 687299,
+        "total_duration_formatted": "190h 54m 59s",
+        "average_duration_seconds": 27491,
+        "average_duration_formatted": "7h 38m 11s",
+        "rank": 11,
+        "avg_viewers": 24343,
+        "peak_viewers": 336323,
+        "hours_watched": 4832569,
+        "minutes_streamed": 11911,
+        "followers_gained": 32503
+      }
+    },
+    {
+      "channel_name": "HasanAbi",
+      "channel_id": "207813352",
+      "platform": "Twitch",
+      "followers": 3045898,
+      "past_30_days": {
+        "streams_count": 30,
+        "total_duration_seconds": 774991,
+        "total_duration_formatted": "215h 16m 31s",
+        "average_duration_seconds": 25833,
+        "average_duration_formatted": "7h 10m 33s",
+        "rank": 5,
+        "avg_viewers": 36954,
+        "peak_viewers": 357084,
+        "hours_watched": 7977131,
+        "minutes_streamed": 12952,
+        "followers_gained": 16166
+      }
+    },
+    {
+      "channel_name": "Northernlion",
+      "channel_id": "14371185",
+      "platform": "Twitch",
+      "followers": 924015,
+      "past_30_days": {
+        "streams_count": 21,
+        "total_duration_seconds": 366378,
+        "total_duration_formatted": "101h 46m 18s",
+        "average_duration_seconds": 17446,
+        "average_duration_formatted": "4h 50m 46s",
+        "rank": 93,
+        "avg_viewers": 13217,
+        "peak_viewers": 23399,
+        "hours_watched": 1350568,
+        "minutes_streamed": 6131,
+        "followers_gained": 10847
+      }
+    },
+    {
+      "channel_name": "shroud",
+      "channel_id": "37402112",
+      "platform": "Twitch",
+      "followers": 11310767,
+      "past_30_days": {
+        "streams_count": 21,
+        "total_duration_seconds": 627773,
+        "total_duration_formatted": "174h 22m 53s",
+        "average_duration_seconds": 29893,
+        "average_duration_formatted": "8h 18m 13s",
+        "rank": 85,
+        "avg_viewers": 8842,
+        "peak_viewers": 34590,
+        "hours_watched": 1565430,
+        "minutes_streamed": 10623,
+        "followers_gained": -5660
+      }
+    },
+    {
+      "channel_name": "sodapoppin",
+      "channel_id": "26301881",
+      "platform": "Twitch",
+      "followers": 8967838,
+      "past_30_days": {
+        "streams_count": 28,
+        "total_duration_seconds": 623741,
+        "total_duration_formatted": "173h 15m 41s",
+        "average_duration_seconds": 22276,
+        "average_duration_formatted": "6h 11m 16s",
+        "rank": 42,
+        "avg_viewers": 15129,
+        "peak_viewers": 29521,
+        "hours_watched": 2554595,
+        "minutes_streamed": 10131,
+        "followers_gained": 2871
+      }
+    },
+    {
+      "channel_name": "summit1g",
+      "channel_id": "26490481",
+      "platform": "Twitch",
+      "followers": 6382146,
+      "past_30_days": {
+        "streams_count": 36,
+        "total_duration_seconds": 1311366,
+        "total_duration_formatted": "364h 16m 6s",
+        "average_duration_seconds": 36426,
+        "average_duration_formatted": "10h 7m 6s",
+        "rank": 22,
+        "avg_viewers": 9672,
+        "peak_viewers": 20043,
+        "hours_watched": 3615456,
+        "minutes_streamed": 22428,
+        "followers_gained": 4072
+      }
+    },
+    {
+      "channel_name": "Caedrel",
+      "channel_id": "92038375",
+      "platform": "Twitch",
+      "followers": 1525737,
+      "past_30_days": {
+        "streams_count": 25,
+        "total_duration_seconds": 678863,
+        "total_duration_formatted": "188h 34m 23s",
+        "average_duration_seconds": 27154,
+        "average_duration_formatted": "7h 32m 34s",
+        "rank": 3,
+        "avg_viewers": 47989,
+        "peak_viewers": 296503,
+        "hours_watched": 8777199,
+        "minutes_streamed": 10974,
+        "followers_gained": 17758
+      }
+    },
+    {
+      "channel_name": "DougDoug",
+      "channel_id": "31507411",
+      "platform": "Twitch",
+      "followers": 1190433,
+      "past_30_days": {
+        "streams_count": 7,
+        "total_duration_seconds": 105995,
+        "total_duration_formatted": "29h 26m 35s",
+        "average_duration_seconds": 15142,
+        "average_duration_formatted": "4h 12m 22s",
+        "rank": 909,
+        "avg_viewers": 5719,
+        "peak_viewers": 9958,
+        "hours_watched": 140814,
+        "minutes_streamed": 1477,
+        "followers_gained": 7541
+      }
+    },
+    {
+      "channel_name": "pokimane",
+      "channel_id": "44445592",
+      "platform": "Twitch",
+      "followers": 9373497,
+      "past_30_days": {
+        "streams_count": 4,
+        "total_duration_seconds": 24088,
+        "total_duration_formatted": "6h 41m 28s",
+        "average_duration_seconds": 6022,
+        "average_duration_formatted": "1h 40m 22s",
+        "rank": 1765,
+        "avg_viewers": 5019,
+        "peak_viewers": 8628,
+        "hours_watched": 44596,
+        "minutes_streamed": 533,
+        "followers_gained": -6643
+      }
+    },
+    {
+      "channel_name": "Ludwig",
+      "channel_id": "40934651",
+      "platform": "Twitch",
+      "followers": 3613478,
+      "past_30_days": {
+        "streams_count": 25,
+        "total_duration_seconds": 543848,
+        "total_duration_formatted": "151h 4m 8s",
+        "average_duration_seconds": 21753,
+        "average_duration_formatted": "6h 2m 33s",
+        "rank": 86,
+        "avg_viewers": 10253,
+        "peak_viewers": 23884,
+        "hours_watched": 1532842,
+        "minutes_streamed": 8970,
+        "followers_gained": 18017
+      }
+    }
+  ]
+}

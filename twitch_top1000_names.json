@@ -1,0 +1,3506 @@
+{
+  "fetched_at": "2026-03-05T22:19:45.885858+00:00",
+  "count": 700,
+  "channels": [
+    {
+      "login": "theburntpeanut",
+      "display_name": "TheBurntPeanut",
+      "rank": 1
+    },
+    {
+      "login": "jynxzi",
+      "display_name": "Jynxzi",
+      "rank": 2
+    },
+    {
+      "login": "caedrel",
+      "display_name": "Caedrel",
+      "rank": 3
+    },
+    {
+      "login": "zackrawrr",
+      "display_name": "zackrawrr",
+      "rank": 4
+    },
+    {
+      "login": "hasanabi",
+      "display_name": "HasanAbi",
+      "rank": 5
+    },
+    {
+      "login": "fps_shaka",
+      "display_name": "fps_shaka",
+      "rank": 6
+    },
+    {
+      "login": "kato_junichi0817",
+      "display_name": "加藤純一うん〇ちゃん",
+      "rank": 7
+    },
+    {
+      "login": "strogo",
+      "display_name": "StRoGo",
+      "rank": 8
+    },
+    {
+      "login": "virginiatv",
+      "display_name": "VirginiaTV",
+      "rank": 9
+    },
+    {
+      "login": "caseoh_",
+      "display_name": "caseoh_",
+      "rank": 10
+    },
+    {
+      "login": "xqc",
+      "display_name": "xQc",
+      "rank": 11
+    },
+    {
+      "login": "xpsjabba08",
+      "display_name": "xpsjabba08",
+      "rank": 12
+    },
+    {
+      "login": "kamet0",
+      "display_name": "Kamet0",
+      "rank": 13
+    },
+    {
+      "login": "tfue",
+      "display_name": "Tfue",
+      "rank": 14
+    },
+    {
+      "login": "jasontheween",
+      "display_name": "jasontheween",
+      "rank": 15
+    },
+    {
+      "login": "zarbex",
+      "display_name": "zarbex",
+      "rank": 16
+    },
+    {
+      "login": "stableronaldo",
+      "display_name": "stableronaldo",
+      "rank": 17
+    },
+    {
+      "login": "eliasn97",
+      "display_name": "eliasn97",
+      "rank": 18
+    },
+    {
+      "login": "ramzes",
+      "display_name": "ramzes",
+      "rank": 19
+    },
+    {
+      "login": "theburntpeanut_247",
+      "display_name": "TheBurntPeanut_247",
+      "rank": 20
+    },
+    {
+      "login": "bysl4m",
+      "display_name": "bySL4M",
+      "rank": 21
+    },
+    {
+      "login": "summit1g",
+      "display_name": "summit1g",
+      "rank": 22
+    },
+    {
+      "login": "ow_esports",
+      "display_name": "ow_esports",
+      "rank": 23
+    },
+    {
+      "login": "lacy",
+      "display_name": "Lacy",
+      "rank": 24
+    },
+    {
+      "login": "pgl",
+      "display_name": "PGL",
+      "rank": 25
+    },
+    {
+      "login": "shlorox",
+      "display_name": "Shlorox",
+      "rank": 26
+    },
+    {
+      "login": "otplol_",
+      "display_name": "otplol_",
+      "rank": 27
+    },
+    {
+      "login": "rainbow6",
+      "display_name": "Rainbow6",
+      "rank": 28
+    },
+    {
+      "login": "nix",
+      "display_name": "Nix",
+      "rank": 29
+    },
+    {
+      "login": "rubius",
+      "display_name": "Rubius",
+      "rank": 30
+    },
+    {
+      "login": "papaplatte",
+      "display_name": "Papaplatte",
+      "rank": 31
+    },
+    {
+      "login": "ohnepixel",
+      "display_name": "ohnePixel",
+      "rank": 32
+    },
+    {
+      "login": "illojuan",
+      "display_name": "IlloJuan",
+      "rank": 33
+    },
+    {
+      "login": "n3on",
+      "display_name": "N3on",
+      "rank": 34
+    },
+    {
+      "login": "eslcs",
+      "display_name": "ESLCS",
+      "rank": 35
+    },
+    {
+      "login": "sasavot",
+      "display_name": "sasavot",
+      "rank": 36
+    },
+    {
+      "login": "trymacs",
+      "display_name": "Trymacs",
+      "rank": 37
+    },
+    {
+      "login": "rocketleague",
+      "display_name": "RocketLeague",
+      "rank": 38
+    },
+    {
+      "login": "tumblurr",
+      "display_name": "Tumblurr",
+      "rank": 39
+    },
+    {
+      "login": "emongg",
+      "display_name": "Emongg",
+      "rank": 40
+    },
+    {
+      "login": "plaqueboymax",
+      "display_name": "plaqueboymax",
+      "rank": 41
+    },
+    {
+      "login": "sodapoppin",
+      "display_name": "sodapoppin",
+      "rank": 42
+    },
+    {
+      "login": "dota2_paragon_ru",
+      "display_name": "dota2_paragon_ru",
+      "rank": 43
+    },
+    {
+      "login": "jltomy",
+      "display_name": "JLTomy",
+      "rank": 44
+    },
+    {
+      "login": "ibai",
+      "display_name": "ibai",
+      "rank": 45
+    },
+    {
+      "login": "elxokas",
+      "display_name": "elxokas",
+      "rank": 46
+    },
+    {
+      "login": "yourragegaming",
+      "display_name": "yourragegaming",
+      "rank": 47
+    },
+    {
+      "login": "esl_dota2",
+      "display_name": "ESL_DOTA2",
+      "rank": 48
+    },
+    {
+      "login": "voycebeatz",
+      "display_name": "VoyceBeatz",
+      "rank": 49
+    },
+    {
+      "login": "noway4u_sir",
+      "display_name": "NoWay4u_Sir",
+      "rank": 50
+    },
+    {
+      "login": "kenki521",
+      "display_name": "けんき",
+      "rank": 151
+    },
+    {
+      "login": "bbbb87",
+      "display_name": "世誠",
+      "rank": 152
+    },
+    {
+      "login": "marlon",
+      "display_name": "Marlon",
+      "rank": 153
+    },
+    {
+      "login": "imperialhal__",
+      "display_name": "ImperialHal__",
+      "rank": 154
+    },
+    {
+      "login": "arky",
+      "display_name": "Arky",
+      "rank": 155
+    },
+    {
+      "login": "auronplay",
+      "display_name": "auronplay",
+      "rank": 156
+    },
+    {
+      "login": "adapt",
+      "display_name": "Adapt",
+      "rank": 157
+    },
+    {
+      "login": "squishymuffinz",
+      "display_name": "SquishyMuffinz",
+      "rank": 158
+    },
+    {
+      "login": "ml7support",
+      "display_name": "mL7support",
+      "rank": 159
+    },
+    {
+      "login": "valorant",
+      "display_name": "VALORANT",
+      "rank": 160
+    },
+    {
+      "login": "joe_bartolozzi",
+      "display_name": "Joe_Bartolozzi",
+      "rank": 161
+    },
+    {
+      "login": "extraemily",
+      "display_name": "ExtraEmily",
+      "rank": 162
+    },
+    {
+      "login": "admiralbahroo",
+      "display_name": "AdmiralBahroo",
+      "rank": 163
+    },
+    {
+      "login": "realzbluewater",
+      "display_name": "RealzBlueWater",
+      "rank": 164
+    },
+    {
+      "login": "wendolynortizz",
+      "display_name": "wendolynortizz",
+      "rank": 165
+    },
+    {
+      "login": "ewroon",
+      "display_name": "EWROON",
+      "rank": 166
+    },
+    {
+      "login": "ahmpy",
+      "display_name": "ahmpy",
+      "rank": 167
+    },
+    {
+      "login": "gronkhtv",
+      "display_name": "GronkhTV",
+      "rank": 168
+    },
+    {
+      "login": "quickybaby",
+      "display_name": "QuickyBaby",
+      "rank": 169
+    },
+    {
+      "login": "gingy",
+      "display_name": "Gingy",
+      "rank": 170
+    },
+    {
+      "login": "yugi2x",
+      "display_name": "Yugi2x",
+      "rank": 171
+    },
+    {
+      "login": "fantasista_jp",
+      "display_name": "ファン太",
+      "rank": 172
+    },
+    {
+      "login": "valorant_emea",
+      "display_name": "VALORANT_EMEA",
+      "rank": 173
+    },
+    {
+      "login": "penta",
+      "display_name": "PENTA",
+      "rank": 174
+    },
+    {
+      "login": "xkevv",
+      "display_name": "xkevv",
+      "rank": 175
+    },
+    {
+      "login": "cinna",
+      "display_name": "Cinna",
+      "rank": 176
+    },
+    {
+      "login": "ferb",
+      "display_name": "ferb",
+      "rank": 177
+    },
+    {
+      "login": "jinnytty",
+      "display_name": "Jinnytty",
+      "rank": 178
+    },
+    {
+      "login": "boxbox",
+      "display_name": "boxbox",
+      "rank": 179
+    },
+    {
+      "login": "squeex",
+      "display_name": "Squeex",
+      "rank": 180
+    },
+    {
+      "login": "jonvlogs",
+      "display_name": "JonVlogs",
+      "rank": 181
+    },
+    {
+      "login": "voodoosh",
+      "display_name": "VooDooSh",
+      "rank": 182
+    },
+    {
+      "login": "faxuty",
+      "display_name": "faxuty",
+      "rank": 183
+    },
+    {
+      "login": "esfandtv",
+      "display_name": "EsfandTV",
+      "rank": 184
+    },
+    {
+      "login": "happyhappygal",
+      "display_name": "HappyHappyGal",
+      "rank": 185
+    },
+    {
+      "login": "izakooo",
+      "display_name": "IzakOOO",
+      "rank": 186
+    },
+    {
+      "login": "stray228",
+      "display_name": "Stray228",
+      "rank": 187
+    },
+    {
+      "login": "youngmulti",
+      "display_name": "YoungMulti",
+      "rank": 188
+    },
+    {
+      "login": "fontinnelerj",
+      "display_name": "fontinnelerj",
+      "rank": 189
+    },
+    {
+      "login": "mokrivskyi",
+      "display_name": "mokrivskyi",
+      "rank": 190
+    },
+    {
+      "login": "bastighg",
+      "display_name": "BastiGHG",
+      "rank": 191
+    },
+    {
+      "login": "itachi_rl",
+      "display_name": "itachi_rl",
+      "rank": 192
+    },
+    {
+      "login": "gorgc",
+      "display_name": "Gorgc",
+      "rank": 193
+    },
+    {
+      "login": "s0mcs",
+      "display_name": "s0mcs",
+      "rank": 194
+    },
+    {
+      "login": "chowh1",
+      "display_name": "chowh1",
+      "rank": 195
+    },
+    {
+      "login": "brucedropemoff",
+      "display_name": "BruceDropEmOff",
+      "rank": 196
+    },
+    {
+      "login": "mitchjones",
+      "display_name": "MitchJones",
+      "rank": 197
+    },
+    {
+      "login": "roger9527",
+      "display_name": "羅傑",
+      "rank": 198
+    },
+    {
+      "login": "aztecross",
+      "display_name": "Aztecross",
+      "rank": 199
+    },
+    {
+      "login": "missmikkaa",
+      "display_name": "MissMikkaa",
+      "rank": 200
+    },
+    {
+      "login": "betboom_dota_ru",
+      "display_name": "betboom_dota_ru",
+      "rank": 201
+    },
+    {
+      "login": "vanillamace",
+      "display_name": "vanillamace",
+      "rank": 202
+    },
+    {
+      "login": "erobb221",
+      "display_name": "erobb221",
+      "rank": 203
+    },
+    {
+      "login": "therealknossi",
+      "display_name": "TheRealKnossi",
+      "rank": 204
+    },
+    {
+      "login": "toniki",
+      "display_name": "Toniki",
+      "rank": 205
+    },
+    {
+      "login": "warn",
+      "display_name": "Warn",
+      "rank": 206
+    },
+    {
+      "login": "marli",
+      "display_name": "marli",
+      "rank": 207
+    },
+    {
+      "login": "payo",
+      "display_name": "Payo",
+      "rank": 208
+    },
+    {
+      "login": "rejoinlive",
+      "display_name": "rejoinlive",
+      "rank": 209
+    },
+    {
+      "login": "melharucos",
+      "display_name": "melharucos",
+      "rank": 210
+    },
+    {
+      "login": "baiano",
+      "display_name": "Baiano",
+      "rank": 211
+    },
+    {
+      "login": "gtasty",
+      "display_name": "gTasty",
+      "rank": 212
+    },
+    {
+      "login": "karq",
+      "display_name": "KarQ",
+      "rank": 213
+    },
+    {
+      "login": "shinjifromjapanxd",
+      "display_name": "しんじさん",
+      "rank": 214
+    },
+    {
+      "login": "watchfultv",
+      "display_name": "watchfulTV",
+      "rank": 215
+    },
+    {
+      "login": "lol_nemesis",
+      "display_name": "lol_nemesis",
+      "rank": 216
+    },
+    {
+      "login": "domingo",
+      "display_name": "Domingo",
+      "rank": 217
+    },
+    {
+      "login": "vinesauce",
+      "display_name": "Vinesauce",
+      "rank": 218
+    },
+    {
+      "login": "s3kox",
+      "display_name": "s3kox",
+      "rank": 219
+    },
+    {
+      "login": "joueur_du_grenier",
+      "display_name": "Joueur_du_Grenier",
+      "rank": 220
+    },
+    {
+      "login": "shuteye_orange",
+      "display_name": "蝦愛橘子",
+      "rank": 221
+    },
+    {
+      "login": "grubby",
+      "display_name": "Grubby",
+      "rank": 222
+    },
+    {
+      "login": "ledoo",
+      "display_name": "LEDOO",
+      "rank": 223
+    },
+    {
+      "login": "eslcsb",
+      "display_name": "ESLCSb",
+      "rank": 224
+    },
+    {
+      "login": "leva2k",
+      "display_name": "leva2k",
+      "rank": 225
+    },
+    {
+      "login": "zubarefff",
+      "display_name": "zubarefff",
+      "rank": 226
+    },
+    {
+      "login": "tototmix",
+      "display_name": "ととみっくす",
+      "rank": 227
+    },
+    {
+      "login": "ninja",
+      "display_name": "Ninja",
+      "rank": 228
+    },
+    {
+      "login": "lvndmark",
+      "display_name": "LVNDMARK",
+      "rank": 229
+    },
+    {
+      "login": "skill4ltu",
+      "display_name": "skill4ltu",
+      "rank": 230
+    },
+    {
+      "login": "alpacasita",
+      "display_name": "alpacasita",
+      "rank": 231
+    },
+    {
+      "login": "silvername",
+      "display_name": "SilverName",
+      "rank": 232
+    },
+    {
+      "login": "dhalucard",
+      "display_name": "Dhalucard",
+      "rank": 233
+    },
+    {
+      "login": "controcalcio__",
+      "display_name": "ControCalcio__",
+      "rank": 234
+    },
+    {
+      "login": "never_loses",
+      "display_name": "NeVeR_LosEs",
+      "rank": 235
+    },
+    {
+      "login": "colthavok",
+      "display_name": "ColtHavok",
+      "rank": 236
+    },
+    {
+      "login": "benoitchevalieroff",
+      "display_name": "benoitchevalieroff",
+      "rank": 237
+    },
+    {
+      "login": "silky",
+      "display_name": "Silky",
+      "rank": 238
+    },
+    {
+      "login": "sliggytv",
+      "display_name": "Sliggytv",
+      "rank": 239
+    },
+    {
+      "login": "avice",
+      "display_name": "avice",
+      "rank": 240
+    },
+    {
+      "login": "auziomf",
+      "display_name": "AuzioMF",
+      "rank": 241
+    },
+    {
+      "login": "cohh",
+      "display_name": "Cohh",
+      "rank": 242
+    },
+    {
+      "login": "pgl_cs2",
+      "display_name": "PGL_CS2",
+      "rank": 243
+    },
+    {
+      "login": "akarindao",
+      "display_name": "夢野あかり",
+      "rank": 244
+    },
+    {
+      "login": "krl_stream",
+      "display_name": "KRL_STREAM",
+      "rank": 245
+    },
+    {
+      "login": "tenacitytv",
+      "display_name": "TenacityTv",
+      "rank": 246
+    },
+    {
+      "login": "martinciriook",
+      "display_name": "MartinCirioOk",
+      "rank": 247
+    },
+    {
+      "login": "sacy",
+      "display_name": "sacy",
+      "rank": 248
+    },
+    {
+      "login": "jokerdtv",
+      "display_name": "JokerdTV",
+      "rank": 249
+    },
+    {
+      "login": "elojoninja",
+      "display_name": "ElOjoNinja",
+      "rank": 250
+    },
+    {
+      "login": "r3crutatv",
+      "display_name": "R3crutaTV",
+      "rank": 251
+    },
+    {
+      "login": "mobilmobil",
+      "display_name": "老皮",
+      "rank": 252
+    },
+    {
+      "login": "juice",
+      "display_name": "Juice",
+      "rank": 253
+    },
+    {
+      "login": "lydiaviolet",
+      "display_name": "lydiaviolet",
+      "rank": 254
+    },
+    {
+      "login": "cs2_maincast",
+      "display_name": "cs2_maincast",
+      "rank": 255
+    },
+    {
+      "login": "doublelift",
+      "display_name": "Doublelift",
+      "rank": 256
+    },
+    {
+      "login": "zbb__",
+      "display_name": "zbb__",
+      "rank": 257
+    },
+    {
+      "login": "fl0m",
+      "display_name": "fl0m",
+      "rank": 258
+    },
+    {
+      "login": "k3soju",
+      "display_name": "k3soju",
+      "rank": 259
+    },
+    {
+      "login": "naguura",
+      "display_name": "Naguura",
+      "rank": 260
+    },
+    {
+      "login": "ddg",
+      "display_name": "DDG",
+      "rank": 261
+    },
+    {
+      "login": "shotzzy",
+      "display_name": "Shotzzy",
+      "rank": 262
+    },
+    {
+      "login": "guanweiboy",
+      "display_name": "冠緯",
+      "rank": 263
+    },
+    {
+      "login": "folagorlives",
+      "display_name": "FolagorLives",
+      "rank": 264
+    },
+    {
+      "login": "alveussanctuary",
+      "display_name": "AlveusSanctuary",
+      "rank": 265
+    },
+    {
+      "login": "gamerbrother",
+      "display_name": "GamerBrother",
+      "rank": 266
+    },
+    {
+      "login": "a1dan8992",
+      "display_name": "a1dan8992",
+      "rank": 267
+    },
+    {
+      "login": "bonnie",
+      "display_name": "Bonnie",
+      "rank": 268
+    },
+    {
+      "login": "skipnho",
+      "display_name": "SkipNhO",
+      "rank": 269
+    },
+    {
+      "login": "croissantstrike",
+      "display_name": "CroissantStrike",
+      "rank": 270
+    },
+    {
+      "login": "nikof",
+      "display_name": "Nikof",
+      "rank": 271
+    },
+    {
+      "login": "broxah",
+      "display_name": "Broxah",
+      "rank": 272
+    },
+    {
+      "login": "morphe_ya",
+      "display_name": "morphe_ya",
+      "rank": 273
+    },
+    {
+      "login": "hikari_hira",
+      "display_name": "飛良ひかり",
+      "rank": 274
+    },
+    {
+      "login": "formal",
+      "display_name": "FORMAL",
+      "rank": 275
+    },
+    {
+      "login": "mertabimula",
+      "display_name": "mertabimula",
+      "rank": 276
+    },
+    {
+      "login": "alexdieci",
+      "display_name": "alexdieci",
+      "rank": 277
+    },
+    {
+      "login": "elabrahaham",
+      "display_name": "ElAbrahaham",
+      "rank": 278
+    },
+    {
+      "login": "thimagroo",
+      "display_name": "thimagroo",
+      "rank": 279
+    },
+    {
+      "login": "h2p_gucio",
+      "display_name": "H2P_Gucio",
+      "rank": 280
+    },
+    {
+      "login": "sam1268",
+      "display_name": "超負荷",
+      "rank": 281
+    },
+    {
+      "login": "therealmarzaa",
+      "display_name": "TheRealMarzaa",
+      "rank": 282
+    },
+    {
+      "login": "toonyx",
+      "display_name": "toonyx",
+      "rank": 283
+    },
+    {
+      "login": "greentea",
+      "display_name": "綠茶",
+      "rank": 284
+    },
+    {
+      "login": "zentreya",
+      "display_name": "Zentreya",
+      "rank": 285
+    },
+    {
+      "login": "vulture_ow",
+      "display_name": "vulture_ow",
+      "rank": 286
+    },
+    {
+      "login": "gtimetv",
+      "display_name": "GTimeTV",
+      "rank": 287
+    },
+    {
+      "login": "sieglinde",
+      "display_name": "Sieglinde",
+      "rank": 288
+    },
+    {
+      "login": "welovegames",
+      "display_name": "WELOVEGAMES",
+      "rank": 289
+    },
+    {
+      "login": "cineillojuan",
+      "display_name": "CineIlloJuan",
+      "rank": 290
+    },
+    {
+      "login": "mynthos",
+      "display_name": "Mynthos",
+      "rank": 291
+    },
+    {
+      "login": "niklaswilson",
+      "display_name": "NiklasWilson",
+      "rank": 292
+    },
+    {
+      "login": "paymoneywubby",
+      "display_name": "PaymoneyWubby",
+      "rank": 293
+    },
+    {
+      "login": "lplenglish",
+      "display_name": "lplenglish",
+      "rank": 294
+    },
+    {
+      "login": "aldo_geo",
+      "display_name": "aldo_geo",
+      "rank": 295
+    },
+    {
+      "login": "baitybait",
+      "display_name": "BaityBait",
+      "rank": 296
+    },
+    {
+      "login": "c_a_k_e",
+      "display_name": "C_a_k_e",
+      "rank": 297
+    },
+    {
+      "login": "hanjoudesu",
+      "display_name": "はんじょう",
+      "rank": 298
+    },
+    {
+      "login": "qttsix",
+      "display_name": "六希夫",
+      "rank": 299
+    },
+    {
+      "login": "kspksp",
+      "display_name": "KSPKSP",
+      "rank": 300
+    },
+    {
+      "login": "glorious_e",
+      "display_name": "Glorious_E",
+      "rank": 301
+    },
+    {
+      "login": "mooda",
+      "display_name": "mooda",
+      "rank": 302
+    },
+    {
+      "login": "rezreel",
+      "display_name": "RezReel",
+      "rank": 303
+    },
+    {
+      "login": "alphakep",
+      "display_name": "AlphaKep",
+      "rank": 304
+    },
+    {
+      "login": "central_committee",
+      "display_name": "Central_Committee",
+      "rank": 305
+    },
+    {
+      "login": "kungentv",
+      "display_name": "KungenTV",
+      "rank": 306
+    },
+    {
+      "login": "staiy",
+      "display_name": "Staiy",
+      "rank": 307
+    },
+    {
+      "login": "falganwow",
+      "display_name": "FalganWoW",
+      "rank": 308
+    },
+    {
+      "login": "stintik",
+      "display_name": "Stintik",
+      "rank": 309
+    },
+    {
+      "login": "godjj",
+      "display_name": "接接",
+      "rank": 310
+    },
+    {
+      "login": "michimochievee",
+      "display_name": "MichiMochievee",
+      "rank": 311
+    },
+    {
+      "login": "towelliee",
+      "display_name": "Towelliee",
+      "rank": 312
+    },
+    {
+      "login": "streamerhouse",
+      "display_name": "StreamerHouse",
+      "rank": 313
+    },
+    {
+      "login": "chess",
+      "display_name": "Chess",
+      "rank": 314
+    },
+    {
+      "login": "giggand",
+      "display_name": "Giggand",
+      "rank": 315
+    },
+    {
+      "login": "zerost_s",
+      "display_name": "Zerost_s",
+      "rank": 316
+    },
+    {
+      "login": "xrohat",
+      "display_name": "xRohat",
+      "rank": 317
+    },
+    {
+      "login": "ravshann",
+      "display_name": "RavshanN",
+      "rank": 318
+    },
+    {
+      "login": "narekcr",
+      "display_name": "NarekCR",
+      "rank": 319
+    },
+    {
+      "login": "datmodz",
+      "display_name": "DatModz",
+      "rank": 320
+    },
+    {
+      "login": "elmiillor",
+      "display_name": "ElmiilloR",
+      "rank": 321
+    },
+    {
+      "login": "rocketbaguette",
+      "display_name": "RocketBaguette",
+      "rank": 322
+    },
+    {
+      "login": "shisheyu",
+      "display_name": "Shisheyu",
+      "rank": 323
+    },
+    {
+      "login": "k1m6a",
+      "display_name": "K1m6a",
+      "rank": 324
+    },
+    {
+      "login": "diazbiffle",
+      "display_name": "DiazBiffle",
+      "rank": 325
+    },
+    {
+      "login": "yurnboi",
+      "display_name": "yurnboi",
+      "rank": 326
+    },
+    {
+      "login": "poko",
+      "display_name": "Poko",
+      "rank": 327
+    },
+    {
+      "login": "insym",
+      "display_name": "Insym",
+      "rank": 328
+    },
+    {
+      "login": "pelaajatcom",
+      "display_name": "pelaajatcom",
+      "rank": 329
+    },
+    {
+      "login": "xthesolutiontv",
+      "display_name": "xTheSolutionTV",
+      "rank": 330
+    },
+    {
+      "login": "rayasianboy",
+      "display_name": "rayasianboy",
+      "rank": 331
+    },
+    {
+      "login": "lck_carry",
+      "display_name": "LCK_Carry",
+      "rank": 332
+    },
+    {
+      "login": "zanosik66",
+      "display_name": "zanosik66",
+      "rank": 333
+    },
+    {
+      "login": "jankos",
+      "display_name": "Jankos",
+      "rank": 334
+    },
+    {
+      "login": "m3wsu",
+      "display_name": "m3wsu",
+      "rank": 335
+    },
+    {
+      "login": "oniyadayo",
+      "display_name": "おにや",
+      "rank": 336
+    },
+    {
+      "login": "ct0m",
+      "display_name": "ct0m",
+      "rank": 337
+    },
+    {
+      "login": "renatko",
+      "display_name": "renatko",
+      "rank": 338
+    },
+    {
+      "login": "iq200yukaf",
+      "display_name": "IQ200YukaF",
+      "rank": 339
+    },
+    {
+      "login": "revenant",
+      "display_name": "REVENANT",
+      "rank": 340
+    },
+    {
+      "login": "valorant_americas",
+      "display_name": "VALORANT_Americas",
+      "rank": 341
+    },
+    {
+      "login": "shanks_ttv",
+      "display_name": "shanks_ttv",
+      "rank": 342
+    },
+    {
+      "login": "surefour",
+      "display_name": "Surefour",
+      "rank": 343
+    },
+    {
+      "login": "ziqoftw",
+      "display_name": "Ziqoftw",
+      "rank": 344
+    },
+    {
+      "login": "zrush",
+      "display_name": "嬌兔",
+      "rank": 345
+    },
+    {
+      "login": "dracon",
+      "display_name": "Dracon",
+      "rank": 346
+    },
+    {
+      "login": "blackufa",
+      "display_name": "BlackUFA",
+      "rank": 347
+    },
+    {
+      "login": "samueletienne",
+      "display_name": "samueletienne",
+      "rank": 348
+    },
+    {
+      "login": "dona",
+      "display_name": "dona",
+      "rank": 349
+    },
+    {
+      "login": "solaryhs",
+      "display_name": "SolaryHS",
+      "rank": 350
+    },
+    {
+      "login": "kaysan",
+      "display_name": "Kaysan",
+      "rank": 351
+    },
+    {
+      "login": "taxi2g",
+      "display_name": "taxi2g",
+      "rank": 352
+    },
+    {
+      "login": "sneakylol",
+      "display_name": "sneakylol",
+      "rank": 353
+    },
+    {
+      "login": "steel",
+      "display_name": "steel",
+      "rank": 354
+    },
+    {
+      "login": "guacamolemolly",
+      "display_name": "GUACAMOLEMOLLY",
+      "rank": 355
+    },
+    {
+      "login": "pobelter",
+      "display_name": "Pobelter",
+      "rank": 356
+    },
+    {
+      "login": "valkyrae",
+      "display_name": "Valkyrae",
+      "rank": 357
+    },
+    {
+      "login": "gerardromero",
+      "display_name": "gerardromero",
+      "rank": 358
+    },
+    {
+      "login": "kanae_2434",
+      "display_name": "叶ちゃんねる",
+      "rank": 359
+    },
+    {
+      "login": "eamaddennfl",
+      "display_name": "EAMaddenNFL",
+      "rank": 360
+    },
+    {
+      "login": "robcdee",
+      "display_name": "robcdee",
+      "rank": 361
+    },
+    {
+      "login": "ilame",
+      "display_name": "iLame",
+      "rank": 362
+    },
+    {
+      "login": "t90official",
+      "display_name": "T90Official",
+      "rank": 363
+    },
+    {
+      "login": "etoiles",
+      "display_name": "Etoiles",
+      "rank": 364
+    },
+    {
+      "login": "pietsmiet",
+      "display_name": "PietSmiet",
+      "rank": 365
+    },
+    {
+      "login": "alexelcapo",
+      "display_name": "alexelcapo",
+      "rank": 366
+    },
+    {
+      "login": "jay3",
+      "display_name": "Jay3",
+      "rank": 367
+    },
+    {
+      "login": "xop0",
+      "display_name": "Xop0",
+      "rank": 368
+    },
+    {
+      "login": "rostikfacekid",
+      "display_name": "rostikfacekid",
+      "rank": 369
+    },
+    {
+      "login": "unter",
+      "display_name": "Unter",
+      "rank": 370
+    },
+    {
+      "login": "b0aty",
+      "display_name": "B0aty",
+      "rank": 371
+    },
+    {
+      "login": "itsspoit",
+      "display_name": "itsSpoit",
+      "rank": 372
+    },
+    {
+      "login": "eido",
+      "display_name": "eido",
+      "rank": 373
+    },
+    {
+      "login": "lolitofdez",
+      "display_name": "LOLITOFDEZ",
+      "rank": 374
+    },
+    {
+      "login": "jeefhs",
+      "display_name": "JeefHS",
+      "rank": 375
+    },
+    {
+      "login": "camy",
+      "display_name": "Camy",
+      "rank": 376
+    },
+    {
+      "login": "enzzai",
+      "display_name": "enzzai",
+      "rank": 377
+    },
+    {
+      "login": "unclebjorn",
+      "display_name": "UncleBjorn",
+      "rank": 378
+    },
+    {
+      "login": "cooruja",
+      "display_name": "Cooruja",
+      "rank": 379
+    },
+    {
+      "login": "nisqyy",
+      "display_name": "Nisqyy",
+      "rank": 380
+    },
+    {
+      "login": "kubafps",
+      "display_name": "KubaFPS",
+      "rank": 381
+    },
+    {
+      "login": "bagi",
+      "display_name": "Bagi",
+      "rank": 382
+    },
+    {
+      "login": "unboxholics",
+      "display_name": "Unboxholics",
+      "rank": 383
+    },
+    {
+      "login": "piratesoftware",
+      "display_name": "PirateSoftware",
+      "rank": 384
+    },
+    {
+      "login": "beaulo",
+      "display_name": "Beaulo",
+      "rank": 385
+    },
+    {
+      "login": "shylily",
+      "display_name": "Shylily",
+      "rank": 386
+    },
+    {
+      "login": "singsing",
+      "display_name": "singsing",
+      "rank": 387
+    },
+    {
+      "login": "alois_nl",
+      "display_name": "Alois_NL",
+      "rank": 388
+    },
+    {
+      "login": "officermesser",
+      "display_name": "OfficerMesser",
+      "rank": 389
+    },
+    {
+      "login": "jerma985",
+      "display_name": "Jerma985",
+      "rank": 390
+    },
+    {
+      "login": "dota2_maincast",
+      "display_name": "dota2_maincast",
+      "rank": 391
+    },
+    {
+      "login": "maxim",
+      "display_name": "maxim",
+      "rank": 392
+    },
+    {
+      "login": "valorant_pacific",
+      "display_name": "VALORANT_Pacific",
+      "rank": 393
+    },
+    {
+      "login": "altair",
+      "display_name": "Altair",
+      "rank": 394
+    },
+    {
+      "login": "wfatal",
+      "display_name": "wFatal",
+      "rank": 395
+    },
+    {
+      "login": "nikolarn",
+      "display_name": "Nikolarn",
+      "rank": 396
+    },
+    {
+      "login": "santeatv",
+      "display_name": "SanteaTv",
+      "rank": 397
+    },
+    {
+      "login": "mrdzinold",
+      "display_name": "MrDzinold",
+      "rank": 398
+    },
+    {
+      "login": "bawkbasoup",
+      "display_name": "Bawkbasoup",
+      "rank": 399
+    },
+    {
+      "login": "lenagol0vach",
+      "display_name": "LenaGol0vach",
+      "rank": 400
+    },
+    {
+      "login": "edison",
+      "display_name": "EDISON",
+      "rank": 401
+    },
+    {
+      "login": "kingsman265_twitch",
+      "display_name": "Kingsman265_Twitch",
+      "rank": 402
+    },
+    {
+      "login": "ponce",
+      "display_name": "Ponce",
+      "rank": 403
+    },
+    {
+      "login": "sheviii2k",
+      "display_name": "sheviii2k",
+      "rank": 404
+    },
+    {
+      "login": "callofduty_esports",
+      "display_name": "CallofDuty_Esports",
+      "rank": 405
+    },
+    {
+      "login": "caseoh247",
+      "display_name": "caseoh247",
+      "rank": 406
+    },
+    {
+      "login": "ravusssss",
+      "display_name": "ravusssss",
+      "rank": 407
+    },
+    {
+      "login": "aenot",
+      "display_name": "Aenot",
+      "rank": 408
+    },
+    {
+      "login": "rivers_gg",
+      "display_name": "rivers_gg",
+      "rank": 409
+    },
+    {
+      "login": "frodan",
+      "display_name": "Frodan",
+      "rank": 410
+    },
+    {
+      "login": "mrllamasc",
+      "display_name": "MrLlamaSC",
+      "rank": 411
+    },
+    {
+      "login": "dmf_kyochan",
+      "display_name": "恭一郎",
+      "rank": 412
+    },
+    {
+      "login": "orkpod",
+      "display_name": "orkpod",
+      "rank": 413
+    },
+    {
+      "login": "necros",
+      "display_name": "Necros",
+      "rank": 414
+    },
+    {
+      "login": "easportsfc",
+      "display_name": "easportsfc",
+      "rank": 415
+    },
+    {
+      "login": "mafanyaking",
+      "display_name": "mafanyaking",
+      "rank": 416
+    },
+    {
+      "login": "willneff",
+      "display_name": "willneff",
+      "rank": 417
+    },
+    {
+      "login": "henyathegenius",
+      "display_name": "henyathegenius",
+      "rank": 418
+    },
+    {
+      "login": "spygea",
+      "display_name": "SPYGEA",
+      "rank": 419
+    },
+    {
+      "login": "des0ut",
+      "display_name": "des0ut",
+      "rank": 420
+    },
+    {
+      "login": "cdawg",
+      "display_name": "CDawg",
+      "rank": 421
+    },
+    {
+      "login": "rezonfn",
+      "display_name": "rezonfn",
+      "rank": 422
+    },
+    {
+      "login": "tisischubech",
+      "display_name": "TisiSchubech",
+      "rank": 423
+    },
+    {
+      "login": "nissaxter",
+      "display_name": "Nissaxter",
+      "rank": 424
+    },
+    {
+      "login": "hennie2001",
+      "display_name": "烟花蹦蹦蹦",
+      "rank": 425
+    },
+    {
+      "login": "akamikarubi",
+      "display_name": "赤見かるび",
+      "rank": 426
+    },
+    {
+      "login": "kr1stw",
+      "display_name": "西南69",
+      "rank": 427
+    },
+    {
+      "login": "kiruma_ch",
+      "display_name": "切嘛",
+      "rank": 428
+    },
+    {
+      "login": "takayaspecial",
+      "display_name": "たかやスペシャル",
+      "rank": 429
+    },
+    {
+      "login": "scump",
+      "display_name": "scump",
+      "rank": 430
+    },
+    {
+      "login": "clemovitch",
+      "display_name": "Clemovitch",
+      "rank": 431
+    },
+    {
+      "login": "agraelus",
+      "display_name": "Agraelus",
+      "rank": 432
+    },
+    {
+      "login": "tpabomah",
+      "display_name": "TpaBoMaH",
+      "rank": 433
+    },
+    {
+      "login": "blusewilly_retry",
+      "display_name": "餐餐自由配",
+      "rank": 434
+    },
+    {
+      "login": "skyyart",
+      "display_name": "Skyyart",
+      "rank": 435
+    },
+    {
+      "login": "hiro_llol",
+      "display_name": "Hiro_lLoL",
+      "rank": 436
+    },
+    {
+      "login": "fobm4ster",
+      "display_name": "fobm4ster",
+      "rank": 437
+    },
+    {
+      "login": "valorant_fr",
+      "display_name": "VALORANT_fr",
+      "rank": 438
+    },
+    {
+      "login": "peachjars",
+      "display_name": "PeachJars",
+      "rank": 439
+    },
+    {
+      "login": "crystalmolly",
+      "display_name": "CrystalMolly",
+      "rank": 440
+    },
+    {
+      "login": "mistermv",
+      "display_name": "mistermv",
+      "rank": 441
+    },
+    {
+      "login": "aunkere",
+      "display_name": "Aunkere",
+      "rank": 442
+    },
+    {
+      "login": "rdulive",
+      "display_name": "RduLIVE",
+      "rank": 443
+    },
+    {
+      "login": "rainbow6bravo",
+      "display_name": "Rainbow6Bravo",
+      "rank": 444
+    },
+    {
+      "login": "gocchanmikey",
+      "display_name": "ごっちゃんマイキー",
+      "rank": 445
+    },
+    {
+      "login": "velja_lol",
+      "display_name": "velja_lol",
+      "rank": 446
+    },
+    {
+      "login": "naru0419045",
+      "display_name": "なるお_",
+      "rank": 447
+    },
+    {
+      "login": "gaspowrl",
+      "display_name": "GaspowRL",
+      "rank": 448
+    },
+    {
+      "login": "yukiofps14",
+      "display_name": "ゆきお2",
+      "rank": 449
+    },
+    {
+      "login": "l4hmadju",
+      "display_name": "L4HMADJU",
+      "rank": 450
+    },
+    {
+      "login": "ilrossopiubelloditwitch",
+      "display_name": "ilrossopiubelloditwitch",
+      "rank": 451
+    },
+    {
+      "login": "phunkroyal",
+      "display_name": "PhunkRoyal",
+      "rank": 452
+    },
+    {
+      "login": "oilrats",
+      "display_name": "Oilrats",
+      "rank": 453
+    },
+    {
+      "login": "lilaggy",
+      "display_name": "LilAggy",
+      "rank": 454
+    },
+    {
+      "login": "tenz",
+      "display_name": "TenZ",
+      "rank": 455
+    },
+    {
+      "login": "ow_esports_jp",
+      "display_name": "OW_ESPORTS_JP",
+      "rank": 456
+    },
+    {
+      "login": "kaydop",
+      "display_name": "Kaydop",
+      "rank": 457
+    },
+    {
+      "login": "roman",
+      "display_name": "roman",
+      "rank": 458
+    },
+    {
+      "login": "xhalli4x",
+      "display_name": "はりーシ",
+      "rank": 459
+    },
+    {
+      "login": "fugu_fps",
+      "display_name": "fugu_fps",
+      "rank": 460
+    },
+    {
+      "login": "dansgaming",
+      "display_name": "DansGaming",
+      "rank": 461
+    },
+    {
+      "login": "un1v249",
+      "display_name": "un1v249",
+      "rank": 462
+    },
+    {
+      "login": "locklear",
+      "display_name": "Locklear",
+      "rank": 463
+    },
+    {
+      "login": "agendafreetv",
+      "display_name": "agendafreetv",
+      "rank": 464
+    },
+    {
+      "login": "kyo1984123",
+      "display_name": "kyo1984123",
+      "rank": 465
+    },
+    {
+      "login": "savix",
+      "display_name": "Savix",
+      "rank": 466
+    },
+    {
+      "login": "michaelreeves",
+      "display_name": "michaelreeves",
+      "rank": 467
+    },
+    {
+      "login": "werlyb",
+      "display_name": "Werlyb",
+      "rank": 468
+    },
+    {
+      "login": "hotbeatstv",
+      "display_name": "HotBeatsTV",
+      "rank": 469
+    },
+    {
+      "login": "mrsavage",
+      "display_name": "MrSavage",
+      "rank": 470
+    },
+    {
+      "login": "39daph",
+      "display_name": "39daph",
+      "rank": 471
+    },
+    {
+      "login": "seoi1016",
+      "display_name": "정서이_",
+      "rank": 472
+    },
+    {
+      "login": "gamesdonequick",
+      "display_name": "GamesDoneQuick",
+      "rank": 473
+    },
+    {
+      "login": "dariomocciatwitch",
+      "display_name": "DarioMocciaTwitch",
+      "rank": 474
+    },
+    {
+      "login": "djmariio",
+      "display_name": "DjMaRiiO",
+      "rank": 475
+    },
+    {
+      "login": "repaz",
+      "display_name": "Repaz",
+      "rank": 476
+    },
+    {
+      "login": "limealicious",
+      "display_name": "Limealicious",
+      "rank": 477
+    },
+    {
+      "login": "cyganzor",
+      "display_name": "cyganzor",
+      "rank": 478
+    },
+    {
+      "login": "moistcr1tikal",
+      "display_name": "moistcr1tikal",
+      "rank": 479
+    },
+    {
+      "login": "judah_xx",
+      "display_name": "judah_xx",
+      "rank": 480
+    },
+    {
+      "login": "emilyywang",
+      "display_name": "emilyywang",
+      "rank": 481
+    },
+    {
+      "login": "ybicanoooobov",
+      "display_name": "ybicanoooobov",
+      "rank": 482
+    },
+    {
+      "login": "skermz",
+      "display_name": "Skermz",
+      "rank": 483
+    },
+    {
+      "login": "h0llylp",
+      "display_name": "H0llyLP",
+      "rank": 484
+    },
+    {
+      "login": "honeypuu",
+      "display_name": "HoneyPuu",
+      "rank": 485
+    },
+    {
+      "login": "mitsuki_mitsuu",
+      "display_name": "みつきさんです",
+      "rank": 486
+    },
+    {
+      "login": "goodoq",
+      "display_name": "goodoq",
+      "rank": 487
+    },
+    {
+      "login": "forg1",
+      "display_name": "forg1",
+      "rank": 488
+    },
+    {
+      "login": "subroza",
+      "display_name": "Subroza",
+      "rank": 489
+    },
+    {
+      "login": "rezo",
+      "display_name": "Rezo",
+      "rank": 490
+    },
+    {
+      "login": "guzu",
+      "display_name": "Guzu",
+      "rank": 491
+    },
+    {
+      "login": "lyonwgflive",
+      "display_name": "LyonWGFLive",
+      "rank": 492
+    },
+    {
+      "login": "benjychavez_",
+      "display_name": "benjychavez_",
+      "rank": 493
+    },
+    {
+      "login": "rickyedit",
+      "display_name": "rickyedit",
+      "rank": 494
+    },
+    {
+      "login": "deusamir",
+      "display_name": "deusamir",
+      "rank": 495
+    },
+    {
+      "login": "ziriguidum777",
+      "display_name": "ziriguidum777",
+      "rank": 496
+    },
+    {
+      "login": "koma",
+      "display_name": "Koma",
+      "rank": 497
+    },
+    {
+      "login": "onigiri",
+      "display_name": "OniGiri",
+      "rank": 498
+    },
+    {
+      "login": "esamarathon",
+      "display_name": "ESAMarathon",
+      "rank": 499
+    },
+    {
+      "login": "fubgun",
+      "display_name": "fubgun",
+      "rank": 500
+    },
+    {
+      "login": "perra",
+      "display_name": "perra",
+      "rank": 501
+    },
+    {
+      "login": "wakzlol",
+      "display_name": "WakzLoL",
+      "rank": 502
+    },
+    {
+      "login": "realkatieb",
+      "display_name": "RealKatieB",
+      "rank": 503
+    },
+    {
+      "login": "juansguarnizo",
+      "display_name": "juansguarnizo",
+      "rank": 504
+    },
+    {
+      "login": "deme",
+      "display_name": "deme",
+      "rank": 505
+    },
+    {
+      "login": "assarisyoko1",
+      "display_name": "あっさりしょこー",
+      "rank": 506
+    },
+    {
+      "login": "axtlol",
+      "display_name": "aXtLOL",
+      "rank": 507
+    },
+    {
+      "login": "valorant_jpn",
+      "display_name": "VALORANT_jpn",
+      "rank": 508
+    },
+    {
+      "login": "mande",
+      "display_name": "Mande",
+      "rank": 509
+    },
+    {
+      "login": "dunduk",
+      "display_name": "Dunduk",
+      "rank": 510
+    },
+    {
+      "login": "ddooyaa",
+      "display_name": "문뚜야",
+      "rank": 511
+    },
+    {
+      "login": "vegas",
+      "display_name": "vegas",
+      "rank": 512
+    },
+    {
+      "login": "dmitry_bale",
+      "display_name": "DMITRY_BALE",
+      "rank": 513
+    },
+    {
+      "login": "gorilon",
+      "display_name": "gorilon",
+      "rank": 514
+    },
+    {
+      "login": "carterefe",
+      "display_name": "carterefe",
+      "rank": 515
+    },
+    {
+      "login": "thejove",
+      "display_name": "TheJove",
+      "rank": 516
+    },
+    {
+      "login": "teegrizzley",
+      "display_name": "TeeGrizzley",
+      "rank": 517
+    },
+    {
+      "login": "razah",
+      "display_name": "RazaH",
+      "rank": 518
+    },
+    {
+      "login": "melhssn_",
+      "display_name": "MelHssn_",
+      "rank": 519
+    },
+    {
+      "login": "agurin",
+      "display_name": "agurin",
+      "rank": 520
+    },
+    {
+      "login": "seucreysonreborn",
+      "display_name": "seucreysonreborn",
+      "rank": 521
+    },
+    {
+      "login": "hakaiwrld",
+      "display_name": "hakaiwrld",
+      "rank": 522
+    },
+    {
+      "login": "reventxz",
+      "display_name": "ReventXz",
+      "rank": 523
+    },
+    {
+      "login": "mazellovvv",
+      "display_name": "mazellovvv",
+      "rank": 524
+    },
+    {
+      "login": "funnymike",
+      "display_name": "funnymike",
+      "rank": 525
+    },
+    {
+      "login": "vedal987",
+      "display_name": "vedal987",
+      "rank": 526
+    },
+    {
+      "login": "joshstrifehayes",
+      "display_name": "JoshStrifeHayes",
+      "rank": 527
+    },
+    {
+      "login": "deadp47_",
+      "display_name": "DeadP47_",
+      "rank": 528
+    },
+    {
+      "login": "sequisha",
+      "display_name": "Sequisha",
+      "rank": 529
+    },
+    {
+      "login": "chatbannoowiii",
+      "display_name": "ChatBannOowiii",
+      "rank": 530
+    },
+    {
+      "login": "jamside",
+      "display_name": "jamside",
+      "rank": 531
+    },
+    {
+      "login": "sleduck",
+      "display_name": "SleDuck",
+      "rank": 532
+    },
+    {
+      "login": "failverde",
+      "display_name": "懶貓",
+      "rank": 533
+    },
+    {
+      "login": "crownie_lol",
+      "display_name": "crownie_lol",
+      "rank": 534
+    },
+    {
+      "login": "a541021",
+      "display_name": "狂暴小建",
+      "rank": 535
+    },
+    {
+      "login": "247jynxzi",
+      "display_name": "247Jynxzi",
+      "rank": 536
+    },
+    {
+      "login": "slayproxx",
+      "display_name": "Slayproxx",
+      "rank": 537
+    },
+    {
+      "login": "graycen",
+      "display_name": "Graycen",
+      "rank": 538
+    },
+    {
+      "login": "antoinedaniel",
+      "display_name": "AntoineDaniel",
+      "rank": 539
+    },
+    {
+      "login": "by_owl",
+      "display_name": "by_Owl",
+      "rank": 540
+    },
+    {
+      "login": "clout",
+      "display_name": "clout",
+      "rank": 541
+    },
+    {
+      "login": "faide",
+      "display_name": "Faide",
+      "rank": 542
+    },
+    {
+      "login": "lowtiergod",
+      "display_name": "LowTierGod",
+      "rank": 543
+    },
+    {
+      "login": "drakeoffc",
+      "display_name": "drakeoffc",
+      "rank": 544
+    },
+    {
+      "login": "trottah",
+      "display_name": "Trottah",
+      "rank": 545
+    },
+    {
+      "login": "casinodaddy",
+      "display_name": "CasinoDaddy",
+      "rank": 546
+    },
+    {
+      "login": "laynalazar",
+      "display_name": "LaynaLazar",
+      "rank": 547
+    },
+    {
+      "login": "overpow",
+      "display_name": "Overpow",
+      "rank": 548
+    },
+    {
+      "login": "carolinekwan",
+      "display_name": "carolinekwan",
+      "rank": 549
+    },
+    {
+      "login": "paradeev1ch",
+      "display_name": "paradeev1ch",
+      "rank": 550
+    },
+    {
+      "login": "grenbaud",
+      "display_name": "GrenBaud",
+      "rank": 551
+    },
+    {
+      "login": "5opka",
+      "display_name": "5opka",
+      "rank": 552
+    },
+    {
+      "login": "beterbabbit",
+      "display_name": "BeterBabbit",
+      "rank": 553
+    },
+    {
+      "login": "angrodtralari",
+      "display_name": "AngrodTralari",
+      "rank": 554
+    },
+    {
+      "login": "liam",
+      "display_name": "Liam",
+      "rank": 555
+    },
+    {
+      "login": "nervarien",
+      "display_name": "Nervarien",
+      "rank": 556
+    },
+    {
+      "login": "choc",
+      "display_name": "choc",
+      "rank": 557
+    },
+    {
+      "login": "bendadonnn",
+      "display_name": "bendadonnn",
+      "rank": 558
+    },
+    {
+      "login": "corgicam",
+      "display_name": "CorgiCam",
+      "rank": 559
+    },
+    {
+      "login": "olesha",
+      "display_name": "Olesha",
+      "rank": 560
+    },
+    {
+      "login": "peter",
+      "display_name": "Peter",
+      "rank": 561
+    },
+    {
+      "login": "denims",
+      "display_name": "Denims",
+      "rank": 562
+    },
+    {
+      "login": "sallesgoti22",
+      "display_name": "sallesgoti22",
+      "rank": 563
+    },
+    {
+      "login": "jlcs2",
+      "display_name": "jLcs2",
+      "rank": 564
+    },
+    {
+      "login": "flight23white",
+      "display_name": "Flight23white",
+      "rank": 565
+    },
+    {
+      "login": "terracid",
+      "display_name": "Terracid",
+      "rank": 566
+    },
+    {
+      "login": "mahluna",
+      "display_name": "Mahluna",
+      "rank": 567
+    },
+    {
+      "login": "ferretsoftware",
+      "display_name": "FerretSoftware",
+      "rank": 568
+    },
+    {
+      "login": "bean",
+      "display_name": "Bean",
+      "rank": 569
+    },
+    {
+      "login": "hera",
+      "display_name": "Hera",
+      "rank": 570
+    },
+    {
+      "login": "betboom_dota_ru2",
+      "display_name": "betboom_dota_ru2",
+      "rank": 571
+    },
+    {
+      "login": "nezumivy",
+      "display_name": "nezumivy",
+      "rank": 572
+    },
+    {
+      "login": "elpelotasssss",
+      "display_name": "ElPelotasssss",
+      "rank": 573
+    },
+    {
+      "login": "genesisgg",
+      "display_name": "genesisgg",
+      "rank": 574
+    },
+    {
+      "login": "euriece",
+      "display_name": "Euriece",
+      "rank": 575
+    },
+    {
+      "login": "irissiri129",
+      "display_name": "艾怡",
+      "rank": 576
+    },
+    {
+      "login": "felikah",
+      "display_name": "Felikah",
+      "rank": 577
+    },
+    {
+      "login": "imaqtpie",
+      "display_name": "imaqtpie",
+      "rank": 578
+    },
+    {
+      "login": "woojungx4",
+      "display_name": "우정우정우정우정",
+      "rank": 579
+    },
+    {
+      "login": "orangemorange",
+      "display_name": "orangemorange",
+      "rank": 580
+    },
+    {
+      "login": "itsassitv",
+      "display_name": "itsAssiTV",
+      "rank": 581
+    },
+    {
+      "login": "frontalpanda",
+      "display_name": "FrontalPanda",
+      "rank": 582
+    },
+    {
+      "login": "byilhann",
+      "display_name": "byilhann",
+      "rank": 583
+    },
+    {
+      "login": "vodkavdk",
+      "display_name": "ボドカさん",
+      "rank": 584
+    },
+    {
+      "login": "carola",
+      "display_name": "Carola",
+      "rank": 585
+    },
+    {
+      "login": "lilsimsie",
+      "display_name": "lilsimsie",
+      "rank": 586
+    },
+    {
+      "login": "xarola_",
+      "display_name": "XAROLA_",
+      "rank": 587
+    },
+    {
+      "login": "letshugotv",
+      "display_name": "LetsHugoTV",
+      "rank": 588
+    },
+    {
+      "login": "lampachmen",
+      "display_name": "LampachMen",
+      "rank": 589
+    },
+    {
+      "login": "ray",
+      "display_name": "Ray",
+      "rank": 590
+    },
+    {
+      "login": "celerity",
+      "display_name": "Celerity",
+      "rank": 591
+    },
+    {
+      "login": "admiralbulldog",
+      "display_name": "AdmiralBulldog",
+      "rank": 592
+    },
+    {
+      "login": "bigpuffer",
+      "display_name": "Bigpuffer",
+      "rank": 593
+    },
+    {
+      "login": "humility",
+      "display_name": "Humility",
+      "rank": 594
+    },
+    {
+      "login": "liang_0714",
+      "display_name": "小亮",
+      "rank": 595
+    },
+    {
+      "login": "drututt",
+      "display_name": "Drututt",
+      "rank": 596
+    },
+    {
+      "login": "hivise",
+      "display_name": "hivise",
+      "rank": 597
+    },
+    {
+      "login": "szelioficjalnie",
+      "display_name": "szelioficjalnie",
+      "rank": 598
+    },
+    {
+      "login": "kosky",
+      "display_name": "kosky",
+      "rank": 599
+    },
+    {
+      "login": "surskity11",
+      "display_name": "Surskity11",
+      "rank": 600
+    },
+    {
+      "login": "tomato",
+      "display_name": "Tomato",
+      "rank": 601
+    },
+    {
+      "login": "scarra",
+      "display_name": "Scarra",
+      "rank": 602
+    },
+    {
+      "login": "zoil",
+      "display_name": "Zoil",
+      "rank": 603
+    },
+    {
+      "login": "uzra",
+      "display_name": "Uzra",
+      "rank": 604
+    },
+    {
+      "login": "quxocere33",
+      "display_name": "QuxoCere33",
+      "rank": 605
+    },
+    {
+      "login": "off_kuka358",
+      "display_name": "off_kuka358",
+      "rank": 606
+    },
+    {
+      "login": "ade3_3",
+      "display_name": "ade3_3",
+      "rank": 607
+    },
+    {
+      "login": "mfreak00",
+      "display_name": "mfreak00",
+      "rank": 608
+    },
+    {
+      "login": "zwebackhd",
+      "display_name": "zwebackhd",
+      "rank": 609
+    },
+    {
+      "login": "folase",
+      "display_name": "folase",
+      "rank": 610
+    },
+    {
+      "login": "mongraal",
+      "display_name": "Mongraal",
+      "rank": 611
+    },
+    {
+      "login": "silvervale",
+      "display_name": "Silvervale",
+      "rank": 612
+    },
+    {
+      "login": "sidneyeweka",
+      "display_name": "SidneyEweka",
+      "rank": 613
+    },
+    {
+      "login": "qojqva",
+      "display_name": "qojqva",
+      "rank": 614
+    },
+    {
+      "login": "sheefgg",
+      "display_name": "SheefGG",
+      "rank": 615
+    },
+    {
+      "login": "sesuko",
+      "display_name": "Sesuko",
+      "rank": 616
+    },
+    {
+      "login": "randombrucetv",
+      "display_name": "RandomBruceTV",
+      "rank": 617
+    },
+    {
+      "login": "mastersnakou",
+      "display_name": "MasterSnakou",
+      "rank": 618
+    },
+    {
+      "login": "pira_real",
+      "display_name": "PIRA_real",
+      "rank": 619
+    },
+    {
+      "login": "jeens",
+      "display_name": "Jeens",
+      "rank": 620
+    },
+    {
+      "login": "dante_will",
+      "display_name": "Dante_Will",
+      "rank": 621
+    },
+    {
+      "login": "giantwaffle",
+      "display_name": "Giantwaffle",
+      "rank": 622
+    },
+    {
+      "login": "chloe__irl",
+      "display_name": "Chloe__IRL",
+      "rank": 623
+    },
+    {
+      "login": "alfrea",
+      "display_name": "らいじん",
+      "rank": 624
+    },
+    {
+      "login": "justcooman",
+      "display_name": "JustCooman",
+      "rank": 625
+    },
+    {
+      "login": "97zoner",
+      "display_name": "97zoner",
+      "rank": 626
+    },
+    {
+      "login": "tfblade",
+      "display_name": "TFBlade",
+      "rank": 627
+    },
+    {
+      "login": "zeling",
+      "display_name": "Zeling",
+      "rank": 628
+    },
+    {
+      "login": "snopey",
+      "display_name": "Snopey",
+      "rank": 629
+    },
+    {
+      "login": "stariy_bog",
+      "display_name": "stariy_bog",
+      "rank": 630
+    },
+    {
+      "login": "yuuechka",
+      "display_name": "yuuechka",
+      "rank": 631
+    },
+    {
+      "login": "derzko69",
+      "display_name": "derzko69",
+      "rank": 632
+    },
+    {
+      "login": "natehill",
+      "display_name": "NateHill",
+      "rank": 633
+    },
+    {
+      "login": "lolesportstw",
+      "display_name": "lolesportstw",
+      "rank": 634
+    },
+    {
+      "login": "sykkuno",
+      "display_name": "Sykkuno",
+      "rank": 635
+    },
+    {
+      "login": "ricci",
+      "display_name": "Ricci",
+      "rank": 636
+    },
+    {
+      "login": "inkmate0",
+      "display_name": "inkmate0",
+      "rank": 637
+    },
+    {
+      "login": "sylvainlyve",
+      "display_name": "SylvainLyve",
+      "rank": 638
+    },
+    {
+      "login": "jennyan",
+      "display_name": "JenNyan",
+      "rank": 639
+    },
+    {
+      "login": "gssspotted",
+      "display_name": "Gssspotted",
+      "rank": 640
+    },
+    {
+      "login": "mailand",
+      "display_name": "mailand",
+      "rank": 641
+    },
+    {
+      "login": "cdnthe3rd",
+      "display_name": "CDNThe3rd",
+      "rank": 642
+    },
+    {
+      "login": "ren_kisaragi__",
+      "display_name": "如月れん",
+      "rank": 643
+    },
+    {
+      "login": "august",
+      "display_name": "August",
+      "rank": 644
+    },
+    {
+      "login": "paroniie",
+      "display_name": "帕蘿妮",
+      "rank": 645
+    },
+    {
+      "login": "misterarther",
+      "display_name": "MISTERARTHER",
+      "rank": 646
+    },
+    {
+      "login": "ereklo_game",
+      "display_name": "Ereklo_Game",
+      "rank": 647
+    },
+    {
+      "login": "deshaefrost",
+      "display_name": "DeshaeFrost",
+      "rank": 648
+    },
+    {
+      "login": "qoqsik",
+      "display_name": "qoqsik",
+      "rank": 649
+    },
+    {
+      "login": "doggikrazynba",
+      "display_name": "doggikrazynba",
+      "rank": 650
+    },
+    {
+      "login": "szzalony",
+      "display_name": "Szzalony",
+      "rank": 801
+    },
+    {
+      "login": "raud",
+      "display_name": "Raud",
+      "rank": 802
+    },
+    {
+      "login": "slrabbit99",
+      "display_name": "貝克",
+      "rank": 803
+    },
+    {
+      "login": "rubenmartinweb",
+      "display_name": "rubenmartinweb",
+      "rank": 804
+    },
+    {
+      "login": "foolish",
+      "display_name": "Foolish",
+      "rank": 805
+    },
+    {
+      "login": "pun1shers_tv",
+      "display_name": "Pun1shers_TV",
+      "rank": 806
+    },
+    {
+      "login": "les",
+      "display_name": "LES",
+      "rank": 807
+    },
+    {
+      "login": "thesketchreal",
+      "display_name": "thesketchreal",
+      "rank": 808
+    },
+    {
+      "login": "clovaobengala",
+      "display_name": "ClovaoBengala",
+      "rank": 809
+    },
+    {
+      "login": "twitchrivals",
+      "display_name": "TwitchRivals",
+      "rank": 810
+    },
+    {
+      "login": "sips_",
+      "display_name": "sips_",
+      "rank": 811
+    },
+    {
+      "login": "staryuuki",
+      "display_name": "Staryuuki",
+      "rank": 812
+    },
+    {
+      "login": "yoon_froggy",
+      "display_name": "윤개굴이",
+      "rank": 813
+    },
+    {
+      "login": "qlnek",
+      "display_name": "qlnek",
+      "rank": 814
+    },
+    {
+      "login": "superjj",
+      "display_name": "SuperJJ",
+      "rank": 815
+    },
+    {
+      "login": "demon1",
+      "display_name": "Demon1",
+      "rank": 816
+    },
+    {
+      "login": "ns_art",
+      "display_name": "NS_ART",
+      "rank": 817
+    },
+    {
+      "login": "juliakins",
+      "display_name": "juliakins",
+      "rank": 818
+    },
+    {
+      "login": "guit88man",
+      "display_name": "guit88man",
+      "rank": 819
+    },
+    {
+      "login": "edopeh",
+      "display_name": "edopeh",
+      "rank": 820
+    },
+    {
+      "login": "criken",
+      "display_name": "Criken",
+      "rank": 821
+    },
+    {
+      "login": "calebhart42",
+      "display_name": "Calebhart42",
+      "rank": 822
+    },
+    {
+      "login": "elcalvolol_",
+      "display_name": "elcalvolol_",
+      "rank": 823
+    },
+    {
+      "login": "rakattack",
+      "display_name": "Rakattack",
+      "rank": 824
+    },
+    {
+      "login": "pokemon",
+      "display_name": "Pokemon",
+      "rank": 825
+    },
+    {
+      "login": "vovapain",
+      "display_name": "Vovapain",
+      "rank": 826
+    },
+    {
+      "login": "dezgamez",
+      "display_name": "DezGamez",
+      "rank": 827
+    },
+    {
+      "login": "cblol",
+      "display_name": "CBLOL",
+      "rank": 828
+    },
+    {
+      "login": "jasper7se",
+      "display_name": "Jasper7se",
+      "rank": 829
+    },
+    {
+      "login": "deadlyslob",
+      "display_name": "Deadlyslob",
+      "rank": 830
+    },
+    {
+      "login": "kragiee",
+      "display_name": "kragiee",
+      "rank": 831
+    },
+    {
+      "login": "zizaran",
+      "display_name": "Zizaran",
+      "rank": 832
+    },
+    {
+      "login": "santipulgaz",
+      "display_name": "santipulgaz",
+      "rank": 833
+    },
+    {
+      "login": "rtgame",
+      "display_name": "RTGame",
+      "rank": 834
+    },
+    {
+      "login": "soymotor",
+      "display_name": "SoyMotor",
+      "rank": 835
+    },
+    {
+      "login": "knebeltv",
+      "display_name": "KnebelTV",
+      "rank": 836
+    },
+    {
+      "login": "maxylobes",
+      "display_name": "Maxylobes",
+      "rank": 837
+    },
+    {
+      "login": "katoo",
+      "display_name": "katoo",
+      "rank": 838
+    },
+    {
+      "login": "z60411",
+      "display_name": "綠寶",
+      "rank": 839
+    },
+    {
+      "login": "mmorpg",
+      "display_name": "Mmorpg",
+      "rank": 840
+    },
+    {
+      "login": "teepee",
+      "display_name": "TeePee",
+      "rank": 841
+    },
+    {
+      "login": "mipooshka",
+      "display_name": "Mipooshka",
+      "rank": 842
+    },
+    {
+      "login": "kinggeorge",
+      "display_name": "KingGeorge",
+      "rank": 843
+    },
+    {
+      "login": "muhanjan",
+      "display_name": "MuHaNjAn",
+      "rank": 844
+    },
+    {
+      "login": "rosdri_twitch",
+      "display_name": "Rosdri_Twitch",
+      "rank": 845
+    },
+    {
+      "login": "mathil1",
+      "display_name": "Mathil1",
+      "rank": 846
+    },
+    {
+      "login": "poach",
+      "display_name": "POACH",
+      "rank": 847
+    },
+    {
+      "login": "x9nium",
+      "display_name": "x9nium",
+      "rank": 848
+    },
+    {
+      "login": "herdyn",
+      "display_name": "Herdyn",
+      "rank": 849
+    },
+    {
+      "login": "light_starboy",
+      "display_name": "マクドナルドさん",
+      "rank": 850
+    },
+    {
+      "login": "ruetoo",
+      "display_name": "Ruetoo",
+      "rank": 901
+    },
+    {
+      "login": "mrsal_59",
+      "display_name": "MrSal_59",
+      "rank": 902
+    },
+    {
+      "login": "iitztimmy",
+      "display_name": "iiTzTimmy",
+      "rank": 903
+    },
+    {
+      "login": "rdcwaitingroom_",
+      "display_name": "RdcWaitingRoom_",
+      "rank": 904
+    },
+    {
+      "login": "emiru247",
+      "display_name": "Emiru247",
+      "rank": 905
+    },
+    {
+      "login": "daxak",
+      "display_name": "Daxak",
+      "rank": 906
+    },
+    {
+      "login": "orslok",
+      "display_name": "orslok",
+      "rank": 907
+    },
+    {
+      "login": "themrsark",
+      "display_name": "TheMrSark",
+      "rank": 908
+    },
+    {
+      "login": "dougdoug",
+      "display_name": "DougDoug",
+      "rank": 909
+    },
+    {
+      "login": "ko0416",
+      "display_name": "Ko0416",
+      "rank": 910
+    },
+    {
+      "login": "mictia00",
+      "display_name": "Mictia00",
+      "rank": 911
+    },
+    {
+      "login": "willerz",
+      "display_name": "WillerZ",
+      "rank": 912
+    },
+    {
+      "login": "olofmeister",
+      "display_name": "olofmeister",
+      "rank": 913
+    },
+    {
+      "login": "runthefutmarket",
+      "display_name": "runthefutmarket",
+      "rank": 914
+    },
+    {
+      "login": "watchfultvb",
+      "display_name": "watchfulTVb",
+      "rank": 915
+    },
+    {
+      "login": "repoze",
+      "display_name": "Repoze",
+      "rank": 916
+    },
+    {
+      "login": "nmplol2",
+      "display_name": "nmplol2",
+      "rank": 917
+    },
+    {
+      "login": "loeya",
+      "display_name": "Loeya",
+      "rank": 918
+    },
+    {
+      "login": "nicewigg",
+      "display_name": "NiceWigg",
+      "rank": 919
+    },
+    {
+      "login": "strippin",
+      "display_name": "Strippin",
+      "rank": 920
+    },
+    {
+      "login": "awizotv",
+      "display_name": "AwizoTV",
+      "rank": 921
+    },
+    {
+      "login": "manatylol",
+      "display_name": "ManatyLoL",
+      "rank": 922
+    },
+    {
+      "login": "viper",
+      "display_name": "Viper",
+      "rank": 923
+    },
+    {
+      "login": "chesstopia1",
+      "display_name": "Chesstopia1",
+      "rank": 924
+    },
+    {
+      "login": "mikami_kon",
+      "display_name": "巫神こん",
+      "rank": 925
+    },
+    {
+      "login": "move_mind",
+      "display_name": "Move_Mind",
+      "rank": 926
+    },
+    {
+      "login": "cursedfiber78",
+      "display_name": "CursedFiber78",
+      "rank": 927
+    },
+    {
+      "login": "theguill84",
+      "display_name": "TheGuill84",
+      "rank": 928
+    },
+    {
+      "login": "sadicaz",
+      "display_name": "sadicaz",
+      "rank": 929
+    },
+    {
+      "login": "lollolacustre",
+      "display_name": "lollolacustre",
+      "rank": 930
+    },
+    {
+      "login": "imow",
+      "display_name": "ImOw",
+      "rank": 931
+    },
+    {
+      "login": "zagowt",
+      "display_name": "zagowt",
+      "rank": 932
+    },
+    {
+      "login": "ksufee",
+      "display_name": "Ksufee",
+      "rank": 933
+    },
+    {
+      "login": "dota2_paragon_ru2",
+      "display_name": "dota2_paragon_ru2",
+      "rank": 934
+    },
+    {
+      "login": "megarush51",
+      "display_name": "MegaRush51",
+      "rank": 935
+    },
+    {
+      "login": "nexxuz",
+      "display_name": "Nexxuz",
+      "rank": 936
+    },
+    {
+      "login": "sterzik",
+      "display_name": "Sterzik",
+      "rank": 937
+    },
+    {
+      "login": "ratedepicz",
+      "display_name": "RatedEpicz",
+      "rank": 938
+    },
+    {
+      "login": "morphilina",
+      "display_name": "morphilina",
+      "rank": 939
+    },
+    {
+      "login": "bonjwachill",
+      "display_name": "BonjwaChill",
+      "rank": 940
+    },
+    {
+      "login": "foxrabbit",
+      "display_name": "FOXRABBIT",
+      "rank": 941
+    },
+    {
+      "login": "segibuzah",
+      "display_name": "segibuzah",
+      "rank": 942
+    },
+    {
+      "login": "stokes",
+      "display_name": "Stokes",
+      "rank": 943
+    },
+    {
+      "login": "littlebigwhale",
+      "display_name": "LittleBigWhale",
+      "rank": 944
+    },
+    {
+      "login": "haitani0904",
+      "display_name": "ハイタニ",
+      "rank": 945
+    },
+    {
+      "login": "grian",
+      "display_name": "Grian",
+      "rank": 946
+    },
+    {
+      "login": "im_dontai",
+      "display_name": "Im_Dontai",
+      "rank": 947
+    },
+    {
+      "login": "liminhag0d",
+      "display_name": "liminhag0d",
+      "rank": 948
+    },
+    {
+      "login": "onlyjson",
+      "display_name": "onlyjson",
+      "rank": 949
+    },
+    {
+      "login": "farbizzbat9",
+      "display_name": "FarbizzBat9",
+      "rank": 950
+    },
+    {
+      "login": "drfeelgood",
+      "display_name": "DrFeelgood",
+      "rank": 951
+    },
+    {
+      "login": "playhearthstone",
+      "display_name": "PlayHearthstone",
+      "rank": 952
+    },
+    {
+      "login": "fruktozka",
+      "display_name": "Fruktozka",
+      "rank": 953
+    },
+    {
+      "login": "nexe_",
+      "display_name": "Nexe_",
+      "rank": 954
+    },
+    {
+      "login": "cowfee",
+      "display_name": "cowfee",
+      "rank": 955
+    },
+    {
+      "login": "benfruit",
+      "display_name": "BenFruit",
+      "rank": 956
+    },
+    {
+      "login": "tonton",
+      "display_name": "Tonton",
+      "rank": 957
+    },
+    {
+      "login": "uraniumrr",
+      "display_name": "uraniumrr",
+      "rank": 958
+    },
+    {
+      "login": "newmultishow",
+      "display_name": "NewMultiShow",
+      "rank": 959
+    },
+    {
+      "login": "roadhouse",
+      "display_name": "RoadHouse",
+      "rank": 960
+    },
+    {
+      "login": "ajikichi",
+      "display_name": "アジ吉",
+      "rank": 961
+    },
+    {
+      "login": "sanchovies",
+      "display_name": "Sanchovies",
+      "rank": 962
+    },
+    {
+      "login": "infume",
+      "display_name": "infume",
+      "rank": 963
+    },
+    {
+      "login": "iceicell",
+      "display_name": "iceicell",
+      "rank": 964
+    },
+    {
+      "login": "marymaybe",
+      "display_name": "MaryMaybe",
+      "rank": 965
+    },
+    {
+      "login": "luxthos",
+      "display_name": "Luxthos",
+      "rank": 966
+    },
+    {
+      "login": "sheiden",
+      "display_name": "Sheiden",
+      "rank": 967
+    },
+    {
+      "login": "smtxlost",
+      "display_name": "SMTXLOST",
+      "rank": 968
+    },
+    {
+      "login": "qtcinderella",
+      "display_name": "QTCinderella",
+      "rank": 969
+    },
+    {
+      "login": "silithur",
+      "display_name": "Silithur",
+      "rank": 970
+    },
+    {
+      "login": "fr3ddy",
+      "display_name": "Fr3ddy",
+      "rank": 971
+    },
+    {
+      "login": "goldgoblinnet",
+      "display_name": "GoldGoblinNET",
+      "rank": 972
+    },
+    {
+      "login": "meltonff",
+      "display_name": "メルトンめるとん",
+      "rank": 973
+    },
+    {
+      "login": "thegrefg",
+      "display_name": "TheGrefg",
+      "rank": 974
+    },
+    {
+      "login": "relaxcis",
+      "display_name": "relaxcis",
+      "rank": 975
+    },
+    {
+      "login": "konuzisak",
+      "display_name": "konuzisak",
+      "rank": 976
+    },
+    {
+      "login": "sakurashymko",
+      "display_name": "sakurashymko",
+      "rank": 977
+    },
+    {
+      "login": "th3antonio",
+      "display_name": "Th3Antonio",
+      "rank": 978
+    },
+    {
+      "login": "burgaofps",
+      "display_name": "BURGAOfps",
+      "rank": 979
+    },
+    {
+      "login": "tininho_cruz",
+      "display_name": "tininho_cruz",
+      "rank": 980
+    },
+    {
+      "login": "tftoddy",
+      "display_name": "TFToddy",
+      "rank": 981
+    },
+    {
+      "login": "edizderbreite",
+      "display_name": "edizderbreite",
+      "rank": 982
+    },
+    {
+      "login": "wakiwaki612",
+      "display_name": "わきをだ",
+      "rank": 983
+    },
+    {
+      "login": "zalekoduf",
+      "display_name": "zalekoduf",
+      "rank": 984
+    },
+    {
+      "login": "mirwana",
+      "display_name": "MIRWANA",
+      "rank": 985
+    },
+    {
+      "login": "kinapoppo",
+      "display_name": "kinapoppo",
+      "rank": 986
+    },
+    {
+      "login": "abdulhd",
+      "display_name": "AbdulHD",
+      "rank": 987
+    },
+    {
+      "login": "ahlaundoh",
+      "display_name": "Ahlaundoh",
+      "rank": 988
+    },
+    {
+      "login": "toosefn",
+      "display_name": "TooseFN",
+      "rank": 989
+    },
+    {
+      "login": "russiamentop",
+      "display_name": "russiamentop",
+      "rank": 990
+    },
+    {
+      "login": "riri_lol",
+      "display_name": "りーり",
+      "rank": 991
+    },
+    {
+      "login": "elnueveenvivo",
+      "display_name": "elnueveenvivo",
+      "rank": 992
+    },
+    {
+      "login": "pwgood",
+      "display_name": "PWGood",
+      "rank": 993
+    },
+    {
+      "login": "evelynomadera",
+      "display_name": "evelynomadera",
+      "rank": 994
+    },
+    {
+      "login": "frametamer666",
+      "display_name": "frametamer666",
+      "rank": 995
+    },
+    {
+      "login": "romainjacques_",
+      "display_name": "RomainJacques_",
+      "rank": 996
+    },
+    {
+      "login": "officialhyper",
+      "display_name": "OfficialHyper",
+      "rank": 997
+    },
+    {
+      "login": "hyver",
+      "display_name": "HYVER",
+      "rank": 998
+    },
+    {
+      "login": "et_1231",
+      "display_name": "依渟",
+      "rank": 999
+    },
+    {
+      "login": "tanukininja",
+      "display_name": "たぬき忍者",
+      "rank": 1000
+    }
+  ]
+}
