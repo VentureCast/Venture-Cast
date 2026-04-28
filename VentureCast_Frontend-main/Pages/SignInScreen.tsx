@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
 import InputField from './Components/InputField';
 import Button from './Components/Button';
-import { supabase } from '../supabaseClient';
+import { useUser } from '../UserProvider';
 import { useNavigation } from '@react-navigation/native';
 
 const SignInScreen = ({ navigation: navFromProps }: any) => {
@@ -11,22 +11,17 @@ const SignInScreen = ({ navigation: navFromProps }: any) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigation = navFromProps || useNavigation();
+  const { signIn } = useUser();
 
   const handleSignIn = async () => {
     setLoading(true);
     setError(null);
     try {
       const lowerEmail = email.trim().toLowerCase();
-      const { data, error } = await supabase.auth.signInWithPassword({ email: lowerEmail, password });
-      if (error) {
-        setError(error.message);
-      } else if (data && data.user) {
-        navigation.navigate('MainTabs');
-      } else {
-        setError('Unknown error.');
-      }
+      await signIn(lowerEmail, password);
+      navigation.navigate('MainTabs');
     } catch (e: any) {
-      setError(e.message || 'Unknown error.');
+      setError(e.message || 'Invalid credentials.');
     } finally {
       setLoading(false);
     }
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    backgroundColor: '#FFFFFF', // White background
+    backgroundColor: '#FFFFFF',
     paddingTop: 60,
     paddingBottom: 30,
   },
@@ -90,21 +85,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: 'urbanist',
   },
-
   faceIdText: {
     marginTop: 30,
     color: '#2C1E57',
     fontWeight: '600',
     fontFamily: 'urbanist',
   },
-  //back arrow
-  icon: { 
+  icon: {
     width: 23.5,
     height: 20,
     marginHorizontal: 20,
-    marginBottom: 18, // need these to be relative to screen size
+    marginBottom: 18,
     },
-    //reset pass
     resetButton: {
       height: 40,
     },

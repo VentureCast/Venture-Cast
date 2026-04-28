@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation, NavigationProp, useRoute, RouteProp } from '@react-navigation/native';
-import { supabase } from '../supabaseClient';
+import { useUser } from '../UserProvider';
+import api from '../services/api';
 
 type RootStackParamList = {
-  Orders: undefined; // Do this for all linked pages
+  Orders: undefined;
   Portfolio: undefined;
   ClipsPage: undefined;
   StockDetails: { streamer_id: string } | undefined;
@@ -14,46 +15,39 @@ const StockDetailsScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'StockDetails'>>();
   const streamerId = route.params?.streamer_id;
+  const { user, token } = useUser();
 
   const [streamer, setStreamer] = useState<any>(null);
-  const [stats, setStats] = useState<any>(null);
+  const [shareInfo, setShareInfo] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (user && token) {
+      api.setToken(token);
+      api.setUserId(user._id);
+    }
+  }, [user, token]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!streamerId) return;
       setLoading(true);
-      // Fetch streamer info (name from StreamerInfo, others from Streamers)
-      const { data: streamerBase } = await supabase
-        .from('Streamers')
-        .select('streamer_id, ticker_name, profile_picture_path')
-        .eq('streamer_id', streamerId)
-        .single();
-      const { data: info } = await supabase
-        .from('StreamerInfo')
-        .select('name')
-        .eq('streamer_id', streamerId)
-        .single();
-      const streamerData = streamerBase ? { ...streamerBase, username: info?.name } : null;
-      setStreamer(streamerData);
-      // Fetch streamer prices
-      const { data: statsData } = await supabase
-        .from('StreamerPrice')
-        .select('streamer_id, current_price, day_1_price')
-        .eq('streamer_id', streamerId)
-        .single();
-      setStats(statsData);
+      try {
+        const streamerData = await api.getStreamer(streamerId);
+        setStreamer(streamerData);
+
+        const shareData = await api.getShareInfo(streamerId);
+        setShareInfo(shareData);
+      } catch {
+        // Fallback to defaults
+      }
       setLoading(false);
     };
     fetchData();
   }, [streamerId]);
 
-  const price = stats?.current_price || 100.00;
-  const day1Price = stats?.day_1_price || 100.00;
-  const trendPercent = useMemo(() => {
-    if (!day1Price) return '0.00';
-    return (((price / day1Price) - 1) * 100).toFixed(2);
-  }, [price, day1Price]);
+  const price = shareInfo?.sharePrice || 0;
+  const trendPercent = '0.00';
 
   if (loading) {
     return (
@@ -90,8 +84,8 @@ const StockDetailsScreen = () => {
             style={styles.stockImage}
           />
           <View style={styles.stockDetails}>
-            <Text style={styles.stockName}>{streamer?.ticker_name || 'TICKER'}</Text>
-            <Text style={styles.stockTicker}>{streamer?.username || streamerId}</Text>
+            <Text style={styles.stockName}>{streamer?.ticker || 'TICKER'}</Text>
+            <Text style={styles.stockTicker}>{streamer?.name || streamerId}</Text>
           </View>
           <View style={styles.stockPriceInfo}>
             <Text style={styles.lastCloseText}>Last close</Text>
@@ -115,7 +109,7 @@ const StockDetailsScreen = () => {
 
         {/* My Position Section */}
         <View style={styles.positionContainer}>
-          <Text style={styles.positionTitle}>My PDP Position</Text>
+          <Text style={styles.positionTitle}>My Position</Text>
           <View style={styles.positionRow}>
             <View style={styles.positionInfo}>
               <Text>Shares</Text>
@@ -270,8 +264,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 15,
     backgroundColor: '#fff',
-    position: 'absolute',  // Fix the button container
-    bottom: 0,  // Stick to the bottom of the screen
+    position: 'absolute',
+    bottom: 0,
     left: 0,
     right: 0,
   },

@@ -340,6 +340,257 @@ class ApiClient {
       body: JSON.stringify({ amount, description, metadata }),
     });
   }
+
+  // ============================================
+  // TRADING
+  // ============================================
+  async buyShares(streamerId: string, shareCount: number, maxPrice?: number) {
+    return this.request<{
+      success: boolean;
+      transaction: {
+        id: string;
+        type: string;
+        shareCount: number;
+        pricePerShare: number;
+        totalCost: number;
+        newBalance: number;
+        createdAt: string;
+      };
+      portfolio: {
+        streamerId: string;
+        sharesOwned: number;
+        averageCost: number;
+      };
+    }>('/trade/buy', {
+      method: 'POST',
+      body: JSON.stringify({ streamerId, shareCount, maxPrice }),
+    });
+  }
+
+  async sellShares(streamerId: string, shareCount: number, minPrice?: number) {
+    return this.request<{
+      success: boolean;
+      transaction: {
+        id: string;
+        type: string;
+        shareCount: number;
+        pricePerShare: number;
+        totalProceeds: number;
+        newBalance: number;
+        createdAt: string;
+      };
+      portfolio: {
+        streamerId: string;
+        sharesOwned: number;
+        averageCost: number;
+      };
+    }>('/trade/sell', {
+      method: 'POST',
+      body: JSON.stringify({ streamerId, shareCount, minPrice }),
+    });
+  }
+
+  async getPortfolio(userId: string) {
+    return this.request<{
+      portfolio: Array<{
+        streamer: {
+          _id: string;
+          name: string;
+          platform: string;
+          subscriberCount: number;
+        };
+        sharesOwned: number;
+        averageCost: number;
+        currentPrice: number;
+        currentValue: number;
+        totalCost: number;
+        gainLoss: number;
+        gainLossPercent: string;
+      }>;
+      summary: {
+        totalValue: number;
+        totalCost: number;
+        totalGainLoss: number;
+        totalGainLossPercent: string;
+        cashBalance: number;
+        totalAccountValue: number;
+      };
+    }>(`/portfolio/${userId}`, {
+      method: 'GET',
+    });
+  }
+
+  async getShareInfo(streamerId: string) {
+    return this.request<{
+      streamerId: string;
+      sharePrice: number;
+      totalShares: number;
+      marketCap: number;
+      priceHistory?: {
+        day1: number | null;
+        day2: number | null;
+        day3: number | null;
+        day4: number | null;
+        day5: number | null;
+        day6: number | null;
+        day7: number | null;
+      };
+      exists: boolean;
+      updatedAt?: string;
+    }>(`/shares/${streamerId}`, {
+      method: 'GET',
+    });
+  }
+
+  async getTradeHistory(userId: string, limit = 50, offset = 0) {
+    return this.request<{
+      transactions: Array<{
+        id: string;
+        type: string;
+        streamer: { name: string; platform: string };
+        shareCount: number;
+        sharePrice: number;
+        amount: number;
+        status: string;
+        createdAt: string;
+      }>;
+      pagination: {
+        total: number;
+        limit: number;
+        offset: number;
+        hasMore: boolean;
+      };
+    }>(`/trade/history/${userId}?limit=${limit}&offset=${offset}`, {
+      method: 'GET',
+    });
+  }
+
+  async getUserProfile(userId: string) {
+    return this.request<any>(`/users/${userId}`, {
+      method: 'GET',
+    });
+  }
+
+  async getCurrentUser() {
+    return this.request<any>('/auth/me', {
+      method: 'GET',
+    });
+  }
+
+  // ============================================
+  // STREAMERS
+  // ============================================
+  async getStreamers() {
+    return this.request<{
+      streamers: Array<{
+        _id: string;
+        id: string;
+        name: string;
+        platform: string;
+        profileImageUrl?: string;
+        followerCount?: number;
+        category?: string;
+        sharePrice: number;
+        totalShares: number;
+        marketCap: number;
+      }>;
+    }>('/streamer', {
+      method: 'GET',
+    });
+  }
+
+  async getStreamer(streamerId: string) {
+    return this.request<{
+      _id: string;
+      id: string;
+      name: string;
+      platform: string;
+      ticker: string;
+      profileImageUrl?: string;
+      followerCount?: number;
+      sharePrice: number;
+      totalShares: number;
+      marketCap: number;
+    }>(`/streamer/${streamerId}`, {
+      method: 'GET',
+    });
+  }
+
+  async searchStreamers(query: string) {
+    return this.request<{
+      streamers: Array<{
+        _id: string;
+        id: string;
+        name: string;
+        platform: string;
+        ticker: string;
+        profileImageUrl?: string;
+        sharePrice: number;
+      }>;
+    }>(`/streamer/search?q=${encodeURIComponent(query)}`, {
+      method: 'GET',
+    });
+  }
+
+  async getCategories() {
+    return this.request<{
+      categories: Array<{
+        id: string;
+        name: string;
+      }>;
+    }>('/streamer/categories', {
+      method: 'GET',
+    });
+  }
+
+  // ============================================
+  // WATCHLIST
+  // ============================================
+  async getWatchlist() {
+    return this.request<{
+      watchlist: Array<{
+        _id: string;
+        streamerId: string;
+        addedAt: string;
+        name: string;
+        ticker: string;
+        platform: string;
+        profileImageUrl: string | null;
+        category: string | null;
+        sharePrice: number;
+        day1Price: number | null;
+        marketCap: number;
+      }>;
+    }>('/watchlist', {
+      method: 'GET',
+    });
+  }
+
+  async addToWatchlist(streamerId: string) {
+    return this.request<{
+      success: boolean;
+      watchlistItem: {
+        _id: string;
+        streamerId: string;
+        addedAt: string;
+      };
+    }>('/watchlist', {
+      method: 'POST',
+      body: JSON.stringify({ streamerId }),
+    });
+  }
+
+  async removeFromWatchlist(streamerId: string) {
+    return this.request<{ success: boolean }>(`/watchlist/${streamerId}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async isInWatchlist(streamerId: string) {
+    return this.request<{ inWatchlist: boolean }>(`/watchlist/check/${streamerId}`, {
+      method: 'GET',
+    });
+  }
 }
 
 // Export singleton instance

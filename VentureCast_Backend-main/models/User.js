@@ -174,12 +174,6 @@ const UserSchema = new mongoose.Schema({
   ]
 });
 
-// Indexes
-UserSchema.index({ stripeAccountId: 1 });
-UserSchema.index({ stripeCustomerId: 1 });
-UserSchema.index({ financialAccountId: 1 });
-UserSchema.index({ email: 1 });
-
 // Virtual for checking if user can trade
 UserSchema.virtual('canTrade').get(function() {
   return this.onboardingStatus === 'completed' &&

@@ -1,37 +1,45 @@
 // components/MiniWatchlist.tsx
-//this appears only on the homepage (as of now)
+// This appears only on the homepage (as of now)
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { supabase } from '../../supabaseClient';
 import { useUser } from '../../UserProvider';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import api from '../../services/api';
 
 type RootStackParamList = {
   StockPage: { streamer_id: string };
 };
 
-// Default data for fallback
-const defaultPercentage = '2.50';
 const defaultGraph = require('../../Assets/Graphs/big-positive-graph-1.png');
+const defaultNegGraph = require('../../Assets/Graphs/big-negative-graph-1.png');
 const defaultAvatar = require('../../Assets/Images/Billy-Eyelash.png');
 
 interface WatchlistItem {
   id: string;
+  streamerId: string;
   name: string;
+  ticker: string;
   percentage: number;
   graph: any;
   avatar: any;
 }
 
 const MiniWatchlist = () => {
-  const { user } = useUser();
+  const { user, token } = useUser();
   const [watchlistData, setWatchlistData] = useState<WatchlistItem[]>([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
+    if (user && token) {
+      api.setToken(token);
+      api.setUserId(user._id);
+    }
+  }, [user, token]);
+
+  useEffect(() => {
     const fetchWatchlist = async () => {
-      if (!user) {
+      if (!user || !token) {
         setWatchlistData([]);
         setLoading(false);
         return;
@@ -39,45 +47,31 @@ const MiniWatchlist = () => {
 
       try {
         setLoading(true);
-        
-        // Fetch watchlist data with streamer information
-        const { data, error } = await supabase
-          .from('Watchlists')
-          .select(`
-            streamer_id,
-            Streamers (
-              streamer_id,
-              username,
-              ticker_name,
-              profile_picture_path
-            )
-          `)
-          .eq('user_id', user.id);
+        const data = await api.getWatchlist();
+        if (data.watchlist && data.watchlist.length > 0) {
+          const transformedData: WatchlistItem[] = data.watchlist.map((item, index) => {
+            // Calculate day-over-day percentage change
+            const currentPrice = item.sharePrice || 0;
+            const previousPrice = item.day1Price || currentPrice;
+            const percentage = previousPrice > 0
+              ? ((currentPrice - previousPrice) / previousPrice) * 100
+              : 0;
 
-        if (error) {
-          console.error('Error fetching watchlist:', error);
-          setWatchlistData([]);
-        } else if (data && data.length > 0) {
-          // Transform the data to match the expected format
-          const transformedData: WatchlistItem[] = data.map((item: any, index: number) => {
-            const streamer = Array.isArray(item.Streamers) ? item.Streamers[0] : item.Streamers;
             return {
-              id: item.streamer_id || `item-${index}`,
-              name: streamer?.ticker_name || 'Unknown',
-              percentage: Math.random() * 20 - 10, // Random percentage between -10 and 10 for demo
-              graph: Math.random() > 0.5 ? 
-                require('../../Assets/Graphs/big-positive-graph-1.png') : 
-                require('../../Assets/Graphs/big-negative-graph-1.png'),
-              avatar: streamer?.profile_picture_path ? { uri: streamer.profile_picture_path } : defaultAvatar
+              id: item._id,
+              streamerId: item.streamerId,
+              name: item.name,
+              ticker: item.ticker,
+              percentage,
+              graph: percentage >= 0 ? defaultGraph : defaultNegGraph,
+              avatar: defaultAvatar,
             };
           });
-          
           setWatchlistData(transformedData);
         } else {
           setWatchlistData([]);
         }
-      } catch (error) {
-        console.error('Error in fetchWatchlist:', error);
+      } catch {
         setWatchlistData([]);
       } finally {
         setLoading(false);
@@ -85,7 +79,7 @@ const MiniWatchlist = () => {
     };
 
     fetchWatchlist();
-  }, [user]);
+  }, [user, token]);
 
   if (loading) {
     return (
@@ -109,16 +103,16 @@ const MiniWatchlist = () => {
 
   return (
     <View style={styles.shadowContainer}>
-      <FlatList 
+      <FlatList
         data={watchlistData}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('StockPage', { streamer_id: item.id })}>
+          <TouchableOpacity onPress={() => navigation.navigate('StockPage', { streamer_id: item.streamerId })}>
             <View style={styles.container}>
               <View style={styles.miniWatchlist}>
                 <Image source={item.avatar} style={styles.stockAvatar} />
                 <View style={styles.textContainer}>
-                  <Text style={styles.stockText}>{item.name}</Text>
-                  <Text style={[styles.stockPercentage, 
+                  <Text style={styles.stockText}>{item.ticker}</Text>
+                  <Text style={[styles.stockPercentage,
                     item.percentage >= 0 ? styles.positive : styles.negative]}
                   >
                     {item.percentage.toFixed(2)}%
@@ -137,13 +131,10 @@ const MiniWatchlist = () => {
   );
 };
 
-// session 2:
-//  then duplicate it for the next stock section
-
 const styles = StyleSheet.create({
   shadowContainer: {
     borderRadius: 20,
-    shadowColor: '#351560', 
+    shadowColor: '#351560',
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,

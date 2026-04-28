@@ -1,20 +1,50 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, ActivityIndicator } from 'react-native';
+import { useNavigation, NavigationProp, useRoute, RouteProp } from '@react-navigation/native';
 import formatCurrency from './Components/formatCurrency';
+import { useUser } from '../UserProvider';
+import api from '../services/api';
 
 type RootStackParamList = {
-  StockPage: undefined; // Do this for all linked pages
+  StockPage: { streamer_id: string };
   BuyPreview: undefined;
-  ClipsPage: undefined;
-  short: undefined;
+  BuyCongrats: undefined;
 };
 
-const BuyStockScreen = ({ }:any) => {
-
+const BuyStockScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<{ params: { streamerId?: string; stockName?: string; stockLongName?: string; stockCost?: number } }, 'params'>>();
+  const { user, token } = useUser();
+
+  const streamerId = route.params?.streamerId || '';
+  const stockName = route.params?.stockName || 'N/A';
+  const stockLongName = route.params?.stockLongName || 'Unknown';
+  const stockCost = route.params?.stockCost || 0;
 
   const [investmentAmount, setInvestmentAmount] = useState('0');
+  const [cashBalance, setCashBalance] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user && token) {
+      api.setToken(token);
+      api.setUserId(user._id);
+      fetchBalance();
+    }
+  }, [user, token]);
+
+  const fetchBalance = async () => {
+    try {
+      const balanceData = await api.getBalance();
+      setCashBalance((balanceData.available || 0) / 100); // Convert cents to dollars
+    } catch (error) {
+      // Fallback to user's treasury balance
+      setCashBalance((user?.treasuryBalance?.available || 0) / 100);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const formatNumberTextbox = (number: number): string => {
     return number.toLocaleString('en-US');
@@ -26,43 +56,80 @@ const BuyStockScreen = ({ }:any) => {
 
   const handlePress = (item: string | number) => {
     setInvestmentAmount((prev) => {
-      const currentValue = prev.toString(); // Keep the current value as a string
-  
-      // Handle backspace
+      const currentValue = prev.toString();
+
       if (item === '⌫') {
-        const newValue = currentValue.slice(0, -1); // Remove the last character
-        return newValue === '' ? '0' : newValue; // Return '0' if empty, otherwise keep it as a string
+        const newValue = currentValue.slice(0, -1);
+        return newValue === '' ? '0' : newValue;
       }
-  
-      // Handle decimal point
+
       if (item === '.') {
         if (currentValue.includes('.')) {
-          return currentValue; // Ignore if a decimal point already exists
+          return currentValue;
         }
-        return currentValue + '.'; // Append the decimal point
+        return currentValue + '.';
       }
-  
-      // Append numbers
+
       if (typeof item === 'number' || !isNaN(Number(item))) {
         if (currentValue === '0') {
-          return item.toString(); // Replace '0' with the input number
+          return item.toString();
         }
-        return currentValue + item.toString(); // Append the number to the string
+        return currentValue + item.toString();
       }
-  
-      return currentValue; // Return unchanged if input is invalid
+
+      return currentValue;
     });
-
-
   };
-  const investmentNumber = parseFloat(investmentAmount)
+
+  const investmentNumber = parseFloat(investmentAmount);
+
+  const shareCount = stockCost > 0 ? Math.floor(investmentNumber / stockCost) : 0;
 
   const message = () => {
-    if (investmentNumber > 0) {
-      return (formatCurrency(investmentNumber) + ` worth of ${user.stockName} will be purchased`)
+    if (cashBalance < investmentNumber) {
+      return 'Not enough cash for purchase';
+    } else if (investmentNumber <= 0) {
+      return 'Enter an amount to invest';
     } else {
-      return ("Not enough cash for purchase")
+      return `${shareCount} share${shareCount !== 1 ? 's' : ''} of ${stockName} at ${formatCurrency(stockCost)}/share`;
     }
+  };
+
+  const handleBuy = async () => {
+    if (investmentNumber <= 0 || shareCount <= 0) {
+      Alert.alert('Invalid Amount', 'Please enter a valid investment amount.');
+      return;
+    }
+
+    if (cashBalance < investmentNumber) {
+      Alert.alert('Insufficient Funds', 'You do not have enough cash for this purchase.');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const result = await api.buyShares(streamerId, shareCount, stockCost);
+
+      if (result.success) {
+        Alert.alert(
+          'Order Executed',
+          `Bought ${shareCount} shares of ${stockName} at ${formatCurrency(result.transaction.pricePerShare)}/share.\n\nTotal: ${formatCurrency(result.transaction.totalCost)}\nNew Balance: ${formatCurrency(result.transaction.newBalance)}`,
+          [{ text: 'OK', onPress: () => navigation.navigate('BuyCongrats') }]
+        );
+      }
+    } catch (error: any) {
+      Alert.alert('Trade Failed', error.message || 'Failed to execute buy order. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color="#351560" />
+      </View>
+    );
   }
 
   return (
@@ -77,42 +144,48 @@ const BuyStockScreen = ({ }:any) => {
 
       {/* Stock Info */}
       <View style={styles.stockInfo}>
-        <View  style={styles.leftContainer}>
+        <View style={styles.leftContainer}>
           <Image
-            source={require('../Assets/Images/dude-perfect.png')} // Update with your stock image
+            source={require('../Assets/Images/dude-perfect.png')}
             style={styles.stockLogo}
           />
           <View>
-            <Text style={styles.stockName}>{user.stockLongName}</Text>
-            <Text style={styles.stockTicker}>{user.stockName}</Text>
+            <Text style={styles.stockName}>{stockLongName}</Text>
+            <Text style={styles.stockTicker}>{stockName}</Text>
           </View>
         </View>
-        <Text style={styles.marketPrice}>{formatCurrency(user.stockCost)}</Text>
+        <Text style={styles.marketPrice}>{formatCurrency(stockCost)}</Text>
       </View>
 
       {/* Investment Input */}
       <View style={styles.investmentContainer}>
         <Text style={styles.cashAvailable}>
-          Cash Available: {formatCurrency(user.cash)}
+          Cash Available: {formatCurrency(cashBalance)}
         </Text>
         <View style={styles.investmentBox}>
-          <Text style={[styles.investmentAmount, investmentNumber > user.cash ? styles.negative : styles.positive]}>{formatCurrencyTextbox(investmentNumber)}</Text>
+          <Text style={[styles.investmentAmount, investmentNumber > cashBalance ? styles.negative : styles.positive]}>
+            {formatCurrencyTextbox(investmentNumber)}
+          </Text>
         </View>
         <Text style={styles.cashAvailable}>
-        {message()}
+          {message()}
         </Text>
       </View>
 
       {/* Continue Button */}
-      <TouchableOpacity style={styles.continueButton} onPress={()=> {
-            navigation.navigate('BuyPreview') // withdraw/deposit preview
-        }}>
-        <Text style={styles.continueText}>Continue</Text>
+      <TouchableOpacity
+        style={[styles.continueButton, (submitting || investmentNumber <= 0 || cashBalance < investmentNumber) && styles.disabledButton]}
+        onPress={handleBuy}
+        disabled={submitting || investmentNumber <= 0 || cashBalance < investmentNumber}
+      >
+        <Text style={styles.continueText}>
+          {submitting ? 'Processing...' : 'Buy'}
+        </Text>
       </TouchableOpacity>
 
       {/* Number Pad */}
       <View style={styles.numberPad}>
-        {['1', '2', '3', '4', '5', '6', '7', '8','9', '.', '0', '⌫'].map((item, index) => (
+        {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '⌫'].map((item, index) => (
           <TouchableOpacity
             key={index}
             style={styles.numberKey}
@@ -132,7 +205,7 @@ const BuyStockScreen = ({ }:any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white', 
+    backgroundColor: 'white',
   },
   leftContainer: {
     flexDirection: 'row',
@@ -202,22 +275,11 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: 'bold',
     fontFamily: 'urbanist',
-
   },
   cashAvailable: {
     fontSize: 14,
     color: '#888',
     marginBottom: 10,
-    fontFamily: 'urbanist',
-
-  },
-  shareButton: {
-    backgroundColor: '#D1D1F7', // Button background color
-    padding: 10,
-    borderRadius: 12,
-  },
-  shareText: {
-    color: '#333',
     fontFamily: 'urbanist',
   },
   continueButton: {
@@ -228,12 +290,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 20,
   },
+  disabledButton: {
+    backgroundColor: '#A0A0A0',
+  },
   continueText: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'urbanist',
-
   },
   numberPad: {
     flexDirection: 'row',
@@ -247,7 +311,7 @@ const styles = StyleSheet.create({
     margin: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white', // Match the background color
+    backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -259,9 +323,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'urbanist',
   },
-  positive: {
-
-  },
+  positive: {},
   negative: {
     color: '#F75555',
   },
