@@ -2,9 +2,8 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity, Dimensions } from 'react-native';
 import Header from './Components/Header';
 import CategoryBox from './Components/CategoryBox';
-import MiniWatchlist from './Components/MiniWatchlist';
+import MiniStockCard from './Components/MiniStockCard';
 import StockDetailsScreen from './StockDetails';
-import MiniStockScroll from './Components/MiniStockScroll';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useUser } from '../UserProvider';
 import api from '../services/api';
@@ -15,6 +14,7 @@ type RootStackParamList = {
   ClipsPage: undefined;
   DepositOption: undefined;
   Discover: undefined;
+  Watchlist: undefined;
 };
 
 const defaultPercentage = '2.50';
@@ -118,16 +118,14 @@ const VentureCastHome = () => {
                 key={category.id}
                 style={{
                   width: boxWidth,
-                  height: boxHeight,
+                  height: 100,
                   marginRight: idx === categories.length - 1 ? 0 : boxSpacing,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
                 <CategoryBox
-                  graph={defaultGraph}
                   name={category.name}
-                  percentage={defaultPercentage}
                 />
               </View>
             ))}
@@ -140,10 +138,11 @@ const VentureCastHome = () => {
             <Text style={styles.sectionTitle}>Watchlist</Text>
             <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
         </View>
+      </TouchableOpacity>
 
       <View>
         <View style={styles.sectionWatchlist}>
-            <MiniWatchlist />
+            <MiniStockCard type="watchlist" />
         </View>
       </View>
 

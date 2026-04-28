@@ -179,7 +179,7 @@ const StockPage = () => {
           />
         </View>
         {/* Weekly Trend Graph */}
-        <View style={{ alignItems: 'center', marginVertical: 10 }}>
+        <View style={{ alignItems: 'center', marginTop: 10 }}>
           <LineGraph data={weeklyTrendData} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginTop: -20 }}>
             {[7,6,5,4,3,2,1,0].map((d, i) => (

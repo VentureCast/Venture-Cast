@@ -93,8 +93,9 @@ const AccountScreen = () => {
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>
       {/* Profile Header */}
       <View style={styles.profileHeader}>
+        {/* TODO: Replace with user's actual profile image if available */}
         <Image
-          source={require('../Assets/Images/JimmyBeast.png') }
+          source={require('../Assets/Images/JimmyBeast.png')}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>

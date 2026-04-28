@@ -4,14 +4,6 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Modal, FlatList, Touch
 const WatchListItem = ({ profileImage, name, shortName, price, priceChange }:any) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  // Dummy data to populate the modal list
-  const watchListData = [
-    { id: 1, name: 'Jake Paul', shortName: 'JKPI', price: 207.47, priceChange: 2.37, profileImage: require('../../Assets/Images/jake-paul.png') },
-    { id: 2, name: 'Like Nastya', shortName: 'LKNT', price: 274.52, priceChange: -0.86, profileImage: require('../../Assets/Images/pewdiepie.png') },
-    { id: 3, name: 'James Beast Sr.', shortName: 'MBK', price: 95.56, priceChange: -4.25, profileImage: require('../../Assets/Images/JimmyBeast.png') },
-    // Add more items here
-  ];
-
   // Handler to toggle modal visibility wtf is this modal for?
   const handleItemPress = () => {
     setModalVisible(true);
@@ -64,7 +56,7 @@ const WatchListItem = ({ profileImage, name, shortName, price, priceChange }:any
           
           {/* List of options in the modal */}
           <FlatList
-            data={watchListData}
+            data={[]} // Removed unused watchListData dummy array.
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.listItem}>

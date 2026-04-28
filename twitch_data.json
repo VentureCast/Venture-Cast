@@ -12,13 +12,13 @@
     "created_at": "2013-06-07T14:25:22Z",
     "stream_data": null,
     "is_live": false,
-    "followers_total": 9392980,
-    "followers": 9263,
-    "avg_viewers": 11725,
+    "followers_total": 9393252,
+    "followers": 8273,
+    "avg_viewers": 12164,
     "max_viewers": 40866,
-    "hours_watched": 431481,
-    "minutes_streamed": 2208,
-    "rank": 204
+    "hours_watched": 399250,
+    "minutes_streamed": 1969,
+    "rank": 220
   },
   "xqc": {
     "id": "71092938",
@@ -31,42 +31,15 @@
     "offline_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/00f23655-a8b0-4d87-8053-d407892bda4d-channel_offline_image-1920x1080.png",
     "view_count": 0,
     "created_at": "2014-09-12T23:50:05Z",
-    "stream_data": {
-      "id": "329398440061",
-      "user_id": "71092938",
-      "user_login": "xqc",
-      "user_name": "xQc",
-      "game_id": "1222247252",
-      "game_name": "Donkey Kong Bananza",
-      "type": "live",
-      "title": "😚CLICK😚LIVE😚HERE😚PULL UP😚JOIN IN :)😚DRAMA😚NEWS😚STUFF😚VIDEOS😚GAMES😚FKJH4RHQ3UI4RYU3948287😚59874389573248905😚",
-      "viewer_count": 25039,
-      "started_at": "2025-07-19T20:10:45Z",
-      "language": "en",
-      "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_xqc-{width}x{height}.jpg",
-      "tag_ids": [],
-      "tags": [
-        "English",
-        "vtuber",
-        "depression",
-        "adhd",
-        "psychosis",
-        "xqc",
-        "femboy",
-        "anime",
-        "reaction",
-        "IRL"
-      ],
-      "is_mature": false
-    },
-    "is_live": true,
-    "followers_total": 12091088,
-    "followers": 25414,
-    "avg_viewers": 24284,
+    "stream_data": null,
+    "is_live": false,
+    "followers_total": 12093389,
+    "followers": 24804,
+    "avg_viewers": 24254,
     "max_viewers": 55912,
-    "hours_watched": 4879867,
-    "minutes_streamed": 12057,
-    "rank": 16
+    "hours_watched": 4677023,
+    "minutes_streamed": 11570,
+    "rank": 15
   },
   "shroud": {
     "id": "37402112",
@@ -81,13 +54,13 @@
     "created_at": "2012-11-03T15:50:32Z",
     "stream_data": null,
     "is_live": false,
-    "followers_total": 11127487,
-    "followers": -3255,
-    "avg_viewers": 7809,
+    "followers_total": 11125096,
+    "followers": -5639,
+    "avg_viewers": 7488,
     "max_viewers": 17482,
-    "hours_watched": 1247641,
-    "minutes_streamed": 9586,
-    "rank": 128
+    "hours_watched": 1089103,
+    "minutes_streamed": 8727,
+    "rank": 148
   },
   "ninja": {
     "id": "19571641",
@@ -102,13 +75,13 @@
     "created_at": "2011-01-16T04:31:20Z",
     "stream_data": null,
     "is_live": false,
-    "followers_total": 19188349,
-    "followers": -5131,
-    "avg_viewers": 3682,
+    "followers_total": 19186726,
+    "followers": -1722,
+    "avg_viewers": 3434,
     "max_viewers": 6070,
-    "hours_watched": 110701,
-    "minutes_streamed": 1804,
-    "rank": 875
+    "hours_watched": 159909,
+    "minutes_streamed": 2794,
+    "rank": 821
   },
   "auronplay": {
     "id": "459331509",
@@ -123,13 +96,13 @@
     "created_at": "2019-09-03T14:02:49Z",
     "stream_data": null,
     "is_live": false,
-    "followers_total": 16831649,
-    "followers": 19538,
-    "avg_viewers": 21917,
+    "followers_total": 16835723,
+    "followers": 20877,
+    "avg_viewers": 21061,
     "max_viewers": 31928,
-    "hours_watched": 674312,
-    "minutes_streamed": 1846,
-    "rank": 85
+    "hours_watched": 649354,
+    "minutes_streamed": 1850,
+    "rank": 96
   },
   "ibai": {
     "id": "83232866",
@@ -150,7 +123,7 @@
     "max_viewers": 172695,
     "hours_watched": 5822591,
     "minutes_streamed": 5497,
-    "rank": 4
+    "rank": 5
   },
   "rubius": {
     "id": "39276140",
@@ -166,12 +139,12 @@
     "stream_data": null,
     "is_live": false,
     "followers_total": 15783491,
-    "followers": 22591,
-    "avg_viewers": 21510,
-    "max_viewers": 35469,
-    "hours_watched": 1976061,
-    "minutes_streamed": 5512,
-    "rank": 40
+    "followers": 18709,
+    "avg_viewers": 21128,
+    "max_viewers": 33872,
+    "hours_watched": 1682479,
+    "minutes_streamed": 4778,
+    "rank": 44
   },
   "tfue": {
     "id": "60056333",
@@ -228,12 +201,12 @@
     "created_at": "2012-10-08T18:13:50Z",
     "stream_data": null,
     "is_live": false,
-    "followers_total": 7274230,
-    "followers": 23024,
-    "avg_viewers": 10680,
+    "followers_total": 7274948,
+    "followers": 23515,
+    "avg_viewers": 10403,
     "max_viewers": 35915,
-    "hours_watched": 1630879,
-    "minutes_streamed": 9162,
-    "rank": 77
+    "hours_watched": 1742630,
+    "minutes_streamed": 10051,
+    "rank": 71
   }
 }

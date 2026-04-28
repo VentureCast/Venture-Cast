@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
 
   stockNameLogo: {
     flexDirection: 'row',
-
+    alignItems: 'center',
   },
   stockItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 15,
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderColor: '#e0e0e0',
   },
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginRight: 10,
+    borderRadius: 30,
   },
   stockName: {
     fontSize: 18,

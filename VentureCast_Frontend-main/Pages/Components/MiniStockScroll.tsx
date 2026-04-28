@@ -6,6 +6,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import formatCurrency from './formatCurrency';
 import { useUser } from '../../UserProvider';
 import api from '../../services/api';
+import SimpleLineGraph from './SimpleLineGraph';
 
 type RootStackParamList = {
   StockPage: { streamer_id: string };
@@ -94,7 +95,9 @@ const MiniStockScroll = () => {
               </View>
             </View>
           </View>
-          <Image source={item.graph} style={styles.graph} />
+          <View style={styles.graphContainer}>
+            <SimpleLineGraph data={item.priceHistory} isPositive={item.percentage >= 0} />
+          </View>
         </View>
       </TouchableOpacity>
          )}
@@ -127,15 +130,18 @@ const styles = StyleSheet.create({
   miniStockScroll: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 10,
   },
   infoContainer: {
     marginLeft: 10,
+    justifyContent: 'center',
   },
   textContainer: {
     flexDirection: 'column',
-    width: 130,
+    width: 90,
     marginBottom: 5,
+    justifyContent: 'center',
   },
   stockAvatar: {
     width: 40,
@@ -145,7 +151,7 @@ const styles = StyleSheet.create({
   stockText: {
     fontFamily: 'Urbanist',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 16,
     color: '#333',
     marginTop: 5,
   },
@@ -158,11 +164,11 @@ const styles = StyleSheet.create({
   },
   numberContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   stockPrice: {
     justifyContent: 'flex-end',
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Urbanist',
     fontWeight: 'bold',
     color: '#212121',
@@ -179,11 +185,18 @@ const styles = StyleSheet.create({
   negative: {
     color: '#F75555',
   },
-  graph: {
+  priceContainer: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  graphContainer: {
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
     height: 80,
     width: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 5,
   },
 });
 

@@ -4,21 +4,7 @@ import BankItem from './Components/BankItem';
 import PaymentComponent from './Components/PaymentComponent';
 
 
-const bankingData = [
-  {id: '1', name: 'Bank of America', userName: 'Alexander Creighton', icon: require('../Assets/Icons/BankofAmerica.png'), page: 'WithdrawBOA'}, // not going to use page modifier yet
-  {id: '2', name: 'JP Morgan Chase', userName: 'Alexander Creighton', icon: require('../Assets/Icons/Chase.png'), page: 'WithdrawC'},
-  {id: '3', name: 'Toronto Dominion Bank', userName: 'Alexander Creighton', icon: require('../Assets/Icons/TDBank.png'), page: 'WithdrawTD'},
-  {id: '4', name: 'Capital One', userName: 'Alexander Creighton', icon: require('../Assets/Icons/CapitalOne.png'), page: 'WithdrawCO'},
-];
-
-const cardData = [
-  { nameNumber: 'Apple Pay', profileImage: require('../Assets/Icons/ApplePay.png') , page: 'CardDetailsApple'},
-  { nameNumber: 'PayPal', profileImage: require('../Assets/Icons/PayPal.png'), page: 'CardDetailsPayPal'},
-  { nameNumber: 'Google Pay', profileImage: require('../Assets/Icons/GooglePay.png') , page: 'CardDetailsGoogle'},
-  { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/Visa.png') , page: 'CardDetailsVisa'},
-  { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/MasterCard.png') , page: 'CardDetailsMasterCard'},
-  { nameNumber: '1234 5678 8765 4321', profileImage: require('../Assets/Icons/AmEx.png') , page: 'CardDetailsAmEx'},
- ];
+// Removed bankingData and cardData dummy arrays if not used in the UI.
 
 const DepositOption = ({ navigation }:any) => {
 
@@ -37,27 +23,27 @@ const DepositOption = ({ navigation }:any) => {
             <Text style={styles.sectionTitle}>Your Bank Accounts</Text>
         </View>
         <View style={styles.optionsContainer}>
-          {bankingData.map(bank => (
+          {/* Removed bankingData.map(bank => ( */}
           <BankItem 
-            key={bank.id}
-            title={bank.userName}
-            description={bank.name}
-            icon={bank.icon}
+            key={'1'} // Placeholder for now
+            title={'Alexander Creighton'}
+            description={'Bank of America'}
+            icon={require('../Assets/Icons/BankofAmerica.png')}
             page= 'Deposit' />
-            ))}
+            {/* Removed bankingData.map(bank => ( */}
         </View>
         <View style={styles.titleRow}>
           <Text style={styles.sectionTitle}>Other Payment Methods</Text>
         </View>
         <View style={styles.optionsContainer}>
-          {cardData.map((item, index) => ( // never used the index method yet, do remember it from scrimba tho
+          {/* Removed cardData.map((item, index) => ( */}
           <PaymentComponent
-            key={index}
-            icon={item.profileImage}
-            title={item.nameNumber}
+            key={'1'} // Placeholder for now
+            icon={require('../Assets/Icons/ApplePay.png')}
+            title={'Apple Pay'}
             page= 'Deposit' 
           />
-        ))}
+          {/* Removed cardData.map((item, index) => ( */}
         </View>
       </ScrollView>
     </>
