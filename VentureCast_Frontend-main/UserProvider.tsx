@@ -1,5 +1,37 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+/** Minimal AsyncStorage shape used by this file */
+type StorageAPI = {
+  getItem: (key: string) => Promise<string | null>;
+  setItem: (key: string, value: string) => Promise<void>;
+  multiRemove: (keys: string[]) => Promise<void>;
+};
+
+function createMemoryStorage(): StorageAPI {
+  const mem = new Map<string, string>();
+  return {
+    getItem: async (key) => mem.get(key) ?? null,
+    setItem: async (key, value) => {
+      mem.set(key, value);
+    },
+    multiRemove: async (keys) => {
+      keys.forEach((k) => mem.delete(k));
+    },
+  };
+}
+
+function loadStorage(): StorageAPI {
+  try {
+    return require('@react-native-async-storage/async-storage').default;
+  } catch {
+    console.warn(
+      '[UserProvider] AsyncStorage native module missing; using in-memory storage until you rebuild the app (ios: pod install + clean build).'
+    );
+    return createMemoryStorage();
+  }
+}
+
+const AsyncStorage = loadStorage();
 
 const API_BASE_URL = __DEV__
   ? 'http://localhost:3001'

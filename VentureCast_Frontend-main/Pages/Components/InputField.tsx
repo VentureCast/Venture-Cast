@@ -9,9 +9,20 @@ interface InputFieldProps {
   isPassword?: boolean;
   keyboardType?: string;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  autoCorrect?: boolean;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, placeholder, value, onChangeText, isPassword, keyboardType, autoCapitalize }) => {
+const InputField: React.FC<InputFieldProps> = ({
+  label,
+  placeholder,
+  value,
+  onChangeText,
+  isPassword,
+  keyboardType,
+  autoCapitalize,
+  autoCorrect,
+}) => {
+  const secure = !!isPassword;
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}:</Text>}
@@ -20,9 +31,11 @@ const InputField: React.FC<InputFieldProps> = ({ label, placeholder, value, onCh
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
-        secureTextEntry={isPassword}
-        keyboardType={keyboardType as any}
-        autoCapitalize={autoCapitalize}
+        secureTextEntry={secure}
+        keyboardType={secure ? 'default' : (keyboardType as any)}
+        autoCapitalize={secure ? 'none' : autoCapitalize}
+        autoCorrect={autoCorrect ?? !secure}
+        textContentType={secure ? 'password' : undefined}
       />
     </View>
   );

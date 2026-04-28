@@ -11,12 +11,11 @@ const UploadGovernmentIDScreen = () => {
 
   // Handle the Continue button
   const handleContinue = () => {
-    navigation.navigate('IdWithSelf'); // Replace 'NextPage' with your actual next screen route
+    navigation.navigate('SignIn');
   };
 
-  // Handle the Change button to retake the photo
   const handleRetake = () => {
-    navigation.navigate('ScanScreen'); // Navigate back to the CameraScreen to retake photo
+    navigation.navigate('CameraScreen');
   };
 
   return (

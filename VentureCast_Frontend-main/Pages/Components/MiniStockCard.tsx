@@ -1,11 +1,11 @@
 // components/MiniStockCard.tsx
 // Unified component for both watchlist and positions items
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import formatCurrency from './formatCurrency';
 import { useUser } from '../../UserProvider';
-import { supabase } from '../../supabaseClient';
+import api from '../../services/api';
 import SimpleLineGraph from './SimpleLineGraph';
 
 type RootStackParamList = {
@@ -35,157 +35,169 @@ interface MiniStockCardProps {
   type: 'watchlist' | 'positions';
 }
 
+function buildPriceHistory(
+  shareInfo: Awaited<ReturnType<typeof api.getShareInfo>> | null,
+  fallbackPrice: number
+): number[] {
+  if (!shareInfo?.priceHistory) {
+    return Array(8).fill(fallbackPrice || 100);
+  }
+  const h = shareInfo.priceHistory;
+  const seq = [
+    h.day7,
+    h.day6,
+    h.day5,
+    h.day4,
+    h.day3,
+    h.day2,
+    h.day1,
+    shareInfo.sharePrice,
+  ];
+  return seq.map((x) =>
+    x != null && !Number.isNaN(Number(x)) ? Number(x) : fallbackPrice || 100
+  );
+}
+
+function trendVsDay7(
+  shareInfo: Awaited<ReturnType<typeof api.getShareInfo>> | null,
+  currentPrice: number
+): number {
+  const d7 = shareInfo?.priceHistory?.day7;
+  if (d7 == null || d7 === 0) return 0;
+  return Number((((currentPrice / d7) - 1) * 100).toFixed(2));
+}
+
 const MiniStockCard = ({ type }: MiniStockCardProps) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { user } = useUser();
-  const [data, setData] = useState<any[]>([]);
-  const [streamers, setStreamers] = useState<any[]>([]);
-  const [streamerStats, setStreamerStats] = useState<any[]>([]);
+  const { user, token } = useUser();
+  const [stockCardData, setStockCardData] = useState<StockCardItem[]>([]);
 
   useEffect(() => {
+    let cancelled = false;
+
     const fetchData = async () => {
-      if (!user) return;
-
-      let fetchedData: any[] = [];
-      let streamerIds: string[] = [];
-
-      if (type === 'positions') {
-        // Fetch holdings for positions
-        const { data: holdingsData, error: holdingsError } = await supabase
-          .from('Holdings')
-          .select('*')
-          .eq('user_id', user.id);
-        
-        if (holdingsError || !holdingsData) {
-          setData([]);
-          setStreamers([]);
-          setStreamerStats([]);
-          return;
-        }
-        fetchedData = holdingsData;
-        streamerIds = [...new Set(holdingsData.map(h => h.streamer_id))];
-      } else {
-        // Fetch watchlist for watchlist
-        const { data: watchlistData, error: watchlistError } = await supabase
-          .from('Watchlists')
-          .select('streamer_id')
-          .eq('user_id', user.id);
-        
-        if (watchlistError || !watchlistData) {
-          setData([]);
-          setStreamers([]);
-          setStreamerStats([]);
-          return;
-        }
-        fetchedData = watchlistData;
-        streamerIds = watchlistData.map(w => w.streamer_id);
-      }
-
-      setData(fetchedData);
-
-      if (streamerIds.length === 0) {
-        setStreamers([]);
-        setStreamerStats([]);
+      if (!user?._id || !token) {
+        setStockCardData([]);
         return;
       }
 
-      // Fetch streamers (ticker_name, profile_picture_path)
-      const { data: streamersData } = await supabase
-        .from('Streamers')
-        .select('streamer_id, ticker_name, profile_picture_path')
-        .in('streamer_id', streamerIds);
-      setStreamers(streamersData || []);
+      api.setToken(token);
 
-      // Fetch streamer display names from StreamerInfo
-      const { data: infoData } = await supabase
-        .from('StreamerInfo')
-        .select('streamer_id, name')
-        .in('streamer_id', streamerIds);
-      const nameMap = Object.fromEntries((infoData || []).map((i: any) => [i.streamer_id, i.name]));
-      setStreamers((prev: any[]) => (prev || []).map(s => ({ ...s, username: nameMap[s.streamer_id] || s.username })));
+      try {
+        if (type === 'watchlist') {
+          const { watchlist } = await api.getWatchlist();
+          const infos = await Promise.all(
+            watchlist.map((w) =>
+              api.getShareInfo(w.streamerId).catch(() => null)
+            )
+          );
+          if (cancelled) return;
 
-      // Fetch streamer prices
-      const { data: statsData } = await supabase
-        .from('StreamerPrice')
-        .select('streamer_id, current_price, day_1_price, day_2_price, day_3_price, day_4_price, day_5_price, day_6_price, day_7_price')
-        .in('streamer_id', streamerIds);
-      setStreamerStats(statsData || []);
+          const cards: StockCardItem[] = watchlist.map((w, idx) => {
+            const info = infos[idx];
+            const price = w.sharePrice ?? 0;
+            const percentage = trendVsDay7(info, price);
+            const priceHistory = buildPriceHistory(info, price);
+            const avatar = w.profileImageUrl
+              ? { uri: w.profileImageUrl }
+              : defaultAvatars[idx % defaultAvatars.length];
+
+            return {
+              id: w.streamerId,
+              streamer_id: w.streamerId,
+              name: w.name,
+              ticker: w.ticker,
+              price,
+              percentage,
+              priceHistory,
+              avatar,
+              equityValue: 0,
+            };
+          });
+
+          setStockCardData(
+            cards.sort((a, b) => a.name.localeCompare(b.name))
+          );
+        } else {
+          const { portfolio } = await api.getPortfolio(user._id);
+          const infos = await Promise.all(
+            portfolio.map((p) =>
+              api.getShareInfo(String(p.streamer._id)).catch(() => null)
+            )
+          );
+          if (cancelled) return;
+
+          const cards: StockCardItem[] = portfolio.map((p, idx) => {
+            const info = infos[idx];
+            const streamer = p.streamer as {
+              _id: string;
+              name?: string;
+              ticker?: string;
+            };
+            const sid = String(streamer._id);
+            const price = p.currentPrice ?? 0;
+            const percentage = trendVsDay7(info, price);
+            const priceHistory = buildPriceHistory(info, price);
+            const avatar = defaultAvatars[idx % defaultAvatars.length];
+
+            return {
+              id: sid,
+              streamer_id: sid,
+              name: streamer.name || 'Unknown',
+              ticker:
+                streamer.ticker ||
+                (streamer.name || 'NA').substring(0, 4).toUpperCase(),
+              price,
+              percentage,
+              priceHistory,
+              avatar,
+              equityValue: p.currentValue ?? 0,
+            };
+          });
+
+          setStockCardData(
+            cards.sort((a, b) => b.equityValue - a.equityValue)
+          );
+        }
+      } catch (e) {
+        console.error('MiniStockCard fetch error', e);
+        if (!cancelled) setStockCardData([]);
+      }
     };
+
     fetchData();
-  }, [user, type]);
-
-  const streamerMap = useMemo(() => {
-    return Object.fromEntries(streamers.map(s => [s.streamer_id, s]));
-  }, [streamers]);
-
-  const statsMap = useMemo(() => {
-    return Object.fromEntries(streamerStats.map(s => [s.streamer_id, s]));
-  }, [streamerStats]);
-
-  // Build stock data for display
-  const stockCardData = useMemo(() => {
-    return data.map((item, idx) => {
-      const streamer = streamerMap[item.streamer_id] || {};
-      const stats = statsMap[item.streamer_id] || {};
-      const price = stats.current_price || 100.00;
-      const day7Price = stats.day_7_price || 100.00;
-      const shares = type === 'positions' ? (item.shares_owned || 0) : 0;
-      const trendPercent = Number(((price / day7Price) - 1) * 100).toFixed(2);
-      
-      // Prepare price history data for the graph
-      const priceHistory = [
-        stats.day_7_price,
-        stats.day_6_price,
-        stats.day_5_price,
-        stats.day_4_price,
-        stats.day_3_price,
-        stats.day_2_price,
-        stats.day_1_price,
-        stats.current_price,
-      ].map(x => (x !== undefined && x !== null ? Number(x) : Number(price) || 100.00));
-      
-      const avatar = streamer.profile_picture_path
-        ? { uri: streamer.profile_picture_path }
-        : defaultAvatars[idx % defaultAvatars.length];
-
-      return {
-        id: type === 'positions' ? (item.portfolio_id || idx) : item.streamer_id,
-        streamer_id: item.streamer_id,
-        name: streamer.ticker_name || 'DUMMY',
-        ticker: streamer.ticker_name || 'DUMMY',
-        price: price,
-        percentage: Number(trendPercent),
-        priceHistory,
-        avatar,
-        equityValue: price * shares,
-      };
-    })
-    // Sort by equity value descending for positions, by name for watchlist
-    .sort((a, b) => type === 'positions' ? b.equityValue - a.equityValue : a.name.localeCompare(b.name));
-  }, [data, streamerMap, statsMap, type]);
-
-  const formatPercentage = (number: number): string => {
-    return `${number.toLocaleString('en-US')}%`;
-  };
+    return () => {
+      cancelled = true;
+    };
+  }, [user, token, type]);
 
   return (
     <View style={styles.shadowContainer}>
       <FlatList
         data={stockCardData}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('StockPage', { streamer_id: item.streamer_id })}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('StockPage', { streamer_id: item.streamer_id })
+            }
+          >
             <View style={styles.container}>
               <View style={styles.miniStockCard}>
                 <Image source={item.avatar} style={styles.stockAvatar} />
                 <View style={styles.infoContainer}>
                   <View style={styles.textContainer}>
                     <Text style={styles.stockText}>{item.name}</Text>
-                    <Text style={styles.stockPrice}>{formatCurrency(item.price)}</Text>
+                    <Text style={styles.stockPrice}>
+                      {formatCurrency(item.price)}
+                    </Text>
                   </View>
                 </View>
               </View>
               <View style={styles.graphContainer}>
-                <SimpleLineGraph data={item.priceHistory} isPositive={item.percentage >= 0} />
+                <SimpleLineGraph
+                  data={item.priceHistory}
+                  isPositive={item.percentage >= 0}
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -201,7 +213,7 @@ const MiniStockCard = ({ type }: MiniStockCardProps) => {
 const styles = StyleSheet.create({
   shadowContainer: {
     borderRadius: 20,
-    shadowColor: '#351560', 
+    shadowColor: '#351560',
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
@@ -262,4 +274,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MiniStockCard; 
+export default MiniStockCard;

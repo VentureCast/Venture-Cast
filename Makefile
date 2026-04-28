@@ -1,6 +1,6 @@
 # VentureCast Docker Management Makefile
 
-.PHONY: help build up down restart logs shell clean test
+.PHONY: help build up down restart logs shell clean test backend-deps
 
 # Default target
 help:
@@ -21,6 +21,7 @@ help:
 	@echo "  make test           - Run tests in containers"
 	@echo "  make test-docker    - Test Docker setup and services"
 	@echo "  make init           - Initialize project (copy env files, install deps)"
+	@echo "  make backend-deps   - npm install inside backend container (after git pull)"
 
 # Initialize project
 init:
@@ -42,6 +43,10 @@ build:
 build-prod:
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build
 
+# Sync backend node_modules in the Docker anonymous volume (required after git pull when package.json changed)
+backend-deps:
+	docker-compose exec backend npm install
+
 # Start/Stop commands
 up:
 	docker-compose up -d
@@ -50,6 +55,8 @@ up:
 	@echo "  - Backend API: http://localhost:3001"
 	@echo "  - MongoDB: localhost:27017"
 	@echo "  - Redis: localhost:6379"
+	@echo ""
+	@echo "If VentureCast_Backend-main/package.json changed: run  make backend-deps"
 
 up-prod:
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml --profile production up -d

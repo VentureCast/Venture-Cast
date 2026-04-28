@@ -42,6 +42,8 @@ services:
       - "3001:3001"
     volumes:
       - ./VentureCast_Backend-main:/app
+      # Anonymous volume keeps Linux-native deps; if package.json changes, run:
+      #   docker compose exec backend npm install
       - /app/node_modules
     networks:
       - venturecast-network
