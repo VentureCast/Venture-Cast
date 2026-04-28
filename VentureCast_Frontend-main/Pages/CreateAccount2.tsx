@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Text, ScrollView, Alert } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native';
 import Button from './Components/Button';
 import InputField from './Components/InputField';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -18,16 +18,27 @@ const CreateAccountScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const [howDidYouHear, setHowDidYouHear] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const handleContinue = () => {
-    if (password === confirmPassword)
-      return (
-        navigation.navigate('CameraScreen')
-      ); 
-    else 
-      return (
-        Alert.alert('Passwords do not match.')
-      );
+    const p = password.trim();
+    const c = confirmPassword.trim();
+
+    if (!p) {
+      setPasswordError('Please enter a password.');
+      return;
+    }
+    if (!c) {
+      setPasswordError('Please confirm your password.');
+      return;
+    }
+    if (p !== c) {
+      setPasswordError('Passwords do not match.');
+      return;
+    }
+
+    setPasswordError('');
+    navigation.navigate('CameraScreen');
   };
   // need to now link over to the ID verification part
 
@@ -48,6 +59,8 @@ const CreateAccountScreen = () => {
           onChangeText={setEmail}
           placeholder="Email"
           keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
         />
 
         <InputField
@@ -55,29 +68,46 @@ const CreateAccountScreen = () => {
           value={username}
           onChangeText={setUsername}
           placeholder="Username"
+          autoCapitalize="none"
+          autoCorrect={false}
         />
         {/* Password */}
 
         <InputField
           label="Set Password"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(t) => {
+            setPasswordError('');
+            setPassword(t);
+          }}
           placeholder="Password"
+          isPassword
+          autoCapitalize="none"
+          autoCorrect={false}
         />
         <InputField
           label="Confirm Password"
           value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          placeholder="Password"
-          keyboardType='password'
+          onChangeText={(t) => {
+            setPasswordError('');
+            setConfirmPassword(t);
+          }}
+          placeholder="Confirm password"
+          isPassword
+          autoCapitalize="none"
+          autoCorrect={false}
         />
-        {/* ^^^^secureTextEntry to hide text^^^ */}
+        {passwordError ? (
+          <Text style={styles.errorText}>{passwordError}</Text>
+        ) : null}
 
         <InputField
           label="How Did You Hear About Us?"
           value={howDidYouHear}
           onChangeText={setHowDidYouHear}
           placeholder="e.g., YouTube"
+          autoCapitalize="none"
+          autoCorrect={false}
         />
 
         <Button title="Continue" onPress={handleContinue} />
@@ -114,6 +144,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       paddingVertical: 15,
       marginTop: 60,
+    },
+    errorText: {
+      color: '#F75555',
+      fontFamily: 'urbanist',
+      fontSize: 14,
+      marginTop: 4,
+      marginBottom: 4,
     },
 });
 

@@ -3,7 +3,7 @@ import { View, ScrollView, StyleSheet, Image, Text, TouchableOpacity, Dimensions
 import Header from './Components/Header';
 import CategoryBox from './Components/CategoryBox';
 import MiniStockCard from './Components/MiniStockCard';
-import StockDetailsScreen from './StockDetails';
+import MiniStockScroll from './Components/MiniStockScroll';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useUser } from '../UserProvider';
 import api from '../services/api';
@@ -134,9 +134,10 @@ const VentureCastHome = () => {
       )}
 
       {/* Watch List Section */}
+      <TouchableOpacity onPress={() => navigation.navigate('Watchlist')}>
         <View style={styles.subTitle}>
-            <Text style={styles.sectionTitle}>Watchlist</Text>
-            <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
+          <Text style={styles.sectionTitle}>Watchlist</Text>
+          <Image style={styles.rightArrow} source={require('../Assets/Icons/Arrow-right.png')} />
         </View>
       </TouchableOpacity>
 

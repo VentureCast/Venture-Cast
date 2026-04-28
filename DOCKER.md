@@ -28,6 +28,14 @@ cd Venture-Cast
 docker-compose up -d
 ```
 
+**iOS (CocoaPods):** `ios/Pods` is not committed. After clone, install iOS native dependencies once:
+
+```bash
+cd VentureCast_Frontend-main/ios && pod install && cd ../..
+```
+
+(Use the `.xcworkspace` in `ios/` to open the app in Xcode, not the `.xcodeproj` alone.)
+
 ### 2. Access Services
 
 Once running, services are available at:
@@ -57,6 +65,29 @@ Once running, services are available at:
 - `mongodb_data`: Persistent MongoDB data
 - `mongodb_config`: MongoDB configuration
 - `redis_data`: Redis persistent data
+- **Backend `node_modules` (anonymous volume):** The backend service mounts your repo at `/app` but uses a **separate Docker volume** for `/app/node_modules` so the Linux container does not use macOS/Windows-built native binaries from your host. That volume **persists** across runs and is **not updated automatically** when you change `package.json` or `package-lock.json` on `git pull`.
+
+### Backend npm dependencies after `git pull`
+
+If someone pulls the repo and **`VentureCast_Backend-main/package.json`** (or the lockfile) changed, the backend container may crash on startup with errors like **`Cannot find module 'helmet'`** (or another package), and **`curl http://localhost:3001/`** may return no HTTP status (**`000`** from curl’s `%{http_code}`) because nothing is listening.
+
+**Fix:** install dependencies **inside the running backend container** so the anonymous volume matches the current lockfile:
+
+```bash
+make backend-deps
+```
+
+Equivalent:
+
+```bash
+docker compose exec backend npm install
+```
+
+Run this **after pulling** when backend dependencies might have changed. The project [`Makefile`](Makefile) also prints a reminder after `make up`.
+
+**First-time setup:** [`scripts/docker-setup.sh`](scripts/docker-setup.sh) attempts this automatically after `docker compose up -d`.
+
+If problems persist, rebuild the backend image and recreate the container (see rebuild commands elsewhere in this doc); as a last resort, removing volumes (`make clean` / `docker compose down -v`) clears persisted data—only do that if you understand MongoDB data will be removed unless backed up.
 
 ## Development Workflow
 

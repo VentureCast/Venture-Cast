@@ -77,6 +77,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     docker-compose up -d
     echo -e "${GREEN}✓ Services started successfully${NC}"
 
+    echo -e "${YELLOW}Syncing backend npm dependencies inside container...${NC}"
+    docker-compose exec backend npm install || echo -e "${YELLOW}Could not run npm install in backend yet; run: docker compose exec backend npm install${NC}"
+
     echo ""
     echo "========================================="
     echo "Services are running at:"

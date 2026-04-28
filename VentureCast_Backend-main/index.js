@@ -111,8 +111,9 @@ app.use(errorHandler);
 // Only start server when run directly (not imported for tests)
 if (require.main === module) {
   const PORT = process.env.PORT || 3001;
-  const server = app.listen(PORT, () => {
-    logger.info(`Server running on port ${PORT}`);
+  const HOST = process.env.HOST || '0.0.0.0';
+  const server = app.listen(PORT, HOST, () => {
+    logger.info(`Server running on http://${HOST}:${PORT}`);
     logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
   });
 

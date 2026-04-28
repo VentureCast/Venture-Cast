@@ -12,6 +12,10 @@ import 'react-native-url-polyfill/auto';
 // Import your screens
 import VentureCast from './Pages/VentureCast';
 import CreateAccountScreen from './Pages/CreateAccount2';
+import CameraScreen from './Pages/CreateAccount3';
+import UploadGovernmentIDScreen from './Pages/UploadGovernmentID';
+import DepositScreen from './Pages/DepositScreen';
+import WithdrawScreen from './Pages/WithdrawScreen';
 import SignInScreen from './Pages/SignInScreen';
 // header components
 import HeaderLeft from './Pages/Components/HeaderLeft';
@@ -62,8 +66,6 @@ import EditPaymentMethod from './Pages/EditPaymentMethod';
 // Stripe integration screens
 import KYCOnboarding from './Pages/KYCOnboarding';
 import AddBankAccount from './Pages/AddBankAccount';
-import DepositScreen from './Pages/DepositScreen';
-import WithdrawScreen from './Pages/WithdrawScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -162,13 +164,23 @@ const App = () => {
           />
           <Stack.Screen
             name="CreateAccount"
-            component={CreateAccount}
+            component={CreateAccountScreen}
             options={{ gestureEnabled: false, headerShown: false }} // Security: Disable gestures
           />
           <Stack.Screen
             name="CreateAccountStep2"
             component={CreateAccountScreen}
             options={{ gestureEnabled: false, headerShown: false}} // Security: Disable gestures
+          />
+          <Stack.Screen
+            name="CameraScreen"
+            component={CameraScreen}
+            options={{ gestureEnabled: false, headerShown: false }}
+          />
+          <Stack.Screen
+            name="UploadGovernmentIDScreen"
+            component={UploadGovernmentIDScreen}
+            options={{ gestureEnabled: false, headerShown: false }}
           />
           <Stack.Screen
             name="SignIn"
@@ -413,13 +425,13 @@ const App = () => {
           /> 
           <Stack.Screen
             name="Withdraw"
-            component={Withdraw} // Add the withdraw screen
-            options={{ headerShown: false }} 
-          />      
+            component={WithdrawScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Deposit"
-            component={Deposit} // Add the deposit screen
-            options={{ headerShown: false }} 
+            component={DepositScreen}
+            options={{ headerShown: false }}
           /> 
           <Stack.Screen
             name="WithdrawCongrats"

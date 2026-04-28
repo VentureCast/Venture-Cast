@@ -4,6 +4,7 @@ ${PODS_CONFIGURATION_BUILD_DIR}/GTMAppAuth/GTMAppAuth_Privacy.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher/GTMSessionFetcher_Core_Privacy.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/GoogleSignIn/GoogleSignIn.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/RCT-Folly_privacy.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle
 ${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf
 ${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf
 ${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf
@@ -25,5 +26,13 @@ ${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.
 ${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf
 ${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/Stripe/StripeBundle.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/StripeCore/StripeCoreBundle.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/StripeFinancialConnections/StripeFinancialConnectionsBundle.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/StripePaymentSheet/StripePaymentSheetBundle.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/StripePayments/StripePaymentsBundle.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/StripePayments/Stripe3DS2.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/StripePaymentsUI/StripePaymentsUIBundle.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/StripeUICore/StripeUICoreBundle.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle
