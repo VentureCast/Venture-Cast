@@ -41,9 +41,9 @@ integration test **is** the contract the frontend will consume later.
 | Source of truth | **Derive from the oracle + invariants** | The Python `creator_amm/` prototype is **not in this repo**. The $205 oracle + 4 invariants are a complete, testable spec. |
 | Cutover | **Build alongside, flag-gated** | New modules + new endpoints. Old `executeBuy/executeSell` stays until per-market cutover. Safest for real money. |
 | Ledger truth | **Internal double-entry ledger authoritative** | Mongo ledger is truth for in-app cash/positions/reserve/fees. Stripe Treasury touched only at deposit/withdraw edges. |
-| Language | **Plain JS / CommonJS + JSDoc typedefs** ⚠️ *confirm* | Every existing backend file is plain `.js` with `require`. Introducing a TS toolchain (tsc/ts-jest/build step) is real scope. Recommend JSDoc money types instead. |
+| Language | **Plain JS / CommonJS + JSDoc typedefs** ✅ | Every existing backend file is plain `.js` with `require`. Introducing a TS toolchain (tsc/ts-jest/build step) is real scope. JSDoc money types instead. |
 
-⚠️ = open confirm-point for you (see §9).
+All §0 forks and the §9 confirm-points are now **resolved** (see §9).
 
 ---
 
@@ -224,13 +224,13 @@ Infra: Jest + supertest + `mongodb-memory-server` (`MongoMemoryReplSet`), `--run
 
 ---
 
-## 9. Open confirm-points (need your ✅ before/at implementation)
+## 9. Confirm-points — RESOLVED
 
-1. **Language:** plain JS + JSDoc money typedefs (recommended) vs. introduce TypeScript. *Default: plain JS.*
-2. **Fractional shares:** integer units only (recommended, matches "stock") vs. allow fractional. *Default: integer.*
-3. **Spread/fee defaults:** starting `spreadBps` / `feeBps` per tier (e.g. 50 / 100 bps?). *Default: I'll propose values in the plan PR.*
-4. **Reserve seeding:** when a market is created, where does the initial reserve come from — platform-funded float, or pure curve proceeds? *Affects solvency math; default: platform-funded floor + curve proceeds.*
-5. **Branch base:** keep `feature/creator-amm-engine` off `Buy/SellAPI/Dockerization` (recommended) vs. rebase onto `main`.
+1. **Language:** ✅ **Plain JS + JSDoc money typedefs** (CommonJS, no build step; matches existing backend).
+2. **Share units:** ✅ **Integer units only.** "Buy $X" floors to whole units; the sub-unit remainder stays as the user's cash. No fractional shares.
+3. **Economics:** ✅ **50 bps spread + 100 bps fee** as starting per-tier defaults. Spread (0.5%) accrues to `market_reserve`; fee (1.0%) routes to `platform_fees`. Both live in `config.js`, tunable per tier.
+4. **Market genesis:** ✅ A new market opens at **supply `s0 = 0`** → starting price = `P0` ($1.00 with oracle params), and the **platform seeds the reserve to its floor** so the first trades are solvent. Price is discovered by trading up the curve. (No Stripe dependency — the seed is an internal ledger posting from a `platform_funding` account.)
+5. **Branch base:** ✅ Stay on `feature/creator-amm-engine` (off `Buy/SellAPI/Dockerization`).
 
 ---
 
