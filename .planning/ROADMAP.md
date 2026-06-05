@@ -39,7 +39,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Opening a new market creates a `Market` + `MarketState` at supply `s0=0` and price `P0`, with `version=0`.
   3. Genesis seeds the reserve to `reserveFloorCents` via a balanced `platform_funding` → `market_reserve` ledger posting that sums to zero.
   4. A `MongoMemoryReplSet` test confirms genesis is atomic (market + state + seeding postings commit together or not at all).
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 01-01-PLAN.md — Define the nine AMM Mongoose models (Market, MarketState, LedgerAccount, LedgerEntry, Order, Trade, PriceCandle, RiskEvent, AdminAction) with unique indexes
+  - [ ] 01-02-PLAN.md — Wave 0 genesis atomicity test + ammFixtures, and genesisService.openMarket() seeding the reserve to floor via balanced double-entry posting
 
 ### Phase 2: Pricing Engine (Oracle-First)
 **Goal**: A pure, DB-free pricing module computes exact integer-cent buy cost, sell payout, cash→units inversion, and spread/fee routing — proven by the oracle written first (TDD).
@@ -107,7 +109,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Data Model & Market Genesis | 0/TBD | Not started | - |
+| 1. Data Model & Market Genesis | 0/2 | Not started | - |
 | 2. Pricing Engine (Oracle-First) | 0/TBD | Not started | - |
 | 3. Ledger & Risk Engines | 0/TBD | Not started | - |
 | 4. Atomic Execution Orchestrator | 0/TBD | Not started | - |
