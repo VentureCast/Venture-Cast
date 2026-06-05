@@ -138,18 +138,17 @@ describe('priceCents monotonicity', () => {
 // ============================================================
 describe('overflow guard (PRICE-05)', () => {
   test('buyCostCents throws PricingError for supply that breaks isSafeInteger on s^2 term', () => {
-    // Need k_num * (s1^2 - s0^2) to overflow Number.MAX_SAFE_INTEGER
-    // For k_num=100, s0=94906266 (sqrt(MAX_SAFE_INTEGER) + 1), delta=1:
-    // s1^2 - s0^2 ≈ 2*s0 ≈ 189,812,532 → * k_num=100 = 18,981,253,200 (safe)
-    // Use k_num=100, s0=9_000_000_000 to guarantee overflow:
-    // k_num*(s1^2-s0^2) = 100 * (s0^2 area) >> MAX_SAFE_INTEGER
-    expect(() => buyCostCents(9_000_000_000, 1, { P0_cents: 100, k_num: 100, k_den: 1 }))
+    // Need k_num * (s1^2 - s0^2) to exceed Number.MAX_SAFE_INTEGER (9_007_199_254_740_991).
+    // For k_num=100, s0=45_036_000_000_000, delta=1:
+    //   quadNum = 100 * (s1^2 - s0^2) = 100 * (2*s0+1) ≈ 9_007_200_000_000_100 > MAX_SAFE_INTEGER
+    // Verified via node: Number.isSafeInteger(qb) === false
+    expect(() => buyCostCents(45_036_000_000_000, 1, { P0_cents: 100, k_num: 100, k_den: 1 }))
       .toThrow(PricingError);
   });
 
   test('PricingError has statusCode 500 on overflow', () => {
     try {
-      buyCostCents(9_000_000_000, 1, { P0_cents: 100, k_num: 100, k_den: 1 });
+      buyCostCents(45_036_000_000_000, 1, { P0_cents: 100, k_num: 100, k_den: 1 });
       expect(true).toBe(false); // should not reach here
     } catch (err) {
       expect(err).toBeInstanceOf(PricingError);
