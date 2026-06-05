@@ -21,7 +21,7 @@ the whole thing: $205 oracle, 10k-trade-per-tier sim, concurrency, and idempoten
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Data Model & Market Genesis** - New Mongoose collections, indexes, and market genesis seeding the reserve to its floor
+- [x] **Phase 1: Data Model & Market Genesis** - New Mongoose collections, indexes, and market genesis seeding the reserve to its floor
 - [ ] **Phase 2: Pricing Engine (Oracle-First)** - Pure integer-cent bonding-curve engine that passes the $205 oracle exactly
 - [ ] **Phase 3: Ledger & Risk Engines** - Two independent pure modules built in parallel: double-entry ledger and 3-tier risk engine
 - [ ] **Phase 4: Atomic Execution Orchestrator** - One-transaction integration of pricing+ledger+risk with optimistic locking, idempotency, slippage
@@ -41,7 +41,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. A `MongoMemoryReplSet` test confirms genesis is atomic (market + state + seeding postings commit together or not at all).
 **Plans**: 2 plans
   - [x] 01-01-PLAN.md — Define the nine AMM Mongoose models (Market, MarketState, LedgerAccount, LedgerEntry, Order, Trade, PriceCandle, RiskEvent, AdminAction) with unique indexes
-  - [ ] 01-02-PLAN.md — Wave 0 genesis atomicity test + ammFixtures, and genesisService.openMarket() seeding the reserve to floor via balanced double-entry posting
+  - [x] 01-02-PLAN.md — Wave 0 genesis atomicity test + ammFixtures, and genesisService.openMarket() seeding the reserve to floor via balanced double-entry posting
 
 ### Phase 2: Pricing Engine (Oracle-First)
 **Goal**: A pure, DB-free pricing module computes exact integer-cent buy cost, sell payout, cash→units inversion, and spread/fee routing — proven by the oracle written first (TDD).
@@ -109,7 +109,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Data Model & Market Genesis | 1/2 | In progress | - |
+| 1. Data Model & Market Genesis | 2/2 | Complete | 2026-06-05 |
 | 2. Pricing Engine (Oracle-First) | 0/TBD | Not started | - |
 | 3. Ledger & Risk Engines | 0/TBD | Not started | - |
 | 4. Atomic Execution Orchestrator | 0/TBD | Not started | - |

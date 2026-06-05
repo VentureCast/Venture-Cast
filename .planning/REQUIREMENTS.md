@@ -20,7 +20,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 - [ ] **LEDG-01**: Every trade posts a balanced set of double-entry entries summing to zero (integer cents/units)
 - [ ] **LEDG-02**: System maintains account balance projections (`user_cash`, `user_position`, `market_reserve`, `platform_fees`, `platform_funding`) verifiable by summing entries
 - [ ] **LEDG-03**: System aborts any trade that would leave the ledger unbalanced
-- [ ] **LEDG-04**: Market genesis opens at supply s0=0 / price=P0 and seeds the reserve to its floor via a `platform_funding` posting
+- [x] **LEDG-04**: Market genesis opens at supply s0=0 / price=P0 and seeds the reserve to its floor via a `platform_funding` posting
 
 ### Risk
 
@@ -74,7 +74,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LEDG-04 | Phase 1 | In progress (models done; genesis service + test in 01-02) |
+| LEDG-04 | Phase 1 | Complete — openMarket() atomic genesis + LEDG-04a..d tests pass (01-02) |
 | PRICE-01 | Phase 2 | Pending |
 | PRICE-02 | Phase 2 | Pending |
 | PRICE-03 | Phase 2 | Pending |
