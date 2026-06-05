@@ -85,95 +85,90 @@ async function openMarket(params) {
   }
 
   const session = await mongoose.startSession();
-  session.startTransaction();
 
-  // Track commit so the catch never aborts a transaction that already committed
-  // (e.g. an UnknownTransactionCommitResult thrown by commitTransaction itself).
-  let committed = false;
+  // Declared outside the callback so they survive a transient retry (withTransaction
+  // may re-run the callback) and remain available for logging + the return value.
+  let market;
+  let marketState;
 
   try {
-    // 1. Create the Market config document
-    const market = new Market({
-      streamerId,
-      P0_cents,
-      k_num,
-      k_den,
-      tier,
-      status: 'active',
-      spreadBps,
-      feeBps,
-    });
-    await market.save({ session });
+    // session.withTransaction is the MongoDB-recommended pattern: it commits on success,
+    // aborts on any thrown error, and transparently retries on TransientTransactionError
+    // (re-runs the callback) and UnknownTransactionCommitResult (re-commits). This closes
+    // the abort-after-commit edge case and is the canonical atomic-write pattern the rest
+    // of the AMM (Phase 4 execution orchestrator) copies.
+    await session.withTransaction(async () => {
+      // 1. Create the Market config document
+      market = new Market({
+        streamerId,
+        P0_cents,
+        k_num,
+        k_den,
+        tier,
+        status: 'active',
+        spreadBps,
+        feeBps,
+      });
+      await market.save({ session });
 
-    // 2. Create MarketState at genesis: s0=0, price=P0, version=0, reserve=floor
-    const marketState = new MarketState({
-      marketId: market._id,
-      supply: 0,
-      reserveCents: reserveFloorCents,  // seeded to floor at genesis
-      reserveFloorCents,
-      lastPriceCents: P0_cents,
-      version: 0,
-    });
-    await marketState.save({ session });
+      // 2. Create MarketState at genesis: s0=0, price=P0, version=0, reserve=floor
+      marketState = new MarketState({
+        marketId: market._id,
+        supply: 0,
+        reserveCents: reserveFloorCents,  // seeded to floor at genesis
+        reserveFloorCents,
+        lastPriceCents: P0_cents,
+        version: 0,
+      });
+      await marketState.save({ session });
 
-    // 3. Seed reserve: debit platform_funding, credit market_reserve:<marketId>
-    //    Both entries together must sum to zero (double-entry invariant).
-    const fundingKey = 'platform_funding';
-    const reserveKey = `market_reserve:${market._id}`;
+      // 3. Seed reserve: debit platform_funding, credit market_reserve:<marketId>.
+      //    Assert the double-entry invariant BEFORE posting anything.
+      const fundingKey = 'platform_funding';
+      const reserveKey = `market_reserve:${market._id}`;
+      const debitDelta = -reserveFloorCents;   // negative: cash leaves platform_funding
+      const creditDelta = reserveFloorCents;    // positive: cash enters market_reserve
 
-    const debitEntry = new LedgerEntry({
-      tradeId: null,                       // genesis — not associated with a trade
-      accountKey: fundingKey,
-      delta: -reserveFloorCents,           // negative: cash leaves platform_funding
-      unit: 'cents',
-      note: `genesis debit for market ${market._id}`,
-    });
-    await debitEntry.save({ session });
+      if (debitDelta + creditDelta !== 0) {
+        throw new GenesisError(
+          'Genesis ledger entries do not sum to zero',
+          500,
+          { debitDelta, creditDelta }
+        );
+      }
 
-    const creditEntry = new LedgerEntry({
-      tradeId: null,
-      accountKey: reserveKey,
-      delta: reserveFloorCents,            // positive: cash enters market_reserve
-      unit: 'cents',
-      note: `genesis credit for market ${market._id}`,
-    });
-    await creditEntry.save({ session });
+      const debitEntry = new LedgerEntry({
+        tradeId: null,                          // genesis — not associated with a trade
+        accountKey: fundingKey,
+        delta: debitDelta,
+        unit: 'cents',
+        note: `genesis debit for market ${market._id}`,
+      });
+      await debitEntry.save({ session });
 
-    // 4. Upsert LedgerAccount balance projections via $inc
-    //    CRITICAL: session must be threaded inside the options object (Mongoose 8 requirement)
-    //    so these upserts are included in the transaction and roll back on abort.
-    await LedgerAccount.findOneAndUpdate(
-      { accountKey: fundingKey },
-      {
-        $inc: { balance: -reserveFloorCents },
-        $setOnInsert: { unit: 'cents' },
-      },
-      { upsert: true, new: true, session }
-    );
+      const creditEntry = new LedgerEntry({
+        tradeId: null,
+        accountKey: reserveKey,
+        delta: creditDelta,
+        unit: 'cents',
+        note: `genesis credit for market ${market._id}`,
+      });
+      await creditEntry.save({ session });
 
-    await LedgerAccount.findOneAndUpdate(
-      { accountKey: reserveKey },
-      {
-        $inc: { balance: reserveFloorCents },
-        $setOnInsert: { unit: 'cents' },
-      },
-      { upsert: true, new: true, session }
-    );
-
-    // 5. Invariant check: the two genesis entries MUST sum to exactly zero.
-    //    This will always pass for a correct integer reserveFloorCents, but
-    //    asserting here prevents silent drift if the posting logic is changed.
-    const entrySum = debitEntry.delta + creditEntry.delta;
-    if (entrySum !== 0) {
-      throw new GenesisError(
-        'Genesis ledger entries do not sum to zero',
-        500,
-        { entrySum, debitDelta: debitEntry.delta, creditDelta: creditEntry.delta }
+      // 4. Upsert LedgerAccount balance projections via $inc.
+      //    CRITICAL: session must be threaded inside the options object (Mongoose 8)
+      //    so these upserts are included in the transaction and roll back on abort.
+      await LedgerAccount.findOneAndUpdate(
+        { accountKey: fundingKey },
+        { $inc: { balance: debitDelta }, $setOnInsert: { unit: 'cents' } },
+        { upsert: true, new: true, session }
       );
-    }
-
-    await session.commitTransaction();
-    committed = true;
+      await LedgerAccount.findOneAndUpdate(
+        { accountKey: reserveKey },
+        { $inc: { balance: creditDelta }, $setOnInsert: { unit: 'cents' } },
+        { upsert: true, new: true, session }
+      );
+    });
 
     logger.info(
       `Market genesis complete: marketId=${market._id}, streamerId=${streamerId}, ` +
@@ -181,20 +176,6 @@ async function openMarket(params) {
     );
 
     return { market, marketState };
-
-  } catch (error) {
-    // Only abort if the transaction has NOT already committed. Aborting a committed
-    // transaction is invalid; if commitTransaction() itself threw an unknown-result
-    // error, the write may have landed and must not be rolled back here.
-    if (!committed) {
-      try {
-        await session.abortTransaction();
-      } catch (abortError) {
-        logger.error(`Genesis abortTransaction failed: ${abortError.message}`);
-      }
-    }
-    // Re-throw so callers get the original GenesisError or wrapped error
-    throw error;
   } finally {
     session.endSession();
   }
