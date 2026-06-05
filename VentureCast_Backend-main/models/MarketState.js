@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { integerValidator } = require('./ammValidators');
 
 // Hot mutable state doc — one per market, optimistic-lock pattern.
 //
@@ -22,26 +23,30 @@ const MarketStateSchema = new mongoose.Schema({
   supply: {
     type: Number,
     required: true,
-    default: 0
+    default: 0,
+    validate: integerValidator
   },
 
   // Current reserve pool — integer cents (not dollars)
   reserveCents: {
     type: Number,
     required: true,
-    default: 0
+    default: 0,
+    validate: integerValidator
   },
 
   // Minimum reserve floor — integer cents; reserve must not fall below this
   reserveFloorCents: {
     type: Number,
-    required: true
+    required: true,
+    validate: integerValidator
   },
 
   // Last executed trade price — integer cents; used as reference price for quotes
   lastPriceCents: {
     type: Number,
-    required: true
+    required: true,
+    validate: integerValidator
   },
 
   // Optimistic concurrency version — incremented atomically on every state write.
@@ -49,7 +54,8 @@ const MarketStateSchema = new mongoose.Schema({
   version: {
     type: Number,
     required: true,
-    default: 0
+    default: 0,
+    validate: integerValidator
   },
 
   updatedAt: {

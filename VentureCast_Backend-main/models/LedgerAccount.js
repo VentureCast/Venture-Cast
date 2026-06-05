@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { integerValidator } = require('./ammValidators');
 
 // Balance projection — one doc per accountKey, updated via $inc upserts (never .save()).
 //
@@ -28,11 +29,14 @@ const LedgerAccountSchema = new mongoose.Schema({
   },
 
   // Running balance — integer cents (for cash accounts) or integer units (for share accounts)
-  // Updated exclusively via $inc findOneAndUpdate, never via .save()
+  // Updated exclusively via $inc findOneAndUpdate, never via .save().
+  // NOTE: Mongoose skips validators on $inc, so integer-ness here is guaranteed upstream —
+  // every LedgerEntry.delta is integer-validated, so the summed projection stays integer.
   balance: {
     type: Number,
     required: true,
-    default: 0
+    default: 0,
+    validate: integerValidator
   },
 
   // Denomination of the balance field

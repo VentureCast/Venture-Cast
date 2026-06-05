@@ -1,29 +1,35 @@
 const mongoose = require('mongoose');
+const { integerValidator } = require('./ammValidators');
 
 const MarketSchema = new mongoose.Schema({
-  // Creator/streamer reference — one market per streamer (admin-enforced, not DB-unique)
+  // Creator/streamer reference — exactly ONE market per streamer (DB-enforced unique).
+  // This makes openMarket() idempotent under retry: a duplicate genesis hits a
+  // duplicate-key error instead of silently creating a second market.
   streamerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Streamer',
     required: true,
-    index: true
+    unique: true
   },
 
   // Starting price in integer cents — e.g. 100 = $1.00
   P0_cents: {
     type: Number,
-    required: true
+    required: true,
+    validate: integerValidator
   },
 
   // Bonding curve slope as a rational: k = k_num / k_den
   // Stored as integers to avoid float precision issues
   k_num: {
     type: Number,
-    required: true
+    required: true,
+    validate: integerValidator
   },
   k_den: {
     type: Number,
-    required: true
+    required: true,
+    validate: integerValidator
   },
 
   // Market tier — determines reserve floor and risk limits
@@ -43,13 +49,15 @@ const MarketSchema = new mongoose.Schema({
   // Spread in basis points — e.g. 50 = 0.50% — credited to market_reserve
   spreadBps: {
     type: Number,
-    required: true
+    required: true,
+    validate: integerValidator
   },
 
   // Protocol fee in basis points — e.g. 100 = 1.00% — credited to platform_fees
   feeBps: {
     type: Number,
-    required: true
+    required: true,
+    validate: integerValidator
   },
 
   // Timestamps
@@ -63,8 +71,7 @@ const MarketSchema = new mongoose.Schema({
   }
 });
 
-// Supporting indexes
-MarketSchema.index({ streamerId: 1 });
+// (streamerId already has a unique index from its field definition above)
 
 // Pre-save hook: keep updatedAt current on every .save() call
 MarketSchema.pre('save', function (next) {

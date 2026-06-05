@@ -264,19 +264,42 @@ describe('atomic rollback', () => {
     expect(await LedgerAccount.countDocuments()).toBe(0);
   });
 
-  it('leaves zero docs when a mid-transaction error causes abort', async () => {
+  it('rolls back Market + MarketState already written when a later in-transaction write throws', async () => {
     const mongoose = require('mongoose');
     const streamerId = new mongoose.Types.ObjectId().toString();
 
-    // Pass a non-integer floor to trigger the Number.isInteger guard
+    // Force the FIRST ledger posting to throw AFTER Market + MarketState have already
+    // been saved inside the transaction. This exercises a TRUE mid-transaction abort:
+    // documents written earlier in the session must be rolled back (not just a
+    // pre-session param-guard rejection, which writes nothing).
+    const saveSpy = jest
+      .spyOn(LedgerEntry.prototype, 'save')
+      .mockRejectedValueOnce(new Error('injected mid-transaction failure'));
+
+    await expect(
+      openMarket({ streamerId, P0_cents: 100, reserveFloorCents: FLOOR_CENTS })
+    ).rejects.toThrow('injected mid-transaction failure');
+
+    saveSpy.mockRestore();
+
+    // Market.save() and MarketState.save() executed before the injected failure, yet the
+    // aborted transaction must leave ZERO documents across every collection.
+    expect(await Market.countDocuments()).toBe(0);
+    expect(await MarketState.countDocuments()).toBe(0);
+    expect(await LedgerEntry.countDocuments()).toBe(0);
+    expect(await LedgerAccount.countDocuments()).toBe(0);
+  });
+
+  it('rejects a non-integer reserveFloorCents at the param guard (no writes)', async () => {
+    const mongoose = require('mongoose');
+    const streamerId = new mongoose.Types.ObjectId().toString();
+
     await expect(
       openMarket({ streamerId, P0_cents: 100, reserveFloorCents: 9999.99 })
     ).rejects.toMatchObject({ statusCode: 400 });
 
     expect(await Market.countDocuments()).toBe(0);
     expect(await MarketState.countDocuments()).toBe(0);
-    expect(await LedgerEntry.countDocuments()).toBe(0);
-    expect(await LedgerAccount.countDocuments()).toBe(0);
   });
 
   it('fully commits on success and leaves all four collections with docs', async () => {

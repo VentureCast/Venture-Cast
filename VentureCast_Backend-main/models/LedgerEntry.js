@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { integerValidator } = require('./ammValidators');
 
 // Immutable double-entry posting — append-only; never updated after insert.
 //
@@ -34,7 +35,8 @@ const LedgerEntrySchema = new mongoose.Schema({
   // Integer cents for cash accounts; integer units for share/position accounts
   delta: {
     type: Number,
-    required: true
+    required: true,
+    validate: integerValidator
   },
 
   // Denomination of the delta field

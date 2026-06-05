@@ -87,6 +87,10 @@ async function openMarket(params) {
   const session = await mongoose.startSession();
   session.startTransaction();
 
+  // Track commit so the catch never aborts a transaction that already committed
+  // (e.g. an UnknownTransactionCommitResult thrown by commitTransaction itself).
+  let committed = false;
+
   try {
     // 1. Create the Market config document
     const market = new Market({
@@ -169,6 +173,7 @@ async function openMarket(params) {
     }
 
     await session.commitTransaction();
+    committed = true;
 
     logger.info(
       `Market genesis complete: marketId=${market._id}, streamerId=${streamerId}, ` +
@@ -178,7 +183,16 @@ async function openMarket(params) {
     return { market, marketState };
 
   } catch (error) {
-    await session.abortTransaction();
+    // Only abort if the transaction has NOT already committed. Aborting a committed
+    // transaction is invalid; if commitTransaction() itself threw an unknown-result
+    // error, the write may have landed and must not be rolled back here.
+    if (!committed) {
+      try {
+        await session.abortTransaction();
+      } catch (abortError) {
+        logger.error(`Genesis abortTransaction failed: ${abortError.message}`);
+      }
+    }
     // Re-throw so callers get the original GenesisError or wrapped error
     throw error;
   } finally {
