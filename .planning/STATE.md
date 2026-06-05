@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-06-03)
 ## Current Position
 
 Phase: 1 of 6 (Data Model & Market Genesis)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-06-05 — Roadmap created (6 phases, 26/26 requirements mapped)
+Plan: 1 of TBD in current phase
+Status: In progress — Plan 01 complete, Plan 02 (genesis service + tests) next
+Last activity: 2026-06-05 — Plan 01-01 complete: 9 AMM Mongoose models created
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 5%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: - min
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 5 min
+- Total execution time: 0.1 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-data-model-market-genesis | 1 | 5 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: -
-- Trend: -
+- Last 5 plans: 5 min
+- Trend: baseline
 
 *Updated after each plan completion*
 
@@ -47,6 +47,9 @@ Recent decisions affecting current work:
 - [Phase 2]: Integer cents everywhere; `k` as rational `k_num/k_den`; spread→reserve, fee→platform_fees; genesis s0=0 @ P0.
 - [Phase 1]: Internal double-entry ledger authoritative; platform_funding seeds reserve (no Stripe dependency this milestone).
 - [Phase 4]: Build alongside existing trade path, flag-gated — no rip-out of `executeBuy/executeSell`.
+- [01-01]: platform_funding LedgerAccount will run negative — accepted as bookkeeping artifact; documented in model comments.
+- [01-01]: MarketState.updatedAt informational only — Phase 4 updateOne bypasses pre('save'); documented in schema comment.
+- [01-01]: PriceCandle is schema-only (no candle-building logic) — candle logic deferred to market data service phase.
 
 ### Pending Todos
 
@@ -63,5 +66,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-06-05
-Stopped at: ROADMAP.md and STATE.md written; REQUIREMENTS.md traceability updated.
+Stopped at: Completed 01-01-PLAN.md — 9 AMM Mongoose models created; ready for Plan 02 (genesis service + tests).
 Resume file: None

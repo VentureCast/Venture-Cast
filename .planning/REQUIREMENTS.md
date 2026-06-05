@@ -74,7 +74,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LEDG-04 | Phase 1 | Pending |
+| LEDG-04 | Phase 1 | In progress (models done; genesis service + test in 01-02) |
 | PRICE-01 | Phase 2 | Pending |
 | PRICE-02 | Phase 2 | Pending |
 | PRICE-03 | Phase 2 | Pending |
@@ -111,4 +111,4 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 ---
 *Requirements defined: 2026-06-03*
-*Last updated: 2026-06-05 after roadmap creation*
+*Last updated: 2026-06-05 after plan 01-01 completion (9 AMM models created)*
