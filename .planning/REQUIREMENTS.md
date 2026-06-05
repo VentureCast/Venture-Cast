@@ -72,17 +72,43 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 ## Traceability
 
-Populated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (pending roadmap) | — | Pending |
+| LEDG-04 | Phase 1 | Pending |
+| PRICE-01 | Phase 2 | Pending |
+| PRICE-02 | Phase 2 | Pending |
+| PRICE-03 | Phase 2 | Pending |
+| PRICE-04 | Phase 2 | Pending |
+| PRICE-05 | Phase 2 | Pending |
+| TEST-01 | Phase 2 | Pending |
+| LEDG-01 | Phase 3 | Pending |
+| LEDG-02 | Phase 3 | Pending |
+| LEDG-03 | Phase 3 | Pending |
+| RISK-01 | Phase 3 | Pending |
+| RISK-02 | Phase 3 | Pending |
+| RISK-03 | Phase 3 | Pending |
+| RISK-04 | Phase 3 | Pending |
+| RISK-05 | Phase 3 | Pending |
+| RISK-06 | Phase 3 | Pending |
+| EXEC-01 | Phase 4 | Pending |
+| EXEC-02 | Phase 4 | Pending |
+| EXEC-03 | Phase 4 | Pending |
+| EXEC-04 | Phase 4 | Pending |
+| API-01 | Phase 5 | Pending |
+| API-02 | Phase 5 | Pending |
+| API-03 | Phase 5 | Pending |
+| API-04 | Phase 5 | Pending |
+| API-05 | Phase 5 | Pending |
+| TEST-02 | Phase 6 | Pending |
+| TEST-03 | Phase 6 | Pending |
+| TEST-04 | Phase 6 | Pending |
+| TEST-05 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 26 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 26 ⚠️
+- Mapped to phases: 26 (100%) ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-03*
-*Last updated: 2026-06-03 after initialization*
+*Last updated: 2026-06-05 after roadmap creation*
