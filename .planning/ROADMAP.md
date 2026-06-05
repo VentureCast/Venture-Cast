@@ -53,7 +53,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Cash→units inversion floors to whole integer units and recomputes the exact integer cost (never trusts the float estimate), guaranteeing `cost ≤ X` via ±1 integer search; $205.00 round-trips to exactly 100 units.
   4. Spread (default 50 bps) is routed to reserve and fee (default 100 bps) is routed to `platform_fees` as two distinct amounts, configurable per tier.
   5. Sub-cent residuals are rounded half-up deterministically and swept into the reserve (never to the user, never lost).
-**Plans**: TBD
+**Plans**: 1 plan
+  - [ ] 02-01-PLAN.md — Oracle-first TDD pricing engine: config.js + pure curve.js (buy/sell integral), inversion.js (cash→units), fees.js (spread/fee routing), pricing.test.js
 
 ### Phase 3: Ledger & Risk Engines
 **Goal**: Two independent pure modules — a double-entry ledger and a 3-tier risk engine — built in parallel and unit-tested in isolation, ready for the orchestrator to compose.
@@ -110,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Data Model & Market Genesis | 2/2 | Complete    | 2026-06-05 |
-| 2. Pricing Engine (Oracle-First) | 0/TBD | Not started | - |
+| 2. Pricing Engine (Oracle-First) | 0/1 | Planned     | - |
 | 3. Ledger & Risk Engines | 0/TBD | Not started | - |
 | 4. Atomic Execution Orchestrator | 0/TBD | Not started | - |
 | 5. API Surface (§7) | 0/TBD | Not started | - |
