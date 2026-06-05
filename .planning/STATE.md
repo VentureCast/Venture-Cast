@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 01-02-PLAN.md — genesisService.openMarket() + LEDG-04 tests; Phase 1 complete; ready for Phase 2 (Pricing Engine).
-last_updated: "2026-06-05T18:16:47.192Z"
+stopped_at: Completed 02-01-PLAN.md — pure pricing engine oracle-first; Phase 2 plan 1 complete
+last_updated: "2026-06-05T18:41:49.819Z"
 last_activity: "2026-06-05 — Plan 01-02 complete: genesisService.openMarket() + LEDG-04 tests"
 progress:
   total_phases: 6
-  completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  completed_phases: 2
+  total_plans: 3
+  completed_plans: 3
   percent: 10
 ---
 
@@ -50,6 +50,7 @@ Progress: [██░░░░░░░░] 10%
 - Trend: baseline
 
 *Updated after each plan completion*
+| Phase 02-pricing-engine-oracle-first P02-01 | 6 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,9 @@ Recent decisions affecting current work:
 - [01-02]: Number.isInteger guard added to openMarket() — float reserveFloorCents would break sum-to-zero invariant; guard throws GenesisError(400) before any writes.
 - [01-02]: GenesisError thrown before session.startTransaction() for validation errors — no abort overhead for bad params.
 - [01-02]: $setOnInsert: { unit: 'cents' } on LedgerAccount upserts — unit set on first insert, not overwritten on subsequent $inc updates.
+- [Phase 02-01]: ceil() for fee/spread rounding in fees.js — favors reserve/platform; floor() would favor user by sub-cent
+- [Phase 02-01]: sellPayoutCents delegates to buyCostCents — exact symmetry guaranteed by shared implementation
+- [Phase 02-01]: cashToUnits two-pass integer search: upward then downward guard; float is starting point only
 
 ### Pending Todos
 
@@ -84,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05
-Stopped at: Completed 01-02-PLAN.md — genesisService.openMarket() + LEDG-04 tests; Phase 1 complete; ready for Phase 2 (Pricing Engine).
+Last session: 2026-06-05T18:41:49.817Z
+Stopped at: Completed 02-01-PLAN.md — pure pricing engine oracle-first; Phase 2 plan 1 complete
 Resume file: None

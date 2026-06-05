@@ -9,11 +9,11 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 ### Pricing
 
-- [ ] **PRICE-01**: System computes buy cost as the exact integer-cent curve integral and passes the oracle ($205.00 / avg $2.05 / end $2.10) exactly
-- [ ] **PRICE-02**: System computes sell payout symmetric to buy over the same supply range, in integer cents
-- [ ] **PRICE-03**: System inverts a cash amount to the max integer units purchasable, with an exact integer recompute (never trusts the float estimate)
-- [ ] **PRICE-04**: System applies spread (→ reserve) and fee (→ platform_fees) per-market in basis points (default 50/100 bps)
-- [ ] **PRICE-05**: System rounds sub-cent residuals deterministically and sweeps them into the reserve
+- [x] **PRICE-01**: System computes buy cost as the exact integer-cent curve integral and passes the oracle ($205.00 / avg $2.05 / end $2.10) exactly
+- [x] **PRICE-02**: System computes sell payout symmetric to buy over the same supply range, in integer cents
+- [x] **PRICE-03**: System inverts a cash amount to the max integer units purchasable, with an exact integer recompute (never trusts the float estimate)
+- [x] **PRICE-04**: System applies spread (→ reserve) and fee (→ platform_fees) per-market in basis points (default 50/100 bps)
+- [x] **PRICE-05**: System rounds sub-cent residuals deterministically and sweeps them into the reserve
 
 ### Ledger
 
@@ -48,7 +48,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 ### Testing
 
-- [ ] **TEST-01**: Oracle test asserts $205.00 / avg $2.05 / end $2.10 exactly
+- [x] **TEST-01**: Oracle test asserts $205.00 / avg $2.05 / end $2.10 exactly
 - [ ] **TEST-02**: Invariant property tests assert ledger-balances + reserve ≥ floor + reserve ≥ 0 after every operation
 - [ ] **TEST-03**: 10,000-trades-per-tier simulation asserts no negative reserve and a penny-balanced ledger
 - [ ] **TEST-04**: Concurrency test asserts no lost update under simultaneous orders on one market
@@ -75,12 +75,12 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | LEDG-04 | Phase 1 | Complete — openMarket() atomic genesis + LEDG-04a..d tests pass (01-02) |
-| PRICE-01 | Phase 2 | Pending |
-| PRICE-02 | Phase 2 | Pending |
-| PRICE-03 | Phase 2 | Pending |
-| PRICE-04 | Phase 2 | Pending |
-| PRICE-05 | Phase 2 | Pending |
-| TEST-01 | Phase 2 | Pending |
+| PRICE-01 | Phase 2 | Complete |
+| PRICE-02 | Phase 2 | Complete |
+| PRICE-03 | Phase 2 | Complete |
+| PRICE-04 | Phase 2 | Complete |
+| PRICE-05 | Phase 2 | Complete |
+| TEST-01 | Phase 2 | Complete |
 | LEDG-01 | Phase 3 | Pending |
 | LEDG-02 | Phase 3 | Pending |
 | LEDG-03 | Phase 3 | Pending |
