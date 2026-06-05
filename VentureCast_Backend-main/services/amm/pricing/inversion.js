@@ -46,6 +46,16 @@ function cashToUnits(X_cents, s0, params) {
 
   const { P0_cents, k_num, k_den } = params;
 
+  // Flat curve (k_num === 0): price is constant P0_cents, so the inversion is linear and
+  // the quadratic seed below would divide by zero. Handle it exactly and return early.
+  if (k_num === 0) {
+    if (P0_cents === 0) {
+      throw new PricingError('Cannot invert a flat zero-price curve (k_num=0, P0_cents=0)', 400, { P0_cents, k_num });
+    }
+    const units = Math.floor(X_cents / P0_cents);
+    return { units, grossCents: units > 0 ? buyCostCents(s0, units, params) : 0 };
+  }
+
   // Float estimate from the quadratic formula (starting point only):
   //   buyCostCents ≈ (k_num/(2*k_den)) * delta^2 + P(s0) * delta
   //   Solving for delta: a_f * delta^2 + b_f * delta - X = 0

@@ -151,7 +151,7 @@ function priceCents(s, params) {
   const whole = floorDiv(slopeNum, k_den);
   const r = slopeNum % k_den;
   const rounded = (r * 2 >= k_den) ? whole + 1 : whole;
-  return P0_cents + rounded;
+  return assertSafeResult(P0_cents + rounded, { s, P0_cents });
 }
 
 /**
