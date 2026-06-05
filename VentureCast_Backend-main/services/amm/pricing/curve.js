@@ -7,33 +7,33 @@
  * All functions accept plain JS objects for market params — never Mongoose documents.
  *
  * Curve: P(s) = P0_cents + (k_num * s) / k_den
- * Buy cost (and sell payout by symmetry) is the closed-form integral:
- *   cost = P0_cents * delta + halfUpDiv(k_num * (s1^2 - s0^2), 2 * k_den)
+ * The cost to move supply from s0 to s1=s0+delta is the closed-form integral:
+ *   integral = P0_cents*delta + k_num*(s1^2 - s0^2) / (2*k_den)
+ * Using the exact factored identity s1^2 - s0^2 = delta*(2*s0 + delta), which keeps
+ * intermediate products small (overflow-safe to far larger supply than s^2 directly).
  *
  * Rounding rule (LOCKED — solvency): every residual favors the reserve, never the user.
- *   halfUpDiv(a, b) rounds UP when the remainder * 2 >= the divisor.
+ *   BUY  cost   rounds UP   (ceilDiv)  — user pays at least the exact integral
+ *   SELL payout rounds DOWN (floorDiv) — user receives at most the exact integral
+ * Consequence (by design): a buy-then-immediate-sell of the same delta at the same
+ * supply range loses <=1c to the reserve — a deliberate anti-drain cushion. The
+ * underlying real-valued integral is identical for both (that is the symmetry); only
+ * the sub-cent rounding direction differs, always in the reserve's favor.
  *
- * Oracle verification (P0=100c, k=1/10, s0=1000, delta=100):
- *   s1=1100, num=210000, divisor=20, quotient=10500, remainder=0
- *   → gross = 100*100 + 10500 = 20500c ($205.00)
+ * Oracle (P0=100c, k=1/10, s0=1000, delta=100): s1^2-s0^2 = 100*(2000+100)=210000,
+ *   integral residual = 210000/20 = 10500 (remainder 0) → gross = 100*100 + 10500 = 20500c.
  *
  * @typedef {{ P0_cents: number, k_num: number, k_den: number }} CurveParams
  */
 
 // ============================================================
-// Error class
+// Error class — mirrors TradeError shape: { statusCode, details }
 // ============================================================
 
-/**
- * PricingError — mirrors TradeError shape exactly: { statusCode, details }.
- *
- * statusCode 400: invalid inputs (negative supply, zero delta, etc.)
- * statusCode 500: arithmetic overflow (s^2 term exceeds Number.MAX_SAFE_INTEGER)
- */
 class PricingError extends Error {
   /**
    * @param {string} message
-   * @param {number} statusCode
+   * @param {number} statusCode - 400 invalid input, 500 arithmetic overflow
    * @param {Object} [details={}]
    */
   constructor(message, statusCode, details = {}) {
@@ -45,29 +45,81 @@ class PricingError extends Error {
 }
 
 // ============================================================
-// Internal helpers
+// Internal helpers (exact integer arithmetic only)
 // ============================================================
 
 /**
- * Integer division with half-up rounding on the remainder.
- * halfUpDiv(a, b) = floor(a/b) + 1  if  remainder * 2 >= b
- *                 = floor(a/b)       otherwise
- *
- * "Half-up" means the breakpoint rounds UP (toward reserve), not toward nearest-even.
- *
- * Examples:
- *   halfUpDiv(210000, 20) = 10500  (oracle: remainder=0)
- *   halfUpDiv(8016, 20)   = 401    (delta=4: remainder=16, 32>=20 → up)
- *   halfUpDiv(2001, 20)   = 100    (delta=1: remainder=1,  2<20  → down)
- *
- * @param {number} a - dividend (non-negative integer)
- * @param {number} b - divisor (positive integer)
- * @returns {number} integer quotient, half-up rounded
+ * Validate curve params. k_den must be a positive integer; k_num a non-negative
+ * integer (a bonding curve never slopes down); P0_cents a non-negative integer.
+ * @param {CurveParams} params
  */
-function halfUpDiv(a, b) {
-  const q = Math.floor(a / b);
+function validateParams(params) {
+  if (!params || typeof params !== 'object') {
+    throw new PricingError('params is required', 400, { params });
+  }
+  const { P0_cents, k_num, k_den } = params;
+  if (!Number.isInteger(P0_cents) || P0_cents < 0) {
+    throw new PricingError('P0_cents must be a non-negative integer', 400, { P0_cents });
+  }
+  if (!Number.isInteger(k_num) || k_num < 0) {
+    throw new PricingError('k_num must be a non-negative integer', 400, { k_num });
+  }
+  if (!Number.isInteger(k_den) || k_den < 1) {
+    throw new PricingError('k_den must be a positive integer', 400, { k_den });
+  }
+}
+
+/** Exact ceil(a/b) for non-negative integer a and positive integer b. */
+function ceilDiv(a, b) {
   const r = a % b;
-  return (r * 2 >= b) ? q + 1 : q;
+  return r === 0 ? a / b : (a - r) / b + 1;
+}
+
+/** Exact floor(a/b) for non-negative integer a and positive integer b. */
+function floorDiv(a, b) {
+  return (a - (a % b)) / b;
+}
+
+/**
+ * Compute the exact integer numerator/denominator of the curve integral residual
+ * over [s0, s0+delta], with overflow guards on every intermediate product.
+ * @returns {{ quadNum: number, quadDen: number }}
+ */
+function integralResidual(s0, delta, params) {
+  const { k_num, k_den } = params;
+  const twoS0PlusDelta = 2 * s0 + delta;            // exact; small
+  const diffSquares = delta * twoS0PlusDelta;        // = s1^2 - s0^2, exact, much smaller than s^2
+  const quadNum = k_num * diffSquares;
+  if (
+    !Number.isSafeInteger(twoS0PlusDelta) ||
+    !Number.isSafeInteger(diffSquares) ||
+    !Number.isSafeInteger(quadNum)
+  ) {
+    throw new PricingError(
+      'Overflow: curve integral term exceeds Number.MAX_SAFE_INTEGER — supply/delta too large',
+      500,
+      { s0, delta, k_num, quadNum }
+    );
+  }
+  return { quadNum, quadDen: 2 * k_den };
+}
+
+/** Validate s0 (non-negative int) and delta (positive int). */
+function validateSupplyDelta(s0, delta) {
+  if (!Number.isInteger(s0) || s0 < 0) {
+    throw new PricingError('s0 must be a non-negative integer', 400, { s0 });
+  }
+  if (!Number.isInteger(delta) || delta <= 0) {
+    throw new PricingError('delta must be a positive integer', 400, { delta });
+  }
+}
+
+/** Guard that the final integer-cent result is a safe integer. */
+function assertSafeResult(value, ctx) {
+  if (!Number.isSafeInteger(value)) {
+    throw new PricingError('Overflow: cost/payout exceeds Number.MAX_SAFE_INTEGER', 500, ctx);
+  }
+  return value;
 }
 
 // ============================================================
@@ -75,80 +127,70 @@ function halfUpDiv(a, b) {
 // ============================================================
 
 /**
- * Instantaneous price at supply level s.
+ * Instantaneous reference price at supply s, in INTEGER cents (rounded to nearest).
  *
- * Returns a float — informational only. Do NOT call this inside the cost integral;
- * the cost integral uses integer arithmetic directly (see buyCostCents).
- * Display: use Math.trunc(priceCents(s, params)) for integer cents.
+ * This is a display/reference value (e.g. a market's "current price" or the
+ * informational lastPriceCents). It is NOT used inside the cost integral — the
+ * integral uses exact integer arithmetic in buyCostCents/sellPayoutCents.
  *
- * @param {number} s - current supply (integer units >= 0)
+ * @param {number} s - current supply (non-negative integer)
  * @param {CurveParams} params
- * @returns {number} price in cents (float, informational; may be non-integer)
+ * @returns {number} price in integer cents (nearest)
  */
 function priceCents(s, params) {
+  validateParams(params);
+  if (!Number.isInteger(s) || s < 0) {
+    throw new PricingError('s must be a non-negative integer', 400, { s });
+  }
   const { P0_cents, k_num, k_den } = params;
-  return P0_cents + (k_num * s) / k_den;
+  const slopeNum = k_num * s;
+  if (!Number.isSafeInteger(slopeNum)) {
+    throw new PricingError('Overflow: k_num*s exceeds Number.MAX_SAFE_INTEGER', 500, { s, k_num });
+  }
+  // P0_cents + round(k_num*s / k_den), exact integer result. Round half-up.
+  const whole = floorDiv(slopeNum, k_den);
+  const r = slopeNum % k_den;
+  const rounded = (r * 2 >= k_den) ? whole + 1 : whole;
+  return P0_cents + rounded;
 }
 
 /**
  * Exact integer-cent cost to buy `delta` units starting at supply `s0`.
- *
- * Uses the closed-form integral: P0*delta + halfUpDiv(k_num*(s1^2-s0^2), 2*k_den)
- * Residual rounds UP (halfUp) so sub-cent amounts flow to the reserve, never the user.
+ * Residual rounds UP (ceil) so sub-cent amounts flow to the reserve, never the user.
  *
  * @param {number} s0    - supply before the buy (non-negative integer)
  * @param {number} delta - units to buy (positive integer)
  * @param {CurveParams} params
- * @returns {number} gross cost in integer cents (halfUp rounded)
- * @throws {PricingError} 400 if inputs are invalid
- * @throws {PricingError} 500 if k_num*(s1^2-s0^2) exceeds Number.MAX_SAFE_INTEGER
+ * @returns {number} gross cost in integer cents (ceil-rounded)
+ * @throws {PricingError} 400 invalid input · 500 overflow
  */
 function buyCostCents(s0, delta, params) {
-  const { P0_cents, k_num, k_den } = params;
-
-  if (!Number.isInteger(s0) || s0 < 0) {
-    throw new PricingError('s0 must be a non-negative integer', 400, { s0 });
-  }
-  if (!Number.isInteger(delta) || delta <= 0) {
-    throw new PricingError('delta must be a positive integer', 400, { delta });
-  }
-
-  const s1 = s0 + delta;
-  const quadNum = k_num * (s1 * s1 - s0 * s0);  // k_num * (s1^2 - s0^2)
-
-  if (!Number.isSafeInteger(quadNum)) {
-    throw new PricingError(
-      'Overflow: k_num*(s1^2-s0^2) exceeds Number.MAX_SAFE_INTEGER — supply too large',
-      500,
-      { quadNum, s0, s1, k_num }
-    );
-  }
-
-  const quadDen = 2 * k_den;
-  return P0_cents * delta + halfUpDiv(quadNum, quadDen);
+  validateParams(params);
+  validateSupplyDelta(s0, delta);
+  const { P0_cents } = params;
+  const { quadNum, quadDen } = integralResidual(s0, delta, params);
+  return assertSafeResult(P0_cents * delta + ceilDiv(quadNum, quadDen), { s0, delta });
 }
 
 /**
  * Exact integer-cent payout for selling `delta` units.
+ * Residual rounds DOWN (floor) so sub-cent amounts stay in the reserve, never the user.
  *
- * IMPORTANT: s0 here is the supply AFTER the sell (i.e., s_before - delta).
- * This is symmetric to buyCostCents: the integral over [s0, s0+delta] is identical.
- * The caller (Phase 4 orchestrator) is responsible for tracking supply direction:
- *   s_after = s_before - delta, then call sellPayoutCents(s_after, delta, params).
- *
- * Symmetry: sellPayoutCents(s_after, delta, params) === buyCostCents(s_after, delta, params)
+ * NOTE: s0 here is the supply AFTER the sell (s_before - delta); the integral over
+ * [s0, s0+delta] covers the same curve range a buy of the same delta would.
  *
  * @param {number} s0    - supply AFTER the sell (non-negative integer)
  * @param {number} delta - units to sell (positive integer)
  * @param {CurveParams} params
- * @returns {number} gross payout in integer cents
- * @throws {PricingError} 400 if inputs are invalid
- * @throws {PricingError} 500 if overflow detected
+ * @returns {number} gross payout in integer cents (floor-rounded)
+ * @throws {PricingError} 400 invalid input · 500 overflow
  */
 function sellPayoutCents(s0, delta, params) {
-  // Delegate to buyCostCents — the integral is identical.
-  // s0 is already the post-sell supply; the integral [s0, s0+delta] covers the same range.
-  return buyCostCents(s0, delta, params);
+  validateParams(params);
+  validateSupplyDelta(s0, delta);
+  const { P0_cents } = params;
+  const { quadNum, quadDen } = integralResidual(s0, delta, params);
+  return assertSafeResult(P0_cents * delta + floorDiv(quadNum, quadDen), { s0, delta });
 }
 
-module.exports = { priceCents, buyCostCents, sellPayoutCents, PricingError };
+module.exports = { priceCents, buyCostCents, sellPayoutCents, PricingError, validateParams, ceilDiv, floorDiv };

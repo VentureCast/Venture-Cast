@@ -51,9 +51,10 @@ describe('oracle (TEST-01)', () => {
 // PRICE-01: Buy cost integral
 // ============================================================
 describe('buy cost integral (PRICE-01)', () => {
-  test('buyCostCents(1000, 1, ORACLE) === 200 (remainder rounds DOWN — user not overpaying)', () => {
-    // true float: 200.05c; remainder=1 in divisor=20 → 1*2=2 < 20 → halfUp=0
-    expect(buyCostCents(1000, 1, ORACLE)).toBe(200);
+  test('buyCostCents(1000, 1, ORACLE) === 201 (remainder rounds UP — user never underpays)', () => {
+    // true float: 200.05c; quadNum=2001, quadDen=20 → ceilDiv=101; 100*1 + 101 = 201
+    // Buy rounds UP (ceil) so the sub-cent residual flows to the reserve, never the user.
+    expect(buyCostCents(1000, 1, ORACLE)).toBe(201);
   });
 
   test('monotonic: buyCostCents(s0, delta+1) > buyCostCents(s0, delta) for several delta', () => {
@@ -81,15 +82,20 @@ describe('sell payout symmetry (PRICE-02)', () => {
     expect(sellPayoutCents(1000, 100, ORACLE)).toBe(20500);
   });
 
-  test('sellPayoutCents equals buyCostCents for several ranges', () => {
+  test('sell payout is the same integral as buy, conservatively rounded (buy ceil ≥ sell floor, differ ≤ 1c)', () => {
+    // "Symmetric" = same underlying curve integral. Buy rounds UP, sell rounds DOWN,
+    // so they are EQUAL when the residual divides evenly and differ by exactly 1c
+    // otherwise — always in the reserve's favor (buy ≥ sell). This is the deliberate
+    // anti-drain cushion: a buy-then-sell round trip can only lose to the reserve.
     const ranges = [
-      [0, 1], [0, 50], [500, 10], [1000, 4], [1000, 1], [2000, 200],
+      [0, 1], [0, 50], [500, 10], [1000, 4], [1000, 1], [2000, 200], [1000, 100],
     ];
     for (const [s0, delta] of ranges) {
-      expect(sellPayoutCents(s0, delta, ORACLE)).toBe(
-        buyCostCents(s0, delta, ORACLE),
-        `s0=${s0}, delta=${delta}`
-      );
+      const buy = buyCostCents(s0, delta, ORACLE);
+      const sell = sellPayoutCents(s0, delta, ORACLE);
+      const gap = buy - sell;
+      expect(gap === 0 || gap === 1).toBe(true);
+      expect(buy).toBeGreaterThanOrEqual(sell);
     }
   });
 });
@@ -98,27 +104,25 @@ describe('sell payout symmetry (PRICE-02)', () => {
 // PRICE-05: Residual rounding — buy rounds UP (reserve-favoring)
 // ============================================================
 describe('residual rounding (PRICE-05)', () => {
-  test('buyCostCents(1000, 4, ORACLE) === 801 (true float 800.80c → halfUp UP into reserve)', () => {
-    // s1=1004, num=1*(1004^2-1000^2)=8016, divisor=20
-    // quotient=400, remainder=16, 16*2=32>=20 → halfUp=1
-    // 100*4 + 400 + 1 = 801
+  test('buyCostCents(1000, 4, ORACLE) === 801 (true float 800.80c → ceil UP into reserve)', () => {
+    // diffSquares=4*(2000+4)=8016, quadNum=8016, quadDen=20 → 400.8 → ceilDiv=401
+    // 100*4 + 401 = 801
     expect(buyCostCents(1000, 4, ORACLE)).toBe(801);
   });
 
-  test('buy cost is always >= true float floor (residual is non-negative)', () => {
-    // For delta=4: true float is 800.80, so 801 >= 800 ✓
-    const cost = buyCostCents(1000, 4, ORACLE);
-    expect(cost).toBeGreaterThanOrEqual(800);
-    // For delta=1: true float is 200.05, so 200 >= 200 ✓
-    const cost1 = buyCostCents(1000, 1, ORACLE);
-    expect(cost1).toBeGreaterThanOrEqual(200);
+  test('buy cost rounds UP, sell payout rounds DOWN around the same true float', () => {
+    // delta=4: true float residual 800.80c → buy ceil 801, sell floor 800
+    expect(buyCostCents(1000, 4, ORACLE)).toBe(801);
+    expect(sellPayoutCents(1000, 4, ORACLE)).toBe(800);
+    // delta=1: true float residual 200.05c → buy ceil 201, sell floor 200
+    expect(buyCostCents(1000, 1, ORACLE)).toBe(201);
+    expect(sellPayoutCents(1000, 1, ORACLE)).toBe(200);
   });
 
-  test('sell-side rounding: sellPayoutCents(s0, delta) rounds with same halfUpDiv as buy', () => {
-    // sellPayoutCents uses the same integral — symmetric to buy
-    // delta=4: same 801c on the sell side (before fees), meaning user gets 801c from the reserve
-    expect(sellPayoutCents(1000, 4, ORACLE)).toBe(801);
-    expect(sellPayoutCents(1000, 1, ORACLE)).toBe(200);
+  test('sell-side rounds DOWN: sellPayoutCents never over-pays the user', () => {
+    // Sell residual floors → the sub-cent stays in the reserve, never paid to the user.
+    expect(sellPayoutCents(1000, 4, ORACLE)).toBe(800); // 800.80 floored
+    expect(sellPayoutCents(1000, 1, ORACLE)).toBe(200); // 200.05 floored
   });
 });
 

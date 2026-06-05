@@ -21,7 +21,7 @@
  * @typedef {{ P0_cents: number, k_num: number, k_den: number }} CurveParams
  */
 
-const { buyCostCents } = require('./curve');
+const { buyCostCents, validateParams, PricingError } = require('./curve');
 
 /**
  * Find the maximum integer units purchasable with X_cents (gross, before fees).
@@ -36,6 +36,14 @@ const { buyCostCents } = require('./curve');
  * @returns {{ units: number, grossCents: number }}
  */
 function cashToUnits(X_cents, s0, params) {
+  validateParams(params);  // throws PricingError 400 on bad params (e.g. k_den=0) before any float math
+  if (!Number.isInteger(X_cents) || X_cents < 0) {
+    throw new PricingError('X_cents must be a non-negative integer', 400, { X_cents });
+  }
+  if (!Number.isInteger(s0) || s0 < 0) {
+    throw new PricingError('s0 must be a non-negative integer', 400, { s0 });
+  }
+
   const { P0_cents, k_num, k_den } = params;
 
   // Float estimate from the quadratic formula (starting point only):
