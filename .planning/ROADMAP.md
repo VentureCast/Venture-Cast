@@ -22,7 +22,7 @@ the whole thing: $205 oracle, 10k-trade-per-tier sim, concurrency, and idempoten
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Data Model & Market Genesis** - New Mongoose collections, indexes, and market genesis seeding the reserve to its floor
-- [ ] **Phase 2: Pricing Engine (Oracle-First)** - Pure integer-cent bonding-curve engine that passes the $205 oracle exactly
+- [x] **Phase 2: Pricing Engine (Oracle-First)** - Pure integer-cent bonding-curve engine that passes the $205 oracle exactly (completed 2026-06-06)
 - [ ] **Phase 3: Ledger & Risk Engines** - Two independent pure modules built in parallel: double-entry ledger and 3-tier risk engine
 - [ ] **Phase 4: Atomic Execution Orchestrator** - One-transaction integration of pricing+ledger+risk with optimistic locking, idempotency, slippage
 - [ ] **Phase 5: API Surface (§7)** - `/markets`, `/quotes`, `/orders`, `/portfolio`, `/admin/*` wired with auth, validation, rate limits
@@ -111,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Data Model & Market Genesis | 2/2 | Complete    | 2026-06-05 |
-| 2. Pricing Engine (Oracle-First) | 0/1 | Planned     | - |
+| 2. Pricing Engine (Oracle-First) | 0/1 | Complete    | 2026-06-06 |
 | 3. Ledger & Risk Engines | 0/TBD | Not started | - |
 | 4. Atomic Execution Orchestrator | 0/TBD | Not started | - |
 | 5. API Surface (§7) | 0/TBD | Not started | - |
