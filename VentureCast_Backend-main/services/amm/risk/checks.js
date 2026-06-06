@@ -116,6 +116,34 @@ function evaluate(trade, snapshot, tierConfig) {
   assertInt(tierConfig.maxDailyCents, 'tierConfig.maxDailyCents');
   assertInt(tierConfig.circuitBreakerPct, 'tierConfig.circuitBreakerPct');
 
+  // ---- RISK-06: circuit breaker — paused market (market-level gate, FIRST) ----
+  if (snapshot.marketStatus === 'paused') {
+    return reject(
+      'circuit_breaker_triggered', 409,
+      'Market is paused — trading halted',
+      { reason: 'market_paused' },
+      { marketId, userId: null }
+    );
+  }
+
+  // ---- RISK-06: circuit breaker — price-move threshold (market-level) ----
+  // Integer-friendly bps math; guard recentRefPriceCents > 0 to avoid div-by-zero.
+  if (Number.isInteger(snapshot.recentRefPriceCents) && snapshot.recentRefPriceCents > 0 &&
+      Number.isInteger(snapshot.newPriceCents)) {
+    const moveBps = Math.round(
+      Math.abs(snapshot.newPriceCents - snapshot.recentRefPriceCents) * 10000 /
+      snapshot.recentRefPriceCents
+    );
+    if (moveBps > tierConfig.circuitBreakerPct) {
+      return reject(
+        'circuit_breaker_triggered', 409,
+        'Price move exceeds circuit-breaker threshold',
+        { moveBps, thresholdBps: tierConfig.circuitBreakerPct, tripBreaker: true },
+        { marketId, userId: null }
+      );
+    }
+  }
+
   // ---- RISK-01: per-trade max size (user-level) ----
   if (trade.grossCents > tierConfig.maxTradeCents) {
     return reject(
@@ -150,7 +178,39 @@ function evaluate(trade, snapshot, tierConfig) {
     );
   }
 
-  // RISK-04/05/06 (reserve floor, dynamic sell cap, circuit breaker) added in Task 2.
+  // ---- RISK-05: dynamic sell cap (sells only, market-level) ----
+  // A sell drains the reserve by its impact (gross minus the spread that stays in reserve).
+  // Reject if that impact would consume more than the available headroom above the floor.
+  if (side === 'sell') {
+    const impactCents = trade.grossCents - trade.spreadCents;
+    const headroomCents = snapshot.reserveCents - snapshot.reserveFloorCents;
+    if (impactCents > headroomCents) {
+      return reject(
+        'dynamic_sell_cap', 409,
+        'Sell reserve impact exceeds available headroom above the floor',
+        { impactCents, headroomCents },
+        { marketId, userId: null }
+      );
+    }
+  }
+
+  // ---- RISK-04: reserve floor invariant (post-trade, market-level) ----
+  // Safety net for the same invariant RISK-05 enforces, viewed from the post-trade balance.
+  // RISK-05 catches the offending SELL first, so on a sell fixture RISK-04 does NOT also
+  // fire here — by the time we reach this line the sell impact already fit within headroom.
+  // RISK-04 remains as the catch-all that ALSO covers buys and the edge case of a floor
+  // raised after a position opened (where reserveCents - reserveFloorCents may be negative).
+  const postReserve = side === 'buy'
+    ? snapshot.reserveCents + (trade.grossCents + trade.spreadCents)   // buy adds to reserve
+    : snapshot.reserveCents - (trade.grossCents - trade.spreadCents);  // sell drains impact
+  if (postReserve < snapshot.reserveFloorCents || postReserve < 0) {
+    return reject(
+      'reserve_floor_breach', 409,
+      'Post-trade reserve would fall below the floor (or below zero)',
+      { postReserveCents: postReserve, floorCents: snapshot.reserveFloorCents },
+      { marketId, userId: null }
+    );
+  }
 
   return { allowed: true };
 }
