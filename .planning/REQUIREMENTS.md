@@ -17,19 +17,19 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 ### Ledger
 
-- [ ] **LEDG-01**: Every trade posts a balanced set of double-entry entries summing to zero (integer cents/units)
-- [ ] **LEDG-02**: System maintains account balance projections (`user_cash`, `user_position`, `market_reserve`, `platform_fees`, `platform_funding`) verifiable by summing entries
-- [ ] **LEDG-03**: System aborts any trade that would leave the ledger unbalanced
+- [x] **LEDG-01**: Every trade posts a balanced set of double-entry entries summing to zero (integer cents/units)
+- [x] **LEDG-02**: System maintains account balance projections (`user_cash`, `user_position`, `market_reserve`, `platform_fees`, `platform_funding`) verifiable by summing entries
+- [x] **LEDG-03**: System aborts any trade that would leave the ledger unbalanced
 - [x] **LEDG-04**: Market genesis opens at supply s0=0 / price=P0 and seeds the reserve to its floor via a `platform_funding` posting
 
 ### Risk
 
-- [ ] **RISK-01**: System enforces per-tier max trade size and rejects over-cap orders with a typed error + `RiskEvent`
-- [ ] **RISK-02**: System enforces per-user, per-market max position
-- [ ] **RISK-03**: System enforces per-user daily volume cap
-- [ ] **RISK-04**: System enforces the reserve floor as an invariant (reserve ≥ floor, never negative) inside the transaction
-- [ ] **RISK-05**: System enforces a dynamic sell cap based on reserve headroom
-- [ ] **RISK-06**: System halts a market via circuit breaker on a price move beyond threshold and rejects trades while paused
+- [x] **RISK-01**: System enforces per-tier max trade size and rejects over-cap orders with a typed error + `RiskEvent`
+- [x] **RISK-02**: System enforces per-user, per-market max position
+- [x] **RISK-03**: System enforces per-user daily volume cap
+- [x] **RISK-04**: System enforces the reserve floor as an invariant (reserve ≥ floor, never negative) inside the transaction
+- [x] **RISK-05**: System enforces a dynamic sell cap based on reserve headroom
+- [x] **RISK-06**: System halts a market via circuit breaker on a price move beyond threshold and rejects trades while paused
 
 ### Execution
 
@@ -81,15 +81,15 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 | PRICE-04 | Phase 2 | Complete |
 | PRICE-05 | Phase 2 | Complete |
 | TEST-01 | Phase 2 | Complete |
-| LEDG-01 | Phase 3 | Pending |
-| LEDG-02 | Phase 3 | Pending |
-| LEDG-03 | Phase 3 | Pending |
-| RISK-01 | Phase 3 | Pending |
-| RISK-02 | Phase 3 | Pending |
-| RISK-03 | Phase 3 | Pending |
-| RISK-04 | Phase 3 | Pending |
-| RISK-05 | Phase 3 | Pending |
-| RISK-06 | Phase 3 | Pending |
+| LEDG-01 | Phase 3 | Complete |
+| LEDG-02 | Phase 3 | Complete |
+| LEDG-03 | Phase 3 | Complete |
+| RISK-01 | Phase 3 | Complete |
+| RISK-02 | Phase 3 | Complete |
+| RISK-03 | Phase 3 | Complete |
+| RISK-04 | Phase 3 | Complete |
+| RISK-05 | Phase 3 | Complete |
+| RISK-06 | Phase 3 | Complete |
 | EXEC-01 | Phase 4 | Pending |
 | EXEC-02 | Phase 4 | Pending |
 | EXEC-03 | Phase 4 | Pending |

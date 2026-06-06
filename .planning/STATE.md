@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 02-01-PLAN.md — pure pricing engine oracle-first; Phase 2 plan 1 complete
-last_updated: "2026-06-06T01:14:41.191Z"
-last_activity: "2026-06-05 — Plan 01-02 complete: genesisService.openMarket() + LEDG-04 tests"
+stopped_at: Completed 03-02-PLAN.md — pure 3-tier risk engine (RISK-01..06)
+last_updated: "2026-06-06T17:52:01.403Z"
+last_activity: "2026-06-06 — Plan 03-02 complete: pure 3-tier risk engine (RISK-01..06)"
 progress:
   total_phases: 6
-  completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
-  percent: 10
+  completed_phases: 3
+  total_plans: 5
+  completed_plans: 5
+  percent: 50
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-03)
 
 **Core value:** Every trade prices on the bonding curve and settles atomically with a penny-balanced double-entry ledger and a reserve that never goes negative — provable by the $205 oracle and a 10k-trade-per-tier simulation.
-**Current focus:** Phase 2 — Pricing Engine (Oracle-First)
+**Current focus:** Phase 4 — Atomic Execution Orchestrator
 
 ## Current Position
 
-Phase: 1 of 6 (Data Model & Market Genesis) — COMPLETE
-Plan: Moving to Phase 2
-Status: Phase 1 complete — all 2 plans done; ready for Phase 2 (Pricing Engine)
-Last activity: 2026-06-05 — Plan 01-02 complete: genesisService.openMarket() + LEDG-04 tests
+Phase: 3 of 6 (Ledger & Risk Engines) — COMPLETE
+Plan: Moving to Phase 4
+Status: Phase 3 complete — ledger engine (03-01) and risk engine (03-02) done; ready for Phase 4
+Last activity: 2026-06-06 — Plan 03-02 complete: pure 3-tier risk engine (RISK-01..06)
 
-Progress: [██░░░░░░░░] 10%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -51,6 +51,8 @@ Progress: [██░░░░░░░░] 10%
 
 *Updated after each plan completion*
 | Phase 02-pricing-engine-oracle-first P02-01 | 6 | 2 tasks | 5 files |
+| Phase 03 P01 | 4 min | 3 tasks | 4 files |
+| Phase 03-ledger-risk-engines P02 | 5 | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -73,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 02-01]: ceil() for fee/spread rounding in fees.js — favors reserve/platform; floor() would favor user by sub-cent
 - [Phase 02-01]: sellPayoutCents delegates to buyCostCents — exact symmetry guaranteed by shared implementation
 - [Phase 02-01]: cashToUnits two-pass integer search: upward then downward guard; float is starting point only
+- [Phase 03]: [03-01]: assertBalanced groups deltas by unit and is the single gate for LEDG-01/03 — build*Postings also call it internally (defense in depth)
+- [Phase 03]: [03-01]: postEntries takes the Mongoose session as a parameter and owns no transaction (no startSession/commit/abort) — Phase 4 owns the lifecycle
 
 ### Pending Todos
 
@@ -88,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T18:41:49.817Z
-Stopped at: Completed 02-01-PLAN.md — pure pricing engine oracle-first; Phase 2 plan 1 complete
+Last session: 2026-06-06T17:50:58.454Z
+Stopped at: Completed 03-02-PLAN.md — pure 3-tier risk engine (RISK-01..06)
 Resume file: None
