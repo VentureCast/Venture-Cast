@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: completed
 stopped_at: Completed 03-02-PLAN.md — pure 3-tier risk engine (RISK-01..06)
-last_updated: "2026-06-06T17:52:01.403Z"
+last_updated: "2026-06-06T17:52:46.587Z"
 last_activity: "2026-06-06 — Plan 03-02 complete: pure 3-tier risk engine (RISK-01..06)"
 progress:
   total_phases: 6
@@ -77,6 +77,9 @@ Recent decisions affecting current work:
 - [Phase 02-01]: cashToUnits two-pass integer search: upward then downward guard; float is starting point only
 - [Phase 03]: [03-01]: assertBalanced groups deltas by unit and is the single gate for LEDG-01/03 — build*Postings also call it internally (defense in depth)
 - [Phase 03]: [03-01]: postEntries takes the Mongoose session as a parameter and owns no transaction (no startSession/commit/abort) — Phase 4 owns the lifecycle
+- [Phase 03-02]: Risk check order: circuit breaker/paused first (market-level gate), then user caps, then dynamic sell cap + reserve floor
+- [Phase 03-02]: RISK-05 (dynamic sell cap) catches the offending sell before RISK-04 (reserve floor); RISK-04 kept as safety net for buys + floor-raised-after-open — they never both fire on one fixture
+- [Phase 03-02]: Market-level rejections (floor, sell cap, breaker, paused) emit userId:null in RiskEvent draft; user caps emit trade.userId
 
 ### Pending Todos
 
