@@ -66,7 +66,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The risk engine rejects over-cap orders for per-tier max trade size, per-user/per-market max position, and per-user daily volume cap — each with a typed `RiskError` and a `RiskEvent` record.
   4. The reserve-floor check is enforced as an invariant (reserve ≥ floor, never negative) and the dynamic sell cap limits sells by reserve headroom.
   5. The circuit breaker halts a market on a price move beyond threshold and rejects trades while the market is paused.
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 03-01-PLAN.md — Pure double-entry ledger (buildBuy/SellPostings + assertBalanced) and session-scoped postEntries persistence with projection reconstruction (LEDG-01/02/03)
+  - [ ] 03-02-PLAN.md — Pure 3-tier risk engine evaluate(): max trade/position/daily caps, reserve-floor invariant, dynamic sell cap, circuit breaker (RISK-01..06)
 
 ### Phase 4: Atomic Execution Orchestrator
 **Goal**: A single orchestrator commits supply + reserve + balances + ledger + trade in one Mongoose transaction or none, with optimistic locking, idempotency, quote expiry, and slippage.
@@ -112,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Data Model & Market Genesis | 2/2 | Complete    | 2026-06-05 |
 | 2. Pricing Engine (Oracle-First) | 0/1 | Complete    | 2026-06-06 |
-| 3. Ledger & Risk Engines | 0/TBD | Not started | - |
+| 3. Ledger & Risk Engines | 0/2 | Planned | - |
 | 4. Atomic Execution Orchestrator | 0/TBD | Not started | - |
 | 5. API Surface (§7) | 0/TBD | Not started | - |
 | 6. Simulation & Full Test Suite | 0/TBD | Not started | - |
