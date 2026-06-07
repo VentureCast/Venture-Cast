@@ -87,9 +87,16 @@ async function loadOriginalResult(idempotencyKey) {
 }
 
 /**
- * Scope an idempotency replay to the request identity. A key reused with a different
- * user/market/side must NOT silently replay the original trade — that would let a
- * reused (or guessed) key leak or replay an unrelated order. Reject instead.
+ * Scope an idempotency replay to the request IDENTITY (user/market/side). A key reused
+ * with a different user/market/side must NOT silently replay the original trade — that
+ * would let a reused (or guessed) key leak or replay an unrelated order. Reject instead.
+ *
+ * SCOPE NOTE (Phase 5 follow-up): this enforces identity, which closes the security-
+ * relevant cross-user/market/side leak. Stripe-style STRICT idempotency — also rejecting a
+ * same-identity key reused with a different qty/cashCents/slippage — requires persisting a
+ * full request fingerprint on the Order (which currently stores side/qty/maxCost/minReceived
+ * but not cashCents). That fingerprint is deferred to Phase 5, where the API request schema
+ * is finalized, to avoid widening the Phase-1 Order schema here.
  */
 function assertReplayMatches(order, { userId, marketId, side }) {
   if (String(order.userId) !== String(userId) ||
