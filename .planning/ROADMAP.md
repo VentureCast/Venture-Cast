@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Data Model & Market Genesis | 2/2 | Complete    | 2026-06-05 |
 | 2. Pricing Engine (Oracle-First) | 0/1 | Complete    | 2026-06-06 |
-| 3. Ledger & Risk Engines | 2/2 | Complete   | 2026-06-06 |
+| 3. Ledger & Risk Engines | 2/2 | Complete    | 2026-06-07 |
 | 4. Atomic Execution Orchestrator | 0/TBD | Not started | - |
 | 5. API Surface (§7) | 0/TBD | Not started | - |
 | 6. Simulation & Full Test Suite | 0/TBD | Not started | - |
