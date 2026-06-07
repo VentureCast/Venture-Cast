@@ -20,6 +20,7 @@ const streamerRoutes = require('./routes/Streamers');
 const stripeRoutes = require('./routes/stripe');
 const webhookRoutes = require('./routes/webhook');
 const watchlistRoutes = require('./routes/watchlist');
+const ammRoutes = require('./routes/amm');
 
 dotenv.config();
 
@@ -99,6 +100,7 @@ app.use('/', tradeLimiter, tradeRoutes);
 app.use('/streamer', apiLimiter, streamerRoutes);
 app.use('/stripe', paymentLimiter, stripeRoutes);
 app.use('/watchlist', apiLimiter, watchlistRoutes);
+app.use('/', apiLimiter, ammRoutes);
 
 // 404 handler (must be before error handler)
 app.use((req, res, next) => {
