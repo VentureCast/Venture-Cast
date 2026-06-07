@@ -40,7 +40,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 ### API
 
-- [ ] **API-01**: `GET /markets` lists tradable markets with current price/supply/status
+- [x] **API-01**: `GET /markets` lists tradable markets with current price/supply/status
 - [ ] **API-02**: `POST /quotes` returns a priced, expiring quote (avg price, gross, fee, spread, total, price impact)
 - [ ] **API-03**: `POST /orders` executes atomically with idempotency + slippage and returns the trade + updated balances
 - [ ] **API-04**: `GET /portfolio` returns the authenticated (JWT) user's positions, IDOR-safe (no `userId` param)
@@ -95,7 +95,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 | EXEC-02 | Phase 4 | Complete |
 | EXEC-03 | Phase 4 | Complete |
 | EXEC-04 | Phase 4 | Complete |
-| API-01 | Phase 5 | Pending |
+| API-01 | Phase 5 | Complete |
 | API-02 | Phase 5 | Pending |
 | API-03 | Phase 5 | Pending |
 | API-04 | Phase 5 | Pending |

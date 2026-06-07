@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 04-01-PLAN.md — atomic executeOrder orchestrator (EXEC-01..04)
-last_updated: "2026-06-07T05:21:36.946Z"
+stopped_at: Completed 05-01-PLAN.md — AMM API foundation (API-01)
+last_updated: "2026-06-07T05:40:18.757Z"
 last_activity: "2026-06-07 — Plan 04-01 complete: atomic executeOrder orchestrator (EXEC-01..04)"
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 9
+  completed_plans: 7
   percent: 67
 ---
 
@@ -54,6 +54,7 @@ Progress: [███████░░░] 67%
 | Phase 03 P01 | 4 min | 3 tasks | 4 files |
 | Phase 03-ledger-risk-engines P02 | 5 | 3 tasks | 3 files |
 | Phase 04 P01 | 7 | 3 tasks | 6 files |
+| Phase 05-api-surface P05-01 | 5 | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,10 @@ Recent decisions affecting current work:
 - [Phase 04]: [04-01]: ExecutionError lives in execution/errors.js to break a priceTrade<->orchestrator require cycle
 - [Phase 04]: [04-01]: Risk-rejection RiskEvent persisted AFTER the txn aborts (durable rejection though the trade rolled back); VersionConflictError is the only retryable signal
 - [Phase 04]: [04-01]: Optimistic version write via MarketState.updateOne({_id,version:V},$inc:{version:1}); matchedCount===0 retries the whole re-read+re-price loop (max 3, jittered)
+- [Phase 05-api-surface]: ammRoutes mounted at '/' with apiLimiter; per-route tradeLimiter will guard POSTs in 05-02
+- [Phase 05-api-surface]: validate(marketIdParam,'params') runs before optionalAuth — invalid :id 400s with zero DB hits
+- [Phase 05-api-surface]: listMarkets uses single MarketState $in batch fetch; O(1) map lookup per market — N+1 eliminated
+- [Phase 05-api-surface]: generateAdminToken signs same JWT payload as generateAuthToken; admin authority from User.isAdmin DB field
 
 ### Pending Todos
 
@@ -99,6 +104,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-07T05:01:10.763Z
-Stopped at: Completed 04-01-PLAN.md — atomic executeOrder orchestrator (EXEC-01..04)
+Last session: 2026-06-07T05:40:18.755Z
+Stopped at: Completed 05-01-PLAN.md — AMM API foundation (API-01)
 Resume file: None
