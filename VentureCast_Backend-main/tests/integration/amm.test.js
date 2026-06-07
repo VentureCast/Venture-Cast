@@ -97,15 +97,22 @@ describe('GET /markets', () => {
 // ============================================================
 
 describe('GET /markets/:id', () => {
-  it('should return 200 with { market, marketState } for a real market', async () => {
+  it('should return 200 with the public market DTO and NOT leak internal fields', async () => {
     const { market } = await createTestMarket();
 
     const res = await request(app).get(`/markets/${market._id}`);
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('market');
-    expect(res.body).toHaveProperty('marketState');
-    expect(res.body.market._id.toString()).toBe(market._id.toString());
+    expect(res.body.marketId.toString()).toBe(market._id.toString());
+    // Public fields present:
+    for (const f of ['streamerId', 'tier', 'status', 'supply', 'priceCents', 'reserveCents', 'P0_cents', 'k_num', 'k_den', 'spreadBps', 'feeBps']) {
+      expect(res.body).toHaveProperty(f);
+    }
+    // Internal fields must NOT be leaked to unauthenticated callers (codex audit #7):
+    expect(res.body).not.toHaveProperty('reserveFloorCents');
+    expect(res.body).not.toHaveProperty('version');
+    expect(res.body).not.toHaveProperty('market');       // no raw doc
+    expect(res.body).not.toHaveProperty('marketState');  // no raw doc
   });
 
   it('should return 404 for a well-formed but missing market id', async () => {

@@ -68,10 +68,12 @@ async function listMarkets(req, res) {
 
 /**
  * GET /markets/:id
- * Returns one market's config and its current MarketState.
+ * Returns one market's PUBLIC config + current price/supply/reserve.
  * Returns 404 if market not found; 400 if :id is invalid (handled by Joi validate).
  *
- * Response: { market, marketState }
+ * Curated DTO (codex audit #7): the public curve/fee params are exposed (clients need
+ * them to understand pricing), but internal-only fields — reserveFloorCents (risk floor)
+ * and the optimistic-lock version — are NOT leaked to unauthenticated callers.
  */
 async function getMarket(req, res) {
   try {
@@ -81,8 +83,23 @@ async function getMarket(req, res) {
     }
 
     const st = await MarketState.findOne({ marketId: m._id }).lean();
+    const supply = st && st.supply != null ? st.supply : 0;
 
-    return res.json({ market: m, marketState: st });
+    return res.json({
+      marketId: m._id,
+      streamerId: m.streamerId,
+      tier: m.tier,
+      status: m.status,
+      supply,
+      priceCents: priceCents(supply, { P0_cents: m.P0_cents, k_num: m.k_num, k_den: m.k_den }),
+      reserveCents: st && st.reserveCents != null ? st.reserveCents : 0,
+      // Public curve + fee params (needed to compute/understand quotes):
+      P0_cents: m.P0_cents,
+      k_num: m.k_num,
+      k_den: m.k_den,
+      spreadBps: m.spreadBps,
+      feeBps: m.feeBps,
+    });
   } catch (err) {
     if (err && err.statusCode) {
       return res.status(err.statusCode).json({ error: err.message, ...err.details });
