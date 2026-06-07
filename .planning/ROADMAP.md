@@ -79,7 +79,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The orchestrator reads `MarketState.version`, writes with `updateOne({_id, version}, {$inc:{version:1}})` inside the txn, and on `matchedCount===0` aborts and retries the whole quote+execute (bounded, e.g. 3 attempts with jitter).
   3. Replaying an order with the same idempotency key returns the original `Trade` and never re-executes (enforced by the unique index).
   4. An expired quote is rejected, and slippage bounds (`minReceived` for sells, `maxCost` for buys) are enforced at execution time against the re-priced trade.
-**Plans**: TBD
+**Plans**: 1 plan
+  - [ ] 04-01-PLAN.md — TDD atomic executeOrder() orchestrator: priceTrade composer + one-withTransaction commit with optimistic version+bounded retry, idempotency-key replay/race, quote expiry + slippage; extends TIER_CONFIG with per-tier risk caps (EXEC-01..04)
 
 ### Phase 5: API Surface (§7)
 **Goal**: The §7 endpoints expose the AMM — list markets, get expiring quotes, execute orders atomically, view IDOR-safe portfolio, and admin market/risk/reconcile operations.
@@ -115,6 +116,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Data Model & Market Genesis | 2/2 | Complete    | 2026-06-05 |
 | 2. Pricing Engine (Oracle-First) | 0/1 | Complete    | 2026-06-06 |
 | 3. Ledger & Risk Engines | 2/2 | Complete    | 2026-06-07 |
-| 4. Atomic Execution Orchestrator | 0/TBD | Not started | - |
+| 4. Atomic Execution Orchestrator | 0/1 | Not started | - |
 | 5. API Surface (§7) | 0/TBD | Not started | - |
 | 6. Simulation & Full Test Suite | 0/TBD | Not started | - |
