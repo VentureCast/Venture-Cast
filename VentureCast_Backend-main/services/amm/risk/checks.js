@@ -116,6 +116,20 @@ function evaluate(trade, snapshot, tierConfig) {
   assertInt(tierConfig.maxDailyCents, 'tierConfig.maxDailyCents');
   assertInt(tierConfig.circuitBreakerPct, 'tierConfig.circuitBreakerPct');
 
+  // Defense in depth: a real trade always has positive notional/quantity and a
+  // non-negative spread. The pricing + orchestrator layers already guarantee this,
+  // but this pure function must not trust its caller (a negative gross could otherwise
+  // sneak past the reserve-floor math by "adding" to the reserve on a sell).
+  if (trade.grossCents <= 0) {
+    throw new RiskError('trade.grossCents must be a positive integer', 400, { grossCents: trade.grossCents });
+  }
+  if (trade.deltaQty <= 0) {
+    throw new RiskError('trade.deltaQty must be a positive integer', 400, { deltaQty: trade.deltaQty });
+  }
+  if (trade.spreadCents < 0) {
+    throw new RiskError('trade.spreadCents must be a non-negative integer', 400, { spreadCents: trade.spreadCents });
+  }
+
   // ---- RISK-06: circuit breaker — paused market (market-level gate, FIRST) ----
   if (snapshot.marketStatus === 'paused') {
     return reject(
