@@ -59,6 +59,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 - **TREAS-01**: Wire deposits/withdrawals to live Stripe Treasury and reconcile `Σ user_cash` against Treasury balance
 - **CUT-01**: Cut the frontend `/trade/buy|sell` path over to the AMM per market behind a flag
 - **FE-01**: Frontend integration (quotes/orders/portfolio screens)
+- **IDEMP-FP**: Strict idempotency — persist a full request fingerprint (incl. cashCents/slippage) on the Order so a same-identity key reused with different params is rejected, not replayed (Phase 4 enforces identity-scope only; codex audit follow-up)
 
 ## Out of Scope
 
