@@ -92,7 +92,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `POST /orders` executes atomically with idempotency key + slippage and returns the trade plus updated balances; replay returns the original trade.
   4. `GET /portfolio` returns the JWT user's positions with no `userId` param (IDOR-safe) — a different user's token cannot read another's portfolio.
   5. Admin endpoints (admin-guarded via `requireAdmin`) create/pause markets, set tier/caps, view risk events, and reconcile the ledger.
-**Plans**: TBD
+**Plans**: 3 plans
+  - [ ] 05-01-PLAN.md — Foundation + read endpoints: routes/controllers/schemas + requireAdmin + User.isAdmin + admin token helper + amm.test.js scaffold; GET /markets + /markets/:id (API-01); mounts amm router in index.js
+  - [ ] 05-02-PLAN.md — Money path: quoteService + portfolioService; POST /quotes, POST /orders (idempotency+slippage via executeOrder), GET /portfolio (IDOR-safe) with auth + Joi (API-02/03/04)
+  - [ ] 05-03-PLAN.md — Admin surface behind requireAdmin: POST/PATCH /admin/markets, GET /admin/risk-events, GET /admin/ledger/reconcile (Σ=0 + projection check) (API-05)
 
 ### Phase 6: Simulation & Full Test Suite
 **Goal**: A dedicated harness proves the whole system: invariants hold after every operation, the 10k-trade-per-tier sim never breaches the reserve, concurrency loses no updates, and replay/expiry/slippage all pass.
@@ -117,5 +120,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Pricing Engine (Oracle-First) | 0/1 | Complete    | 2026-06-06 |
 | 3. Ledger & Risk Engines | 2/2 | Complete    | 2026-06-07 |
 | 4. Atomic Execution Orchestrator | 1/1 | Complete    | 2026-06-07 |
-| 5. API Surface (§7) | 0/TBD | Not started | - |
+| 5. API Surface (§7) | 0/3 | Not started | - |
 | 6. Simulation & Full Test Suite | 0/TBD | Not started | - |
