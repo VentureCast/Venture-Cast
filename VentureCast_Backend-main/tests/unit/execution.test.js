@@ -356,22 +356,31 @@ describe('conservation invariants', () => {
   });
 
   it('a reserve-floor-breaching sell is rejected by risk, writes NOTHING, and records a RiskEvent', async () => {
-    // Tiny floor headroom: build a market whose reserve floor leaves little room, then
-    // try to sell a position large enough that the reserve impact exceeds headroom.
+    // Build a position with small buys (each well within the circuit breaker), then RAISE the
+    // reserve floor out-of-band so even a modest sell would drain the reserve below the floor —
+    // RISK-05 (dynamic sell cap) / RISK-04 (reserve floor) must reject it.
     const { market, marketState } = await createTestMarket({ reserveFloorCents: 10000 });
     const userId = newId();
     await fundUserCash(userId, 100000000);
     const mid = market._id.toString();
 
-    // Build a large position so a big sell would drain past the floor.
-    await executeOrder(buyArgs(userId, mid, 800));
+    // Build the position incrementally so no single buy trips the price-move breaker.
+    for (let i = 0; i < 6; i++) {
+      await executeOrder(buyArgs(userId, mid, 10));
+    }
+
+    // Raise the floor to just below current reserve so almost no sell headroom remains.
+    let cur = await MarketState.findById(marketState._id);
+    const newFloor = cur.reserveCents - 50; // leave only 50c of headroom above the floor
+    await MarketState.updateOne({ _id: cur._id }, { $set: { reserveFloorCents: newFloor } });
+
     const before = await MarketState.findById(marketState._id);
     const tradesBefore = await Trade.countDocuments({});
     const entriesBefore = await LedgerEntry.countDocuments({});
 
-    // Sell the whole position in one shot — its reserve impact should exceed headroom.
+    // A sell of 10 shares drains far more than 50c from the reserve → exceeds headroom.
     await expect(
-      executeOrder(sellArgs(userId, mid, 800))
+      executeOrder(sellArgs(userId, mid, 10))
     ).rejects.toMatchObject({ name: 'RiskError' });
 
     const after = await MarketState.findById(marketState._id);
