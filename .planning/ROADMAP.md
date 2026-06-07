@@ -107,7 +107,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. A concurrency test fires simultaneous orders on one market and asserts exactly one wins per version bump with no lost update and consistent balances.
   4. Idempotency-replay (same key → one trade, identical response), quote-expiry rejection, and slippage-rejection tests all pass.
   5. A supertest walk of `quote → order → portfolio → sell` is green end-to-end (the contract the frontend will consume later).
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 06-01-PLAN.md — Seeded PRNG helper + invariant property tests (TEST-02) + 10k-trades-per-tier in-memory simulation driving the real pricing/fees/ledger/risk engine (TEST-03) + concurrency no-lost-update consolidation (TEST-04)
+  - [ ] 06-02-PLAN.md — End-to-end supertest flow walk quote→order→portfolio→sell + same-idempotencyKey replay + HTTP quote-expiry/slippage rejection (TEST-05)
 
 ## Progress
 
@@ -121,4 +123,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Ledger & Risk Engines | 2/2 | Complete    | 2026-06-07 |
 | 4. Atomic Execution Orchestrator | 1/1 | Complete    | 2026-06-07 |
 | 5. API Surface (§7) | 3/3 | Complete    | 2026-06-07 |
-| 6. Simulation & Full Test Suite | 0/TBD | Not started | - |
+| 6. Simulation & Full Test Suite | 0/2 | Not started | - |
