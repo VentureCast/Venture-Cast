@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 05-01-PLAN.md — AMM API foundation (API-01)
-last_updated: "2026-06-07T05:40:18.757Z"
+stopped_at: Completed 05-02-PLAN.md — quoteService + portfolioService + POST /quotes, POST /orders, GET /portfolio (API-02/03/04)
+last_updated: "2026-06-07T05:52:57.856Z"
 last_activity: "2026-06-07 — Plan 04-01 complete: atomic executeOrder orchestrator (EXEC-01..04)"
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 9
-  completed_plans: 7
+  completed_plans: 8
   percent: 67
 ---
 
@@ -55,6 +55,7 @@ Progress: [███████░░░] 67%
 | Phase 03-ledger-risk-engines P02 | 5 | 3 tasks | 3 files |
 | Phase 04 P01 | 7 | 3 tasks | 6 files |
 | Phase 05-api-surface P05-01 | 5 | 3 tasks | 8 files |
+| Phase 05-api-surface P05-02 | 9 | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,10 @@ Recent decisions affecting current work:
 - [Phase 05-api-surface]: validate(marketIdParam,'params') runs before optionalAuth — invalid :id 400s with zero DB hits
 - [Phase 05-api-surface]: listMarkets uses single MarketState $in batch fetch; O(1) map lookup per market — N+1 eliminated
 - [Phase 05-api-surface]: generateAdminToken signs same JWT payload as generateAuthToken; admin authority from User.isAdmin DB field
+- [Phase 05-api-surface]: quoteService stateless (no DB write); order always re-prices inside txn — quotes are advisory
+- [Phase 05-api-surface]: portfolioService uses $gte/$lt accountKey range (ReDoS-safe) instead of dynamic RegExp
+- [Phase 05-api-surface]: orderSchema has no userId field; controller always uses req.userId from JWT (IDOR by construction)
+- [Phase 05-api-surface]: rateLimiters bypass to no-op in NODE_ENV=test to prevent 429 false failures across all integration suites
 
 ### Pending Todos
 
@@ -104,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-07T05:40:18.755Z
-Stopped at: Completed 05-01-PLAN.md — AMM API foundation (API-01)
+Last session: 2026-06-07T05:52:57.854Z
+Stopped at: Completed 05-02-PLAN.md — quoteService + portfolioService + POST /quotes, POST /orders, GET /portfolio (API-02/03/04)
 Resume file: None

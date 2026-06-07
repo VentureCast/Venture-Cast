@@ -120,5 +120,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Pricing Engine (Oracle-First) | 0/1 | Complete    | 2026-06-06 |
 | 3. Ledger & Risk Engines | 2/2 | Complete    | 2026-06-07 |
 | 4. Atomic Execution Orchestrator | 1/1 | Complete    | 2026-06-07 |
-| 5. API Surface (§7) | 1/3 | In Progress|  |
+| 5. API Surface (§7) | 2/3 | In Progress|  |
 | 6. Simulation & Full Test Suite | 0/TBD | Not started | - |
