@@ -55,3 +55,13 @@ affect the AMM.
 Scope held to test files only — no engine/API source was modified in Phase 6. The simulation
 validating the real engine at 30k trades with zero invariant breaches is the milestone's
 proof-of-correctness. No gaps.
+
+## Codex follow-up audit (2026-06-07, post-build)
+
+Codex audited the simulation TEST for validity (could it trivially pass?). Unable to run Jest
+in its read-only sandbox, it **independently re-implemented the 30k-trade loop using the real
+production modules + the actual prng.js** and ran it: identical fill/reject counts (1454/8546,
+7505/2495, 9896/104), a meaningful buy+sell mix (not all-rejects), and — critically — it
+confirmed the test tracks `reserveCents` INDEPENDENTLY from the `market_reserve` ledger account
+and cross-checks they agree (a non-vacuous check: an engine sign error would fail it). Invariants
+held throughout. Verdict: the simulation genuinely validates the engine. No changes needed.

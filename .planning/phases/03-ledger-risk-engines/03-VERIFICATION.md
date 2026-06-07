@@ -51,3 +51,13 @@ ledger 17 + risk 11 = 28 new tests; full backend suite **143/143**, no regressio
 This phase's independent-audit gate was satisfied by direct orchestrator fuzzing rather
 than the codex CLI (API instability). The fuzz coverage (460k+ cases across the two key
 money invariants) exceeds what a single codex pass provides. No gaps found.
+
+## Codex follow-up audit (2026-06-07, post-build)
+
+The codex CLI was re-run on ledger + risk once the `</dev/null` stdin fix made it stable.
+Finding (MEDIUM): the circuit breaker rounded the price-move bps before comparing, so a move
+of e.g. 1000.45 bps rounded to 1000 and slipped past a 1000-bps threshold. **Fixed** with an
+exact integer compare (`|Δ|*10000 > threshold*ref`) + 2 regression tests (commit `8377578`).
+Ledger double-entry + reserve-floor were already fuzz-proven (460k cases) and unchanged.
+The 2^53 cap-comparison edge codex also noted is unreachable (API Joi bounds cap inputs at 1e12).
+Risk 13/13; full suite 207/207.
