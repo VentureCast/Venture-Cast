@@ -394,3 +394,70 @@ describe('conservation invariants', () => {
     expect(await RiskEvent.countDocuments({})).toBeGreaterThanOrEqual(1);
   });
 });
+
+// ---------------------------------------------------------------------------
+// 6. Security regressions (codex audit) — oversell + idempotency key reuse
+// ---------------------------------------------------------------------------
+describe('security: oversell + idempotency scope', () => {
+  test('a user cannot sell more shares than they own (no naked short / reserve drain)', async () => {
+    const { market } = await createTestMarket();
+    const mid = market._id.toString();
+    // A different buyer creates real market supply (small buy stays under the breaker).
+    const buyer = newId();
+    await fundUserCash(buyer, 10000000);
+    await executeOrder(buyArgs(buyer, mid, 60));
+
+    // The seller owns ZERO shares — a sell must be rejected, not filled against supply.
+    const seller = newId();
+    const tradesBefore = await Trade.countDocuments({});
+    await expect(
+      executeOrder(sellArgs(seller, mid, 50))
+    ).rejects.toMatchObject({ name: 'ExecutionError', statusCode: 409 });
+
+    expect(await accountBalance(`user_pos:${seller}:${mid}`)).toBe(0); // never went negative
+    expect(await Trade.countDocuments({ userId: seller })).toBe(0);
+    expect(await Trade.countDocuments({})).toBe(tradesBefore);          // no write at all
+  });
+
+  test('a user can sell only up to what they own, even when market supply is higher (boundary)', async () => {
+    const { market } = await createTestMarket();
+    const mid = market._id.toString();
+    // Another buyer inflates supply so the INVENTORY guard binds (not priceTrade's supply guard).
+    const other = newId();
+    await fundUserCash(other, 10000000);
+    await executeOrder(buyArgs(other, mid, 30));
+
+    const user = newId();
+    await fundUserCash(user, 10000000);
+    await executeOrder(buyArgs(user, mid, 40));                        // user owns 40, supply now 70
+
+    await expect(
+      executeOrder(sellArgs(user, mid, 41))                            // <= supply(70) but > owned(40)
+    ).rejects.toMatchObject({ name: 'ExecutionError', statusCode: 409 });
+
+    const { trade } = await executeOrder(sellArgs(user, mid, 40));     // exactly owned → ok
+    expect(trade.qty).toBe(40);
+    expect(await accountBalance(`user_pos:${user}:${mid}`)).toBe(0);
+  });
+
+  test('idempotency key reused with different parameters is rejected, not replayed', async () => {
+    const { market } = await createTestMarket();
+    const mid = market._id.toString();
+    const user = newId();
+    await fundUserCash(user, 10000000);
+
+    const key = newId();
+    const first = await executeOrder({ userId: user, marketId: mid, side: 'buy', qty: 10, idempotencyKey: key });
+    expect(first.trade).toBeDefined();
+
+    // Same key, different side → rejected (NOT a silent replay of the original buy).
+    await expect(
+      executeOrder({ userId: user, marketId: mid, side: 'sell', qty: 5, idempotencyKey: key })
+    ).rejects.toMatchObject({ name: 'ExecutionError', statusCode: 409 });
+
+    // Same key, different user → rejected (no cross-user trade leak).
+    await expect(
+      executeOrder({ userId: newId(), marketId: mid, side: 'buy', qty: 10, idempotencyKey: key })
+    ).rejects.toMatchObject({ name: 'ExecutionError', statusCode: 409 });
+  });
+});

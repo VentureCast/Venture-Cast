@@ -87,6 +87,21 @@ async function loadOriginalResult(idempotencyKey) {
 }
 
 /**
+ * Scope an idempotency replay to the request identity. A key reused with a different
+ * user/market/side must NOT silently replay the original trade — that would let a
+ * reused (or guessed) key leak or replay an unrelated order. Reject instead.
+ */
+function assertReplayMatches(order, { userId, marketId, side }) {
+  if (String(order.userId) !== String(userId) ||
+      String(order.marketId) !== String(marketId) ||
+      order.side !== side) {
+    throw new ExecutionError('idempotencyKey reused with different parameters', 409, {
+      idempotencyKey: order.idempotencyKey,
+    });
+  }
+}
+
+/**
  * Execute a buy or sell order atomically.
  *
  * @param {Object} params
@@ -127,20 +142,26 @@ async function executeOrder(params) {
   }
 
   // 1. IDEMPOTENCY pre-check (EXEC-03) — return the original Trade, never re-execute.
+  //    Replay is scoped to request identity (user/market/side) so a reused/guessed key
+  //    cannot replay an unrelated order.
   const replay = await loadOriginalResult(idempotencyKey);
-  if (replay) return replay;
+  if (replay) {
+    assertReplayMatches(replay.order, { userId, marketId, side });
+    return replay;
+  }
 
-  // 2. QUOTE EXPIRY (EXEC-04) — before the txn loop, no writes on an expired quote.
+  // 2. QUOTE EXPIRY (EXEC-04) — fast pre-loop check (also re-checked fresh per attempt below,
+  //    so retry backoff cannot let a just-expired quote slip through).
   if (quoteExpiresAt && new Date() > new Date(quoteExpiresAt)) {
     throw new ExecutionError('quote expired', 409, { quoteExpiresAt });
   }
 
-  // 3. Load Market params/tier/status.
+  // 3. Existence check only — the authoritative Market read happens FRESH inside the txn
+  //    each attempt (so a pause / tier / curve-param change racing the order is honored).
   const market = await Market.findById(marketId);
   if (!market) {
     throw new ExecutionError('market not found', 404, { marketId });
   }
-  const tierConfig = riskConfigForTier(market.tier);
 
   const uid = String(userId);
   const mid = String(marketId);
@@ -164,8 +185,20 @@ async function executeOrder(params) {
         }
         const V = ms.version;
 
-        // b. Re-price against the fresh state.
-        const priced = priceTrade(market, ms, side, side === 'sell' ? { qty } : (qty != null ? { qty } : { cashCents }));
+        // a2. Re-read Market FRESH in-session so a pause / tier / curve-param change racing
+        //     the order is honored, and re-check expiry per attempt so retry backoff cannot
+        //     let a just-expired quote fill.
+        const liveMarket = await Market.findById(market._id).session(session);
+        if (!liveMarket) {
+          throw new ExecutionError('market not found', 404, { marketId: mid });
+        }
+        const liveTierConfig = riskConfigForTier(liveMarket.tier);
+        if (quoteExpiresAt && new Date() > new Date(quoteExpiresAt)) {
+          throw new ExecutionError('quote expired', 409, { quoteExpiresAt });
+        }
+
+        // b. Re-price against the fresh state + fresh market params.
+        const priced = priceTrade(liveMarket, ms, side, side === 'sell' ? { qty } : (qty != null ? { qty } : { cashCents }));
 
         // c. SLIPPAGE (EXEC-04) — against the RE-PRICED trade. NON-retryable (rethrown).
         if (side === 'buy' && maxCostCents != null && priced.totalCents > maxCostCents) {
@@ -183,6 +216,15 @@ async function executeOrder(params) {
         const posAcct = await LedgerAccount.findOne({ accountKey: `user_pos:${uid}:${mid}` }).session(session);
         const userPositionQty = posAcct ? posAcct.balance : 0;
 
+        // d0. INVENTORY GUARD (critical): a user can never sell more shares than they own.
+        //     Without this a 0-share account could sell up to the market supply, get paid,
+        //     drive user_pos negative, and drain the reserve (naked short). NON-retryable.
+        if (side === 'sell' && priced.deltaQty > userPositionQty) {
+          throw new ExecutionError('insufficient shares to sell', 409, {
+            requested: priced.deltaQty, owned: userPositionQty,
+          });
+        }
+
         const todaysTrades = await Trade.find({
           userId,
           createdAt: { $gte: startOfToday() },
@@ -194,7 +236,7 @@ async function executeOrder(params) {
           reserveFloorCents: ms.reserveFloorCents,
           userPositionQty,
           userDailyVolumeCents,
-          marketStatus: market.status,
+          marketStatus: liveMarket.status,
           recentRefPriceCents: ms.lastPriceCents,
           newPriceCents: priced.endPriceCents,
         };
@@ -209,7 +251,7 @@ async function executeOrder(params) {
             userId: uid,
           },
           snapshot,
-          tierConfig
+          liveTierConfig
         );
         if (!verdict.allowed) {
           // Stash the draft so it can be persisted OUTSIDE the aborted txn (durable rejection).
@@ -312,14 +354,15 @@ async function executeOrder(params) {
       );
       return { trade: savedTrade, order: savedOrder, marketState: savedMarketState };
     } catch (err) {
-      // EXEC-03 race: a concurrent same-key insert won → return the original Trade.
+      // EXEC-03 race: a concurrent same-key insert won → return the original Trade
+      // (scoped to request identity, same as the pre-check).
       if (isDuplicateKeyError(err)) {
         const original = await loadOriginalResult(idempotencyKey);
-        if (original) return original;
+        if (original) { assertReplayMatches(original.order, { userId, marketId, side }); return original; }
         // Order exists but the Trade is not yet visible (extreme race) — retry the lookup briefly.
         await sleep(BACKOFF_BASE_MS);
         const retryOriginal = await loadOriginalResult(idempotencyKey);
-        if (retryOriginal) return retryOriginal;
+        if (retryOriginal) { assertReplayMatches(retryOriginal.order, { userId, marketId, side }); return retryOriginal; }
         throw new ExecutionError('duplicate idempotencyKey but original trade not found', 409, { idempotencyKey });
       }
 
