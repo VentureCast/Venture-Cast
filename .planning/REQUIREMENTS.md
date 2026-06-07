@@ -44,7 +44,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 - [x] **API-02**: `POST /quotes` returns a priced, expiring quote (avg price, gross, fee, spread, total, price impact)
 - [x] **API-03**: `POST /orders` executes atomically with idempotency + slippage and returns the trade + updated balances
 - [x] **API-04**: `GET /portfolio` returns the authenticated (JWT) user's positions, IDOR-safe (no `userId` param)
-- [ ] **API-05**: Admin endpoints create/pause markets, set tier/caps, view risk events, and reconcile the ledger (admin-guarded)
+- [x] **API-05**: Admin endpoints create/pause markets, set tier/caps, view risk events, and reconcile the ledger (admin-guarded)
 
 ### Testing
 
@@ -99,7 +99,7 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 | API-02 | Phase 5 | Complete |
 | API-03 | Phase 5 | Complete |
 | API-04 | Phase 5 | Complete |
-| API-05 | Phase 5 | Pending |
+| API-05 | Phase 5 | Complete |
 | TEST-02 | Phase 6 | Pending |
 | TEST-03 | Phase 6 | Pending |
 | TEST-04 | Phase 6 | Pending |

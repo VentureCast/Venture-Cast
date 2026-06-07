@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 05-02-PLAN.md — quoteService + portfolioService + POST /quotes, POST /orders, GET /portfolio (API-02/03/04)
-last_updated: "2026-06-07T05:52:57.856Z"
+stopped_at: Completed 05-03-PLAN.md — admin surface (POST/PATCH /admin/markets, GET /admin/risk-events, GET /admin/ledger/reconcile) — API-05 complete
+last_updated: "2026-06-07T06:00:00.083Z"
 last_activity: "2026-06-07 — Plan 04-01 complete: atomic executeOrder orchestrator (EXEC-01..04)"
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 9
-  completed_plans: 8
+  completed_plans: 9
   percent: 67
 ---
 
@@ -56,6 +56,7 @@ Progress: [███████░░░] 67%
 | Phase 04 P01 | 7 | 3 tasks | 6 files |
 | Phase 05-api-surface P05-01 | 5 | 3 tasks | 8 files |
 | Phase 05-api-surface P05-02 | 9 | 2 tasks | 7 files |
+| Phase 05-api-surface P05-03 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,8 @@ Recent decisions affecting current work:
 - [Phase 05-api-surface]: portfolioService uses $gte/$lt accountKey range (ReDoS-safe) instead of dynamic RegExp
 - [Phase 05-api-surface]: orderSchema has no userId field; controller always uses req.userId from JWT (IDOR by construction)
 - [Phase 05-api-surface]: rateLimiters bypass to no-op in NODE_ENV=test to prevent 429 false failures across all integration suites
+- [Phase 05-api-surface]: authenticateToken runs before requireAdmin on /admin/* routes so missing token 401s (not 403)
+- [Phase 05-api-surface]: adminReconcile: in-memory Σ LedgerEntry.delta scan; action label pause_market/resume_market/set_tier derived from body.status presence
 
 ### Pending Todos
 
@@ -109,6 +112,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-07T05:52:57.854Z
-Stopped at: Completed 05-02-PLAN.md — quoteService + portfolioService + POST /quotes, POST /orders, GET /portfolio (API-02/03/04)
+Last session: 2026-06-07T06:00:00.081Z
+Stopped at: Completed 05-03-PLAN.md — admin surface (POST/PATCH /admin/markets, GET /admin/risk-events, GET /admin/ledger/reconcile) — API-05 complete
 Resume file: None
