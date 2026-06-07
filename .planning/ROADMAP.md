@@ -26,7 +26,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Ledger & Risk Engines** - Two independent pure modules built in parallel: double-entry ledger and 3-tier risk engine (completed 2026-06-06)
 - [x] **Phase 4: Atomic Execution Orchestrator** - One-transaction integration of pricing+ledger+risk with optimistic locking, idempotency, slippage (completed 2026-06-07)
 - [x] **Phase 5: API Surface (§7)** - `/markets`, `/quotes`, `/orders`, `/portfolio`, `/admin/*` wired with auth, validation, rate limits (completed 2026-06-07)
-- [ ] **Phase 6: Simulation & Full Test Suite** - Invariant property tests, 10k-trade-per-tier sim, concurrency, and idempotency-replay/quote-expiry/slippage suite
+- [x] **Phase 6: Simulation & Full Test Suite** - Invariant property tests, 10k-trade-per-tier sim, concurrency, and idempotency-replay/quote-expiry/slippage suite (completed 2026-06-07)
 
 ## Phase Details
 
@@ -123,4 +123,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Ledger & Risk Engines | 2/2 | Complete    | 2026-06-07 |
 | 4. Atomic Execution Orchestrator | 1/1 | Complete    | 2026-06-07 |
 | 5. API Surface (§7) | 3/3 | Complete    | 2026-06-07 |
-| 6. Simulation & Full Test Suite | 1/2 | In Progress|  |
+| 6. Simulation & Full Test Suite | 2/2 | Complete   | 2026-06-07 |

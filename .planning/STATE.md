@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 06-02-PLAN.md — end-to-end flow walk + replay + rejection (TEST-05)
-last_updated: "2026-06-07T06:21:18.355Z"
+stopped_at: Completed 06-01-PLAN.md — seeded PRNG + invariant property tests (TEST-02) + 10k-per-tier simulation (TEST-03) + TEST-04 concurrency consolidation — all 205 tests green
+last_updated: "2026-06-07T06:24:10.820Z"
 last_activity: "2026-06-07 — Plan 04-01 complete: atomic executeOrder orchestrator (EXEC-01..04)"
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 11
-  completed_plans: 10
+  completed_plans: 11
   percent: 67
 ---
 
@@ -58,6 +58,7 @@ Progress: [███████░░░] 67%
 | Phase 05-api-surface P05-02 | 9 | 2 tasks | 7 files |
 | Phase 05-api-surface P05-03 | 4 | 2 tasks | 4 files |
 | Phase 06-simulation-full-test-suite P02 | 2 | 2 tasks | 1 files |
+| Phase 06-simulation-full-test-suite P06-01 | 4 | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,9 @@ Recent decisions affecting current work:
 - [Phase 05-api-surface]: authenticateToken runs before requireAdmin on /admin/* routes so missing token 401s (not 403)
 - [Phase 05-api-surface]: adminReconcile: in-memory Σ LedgerEntry.delta scan; action label pause_market/resume_market/set_tier derived from body.status presence
 - [Phase 06-simulation-full-test-suite]: quoteExpiresAt accepted by Joi orderSchema and processed by orchestrator — asserted directly at HTTP layer (409)
+- [Phase 06-simulation-full-test-suite]: applyTrade mirrors priceTrade.js composition exactly — buyCostCents/sellPayoutCents → applyBuyFees/applySellFees → buildBuyPostings/buildSellPostings; no reimplementation of math
+- [Phase 06-simulation-full-test-suite]: TEST-04 added as a single consolidating assertion block inside the existing concurrency it — no test duplication
+- [Phase 06-simulation-full-test-suite]: Min reserve == reserveFloorCents in all three tier sims is correct — RISK-05 dynamic sell cap is the guard preventing floor breaches
 
 ### Pending Todos
 
@@ -114,6 +118,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-07T06:21:18.353Z
-Stopped at: Completed 06-02-PLAN.md — end-to-end flow walk + replay + rejection (TEST-05)
+Last session: 2026-06-07T06:24:10.817Z
+Stopped at: Completed 06-01-PLAN.md — seeded PRNG + invariant property tests (TEST-02) + 10k-per-tier simulation (TEST-03) + TEST-04 concurrency consolidation — all 205 tests green
 Resume file: None

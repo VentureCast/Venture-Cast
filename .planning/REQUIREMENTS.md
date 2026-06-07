@@ -49,9 +49,9 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 ### Testing
 
 - [x] **TEST-01**: Oracle test asserts $205.00 / avg $2.05 / end $2.10 exactly
-- [ ] **TEST-02**: Invariant property tests assert ledger-balances + reserve ≥ floor + reserve ≥ 0 after every operation
-- [ ] **TEST-03**: 10,000-trades-per-tier simulation asserts no negative reserve and a penny-balanced ledger
-- [ ] **TEST-04**: Concurrency test asserts no lost update under simultaneous orders on one market
+- [x] **TEST-02**: Invariant property tests assert ledger-balances + reserve ≥ floor + reserve ≥ 0 after every operation
+- [x] **TEST-03**: 10,000-trades-per-tier simulation asserts no negative reserve and a penny-balanced ledger
+- [x] **TEST-04**: Concurrency test asserts no lost update under simultaneous orders on one market
 - [x] **TEST-05**: Idempotency-replay, quote-expiry, and slippage-rejection tests pass
 
 ## v2 Requirements
@@ -100,9 +100,9 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 | API-03 | Phase 5 | Complete |
 | API-04 | Phase 5 | Complete |
 | API-05 | Phase 5 | Complete |
-| TEST-02 | Phase 6 | Pending |
-| TEST-03 | Phase 6 | Pending |
-| TEST-04 | Phase 6 | Pending |
+| TEST-02 | Phase 6 | Complete |
+| TEST-03 | Phase 6 | Complete |
+| TEST-04 | Phase 6 | Complete |
 | TEST-05 | Phase 6 | Complete |
 
 **Coverage:**
