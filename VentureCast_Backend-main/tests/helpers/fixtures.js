@@ -57,9 +57,14 @@ function generateAuthToken(userId) {
   return jwt.sign({ id: userId.toString() }, JWT_SECRET, { expiresIn: '1h' });
 }
 
+function generateAdminToken(userId) {
+  return jwt.sign({ id: userId.toString() }, JWT_SECRET, { expiresIn: '1h' });
+}
+
 module.exports = {
   createTestUser,
   createTestStreamer,
   createTestShare,
   generateAuthToken,
+  generateAdminToken,
 };
