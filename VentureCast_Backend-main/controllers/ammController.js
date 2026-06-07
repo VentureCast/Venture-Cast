@@ -2,7 +2,11 @@
 
 const Market = require('../models/Market');
 const MarketState = require('../models/MarketState');
+const LedgerAccount = require('../models/LedgerAccount');
 const { priceCents } = require('../services/amm/pricing/curve');
+const { getQuote } = require('../services/amm/quoteService');
+const portfolioService = require('../services/amm/portfolioService');
+const { executeOrder } = require('../services/amm/execution/orchestrator');
 const logger = require('../utils/logger');
 
 /**
@@ -84,7 +88,88 @@ async function getMarket(req, res) {
   }
 }
 
+/**
+ * POST /quotes
+ * Stateless priced quote via quoteService.getQuote().
+ * Returns the full quote shape; persists nothing.
+ *
+ * Auth: authenticateToken (JWT required).
+ */
+async function postQuote(req, res) {
+  try {
+    const quote = await getQuote(req.body);
+    return res.json(quote);
+  } catch (err) {
+    if (err && err.statusCode) {
+      return res.status(err.statusCode).json({ error: err.message, ...err.details });
+    }
+    logger.error('postQuote error:', err);
+    return res.status(500).json({ error: 'Failed to compute quote' });
+  }
+}
+
+/**
+ * POST /orders
+ * Atomic order execution via executeOrder() (Phase 4 orchestrator).
+ * userId is sourced ONLY from req.userId (the JWT claim) — never from req.body.
+ * Returns { trade, balances: { cashCents, positionQty }, replayed }.
+ *
+ * Auth: authenticateToken (JWT required).
+ */
+async function postOrder(req, res) {
+  try {
+    // SECURITY: userId from JWT only — never trust req.body.userId
+    const params = { ...req.body, userId: req.userId };
+
+    const result = await executeOrder(params);
+
+    const { marketId } = req.body;
+    const uid = req.userId;
+
+    // Read post-trade balances from ledger accounts (read-only, .lean())
+    const [cashAcct, posAcct] = await Promise.all([
+      LedgerAccount.findOne({ accountKey: `user_cash:${uid}` }).lean(),
+      LedgerAccount.findOne({ accountKey: `user_pos:${uid}:${marketId}` }).lean(),
+    ]);
+
+    const cashCents = cashAcct ? cashAcct.balance : 0;
+    const positionQty = posAcct ? posAcct.balance : 0;
+
+    return res.json({
+      trade: result.trade,
+      balances: { cashCents, positionQty },
+      replayed: !!result.replayed,
+    });
+  } catch (err) {
+    if (err && err.statusCode) {
+      return res.status(err.statusCode).json({ error: err.message, ...err.details });
+    }
+    logger.error('postOrder error:', err);
+    return res.status(500).json({ error: 'Failed to execute order' });
+  }
+}
+
+/**
+ * GET /portfolio
+ * IDOR-safe portfolio aggregation.
+ * userId sourced ONLY from req.userId (JWT). NO :userId param route.
+ *
+ * Auth: authenticateToken (JWT required).
+ */
+async function getPortfolio(req, res) {
+  try {
+    const result = await portfolioService.getPortfolio(req.userId);
+    return res.json(result);
+  } catch (err) {
+    logger.error('getPortfolio error:', err);
+    return res.status(500).json({ error: 'Failed to fetch portfolio' });
+  }
+}
+
 module.exports = {
   listMarkets,
   getMarket,
+  postQuote,
+  postOrder,
+  getPortfolio,
 };
