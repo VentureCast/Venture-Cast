@@ -1,15 +1,18 @@
 'use strict';
 
 const request = require('supertest');
+const mongoose = require('mongoose');
 const { connectTestDB, clearTestDB, disconnectTestDB } = require('../helpers/db');
 const { createTestUser, generateAuthToken, generateAdminToken } = require('../helpers/fixtures');
 const { createTestMarket } = require('../helpers/ammFixtures');
 const { priceCents } = require('../../services/amm/pricing/curve');
 const LedgerAccount = require('../../models/LedgerAccount');
+const LedgerEntry = require('../../models/LedgerEntry');
 const Trade = require('../../models/Trade');
 const Market = require('../../models/Market');
 const MarketState = require('../../models/MarketState');
 const Order = require('../../models/Order');
+const AdminAction = require('../../models/AdminAction');
 
 const app = require('../../index');
 
@@ -552,5 +555,202 @@ describe('GET /portfolio', () => {
     expect(pos.positionQty).toBeGreaterThan(0);
     expect(pos.priceCents).toBeGreaterThan(0);
     expect(pos.valueCents).toBeGreaterThan(0);
+  });
+});
+
+// ============================================================
+// Admin routes (API-05)
+// ============================================================
+
+describe('admin', () => {
+  // Shared admin + non-admin state; market created per-test as needed
+  let adminUser;
+  let adminToken;
+  let regularUser;
+  let regularToken;
+
+  // Admin routes under test
+  const ADMIN_ROUTES = [
+    { method: 'post',  path: '/admin/markets',         body: { streamerId: 'a'.repeat(24), reserveFloorCents: 10000 } },
+    { method: 'patch', path: '/admin/markets/' + 'a'.repeat(24), body: { status: 'paused' } },
+    { method: 'get',   path: '/admin/risk-events',     body: null },
+    { method: 'get',   path: '/admin/ledger/reconcile', body: null },
+  ];
+
+  beforeEach(async () => {
+    // Ensure indexes for models involved in genesis transactions
+    await Promise.all([
+      Market.init(),
+      MarketState.init(),
+      Trade.init(),
+      Order.init(),
+      LedgerAccount.init(),
+      AdminAction.init(),
+    ]);
+
+    adminUser = await createTestUser({ isAdmin: true });
+    adminToken = generateAdminToken(adminUser._id);
+
+    regularUser = await createTestUser({ isAdmin: false });
+    regularToken = generateAuthToken(regularUser._id);
+  });
+
+  // --------------------------------------------------------
+  // Guard tests: 401 (no token) and 403 (non-admin token)
+  // --------------------------------------------------------
+
+  it('should return 401 for all admin routes when no token is provided', async () => {
+    for (const route of ADMIN_ROUTES) {
+      let req = request(app)[route.method](route.path);
+      if (route.body) req = req.send(route.body);
+      const res = await req;
+      expect(res.status).toBe(401);
+    }
+  });
+
+  it('should return 403 for all admin routes when a non-admin token is provided', async () => {
+    for (const route of ADMIN_ROUTES) {
+      let req = request(app)[route.method](route.path).set('Authorization', `Bearer ${regularToken}`);
+      if (route.body) req = req.send(route.body);
+      const res = await req;
+      expect(res.status).toBe(403);
+    }
+  });
+
+  // --------------------------------------------------------
+  // POST /admin/markets — create market round-trip
+  // --------------------------------------------------------
+
+  it('POST /admin/markets should create a market (201) and round-trip via GET /markets', async () => {
+    const streamerId = new mongoose.Types.ObjectId().toString();
+
+    const res = await request(app)
+      .post('/admin/markets')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ streamerId, reserveFloorCents: 10000 });
+
+    expect(res.status).toBe(201);
+    expect(res.body).toHaveProperty('market');
+    expect(res.body).toHaveProperty('marketState');
+    expect(res.body.market.streamerId.toString()).toBe(streamerId);
+    expect(res.body.marketState.reserveCents).toBe(10000);
+
+    // Verify market appears in GET /markets
+    const listRes = await request(app)
+      .get('/markets')
+      .set('Authorization', `Bearer ${adminToken}`);
+    expect(listRes.status).toBe(200);
+    const found = listRes.body.find(m => m.marketId === res.body.market._id.toString());
+    expect(found).toBeDefined();
+  });
+
+  it('POST /admin/markets should return 400 when reserveFloorCents is missing', async () => {
+    const res = await request(app)
+      .post('/admin/markets')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ streamerId: new mongoose.Types.ObjectId().toString() });
+
+    expect(res.status).toBe(400);
+  });
+
+  // --------------------------------------------------------
+  // PATCH /admin/markets/:id — pause and resume
+  // --------------------------------------------------------
+
+  it('PATCH /admin/markets/:id should pause and resume a market', async () => {
+    const { market } = await createTestMarket();
+
+    // Pause
+    const pauseRes = await request(app)
+      .patch(`/admin/markets/${market._id}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'paused' });
+
+    expect(pauseRes.status).toBe(200);
+    expect(pauseRes.body.market.status).toBe('paused');
+
+    // Resume
+    const resumeRes = await request(app)
+      .patch(`/admin/markets/${market._id}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'active' });
+
+    expect(resumeRes.status).toBe(200);
+    expect(resumeRes.body.market.status).toBe('active');
+  });
+
+  it('PATCH /admin/markets/:id should return 404 for a missing market', async () => {
+    const missingId = new mongoose.Types.ObjectId().toString();
+
+    const res = await request(app)
+      .patch(`/admin/markets/${missingId}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'paused' });
+
+    expect(res.status).toBe(404);
+  });
+
+  it('PATCH /admin/markets/:id should return 400 when body is empty', async () => {
+    const { market } = await createTestMarket();
+
+    const res = await request(app)
+      .patch(`/admin/markets/${market._id}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({});
+
+    expect(res.status).toBe(400);
+  });
+
+  // --------------------------------------------------------
+  // GET /admin/risk-events
+  // --------------------------------------------------------
+
+  it('GET /admin/risk-events should return 200 with { events: [] } on a clean DB', async () => {
+    const res = await request(app)
+      .get('/admin/risk-events')
+      .set('Authorization', `Bearer ${adminToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('events');
+    expect(Array.isArray(res.body.events)).toBe(true);
+  });
+
+  // --------------------------------------------------------
+  // GET /admin/ledger/reconcile
+  // --------------------------------------------------------
+
+  it('GET /admin/ledger/reconcile should report balanced:true and totalCents:0 after genesis', async () => {
+    // Genesis posts a balanced platform_funding -> market_reserve pair, so Σ delta == 0
+    await createTestMarket();
+
+    const res = await request(app)
+      .get('/admin/ledger/reconcile')
+      .set('Authorization', `Bearer ${adminToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('balanced', true);
+    expect(res.body).toHaveProperty('totalCents', 0);
+    expect(res.body).toHaveProperty('mismatches');
+    expect(Array.isArray(res.body.mismatches)).toBe(true);
+    expect(res.body.mismatches.length).toBe(0);
+  });
+
+  it('GET /admin/ledger/reconcile should detect a mismatch when projection diverges from entries', async () => {
+    // Manually create a LedgerAccount with a wrong projection (not matching entries)
+    await LedgerAccount.create({ accountKey: 'test_bad_account', balance: 999, unit: 'cents' });
+    // No LedgerEntry for this account — so entriesSum=0 but projection=999 → mismatch
+
+    const res = await request(app)
+      .get('/admin/ledger/reconcile')
+      .set('Authorization', `Bearer ${adminToken}`);
+
+    expect(res.status).toBe(200);
+    // balanced must be false because projection != entriesSum
+    expect(res.body.balanced).toBe(false);
+    expect(res.body.mismatches.length).toBeGreaterThan(0);
+    const mismatch = res.body.mismatches.find(m => m.accountKey === 'test_bad_account');
+    expect(mismatch).toBeDefined();
+    expect(mismatch.projection).toBe(999);
+    expect(mismatch.entriesSum).toBe(0);
   });
 });
