@@ -141,14 +141,21 @@ function evaluate(trade, snapshot, tierConfig) {
   }
 
   // ---- RISK-06: circuit breaker — price-move threshold (market-level) ----
-  // Integer-friendly bps math; guard recentRefPriceCents > 0 to avoid div-by-zero.
+  // Guard recentRefPriceCents > 0 to avoid div-by-zero.
   if (Number.isInteger(snapshot.recentRefPriceCents) && snapshot.recentRefPriceCents > 0 &&
       Number.isInteger(snapshot.newPriceCents)) {
-    const moveBps = Math.round(
-      Math.abs(snapshot.newPriceCents - snapshot.recentRefPriceCents) * 10000 /
-      snapshot.recentRefPriceCents
-    );
-    if (moveBps > tierConfig.circuitBreakerPct) {
+    const refP = snapshot.recentRefPriceCents;
+    // EXACT integer decision (codex audit): the move-in-bps is |Δ|*10000/refP, but rounding
+    // it before the compare lets a move of e.g. 1000.45 bps slip past a 1000-bps threshold.
+    // Compare the cross-multiplied integers instead — reject iff |Δ|*10000 > threshold*refP —
+    // so any move STRICTLY above the threshold trips, with no rounding leniency.
+    const moveNum = Math.abs(snapshot.newPriceCents - refP) * 10000;
+    const thresholdNum = tierConfig.circuitBreakerPct * refP;
+    const moveBps = Math.round(moveNum / refP); // informational only (event detail)
+    const overThreshold = (Number.isSafeInteger(moveNum) && Number.isSafeInteger(thresholdNum))
+      ? moveNum > thresholdNum
+      : moveBps > tierConfig.circuitBreakerPct; // fail-open to the rounded compare only on overflow (unreachable via API bounds)
+    if (overThreshold) {
       return reject(
         'circuit_breaker_triggered', 409,
         'Price move exceeds circuit-breaker threshold',

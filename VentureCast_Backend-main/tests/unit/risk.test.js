@@ -225,6 +225,28 @@ describe('risk: circuit breaker — price move (RISK-06)', () => {
     expect(result.allowed).toBe(true);
     expect(result.riskError).toBeUndefined();
   });
+
+  test('a fractional-bps move just above the threshold trips (no rounding leniency) — codex audit', () => {
+    // ref 20001, new 22002 → exact move = 2001*10000/20001 = 1000.45 bps. The old Math.round
+    // rounded this DOWN to 1000 and let it slip past a 1000-bps threshold. The exact integer
+    // compare (|Δ|*10000 > threshold*ref → 20010000 > 20001000) now correctly trips.
+    const result = evalWith({
+      snapshot: { recentRefPriceCents: 20001, newPriceCents: 22002 },
+      tier: { circuitBreakerPct: 1000 },
+    });
+    expect(result.allowed).toBe(false);
+    expect(result.riskEventDraft.type).toBe('circuit_breaker_triggered');
+    expect(result.riskEventDraft.detail.tripBreaker).toBe(true);
+  });
+
+  test('a move exactly at the threshold does NOT trip (strictly-greater semantics)', () => {
+    // ref 1000, new 1100 → exactly 1000 bps; threshold 1000 → not strictly greater → allowed.
+    const result = evalWith({
+      snapshot: { recentRefPriceCents: 1000, newPriceCents: 1100 },
+      tier: { circuitBreakerPct: 1000 },
+    });
+    expect(result.allowed).toBe(true);
+  });
 });
 
 // ---------------------------------------------------------------------------
