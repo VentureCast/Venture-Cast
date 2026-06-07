@@ -33,10 +33,10 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 
 ### Execution
 
-- [ ] **EXEC-01**: System commits supply + reserve + balances + ledger + trade in one Mongoose transaction or none
-- [ ] **EXEC-02**: System uses an optimistic `version` on `MarketState` and retries on write-conflict (bounded)
-- [ ] **EXEC-03**: System enforces idempotency keys — replay returns the original trade and never re-executes
-- [ ] **EXEC-04**: System enforces quote expiry and slippage (`minReceived`/`maxCost`) at execution time
+- [x] **EXEC-01**: System commits supply + reserve + balances + ledger + trade in one Mongoose transaction or none
+- [x] **EXEC-02**: System uses an optimistic `version` on `MarketState` and retries on write-conflict (bounded)
+- [x] **EXEC-03**: System enforces idempotency keys — replay returns the original trade and never re-executes
+- [x] **EXEC-04**: System enforces quote expiry and slippage (`minReceived`/`maxCost`) at execution time
 
 ### API
 
@@ -90,10 +90,10 @@ Source of truth: `documentation/CREATOR_AMM_PLAN.md`. Scope: backend functionali
 | RISK-04 | Phase 3 | Complete |
 | RISK-05 | Phase 3 | Complete |
 | RISK-06 | Phase 3 | Complete |
-| EXEC-01 | Phase 4 | Pending |
-| EXEC-02 | Phase 4 | Pending |
-| EXEC-03 | Phase 4 | Pending |
-| EXEC-04 | Phase 4 | Pending |
+| EXEC-01 | Phase 4 | Complete |
+| EXEC-02 | Phase 4 | Complete |
+| EXEC-03 | Phase 4 | Complete |
+| EXEC-04 | Phase 4 | Complete |
 | API-01 | Phase 5 | Pending |
 | API-02 | Phase 5 | Pending |
 | API-03 | Phase 5 | Pending |

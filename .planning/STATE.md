@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in_progress
-stopped_at: Completed 03-02-PLAN.md — pure 3-tier risk engine (RISK-01..06)
-last_updated: "2026-06-07T04:40:59.234Z"
-last_activity: "2026-06-06 — Plan 03-02 complete: pure 3-tier risk engine (RISK-01..06)"
+status: completed
+stopped_at: Completed 04-01-PLAN.md — atomic executeOrder orchestrator (EXEC-01..04)
+last_updated: "2026-06-07T05:02:15.652Z"
+last_activity: "2026-06-07 — Plan 04-01 complete: atomic executeOrder orchestrator (EXEC-01..04)"
 progress:
   total_phases: 6
-  completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
-  percent: 50
+  completed_phases: 4
+  total_plans: 6
+  completed_plans: 6
+  percent: 67
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-06-03)
 
 ## Current Position
 
-Phase: 3 of 6 (Ledger & Risk Engines) — COMPLETE
-Plan: Moving to Phase 4
-Status: Phase 3 complete — ledger engine (03-01) and risk engine (03-02) done; ready for Phase 4
-Last activity: 2026-06-06 — Plan 03-02 complete: pure 3-tier risk engine (RISK-01..06)
+Phase: 4 of 6 (Atomic Execution Orchestrator) — COMPLETE
+Plan: Moving to Phase 5 (API Surface)
+Status: Phase 4 complete — atomic executeOrder() keystone (EXEC-01..04) done; ready for Phase 5
+Last activity: 2026-06-07 — Plan 04-01 complete: atomic executeOrder orchestrator (EXEC-01..04)
 
-Progress: [█████░░░░░] 50%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [█████░░░░░] 50%
 | Phase 02-pricing-engine-oracle-first P02-01 | 6 | 2 tasks | 5 files |
 | Phase 03 P01 | 4 min | 3 tasks | 4 files |
 | Phase 03-ledger-risk-engines P02 | 5 | 3 tasks | 3 files |
+| Phase 04 P01 | 7 | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,9 @@ Recent decisions affecting current work:
 - [Phase 03-02]: Risk check order: circuit breaker/paused first (market-level gate), then user caps, then dynamic sell cap + reserve floor
 - [Phase 03-02]: RISK-05 (dynamic sell cap) catches the offending sell before RISK-04 (reserve floor); RISK-04 kept as safety net for buys + floor-raised-after-open — they never both fire on one fixture
 - [Phase 03-02]: Market-level rejections (floor, sell cap, breaker, paused) emit userId:null in RiskEvent draft; user caps emit trade.userId
+- [Phase 04]: [04-01]: ExecutionError lives in execution/errors.js to break a priceTrade<->orchestrator require cycle
+- [Phase 04]: [04-01]: Risk-rejection RiskEvent persisted AFTER the txn aborts (durable rejection though the trade rolled back); VersionConflictError is the only retryable signal
+- [Phase 04]: [04-01]: Optimistic version write via MarketState.updateOne({_id,version:V},$inc:{version:1}); matchedCount===0 retries the whole re-read+re-price loop (max 3, jittered)
 
 ### Pending Todos
 
@@ -95,6 +99,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-06T17:50:58.454Z
-Stopped at: Completed 03-02-PLAN.md — pure 3-tier risk engine (RISK-01..06)
+Last session: 2026-06-07T05:01:10.763Z
+Stopped at: Completed 04-01-PLAN.md — atomic executeOrder orchestrator (EXEC-01..04)
 Resume file: None
