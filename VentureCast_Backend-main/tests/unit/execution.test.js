@@ -242,6 +242,15 @@ describe('version / concurrency (EXEC-02)', () => {
     // Reserve == serial-equivalent: equal to the sum of every commit's reserve delta,
     // i.e. final reserve == MarketState projection.
     expect(after.reserveCents).toBe(await accountBalance(`market_reserve:${market._id}`));
+
+    // TEST-04 (concurrency / no lost update) consolidation:
+    // Prove the concurrent writes are equivalent to N serial writes — no lost update.
+    //   Σ shares ledger == 0 (double-entry shares balance)
+    //   user_pos projection == after.supply (single-user: all minted shares belong to this user)
+    //   Trade count === N (every concurrent order landed exactly once)
+    expect(await sumLedger('shares')).toBe(0);
+    expect(await accountBalance(`user_pos:${userId}:${market._id}`)).toBe(after.supply);
+    expect(await Trade.countDocuments({})).toBe(N);
   });
 
   it('stale version (out-of-band bump) still resolves: executeOrder retries and lands consistently', async () => {
