@@ -54,6 +54,42 @@ const orderSchema = Joi.object({
 }).or('qty', 'cashCents');
 
 // ============================================================
+// Body schemas — POST /admin/markets (API-05)
+// ============================================================
+
+/**
+ * createMarketSchema — validates POST /admin/markets request body.
+ * streamerId and reserveFloorCents are required.
+ * Other params fall back to genesisService defaults when omitted.
+ */
+const createMarketSchema = Joi.object({
+  streamerId: objectId.required(),
+  P0_cents: Joi.number().integer().min(1).optional(),
+  k_num: Joi.number().integer().min(1).optional(),
+  k_den: Joi.number().integer().min(1).optional(),
+  tier: Joi.string().valid('1', '2', '3').optional(),
+  spreadBps: Joi.number().integer().min(0).optional(),
+  feeBps: Joi.number().integer().min(0).optional(),
+  reserveFloorCents: Joi.number().integer().min(1).required(),
+});
+
+// ============================================================
+// Body schemas — PATCH /admin/markets/:id (API-05)
+// ============================================================
+
+/**
+ * patchMarketSchema — validates PATCH /admin/markets/:id request body.
+ * At least one field must be present (.min(1)).
+ * status, tier, spreadBps, feeBps are the patchable fields.
+ */
+const patchMarketSchema = Joi.object({
+  status: Joi.string().valid('active', 'paused').optional(),
+  tier: Joi.string().valid('1', '2', '3').optional(),
+  spreadBps: Joi.number().integer().min(0).optional(),
+  feeBps: Joi.number().integer().min(0).optional(),
+}).min(1);
+
+// ============================================================
 // Exports
 // Export as an object so later plans (05-03+) can extend
 // by adding more properties without changing the import shape.
@@ -63,4 +99,6 @@ module.exports = {
   marketIdParam,
   quoteSchema,
   orderSchema,
+  createMarketSchema,
+  patchMarketSchema,
 };
