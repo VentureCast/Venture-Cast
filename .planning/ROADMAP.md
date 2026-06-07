@@ -123,4 +123,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Ledger & Risk Engines | 2/2 | Complete    | 2026-06-07 |
 | 4. Atomic Execution Orchestrator | 1/1 | Complete    | 2026-06-07 |
 | 5. API Surface (§7) | 3/3 | Complete    | 2026-06-07 |
-| 6. Simulation & Full Test Suite | 0/2 | Not started | - |
+| 6. Simulation & Full Test Suite | 1/2 | In Progress|  |
